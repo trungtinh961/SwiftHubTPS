@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "icon_cell_profile_summary.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
