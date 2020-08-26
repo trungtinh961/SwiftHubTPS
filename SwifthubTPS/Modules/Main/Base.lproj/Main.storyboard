@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Global search" translatesAutoresizingMaskIntoConstraints="NO" id="KyJ-93-JmG">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="98" width="414" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="ofh-uL-xLy"/>
                                 </constraints>
@@ -24,7 +24,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lM3-1I-IJi">
-                                <rect key="frame" x="10" y="132" width="394" height="33"/>
+                                <rect key="frame" x="10" y="152" width="394" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="JhU-oa-3TE"/>
                                 </constraints>
@@ -35,10 +35,10 @@
                                 </segments>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5PL-VU-Sac">
-                                <rect key="frame" x="10" y="205" width="394" height="608"/>
+                                <rect key="frame" x="10" y="225" width="394" height="588"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amp-bi-Mrb">
-                                <rect key="frame" x="10" y="174" width="68" height="21"/>
+                                <rect key="frame" x="10" y="194" width="394" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -48,9 +48,10 @@
                         <constraints>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="lM3-1I-IJi" secondAttribute="trailing" constant="10" id="H6b-WO-9Ro"/>
                             <constraint firstItem="5PL-VU-Sac" firstAttribute="top" secondItem="amp-bi-Mrb" secondAttribute="bottom" constant="10" id="Hm1-jG-Lrb"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="amp-bi-Mrb" secondAttribute="trailing" constant="10" id="KPW-Yl-hpn"/>
                             <constraint firstItem="5PL-VU-Sac" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="Lba-Go-xPU"/>
-                            <constraint firstItem="lM3-1I-IJi" firstAttribute="top" secondItem="KyJ-93-JmG" secondAttribute="bottom" id="MIU-g1-tfa"/>
-                            <constraint firstItem="KyJ-93-JmG" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="Nc8-9j-BeX"/>
+                            <constraint firstItem="lM3-1I-IJi" firstAttribute="top" secondItem="KyJ-93-JmG" secondAttribute="bottom" constant="10" id="MIU-g1-tfa"/>
+                            <constraint firstItem="KyJ-93-JmG" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="10" id="Nc8-9j-BeX"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="5PL-VU-Sac" secondAttribute="bottom" id="Rzq-12-HCt"/>
                             <constraint firstItem="KyJ-93-JmG" firstAttribute="trailing" secondItem="PQr-Ze-W5v" secondAttribute="trailing" id="Xv8-Md-WHc"/>
                             <constraint firstItem="lM3-1I-IJi" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="10" id="b9C-kE-Piq"/>
@@ -64,7 +65,7 @@
                     <navigationItem key="navigationItem" id="wb0-yz-OFb">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="UYs-Mq-agq">
-                            <rect key="frame" x="141.66666666666666" y="6" width="130.99999999999997" height="33"/>
+                            <rect key="frame" x="110.66666666666669" y="5.6666666666666679" width="193" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Repositories"/>

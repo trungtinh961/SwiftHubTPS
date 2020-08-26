@@ -113,8 +113,8 @@
 		BAC5D2A524F3C21900A731F0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BAD3886624F608BD0045C10E /* Search */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
-				BAC5D29124F3C13800A731F0 /* FirstViewController.swift */,
 				BAC5D29324F3C13800A731F0 /* SecondViewController.swift */,
 			);
 			path = Modules;
@@ -127,6 +127,14 @@
 				BAC5D29524F3C13800A731F0 /* Main.storyboard */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		BAD3886624F608BD0045C10E /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				BAC5D29124F3C13800A731F0 /* FirstViewController.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
