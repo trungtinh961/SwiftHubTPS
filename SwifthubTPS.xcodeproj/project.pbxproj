@@ -71,6 +71,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BA3D105A24F61FF10079C5A1 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				BAC5D29324F3C13800A731F0 /* SecondViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		BA3D105B24F61FFE0079C5A1 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		BA3D105C24F620530079C5A1 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		BAC5D28124F3C13800A731F0 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +114,7 @@
 		BAC5D28C24F3C13800A731F0 /* SwifthubTPS */ = {
 			isa = PBXGroup;
 			children = (
+				BA3D105C24F620530079C5A1 /* Networking */,
 				BAC5D2A324F3C1A400A731F0 /* Application */,
 				BAC5D2A524F3C21900A731F0 /* Modules */,
 				BAD3886E24F60B370045C10E /* Models */,
@@ -122,9 +145,10 @@
 		BAC5D2A524F3C21900A731F0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BA3D105B24F61FFE0079C5A1 /* Setting */,
+				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAD3886624F608BD0045C10E /* Search */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
-				BAC5D29324F3C13800A731F0 /* SecondViewController.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";

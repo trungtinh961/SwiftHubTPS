@@ -11,6 +11,14 @@ import HMSegmentedControl
 
 class SearchViewController: UIViewController {
 
+    
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
+    
+    @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -19,5 +27,13 @@ class SearchViewController: UIViewController {
         
     }
     
+    @IBAction func btnLanguage(_ sender: Any) {
+    }
+    
+    @IBAction func typeApiSegmentControl(_ sender: Any) {
+    }
+    
+    @IBAction func sinceApiSegmentControl(_ sender: Any) {
+    }
 }
 
