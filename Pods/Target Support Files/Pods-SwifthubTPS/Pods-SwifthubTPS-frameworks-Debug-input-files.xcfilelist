@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-SwifthubTPS/Pods-SwifthubTPS-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/HMSegmentedControl/HMSegmentedControl.framework
+${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework

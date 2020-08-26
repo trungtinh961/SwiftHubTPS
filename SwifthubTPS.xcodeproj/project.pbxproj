@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA3D105924F616550079C5A1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D105824F616550079C5A1 /* User.swift */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -25,6 +26,7 @@
 		29EE408D9F0E788EDF35D898 /* Pods-SwifthubTPS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwifthubTPS.release.xcconfig"; path = "Target Support Files/Pods-SwifthubTPS/Pods-SwifthubTPS.release.xcconfig"; sourceTree = "<group>"; };
 		63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwifthubTPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD005EBAC607AE0125388ABD /* Pods-SwifthubTPS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwifthubTPS.debug.xcconfig"; path = "Target Support Files/Pods-SwifthubTPS/Pods-SwifthubTPS.debug.xcconfig"; sourceTree = "<group>"; };
+		BA3D105824F616550079C5A1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				BAD3886F24F60B830045C10E /* Repository.swift */,
+				BA3D105824F616550079C5A1 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
 				BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
+				BA3D105924F616550079C5A1 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

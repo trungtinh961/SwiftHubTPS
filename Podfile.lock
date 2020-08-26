@@ -1,16 +1,20 @@
 PODS:
   - HMSegmentedControl (1.5.6)
+  - ObjectMapper (4.2.0)
 
 DEPENDENCIES:
   - HMSegmentedControl
+  - ObjectMapper
 
 SPEC REPOS:
   trunk:
     - HMSegmentedControl
+    - ObjectMapper
 
 SPEC CHECKSUMS:
   HMSegmentedControl: 34c1f54d822d8308e7b24f5d901ec674dfa31352
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
 
-PODFILE CHECKSUM: 8e74968424fc661634e5c234b2827b72192d5409
+PODFILE CHECKSUM: 917255eec9d3030bcbb89f61e0dcb8cc7070a602
 
 COCOAPODS: 1.9.3

@@ -6,4 +6,5 @@ inhibit_all_warnings!
 
 target 'SwifthubTPS' do
     pod 'HMSegmentedControl'
+    pod 'ObjectMapper'
 end
