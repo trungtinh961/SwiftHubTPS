@@ -9,11 +9,13 @@
 import UIKit
 import HMSegmentedControl
 
-class FirstViewController: UIViewController {
+class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        
         
     }
     

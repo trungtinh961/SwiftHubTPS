@@ -9,12 +9,15 @@
 /* Begin PBXBuildFile section */
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
-		BAC5D29224F3C13800A731F0 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* FirstViewController.swift */; };
+		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
 		BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29324F3C13800A731F0 /* SecondViewController.swift */; };
 		BAC5D29724F3C13800A731F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC5D29524F3C13800A731F0 /* Main.storyboard */; };
 		BAC5D29924F3C13B00A731F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAC5D29824F3C13B00A731F0 /* Assets.xcassets */; };
 		BAC5D29C24F3C13B00A731F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAC5D29A24F3C13B00A731F0 /* LaunchScreen.storyboard */; };
 		BAC5D2AC24F5215D00A731F0 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAC5D2AB24F5215D00A731F0 /* Icons.xcassets */; };
+		BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD3886A24F60A790045C10E /* RepositoryCell.swift */; };
+		BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAD3886B24F60A790045C10E /* RepositoryCell.xib */; };
+		BAD3887024F60B830045C10E /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD3886F24F60B830045C10E /* Repository.swift */; };
 		D2C57271620F948D548D8370 /* Pods_SwifthubTPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,13 +28,16 @@
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BAC5D29124F3C13800A731F0 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		BAC5D29124F3C13800A731F0 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		BAC5D29324F3C13800A731F0 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		BAC5D29624F3C13800A731F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BAC5D29824F3C13B00A731F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BAC5D29B24F3C13B00A731F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BAC5D29D24F3C13B00A731F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAC5D2AB24F5215D00A731F0 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		BAD3886A24F60A790045C10E /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
+		BAD3886B24F60A790045C10E /* RepositoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepositoryCell.xib; sourceTree = "<group>"; };
+		BAD3886F24F60B830045C10E /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +92,7 @@
 			children = (
 				BAC5D2A324F3C1A400A731F0 /* Application */,
 				BAC5D2A524F3C21900A731F0 /* Modules */,
+				BAD3886E24F60B370045C10E /* Models */,
 				BAC5D2A424F3C1B300A731F0 /* Resources */,
 			);
 			path = SwifthubTPS;
@@ -132,9 +139,19 @@
 		BAD3886624F608BD0045C10E /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				BAC5D29124F3C13800A731F0 /* FirstViewController.swift */,
+				BAC5D29124F3C13800A731F0 /* SearchViewController.swift */,
+				BAD3886A24F60A790045C10E /* RepositoryCell.swift */,
+				BAD3886B24F60A790045C10E /* RepositoryCell.xib */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		BAD3886E24F60B370045C10E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BAD3886F24F60B830045C10E /* Repository.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +217,7 @@
 				BAC5D29C24F3C13B00A731F0 /* LaunchScreen.storyboard in Resources */,
 				BAC5D29924F3C13B00A731F0 /* Assets.xcassets in Resources */,
 				BAC5D2AC24F5215D00A731F0 /* Icons.xcassets in Resources */,
+				BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */,
 				BAC5D29724F3C13800A731F0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,10 +271,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */,
-				BAC5D29224F3C13800A731F0 /* FirstViewController.swift in Sources */,
+				BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
 				BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */,
+				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
