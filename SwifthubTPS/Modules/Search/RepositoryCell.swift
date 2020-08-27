@@ -31,11 +31,7 @@ class RepositoryCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
       
-
-        self.contentView.layer.cornerRadius = 5
-        self.contentView.layer.masksToBounds = true
-        self.contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        
+        mainView.layer.cornerRadius = 5
         viewLanguageColor.layer.cornerRadius = viewLanguageColor.frame.width / 2
         
         

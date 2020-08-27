@@ -11,6 +11,7 @@
 		BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */; };
 		BA3D106224F751500079C5A1 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106124F751500079C5A1 /* Foundation.swift */; };
 		BA3D106524F7527F0079C5A1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106424F7527F0079C5A1 /* UIColor.swift */; };
+		BA3D106824F763D50079C5A1 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106724F763D50079C5A1 /* UIImageView+DownloadImage.swift */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -33,6 +34,7 @@
 		BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTableViewCell.swift; sourceTree = "<group>"; };
 		BA3D106124F751500079C5A1 /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
 		BA3D106424F7527F0079C5A1 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		BA3D106724F763D50079C5A1 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		BA3D105F24F750FC0079C5A1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BA3D106624F763BE0079C5A1 /* UIImageView */,
 				BA3D106024F751290079C5A1 /* Foundation */,
 				BA3D106324F7526C0079C5A1 /* UIColor */,
 			);
@@ -122,6 +125,14 @@
 				BA3D106424F7527F0079C5A1 /* UIColor.swift */,
 			);
 			path = UIColor;
+			sourceTree = "<group>";
+		};
+		BA3D106624F763BE0079C5A1 /* UIImageView */ = {
+			isa = PBXGroup;
+			children = (
+				BA3D106724F763D50079C5A1 /* UIImageView+DownloadImage.swift */,
+			);
+			path = UIImageView;
 			sourceTree = "<group>";
 		};
 		BAC5D28124F3C13800A731F0 = {
@@ -341,6 +352,7 @@
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,
 				BA3D105924F616550079C5A1 /* User.swift in Sources */,
 				BA3D106524F7527F0079C5A1 /* UIColor.swift in Sources */,
+				BA3D106824F763D50079C5A1 /* UIImageView+DownloadImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
     
+    var downloadTask: URLSessionDownloadTask?
     var trendingRepositories: [TrendingRepository]?
     
     
@@ -31,7 +32,7 @@ class SearchViewController: UIViewController {
         if let data = performStoreRequest(with: url) {  // Modified
             trendingRepositories = parse(data: data)
             for item in trendingRepositories! {
-                print("Got results: \(item.languageColor ?? "")")
+                print("Got results: \(item.fullname ?? "")")
             }
             
         }
@@ -60,17 +61,23 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
+        
         cell.lbFullname.text = trendingRepositories![indexPath.row].fullname
         cell.lbDescription.text = trendingRepositories![indexPath.row].description
         cell.lbStars.text = roundedValue(value: trendingRepositories![indexPath.row].stars!)
         cell.lbCurrentPeriodStars.text = roundedValue(value: trendingRepositories![indexPath.row].currentPeriodStars!)
         cell.lbLanguage.isHidden = false
+       // cell.viewLanguageColor.isHidden = false
         cell.lbLanguage.text = trendingRepositories![indexPath.row].language
-        if let color = trendingRepositories![indexPath.row].languageColor {            
+        if let color = trendingRepositories![indexPath.row].languageColor {
             cell.viewLanguageColor.backgroundColor = UIColor(color)
         } else {
             cell.viewLanguageColor.isHidden = true
             cell.lbLanguage.isHidden = true
+        }
+        cell.imgAuthor.image = UIImage(named: "Placeholder")
+        if let smallURL = URL(string: (trendingRepositories?[indexPath.row].avatarUrl!)!) {
+            downloadTask = cell.imgAuthor.loadImage(url: smallURL)
         }
         return cell
     }
