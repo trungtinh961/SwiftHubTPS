@@ -1,20 +1,24 @@
 PODS:
   - HMSegmentedControl (1.5.6)
   - ObjectMapper (4.2.0)
+  - UIColor_Hex_Swift (5.1.0)
 
 DEPENDENCIES:
   - HMSegmentedControl
   - ObjectMapper
+  - UIColor_Hex_Swift
 
 SPEC REPOS:
   trunk:
     - HMSegmentedControl
     - ObjectMapper
+    - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
   HMSegmentedControl: 34c1f54d822d8308e7b24f5d901ec674dfa31352
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  UIColor_Hex_Swift: 8be7432edacb7fa91c78aa05ef3c30b66e4f9415
 
-PODFILE CHECKSUM: 917255eec9d3030bcbb89f61e0dcb8cc7070a602
+PODFILE CHECKSUM: 9477e42f34f52b25ce454ce069c3120183bf1ca2
 
 COCOAPODS: 1.9.3

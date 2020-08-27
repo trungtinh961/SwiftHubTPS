@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BA3D105924F616550079C5A1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D105824F616550079C5A1 /* User.swift */; };
 		BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */; };
+		BA3D106224F751500079C5A1 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106124F751500079C5A1 /* Foundation.swift */; };
+		BA3D106524F7527F0079C5A1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106424F7527F0079C5A1 /* UIColor.swift */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -29,6 +31,8 @@
 		AD005EBAC607AE0125388ABD /* Pods-SwifthubTPS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwifthubTPS.debug.xcconfig"; path = "Target Support Files/Pods-SwifthubTPS/Pods-SwifthubTPS.debug.xcconfig"; sourceTree = "<group>"; };
 		BA3D105824F616550079C5A1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTableViewCell.swift; sourceTree = "<group>"; };
+		BA3D106124F751500079C5A1 /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
+		BA3D106424F7527F0079C5A1 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +99,31 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		BA3D105F24F750FC0079C5A1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BA3D106024F751290079C5A1 /* Foundation */,
+				BA3D106324F7526C0079C5A1 /* UIColor */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BA3D106024F751290079C5A1 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				BA3D106124F751500079C5A1 /* Foundation.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		BA3D106324F7526C0079C5A1 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				BA3D106424F7527F0079C5A1 /* UIColor.swift */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
 		BAC5D28124F3C13800A731F0 = {
 			isa = PBXGroup;
 			children = (
@@ -116,10 +145,11 @@
 		BAC5D28C24F3C13800A731F0 /* SwifthubTPS */ = {
 			isa = PBXGroup;
 			children = (
-				BA3D105C24F620530079C5A1 /* Networking */,
 				BAC5D2A324F3C1A400A731F0 /* Application */,
+				BA3D105F24F750FC0079C5A1 /* Extensions */,
 				BAC5D2A524F3C21900A731F0 /* Modules */,
 				BAD3886E24F60B370045C10E /* Models */,
+				BA3D105C24F620530079C5A1 /* Networking */,
 				BAC5D2A424F3C1B300A731F0 /* Resources */,
 			);
 			path = SwifthubTPS;
@@ -148,10 +178,10 @@
 		BAC5D2A524F3C21900A731F0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				BA3D105B24F61FFE0079C5A1 /* Setting */,
 				BA3D105A24F61FF10079C5A1 /* Login */,
-				BAD3886624F608BD0045C10E /* Search */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
+				BA3D105B24F61FFE0079C5A1 /* Setting */,
+				BAD3886624F608BD0045C10E /* Search */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -301,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA3D106224F751500079C5A1 /* Foundation.swift in Sources */,
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */,
 				BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */,
@@ -309,6 +340,7 @@
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,
 				BA3D105924F616550079C5A1 /* User.swift in Sources */,
+				BA3D106524F7527F0079C5A1 /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

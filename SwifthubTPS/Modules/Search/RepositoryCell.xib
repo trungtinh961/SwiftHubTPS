@@ -122,7 +122,6 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </stackView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_repository" translatesAutoresizingMaskIntoConstraints="NO" id="ixs-7g-Tcq">
                         <rect key="frame" x="8" y="42" width="16" height="16"/>
@@ -134,7 +133,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="ixs-7g-Tcq" firstAttribute="leading" secondItem="egu-ZY-meo" secondAttribute="leading" id="FUV-Xm-okI"/>
                     <constraint firstItem="ixs-7g-Tcq" firstAttribute="bottom" secondItem="egu-ZY-meo" secondAttribute="bottom" id="WV8-AC-fQw"/>

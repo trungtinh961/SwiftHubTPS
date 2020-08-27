@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import HMSegmentedControl
+//import HMSegmentedControl
+import UIColor_Hex_Swift
 
 class SearchViewController: UIViewController {
 
@@ -30,7 +31,7 @@ class SearchViewController: UIViewController {
         if let data = performStoreRequest(with: url) {  // Modified
             trendingRepositories = parse(data: data)
             for item in trendingRepositories! {
-                print("Got results: \(item.fullname! )")
+                print("Got results: \(item.languageColor ?? "")")
             }
             
         }
@@ -61,8 +62,16 @@ extension SearchViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
         cell.lbFullname.text = trendingRepositories![indexPath.row].fullname
         cell.lbDescription.text = trendingRepositories![indexPath.row].description
-        cell.lbStars.text = String(trendingRepositories![indexPath.row].stars!)
-        
+        cell.lbStars.text = roundedValue(value: trendingRepositories![indexPath.row].stars!)
+        cell.lbCurrentPeriodStars.text = roundedValue(value: trendingRepositories![indexPath.row].currentPeriodStars!)
+        cell.lbLanguage.isHidden = false
+        cell.lbLanguage.text = trendingRepositories![indexPath.row].language
+        if let color = trendingRepositories![indexPath.row].languageColor {            
+            cell.viewLanguageColor.backgroundColor = UIColor(color)
+        } else {
+            cell.viewLanguageColor.isHidden = true
+            cell.lbLanguage.isHidden = true
+        }
         return cell
     }
     
@@ -81,11 +90,24 @@ extension SearchViewController: UITableViewDelegate {
 
 // MARK:- Helper Methods
 
-
+extension Double {
+    /// Rounds the double to decimal places value
+    func rounded(toPlaces places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
 
 extension SearchViewController {
     
-//    func 
+    func roundedValue(value: Int) -> String {
+        if value < 1000 {
+            return String(value)
+        } else {
+            let temp = (Double(value)/1000).rounded(toPlaces: 1)
+            return String(temp) + "k"
+        }
+    }
     
     func iTunesURL(searchText: String) -> URL {
         let urlString = String(format: "https://ghapi.huchen.dev/repositories")

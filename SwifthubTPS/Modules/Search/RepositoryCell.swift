@@ -37,9 +37,8 @@ class RepositoryCell: UITableViewCell {
         self.contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         
         viewLanguageColor.layer.cornerRadius = viewLanguageColor.frame.width / 2
-        viewLanguageColor.isHidden = true
         
-        lbLanguage.isHidden = true
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

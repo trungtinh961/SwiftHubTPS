@@ -7,4 +7,5 @@ inhibit_all_warnings!
 target 'SwifthubTPS' do
     pod 'HMSegmentedControl'
     pod 'ObjectMapper'
+    pod 'UIColor_Hex_Swift'
 end
