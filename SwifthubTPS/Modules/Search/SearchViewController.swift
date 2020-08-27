@@ -18,24 +18,40 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
     
     var trendingSince = TrendingSince.daily
+    var trendingType = TrendingType.repository
+    
     var downloadTask: URLSessionDownloadTask?
     var trendingRepositories: [TrendingRepository]?
+    var trendingUsers: [TrendingUser]?
     
     func updateTableView() {
-        trendingRepositories = TrendingGithubAPI.getDatas(language: "", since: trendingSince)
+        if trendingType == .repository {
+            trendingRepositories = TrendingGithubAPI.getDatas(type: trendingType, language: "c++", since: trendingSince) as [TrendingRepository]
+        } else {
+            trendingUsers = TrendingGithubAPI.getDatas(type: trendingType, language: "c++", since: trendingSince) as [TrendingUser]
+//            for item in trendingUsers! {
+//                print("Got results: \(item.username ?? "")")
+//            }
+        }
+        
         resultTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
         
-        trendingRepositories = TrendingGithubAPI.getDatas(language: "", since: trendingSince)
-            for item in trendingRepositories! {
-                print("Got results: \(item.fullname ?? "")")
-            
-        }
+        /// Register cell
+        
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending)
+        
+        /// Get data
+        
+        trendingRepositories = TrendingGithubAPI.getDatas(type: trendingType, language: "", since: trendingSince)
+//        for item in trendingRepositories! {
+//            print("Got results: \(item.fullname ?? "")")
+//
+//        }
     }
     
     // MARK:- Action
@@ -44,6 +60,14 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func typeApiSegmentControl(_ sender: Any) {
+        switch typeApiSegmentControl.selectedSegmentIndex {
+        case 0:
+            trendingType = .repository
+        case 1:
+            trendingType = .user
+        default: print("default")
+        }
+        updateTableView()
     }
     
     @IBAction func sinceApiSegmentControl(_ sender: Any) {
@@ -62,30 +86,50 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
       
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return trendingRepositories!.count
+        if trendingType == . repository {
+            return trendingRepositories!.count
+        } else {
+            return trendingUsers!.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
         
-        cell.lbFullname.text = trendingRepositories![indexPath.row].fullname
-        cell.lbDescription.text = trendingRepositories![indexPath.row].description
-        cell.lbStars.text = trendingRepositories![indexPath.row].stars!.kFormatted()
-        cell.lbCurrentPeriodStars.text = trendingRepositories![indexPath.row].currentPeriodStars!.kFormatted()
-        cell.lbLanguage.isHidden = false
-        cell.viewLanguageColor.isHidden = false
-        cell.lbLanguage.text = trendingRepositories![indexPath.row].language
-        if let color = trendingRepositories![indexPath.row].languageColor {
-            cell.viewLanguageColor.backgroundColor = UIColor(color)
+        if trendingType == .repository {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
+            let indexCell = trendingRepositories![indexPath.row]
+            cell.lbFullname.text = indexCell.fullname
+            cell.lbDescription.text = indexCell.description
+            cell.lbStars.text = indexCell.stars!.kFormatted()
+            cell.lbCurrentPeriodStars.text = indexCell.currentPeriodStars!.kFormatted()
+            cell.lbLanguage.isHidden = false
+            cell.viewLanguageColor.isHidden = false
+            cell.lbLanguage.text = indexCell.language
+            if let color = indexCell.languageColor {
+                cell.viewLanguageColor.backgroundColor = UIColor(color)
+            } else {
+                cell.viewLanguageColor.isHidden = true
+                cell.lbLanguage.isHidden = true
+            }
+            cell.imgAuthor.image = UIImage(named: "Placeholder")
+            if let smallURL = URL(string: indexCell.avatarUrl!) {
+                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            }
+            return cell
         } else {
-            cell.viewLanguageColor.isHidden = true
-            cell.lbLanguage.isHidden = true
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userTrending, for: indexPath) as! UserCell
+            let indexCell = trendingUsers![indexPath.row]
+            cell.lbFullname.text = "\(indexCell.username ?? "") (\(indexCell.name ?? ""))"
+            cell.lbDescription.text = "\(indexCell.username ?? "")/\(indexCell.repo?.name ?? "")"
+            
+            cell.imgAuthor.image = UIImage(named: "Placeholder")
+            if let smallURL = URL(string: indexCell.avatar!) {
+                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            }
+            return cell
         }
-        cell.imgAuthor.image = UIImage(named: "Placeholder")
-        if let smallURL = URL(string: (trendingRepositories?[indexPath.row].avatarUrl!)!) {
-            downloadTask = cell.imgAuthor.loadImage(url: smallURL)
-        }
-        return cell
+        
     }
     
 }

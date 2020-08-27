@@ -6,6 +6,7 @@
 //  Copyright © 2020 Trung Tinh. All rights reserved.
 //
 
+import ObjectMapper
 import Foundation
 
 enum TrendingSince: String {
@@ -14,18 +15,37 @@ enum TrendingSince: String {
     case monthly = "monthly"
 }
 
+enum TrendingType: Int {
+    case repository
+    case user
+}
+
 class TrendingGithubAPI {
     
-  static func getDatas(language: String, since: TrendingSince) -> [TrendingRepository] {
+    static func createURL(type: TrendingType, language: String, since: TrendingSince) -> URL {
         var components = URLComponents()
-        components.scheme = Router.getTrendingRepository(language: language, since: since).scheme
-        components.host = Router.getTrendingRepository(language: language, since: since).host
-        components.path = Router.getTrendingRepository(language: language, since: since).path
-        components.setQueryItems(with: Router.getTrendingRepository(language: language, since: since).parameters!)
-        print(components.url!)
+        
+        if type == .repository {
+            components.scheme = Router.getTrendingRepository(language: language, since: since).scheme
+            components.host = Router.getTrendingRepository(language: language, since: since).host
+            components.path = Router.getTrendingRepository(language: language, since: since).path
+            components.setQueryItems(with: Router.getTrendingRepository(language: language, since: since).parameters!)
+        } else {
+            components.scheme = Router.getTrendingUser(language: language, since: since).scheme
+            components.host = Router.getTrendingUser(language: language, since: since).host
+            components.path = Router.getTrendingUser(language: language, since: since).path
+            components.setQueryItems(with: Router.getTrendingUser(language: language, since: since).parameters!)
+        }
+        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")        
+        return components.url!
+    }
+    
+    static func getDatas<T: Mappable>(type: TrendingType, language: String, since: TrendingSince) -> [T] {
+                     
+        let url = self.createURL(type: type, language: language, since: since)
         var data = Data()
         do {
-            data = try Data(contentsOf: components.url!)
+            data = try Data(contentsOf: url)
         } catch {
             print("Download Error: \(error.localizedDescription)")
             
@@ -37,13 +57,21 @@ class TrendingGithubAPI {
         } catch {
           print(error)
         }
-        var trendingRepositories = [TrendingRepository]()
+        
+        if type == .repository {
+            
+        } else {
+            
+        }
+        
+        var trendingArray = [T]()
         for json in jsonArray {
           if let item = json as? [String: AnyObject] {
-            trendingRepositories.append(TrendingRepository(JSON: item)!)
+            trendingArray.append(T(JSON: item)!)
           }
         }
-        return trendingRepositories
+        
+        return trendingArray
     }
     
 }

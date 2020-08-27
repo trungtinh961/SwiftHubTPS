@@ -47,9 +47,7 @@ enum Router {
         default: break
         }
         return params
-    }
-    
-    
+    }    
     
     var method: String {
         switch self {

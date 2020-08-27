@@ -44,7 +44,7 @@
                                                     <constraint firstAttribute="height" constant="14.5" id="11Y-fE-Bfv"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zY9-bA-p2s">
@@ -141,7 +141,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.68627450980392157" green="0.92941176470588238" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="roM-Gv-gfD" secondAttribute="bottom" id="3yQ-BZ-ZhX"/>
                             <constraint firstItem="roM-Gv-gfD" firstAttribute="top" secondItem="xhs-8N-igS" secondAttribute="top" id="8iK-Hi-Vr5"/>
@@ -159,7 +159,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="xhs-8N-igS" secondAttribute="trailing" constant="6" id="c1L-zI-zcw"/>
                     <constraint firstAttribute="bottom" secondItem="xhs-8N-igS" secondAttribute="bottom" constant="4" id="dZ2-OV-2zd"/>
