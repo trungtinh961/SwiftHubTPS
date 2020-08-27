@@ -33,7 +33,8 @@ class RepositoryCell: UITableViewCell {
       
         mainView.layer.cornerRadius = 5
         viewLanguageColor.layer.cornerRadius = viewLanguageColor.frame.width / 2
-        
+        imgAuthor.layer.cornerRadius = imgAuthor.frame.height / 2
+        imgAuthor.layer.masksToBounds = true
         
     }
 

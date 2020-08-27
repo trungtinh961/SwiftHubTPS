@@ -17,26 +17,25 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
     
+    var trendingSince = TrendingSince.daily
     var downloadTask: URLSessionDownloadTask?
     var trendingRepositories: [TrendingRepository]?
     
+    func updateTableView() {
+        trendingRepositories = TrendingGithubAPI.getDatas(language: "", since: trendingSince)
+        resultTableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
+                
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
         
-        let url = iTunesURL(searchText: "abc xyz")
-        print("URL: '\(url)'")
-        if let data = performStoreRequest(with: url) {  // Modified
-            trendingRepositories = parse(data: data)
+        trendingRepositories = TrendingGithubAPI.getDatas(language: "", since: trendingSince)
             for item in trendingRepositories! {
                 print("Got results: \(item.fullname ?? "")")
-            }
             
         }
-        
     }
     
     // MARK:- Action
@@ -48,6 +47,13 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func sinceApiSegmentControl(_ sender: Any) {
+        switch sinceApiSegmentControl.selectedSegmentIndex {
+        case 0: trendingSince = .daily
+        case 1: trendingSince = .weekly
+        case 2: trendingSince = .monthly
+        default: trendingSince = .daily
+        }
+        updateTableView()
     }
 }
 
@@ -64,10 +70,10 @@ extension SearchViewController: UITableViewDataSource {
         
         cell.lbFullname.text = trendingRepositories![indexPath.row].fullname
         cell.lbDescription.text = trendingRepositories![indexPath.row].description
-        cell.lbStars.text = roundedValue(value: trendingRepositories![indexPath.row].stars!)
-        cell.lbCurrentPeriodStars.text = roundedValue(value: trendingRepositories![indexPath.row].currentPeriodStars!)
+        cell.lbStars.text = trendingRepositories![indexPath.row].stars!.kFormatted()
+        cell.lbCurrentPeriodStars.text = trendingRepositories![indexPath.row].currentPeriodStars!.kFormatted()
         cell.lbLanguage.isHidden = false
-       // cell.viewLanguageColor.isHidden = false
+        cell.viewLanguageColor.isHidden = false
         cell.lbLanguage.text = trendingRepositories![indexPath.row].language
         if let color = trendingRepositories![indexPath.row].languageColor {
             cell.viewLanguageColor.backgroundColor = UIColor(color)
@@ -89,73 +95,61 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+        print(trendingRepositories?[indexPath.row].fullname as Any)
         
     }
-    
     
 }
 
 // MARK:- Helper Methods
 
-extension Double {
-    /// Rounds the double to decimal places value
-    func rounded(toPlaces places:Int) -> Double {
-        let divisor = pow(10.0, Double(places))
-        return (self * divisor).rounded() / divisor
-    }
-}
 
-extension SearchViewController {
-    
-    func roundedValue(value: Int) -> String {
-        if value < 1000 {
-            return String(value)
-        } else {
-            let temp = (Double(value)/1000).rounded(toPlaces: 1)
-            return String(temp) + "k"
-        }
-    }
-    
-    func iTunesURL(searchText: String) -> URL {
-        let urlString = String(format: "https://ghapi.huchen.dev/repositories")
-        let url = URL(string: urlString)
-        return url!
-    }
-
-    func performStoreRequest(with url: URL) -> Data? {
-        do {
-            return try Data(contentsOf: url)
-        } catch {
-            print("Download Error: \(error.localizedDescription)")
-            return nil
-        }
-    }
-
-
-    func parse(data: Data) -> [TrendingRepository] {
-        var jsonArray: Array<Any>!
-        do {
-            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
-        } catch {
-          print(error)
-        }
-        var trendingRepositories = [TrendingRepository]()
-        for json in jsonArray {
-          if let item = json as? [String: AnyObject] {
-            trendingRepositories.append(TrendingRepository(JSON: item)!)
-          }
-        }
-        return trendingRepositories
-    }
-
-    func showNetworkError() {
-        let alert = UIAlertController(title: "Whoops...", message: "There was an error accessing the iTunes Store." + " Please try again.", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        present(alert, animated: true, completion: nil)
-        alert.addAction(action)
-    }
-
-}
-
-
+//extension SearchViewController {
+//
+//    func hostURL(language: String, since: String) -> URL {
+//        var components = URLComponents()
+//        components.scheme = Router.getTrendingRepository(language: "", since: "").scheme
+//        components.host = Router.getTrendingRepository(language: "", since: "").host
+//        components.path = Router.getTrendingRepository(language: "", since: "").path
+//        components.setQueryItems(with: Router.getTrendingRepository(language: "", since: "").parameters!)
+//        return components.url!
+//    }
+//
+//    func performStoreRequest(with url: URL) -> Data? {
+//
+//        do {
+//            return try Data(contentsOf: url)
+//        } catch {
+//            print("Download Error: \(error.localizedDescription)")
+//            return nil
+//        }
+//    }
+//
+//
+//    func parse(data: Data) -> [TrendingRepository] {
+//        var jsonArray: Array<Any>!
+//        do {
+//            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
+//        } catch {
+//          print(error)
+//        }
+//        var trendingRepositories = [TrendingRepository]()
+//        for json in jsonArray {
+//          if let item = json as? [String: AnyObject] {
+//            trendingRepositories.append(TrendingRepository(JSON: item)!)
+//          }
+//        }
+//        return trendingRepositories
+//    }
+//
+//    func showNetworkError() {
+//        let alert = UIAlertController(title: "Whoops...", message: "There was an error accessing the iTunes Store." + " Please try again.", preferredStyle: .alert)
+//        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+//        present(alert, animated: true, completion: nil)
+//        alert.addAction(action)
+//    }
+//
+//}
+//
+//
 

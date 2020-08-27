@@ -9,12 +9,12 @@
 import Foundation
 import ObjectMapper
 
-enum TrendingUserType: String {
+enum TrendingUserType: String, Codable {
     case user
     case organization
 }
 
-struct TrendingUser: Mappable {
+struct TrendingUser: Mappable, Codable {
        
     var username: String?
     var name: String?
