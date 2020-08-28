@@ -26,6 +26,7 @@ class LanguageViewController: UIViewController {
     var languages: [Language]?
     var cellChecked = IndexPath(row: -1, section: 0)
     var isLoading = false
+    var isFirstLaunch = true
     
     func updateTableView(language: String? = "") {
         isLoading = true
@@ -50,7 +51,6 @@ class LanguageViewController: UIViewController {
                     break
                 }
             }
-            print(cellChecked.row)
             tableView(languageTableView, didSelectRowAt: cellChecked)
             languageTableView.scrollToRow(at: cellChecked, at: .middle, animated: true)
         }
@@ -63,14 +63,17 @@ class LanguageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        btnAllLanguage.layer.cornerRadius = 5
+        self.hideKeyboardWhenTappedAround()
+        
+        /// Register Cell
+        
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.language)
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loading)
-        
-//        updateTableView()
-        
+
+        /// Config layouts
+        btnAllLanguage.layer.cornerRadius = 5
         btnSave.isEnabled = false
+        isFirstLaunch = false
         
     }
     
@@ -115,12 +118,13 @@ extension LanguageViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.language, for: indexPath) as! LanguageCell
             cell.lbLanguage.text = languages![indexPath.row].name
             cell.imgCheck.isHidden = true
+            if !isFirstLaunch, indexPath == cellChecked {
+                cell.imgCheck.isHidden = false
+            }
             return cell
         }
         
     }
-    
-    
    
 }
 
@@ -130,10 +134,11 @@ extension LanguageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if cellChecked.row != -1, let cell = tableView.cellForRow(at: cellChecked) as? LanguageCell{
+        if !isFirstLaunch, cellChecked.row != -1, let cell = tableView.cellForRow(at: cellChecked) as? LanguageCell{
             cell.imgCheck.isHidden = true
         }
         if let cell = tableView.cellForRow(at: indexPath) as? LanguageCell{
+            isFirstLaunch = false
             cell.imgCheck.isHidden = false
             cellChecked = indexPath
         }

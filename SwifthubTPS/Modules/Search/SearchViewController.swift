@@ -47,22 +47,19 @@ class SearchViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         updateTableView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.hideKeyboardWhenTappedAround()
         /// Register cell
         
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading)
         
-        /// Get data
         
-//        updateTableView()
         
     }
     
@@ -131,7 +128,6 @@ extension SearchViewController: UITableViewDataSource {
                 cell.viewLanguageColor.isHidden = true
                 cell.lbLanguage.isHidden = true
             }
-//            cell.imgAuthor.image = UIImage(named: "Placeholder")
             if let smallURL = URL(string: indexCell.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
@@ -157,11 +153,27 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
-        print(trendingRepositories?[indexPath.row].fullname as Any)
+        print(trendingRepositories?[indexPath.row].fullname ?? "")
         
     }
     
 }
+
+// MARK:- Search Bar
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached        
+    }
+    
+}
+
+
 
 // MARK:- Navigation
 
@@ -175,6 +187,7 @@ extension SearchViewController {
 
 extension SearchViewController: LanguageViewControllerDelegate {
     func languageViewControllerDidCancel(_ controller: LanguageViewController) {
+        updateTableView()
         dismiss(animated: true, completion: nil)
     }
     
