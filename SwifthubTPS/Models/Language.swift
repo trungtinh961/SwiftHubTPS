@@ -24,3 +24,11 @@ struct Language: Mappable {
     }
     
 }
+
+extension Language: Equatable {
+    
+    static func == (lhs: Language, rhs: Language) -> Bool {
+        return lhs.urlParam == rhs.urlParam
+    }
+    
+}

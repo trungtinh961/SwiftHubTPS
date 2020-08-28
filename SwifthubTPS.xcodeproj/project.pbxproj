@@ -19,6 +19,8 @@
 		BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FE24F8AB11002779B2 /* LanguageCell.swift */; };
 		BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB786FF24F8AB11002779B2 /* LanguageCell.xib */; };
 		BAB7870324F8B453002779B2 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB7870224F8B453002779B2 /* Language.swift */; };
+		BAB7870824F8F43F002779B2 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB7870624F8F43F002779B2 /* LoadingCell.swift */; };
+		BAB7870924F8F43F002779B2 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB7870724F8F43F002779B2 /* LoadingCell.xib */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -49,6 +51,8 @@
 		BAB786FE24F8AB11002779B2 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		BAB786FF24F8AB11002779B2 /* LanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageCell.xib; sourceTree = "<group>"; };
 		BAB7870224F8B453002779B2 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		BAB7870624F8F43F002779B2 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		BAB7870724F8F43F002779B2 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +156,23 @@
 			path = Language;
 			sourceTree = "<group>";
 		};
+		BAB7870424F8F419002779B2 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				BAB7870524F8F423002779B2 /* Table Cell */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		BAB7870524F8F423002779B2 /* Table Cell */ = {
+			isa = PBXGroup;
+			children = (
+				BAB7870624F8F43F002779B2 /* LoadingCell.swift */,
+				BAB7870724F8F43F002779B2 /* LoadingCell.xib */,
+			);
+			path = "Table Cell";
+			sourceTree = "<group>";
+		};
 		BAC5D28124F3C13800A731F0 = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +194,7 @@
 		BAC5D28C24F3C13800A731F0 /* SwifthubTPS */ = {
 			isa = PBXGroup;
 			children = (
+				BAB7870424F8F419002779B2 /* Commons */,
 				BAC5D2A324F3C1A400A731F0 /* Application */,
 				BA3D105F24F750FC0079C5A1 /* Extensions */,
 				BAC5D2A524F3C21900A731F0 /* Modules */,
@@ -312,6 +334,7 @@
 				BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */,
 				BAC5D2AC24F5215D00A731F0 /* Icons.xcassets in Resources */,
 				BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */,
+				BAB7870924F8F43F002779B2 /* LoadingCell.xib in Resources */,
 				BAC5D29724F3C13800A731F0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +399,7 @@
 				BAB7870324F8B453002779B2 /* Language.swift in Sources */,
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
+				BAB7870824F8F43F002779B2 /* LoadingCell.swift in Sources */,
 				BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,

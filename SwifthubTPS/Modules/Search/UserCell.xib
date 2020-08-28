@@ -76,6 +76,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="hR8-m3-5Vp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="3Jj-TW-pS0"/>
                     <constraint firstAttribute="trailing" secondItem="hR8-m3-5Vp" secondAttribute="trailing" constant="6" id="HxY-uo-K0H"/>

@@ -13,6 +13,7 @@ struct TableViewCellIdentifiers {
     static let repositoryTrending = "RepositoryCell"
     static let userTrending = "UserCell"
     static let language = "LanguageCell"
+    static let loading = "LoadingCell"
 }
 
 struct RegisterTableViewCell {

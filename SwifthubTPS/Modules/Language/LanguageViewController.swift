@@ -18,20 +18,54 @@ class LanguageViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var languageTableView: UITableView!
     @IBOutlet weak var btnAllLanguage: UIButton!
+    @IBOutlet weak var btnSave: UIBarButtonItem!
     
     weak var delegate: LanguageViewControllerDelegate?
     var languageItem: Language!
-    
+    var language: String?
     var languages: [Language]?
     var cellChecked = IndexPath(row: -1, section: 0)
+    var isLoading = false
+    
+    func updateTableView(language: String? = "") {
+        isLoading = true
+        let queue = DispatchQueue.global()
+        queue.async {
+            
+            self.languages = TrendingGithubAPI.getDatas(type: .language)
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.languageTableView.reloadData()
+            }
+        }
+        
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         btnAllLanguage.layer.cornerRadius = 5
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.language)
+        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loading)
         
-        languages = TrendingGithubAPI.getDatas(type: .language)
+        updateTableView()
+        
+        btnSave.isEnabled = false
+        
+        if language != nil {
+            for index in 0..<languages!.count {
+                if language == languages![index].urlParam {
+                    cellChecked = IndexPath(row: index, section: 0)
+                    print(index)
+                    print(language!)
+                    break
+                }
+            }
+            languageTableView.selectRow(at: cellChecked, animated: true, scrollPosition: .middle)
+        }
+        
         
     }
     
@@ -46,19 +80,10 @@ class LanguageViewController: UIViewController {
     }
     
     @IBAction func btnAllLanguage(_ sender: Any) {
+        delegate?.languageViewControllerDidCancel(self)
     }
     
    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 
@@ -67,15 +92,30 @@ class LanguageViewController: UIViewController {
 extension LanguageViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return languages?.count ?? 0
+        if isLoading {
+            return 1
+        } else {
+            return languages!.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.language, for: indexPath) as! LanguageCell
-        cell.lbLanguage.text = languages![indexPath.row].name
-        cell.imgCheck.isHidden = true
-        return cell
+        
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.language, for: indexPath) as! LanguageCell
+            cell.lbLanguage.text = languages![indexPath.row].name
+            cell.imgCheck.isHidden = true
+            return cell
+        }
+        
     }
+    
+    
    
 }
 
@@ -92,5 +132,6 @@ extension LanguageViewController: UITableViewDelegate {
             cell.imgCheck.isHidden = false
             cellChecked = indexPath
         }
+        btnSave.isEnabled = true
     }
 }

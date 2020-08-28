@@ -19,18 +19,30 @@ class SearchViewController: UIViewController {
     
     var trendingSince = TrendingSince.daily
     var trendingType = TrendingType.repository
+    var language: String?
     
     var downloadTask: URLSessionDownloadTask?
     var trendingRepositories: [TrendingRepository]?
     var trendingUsers: [TrendingUser]?
+    var isLoading = false
     
     func updateTableView(language: String? = "") {
-        if self.trendingType == .repository {
-            self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
-        } else if self.trendingType == .user {
-            self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
+        isLoading = true
+        let queue = DispatchQueue.global()
+        queue.async {
+            if self.trendingType == .repository {
+                self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
+            } else if self.trendingType == .user {
+                self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
+            }
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.resultTableView.reloadData()
+            }
         }
-        self.resultTableView.reloadData()
+        
+        
     }
     
     override func viewDidLoad() {
@@ -40,6 +52,7 @@ class SearchViewController: UIViewController {
         
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading)
         
         /// Get data
         
@@ -79,17 +92,24 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
       
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if trendingType == . repository {
-            return trendingRepositories?.count ?? 0
+        if isLoading {
+            return 1
+        } else if trendingType == . repository {
+                return trendingRepositories?.count ?? 0
         } else {
-            return trendingUsers?.count ?? 0
+                return trendingUsers?.count ?? 0
         }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if trendingType == .repository {
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+        } else if trendingType == .repository {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
             let indexCell = trendingRepositories![indexPath.row]
             cell.lbFullname.text = indexCell.fullname
@@ -143,6 +163,7 @@ extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as! LanguageViewController
         controller.delegate = self
+        controller.language = language
     }
 }
 
@@ -153,7 +174,8 @@ extension SearchViewController: LanguageViewControllerDelegate {
     
     func languageViewController(_ controller: LanguageViewController, didFinishEditing item: Language) {
         if let urlParam = item.urlParam {
-            updateTableView(language: urlParam.removingPercentEncoding)
+            language = urlParam.removingPercentEncoding
+            updateTableView(language: language)
         }
         dismiss(animated: true, completion: nil)
     }

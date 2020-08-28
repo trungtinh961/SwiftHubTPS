@@ -188,6 +188,7 @@
                     </view>
                     <connections>
                         <outlet property="btnAllLanguage" destination="9wh-5a-hof" id="USE-GT-9OL"/>
+                        <outlet property="btnSave" destination="2Ux-lK-UUV" id="TLY-oO-vgh"/>
                         <outlet property="languageTableView" destination="Rq3-j7-TLV" id="T1P-bI-mfc"/>
                         <outlet property="searchBar" destination="17q-ZA-cvk" id="HdB-tk-6xE"/>
                     </connections>
