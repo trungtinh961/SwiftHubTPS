@@ -8,14 +8,22 @@
 
 import UIKit
 
+protocol LanguageViewControllerDelegate: class {
+    func languageViewControllerDidCancel(_ controller: LanguageViewController)
+    func languageViewController(_ controller: LanguageViewController, didFinishEditing item: Language)
+}
+
 class LanguageViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var languageTableView: UITableView!
     @IBOutlet weak var btnAllLanguage: UIButton!
     
+    weak var delegate: LanguageViewControllerDelegate?
+    var languageItem: Language!
+    
     var languages: [Language]?
-    var cellChecked = IndexPath(row: 0, section: 0)
+    var cellChecked = IndexPath(row: -1, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +36,15 @@ class LanguageViewController: UIViewController {
     }
     
     @IBAction func btnClose(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        delegate?.languageViewControllerDidCancel(self)
     }
     @IBAction func btnSave(_ sender: Any) {
-        print(languages?[cellChecked.row].urlParam ?? "")
-        navigationController?.popViewController(animated: false)
+        if cellChecked.row != -1 {
+            languageItem = languages?[cellChecked.row]
+        }
+        delegate?.languageViewController(self, didFinishEditing: languageItem)
     }
+    
     @IBAction func btnAllLanguage(_ sender: Any) {
     }
     
@@ -74,7 +85,7 @@ extension LanguageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let cell = tableView.cellForRow(at: cellChecked) as? LanguageCell{
+        if cellChecked.row != -1, let cell = tableView.cellForRow(at: cellChecked) as? LanguageCell{
             cell.imgCheck.isHidden = true
         }
         if let cell = tableView.cellForRow(at: indexPath) as? LanguageCell{

@@ -46,24 +46,26 @@ class TrendingGithubAPI {
     }
     
     static func getDatas<T: Mappable>(type: TrendingType, language: String = "", since: TrendingSince = .daily) -> [T] {
-                     
+        var trendingArray = [T]()
         let url = self.createURL(type: type, language: language, since: since)
+        print(url)
         var data = Data()
         do {
             data = try Data(contentsOf: url)
         } catch {
             print("Download Error: \(error.localizedDescription)")
-            
+            return trendingArray
         }
         
         var jsonArray: Array<Any>!
         do {
             jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
         } catch {
-          print(error)
+            print(error)
+            return trendingArray
         }
                 
-        var trendingArray = [T]()
+        
         for json in jsonArray {
           if let item = json as? [String: AnyObject] {
             trendingArray.append(T(JSON: item)!)

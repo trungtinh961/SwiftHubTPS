@@ -24,25 +24,13 @@ class SearchViewController: UIViewController {
     var trendingRepositories: [TrendingRepository]?
     var trendingUsers: [TrendingUser]?
     
-    func updateTableView() {
+    func updateTableView(language: String? = "") {
         if self.trendingType == .repository {
-            self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingRepository]
+            self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
         } else if self.trendingType == .user {
-            self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingUser]
+            self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
         }
         self.resultTableView.reloadData()
-//        let queue = DispatchQueue.global()
-//        queue.async {
-//            if self.trendingType == .repository {
-//                self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingRepository]
-//            } else {
-//                self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingUser]
-//            }
-//        }
-//        DispatchQueue.main.async {
-//            self.resultTableView.reloadData()
-//        }
-        
     }
     
     override func viewDidLoad() {
@@ -62,8 +50,6 @@ class SearchViewController: UIViewController {
     // MARK:- Action
     
     @IBAction func btnLanguage(_ sender: Any) {
-//        let languageViewController = (self.storyboard?.instantiateViewController(identifier: "LanguageViewController"))! as LanguageViewController
-//        self.navigationController?.pushViewController(languageViewController, animated: false)
     }
     
     @IBAction func typeApiSegmentControl(_ sender: Any) {
@@ -151,4 +137,26 @@ extension SearchViewController: UITableViewDelegate {
     
 }
 
+// MARK:- Navigation
 
+extension SearchViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let controller = segue.destination as! LanguageViewController
+        controller.delegate = self
+    }
+}
+
+extension SearchViewController: LanguageViewControllerDelegate {
+    func languageViewControllerDidCancel(_ controller: LanguageViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func languageViewController(_ controller: LanguageViewController, didFinishEditing item: Language) {
+        if let urlParam = item.urlParam {
+            updateTableView(language: urlParam.removingPercentEncoding)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+}

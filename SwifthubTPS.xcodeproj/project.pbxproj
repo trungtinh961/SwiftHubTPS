@@ -10,7 +10,6 @@
 		BA3D105924F616550079C5A1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D105824F616550079C5A1 /* User.swift */; };
 		BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */; };
 		BA3D106224F751500079C5A1 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106124F751500079C5A1 /* Foundation.swift */; };
-		BA3D106524F7527F0079C5A1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106424F7527F0079C5A1 /* UIColor.swift */; };
 		BA3D106824F763D50079C5A1 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106724F763D50079C5A1 /* UIImageView+DownloadImage.swift */; };
 		BA3D106A24F76D2D0079C5A1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3D106924F76D2D0079C5A1 /* Router.swift */; };
 		BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */; };
@@ -41,7 +40,6 @@
 		BA3D105824F616550079C5A1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTableViewCell.swift; sourceTree = "<group>"; };
 		BA3D106124F751500079C5A1 /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
-		BA3D106424F7527F0079C5A1 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BA3D106724F763D50079C5A1 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		BA3D106924F76D2D0079C5A1 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingGithubAPI.swift; sourceTree = "<group>"; };
@@ -122,10 +120,8 @@
 		BA3D105F24F750FC0079C5A1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BA6C5A5324F796B900971F23 /* New Group */,
 				BA3D106624F763BE0079C5A1 /* UIImageView */,
 				BA3D106024F751290079C5A1 /* Foundation */,
-				BA3D106324F7526C0079C5A1 /* UIColor */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -138,27 +134,12 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		BA3D106324F7526C0079C5A1 /* UIColor */ = {
-			isa = PBXGroup;
-			children = (
-				BA3D106424F7527F0079C5A1 /* UIColor.swift */,
-			);
-			path = UIColor;
-			sourceTree = "<group>";
-		};
 		BA3D106624F763BE0079C5A1 /* UIImageView */ = {
 			isa = PBXGroup;
 			children = (
 				BA3D106724F763D50079C5A1 /* UIImageView+DownloadImage.swift */,
 			);
 			path = UIImageView;
-			sourceTree = "<group>";
-		};
-		BA6C5A5324F796B900971F23 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		BAB786F924F8A6CE002779B2 /* Language */ = {
@@ -399,7 +380,6 @@
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,
 				BA3D105924F616550079C5A1 /* User.swift in Sources */,
-				BA3D106524F7527F0079C5A1 /* UIColor.swift in Sources */,
 				BA3D106824F763D50079C5A1 /* UIImageView+DownloadImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
