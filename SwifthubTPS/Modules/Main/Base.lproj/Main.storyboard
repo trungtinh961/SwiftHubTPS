@@ -94,7 +94,6 @@
                         <barButtonItem key="rightBarButtonItem" image="icon_navigation_language" id="NVH-Gf-fnc">
                             <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="btnLanguage:" destination="9pv-A4-QxB" id="0Jh-sp-wUc"/>
                                 <segue destination="csF-i5-M5W" kind="showDetail" id="Xfp-Kx-de8"/>
                             </connections>
                         </barButtonItem>

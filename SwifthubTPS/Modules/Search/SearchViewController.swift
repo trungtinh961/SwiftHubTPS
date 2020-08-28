@@ -11,8 +11,8 @@ import UIKit
 import UIColor_Hex_Swift
 
 class SearchViewController: UIViewController {
+    // MARK: - Properties
 
-    
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
@@ -25,10 +25,19 @@ class SearchViewController: UIViewController {
     var downloadTask: URLSessionDownloadTask?
     var trendingRepositories: [TrendingRepository]?
     var trendingUsers: [TrendingUser]?
-    var isLoading = false
+    private var isLoading = false
     var noResult = false
     
-    func updateTableView(language: String? = "") {
+    // MARK: - LifeCycle
+    
+    // MARK: - IBActions
+    
+    // MARK: - Public
+    
+    // MARK: - Private
+    
+    
+    private func updateTableView(language: String? = "") {
         isLoading = true
         noResult = false
         let queue = DispatchQueue.global()
@@ -71,8 +80,6 @@ class SearchViewController: UIViewController {
     
     // MARK:- Action
     
-    @IBAction func btnLanguage(_ sender: Any) {
-    }
     
     @IBAction func typeApiSegmentControl(_ sender: Any) {
         switch typeApiSegmentControl.selectedSegmentIndex {
@@ -96,8 +103,7 @@ class SearchViewController: UIViewController {
     }
 }
 
-// MARK:- UI Table View
-
+// MARK:- UITableViewDataSource
 extension SearchViewController: UITableViewDataSource {
       
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
