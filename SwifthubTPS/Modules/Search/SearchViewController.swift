@@ -25,16 +25,24 @@ class SearchViewController: UIViewController {
     var trendingUsers: [TrendingUser]?
     
     func updateTableView() {
-        if trendingType == .repository {
-            trendingRepositories = TrendingGithubAPI.getDatas(type: trendingType, language: "c++", since: trendingSince) as [TrendingRepository]
-        } else {
-            trendingUsers = TrendingGithubAPI.getDatas(type: trendingType, language: "c++", since: trendingSince) as [TrendingUser]
-//            for item in trendingUsers! {
-//                print("Got results: \(item.username ?? "")")
-//            }
+        if self.trendingType == .repository {
+            self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingRepository]
+        } else if self.trendingType == .user {
+            self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingUser]
         }
+        self.resultTableView.reloadData()
+//        let queue = DispatchQueue.global()
+//        queue.async {
+//            if self.trendingType == .repository {
+//                self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingRepository]
+//            } else {
+//                self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: "", since: self.trendingSince) as [TrendingUser]
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            self.resultTableView.reloadData()
+//        }
         
-        resultTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -47,16 +55,15 @@ class SearchViewController: UIViewController {
         
         /// Get data
         
-        trendingRepositories = TrendingGithubAPI.getDatas(type: trendingType, language: "", since: trendingSince)
-//        for item in trendingRepositories! {
-//            print("Got results: \(item.fullname ?? "")")
-//
-//        }
+        updateTableView()
+        
     }
     
     // MARK:- Action
     
     @IBAction func btnLanguage(_ sender: Any) {
+//        let languageViewController = (self.storyboard?.instantiateViewController(identifier: "LanguageViewController"))! as LanguageViewController
+//        self.navigationController?.pushViewController(languageViewController, animated: false)
     }
     
     @IBAction func typeApiSegmentControl(_ sender: Any) {
@@ -87,9 +94,9 @@ extension SearchViewController: UITableViewDataSource {
       
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if trendingType == . repository {
-            return trendingRepositories!.count
+            return trendingRepositories?.count ?? 0
         } else {
-            return trendingUsers!.count
+            return trendingUsers?.count ?? 0
         }
         
     }
@@ -130,8 +137,7 @@ extension SearchViewController: UITableViewDataSource {
             return cell
         }
         
-    }
-    
+    }    
 }
 
 extension SearchViewController: UITableViewDelegate {
@@ -145,55 +151,4 @@ extension SearchViewController: UITableViewDelegate {
     
 }
 
-// MARK:- Helper Methods
-
-
-//extension SearchViewController {
-//
-//    func hostURL(language: String, since: String) -> URL {
-//        var components = URLComponents()
-//        components.scheme = Router.getTrendingRepository(language: "", since: "").scheme
-//        components.host = Router.getTrendingRepository(language: "", since: "").host
-//        components.path = Router.getTrendingRepository(language: "", since: "").path
-//        components.setQueryItems(with: Router.getTrendingRepository(language: "", since: "").parameters!)
-//        return components.url!
-//    }
-//
-//    func performStoreRequest(with url: URL) -> Data? {
-//
-//        do {
-//            return try Data(contentsOf: url)
-//        } catch {
-//            print("Download Error: \(error.localizedDescription)")
-//            return nil
-//        }
-//    }
-//
-//
-//    func parse(data: Data) -> [TrendingRepository] {
-//        var jsonArray: Array<Any>!
-//        do {
-//            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
-//        } catch {
-//          print(error)
-//        }
-//        var trendingRepositories = [TrendingRepository]()
-//        for json in jsonArray {
-//          if let item = json as? [String: AnyObject] {
-//            trendingRepositories.append(TrendingRepository(JSON: item)!)
-//          }
-//        }
-//        return trendingRepositories
-//    }
-//
-//    func showNetworkError() {
-//        let alert = UIAlertController(title: "Whoops...", message: "There was an error accessing the iTunes Store." + " Please try again.", preferredStyle: .alert)
-//        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-//        present(alert, animated: true, completion: nil)
-//        alert.addAction(action)
-//    }
-//
-//}
-//
-//
 

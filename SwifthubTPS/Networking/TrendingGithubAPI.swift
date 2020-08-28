@@ -18,6 +18,7 @@ enum TrendingSince: String {
 enum TrendingType: Int {
     case repository
     case user
+    case language
 }
 
 class TrendingGithubAPI {
@@ -30,17 +31,21 @@ class TrendingGithubAPI {
             components.host = Router.getTrendingRepository(language: language, since: since).host
             components.path = Router.getTrendingRepository(language: language, since: since).path
             components.setQueryItems(with: Router.getTrendingRepository(language: language, since: since).parameters!)
-        } else {
+        } else if type == .user {
             components.scheme = Router.getTrendingUser(language: language, since: since).scheme
             components.host = Router.getTrendingUser(language: language, since: since).host
             components.path = Router.getTrendingUser(language: language, since: since).path
             components.setQueryItems(with: Router.getTrendingUser(language: language, since: since).parameters!)
+        } else {
+            components.scheme = Router.languages.scheme
+            components.host = Router.languages.host
+            components.path = Router.languages.path
         }
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")        
         return components.url!
     }
     
-    static func getDatas<T: Mappable>(type: TrendingType, language: String, since: TrendingSince) -> [T] {
+    static func getDatas<T: Mappable>(type: TrendingType, language: String = "", since: TrendingSince = .daily) -> [T] {
                      
         let url = self.createURL(type: type, language: language, since: since)
         var data = Data()
@@ -57,13 +62,7 @@ class TrendingGithubAPI {
         } catch {
           print(error)
         }
-        
-        if type == .repository {
-            
-        } else {
-            
-        }
-        
+                
         var trendingArray = [T]()
         for json in jsonArray {
           if let item = json as? [String: AnyObject] {

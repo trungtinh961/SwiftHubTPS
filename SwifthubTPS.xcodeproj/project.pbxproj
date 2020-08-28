@@ -16,6 +16,10 @@
 		BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */; };
 		BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5824F7B91400971F23 /* UserCell.swift */; };
 		BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6C5A5924F7B91400971F23 /* UserCell.xib */; };
+		BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */; };
+		BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FE24F8AB11002779B2 /* LanguageCell.swift */; };
+		BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB786FF24F8AB11002779B2 /* LanguageCell.xib */; };
+		BAB7870324F8B453002779B2 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB7870224F8B453002779B2 /* Language.swift */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -43,6 +47,10 @@
 		BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingGithubAPI.swift; sourceTree = "<group>"; };
 		BA6C5A5824F7B91400971F23 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		BA6C5A5924F7B91400971F23 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
+		BAB786FE24F8AB11002779B2 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
+		BAB786FF24F8AB11002779B2 /* LanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageCell.xib; sourceTree = "<group>"; };
+		BAB7870224F8B453002779B2 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +161,16 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		BAB786F924F8A6CE002779B2 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */,
+				BAB786FE24F8AB11002779B2 /* LanguageCell.swift */,
+				BAB786FF24F8AB11002779B2 /* LanguageCell.xib */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		BAC5D28124F3C13800A731F0 = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +225,7 @@
 		BAC5D2A524F3C21900A731F0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BAB786F924F8A6CE002779B2 /* Language */,
 				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
 				BA3D105B24F61FFE0079C5A1 /* Setting */,
@@ -239,6 +258,7 @@
 		BAD3886E24F60B370045C10E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BAB7870224F8B453002779B2 /* Language.swift */,
 				BAD3886F24F60B830045C10E /* Repository.swift */,
 				BA3D105824F616550079C5A1 /* User.swift */,
 			);
@@ -308,6 +328,7 @@
 				BAC5D29C24F3C13B00A731F0 /* LaunchScreen.storyboard in Resources */,
 				BAC5D29924F3C13B00A731F0 /* Assets.xcassets in Resources */,
 				BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */,
+				BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */,
 				BAC5D2AC24F5215D00A731F0 /* Icons.xcassets in Resources */,
 				BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */,
 				BAC5D29724F3C13800A731F0 /* Main.storyboard in Resources */,
@@ -364,11 +385,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA3D106224F751500079C5A1 /* Foundation.swift in Sources */,
+				BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */,
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */,
 				BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */,
 				BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */,
+				BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */,
 				BA3D106A24F76D2D0079C5A1 /* Router.swift in Sources */,
+				BAB7870324F8B453002779B2 /* Language.swift in Sources */,
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
 				BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */,

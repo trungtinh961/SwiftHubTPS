@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-struct TrendingRepository: Mappable, Codable {
+struct TrendingRepository: Mappable {
         
     var author: String?
     var name: String?

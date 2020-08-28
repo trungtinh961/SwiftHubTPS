@@ -12,6 +12,7 @@ import UIKit
 struct TableViewCellIdentifiers {
     static let repositoryTrending = "RepositoryCell"
     static let userTrending = "UserCell"
+    static let language = "LanguageCell"
 }
 
 struct RegisterTableViewCell {
