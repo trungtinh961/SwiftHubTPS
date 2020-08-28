@@ -98,6 +98,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="resultTableView" destination="5PL-VU-Sac" id="dum-1A-qpB"/>
+                        <outlet property="searchBar" destination="KyJ-93-JmG" id="RwI-Sd-ht5"/>
                         <outlet property="sinceApiSegmentControl" destination="lM3-1I-IJi" id="sdx-GJ-344"/>
                         <outlet property="typeApiSegmentControl" destination="UYs-Mq-agq" id="UUz-kX-OWP"/>
                     </connections>

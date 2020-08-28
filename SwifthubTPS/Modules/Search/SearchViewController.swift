@@ -16,6 +16,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var trendingSince = TrendingSince.daily
     var trendingType = TrendingType.repository
@@ -45,6 +46,11 @@ class SearchViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTableView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +62,7 @@ class SearchViewController: UIViewController {
         
         /// Get data
         
-        updateTableView()
+//        updateTableView()
         
     }
     
@@ -125,8 +131,8 @@ extension SearchViewController: UITableViewDataSource {
                 cell.viewLanguageColor.isHidden = true
                 cell.lbLanguage.isHidden = true
             }
-            cell.imgAuthor.image = UIImage(named: "Placeholder")
-            if let smallURL = URL(string: indexCell.avatarUrl!) {
+//            cell.imgAuthor.image = UIImage(named: "Placeholder")
+            if let smallURL = URL(string: indexCell.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
             return cell
@@ -137,7 +143,7 @@ extension SearchViewController: UITableViewDataSource {
             cell.lbDescription.text = "\(indexCell.username ?? "")/\(indexCell.repo?.name ?? "")"
             
             cell.imgAuthor.image = UIImage(named: "Placeholder")
-            if let smallURL = URL(string: indexCell.avatar!) {
+            if let smallURL = URL(string: indexCell.avatar ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
             return cell

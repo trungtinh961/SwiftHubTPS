@@ -37,10 +37,28 @@ class LanguageViewController: UIViewController {
             DispatchQueue.main.async {
                 self.isLoading = false
                 self.languageTableView.reloadData()
+                self.selectCell()
             }
         }
-        
-        
+    }
+    
+    func selectCell() {
+        if language != nil, languages != nil {
+            for index in 0..<languages!.count {
+                if language == languages![index].urlParam {
+                    cellChecked = IndexPath(row: index, section: 0)
+                    break
+                }
+            }
+            print(cellChecked.row)
+            tableView(languageTableView, didSelectRowAt: cellChecked)
+            languageTableView.scrollToRow(at: cellChecked, at: .middle, animated: true)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTableView()
     }
     
     override func viewDidLoad() {
@@ -50,22 +68,9 @@ class LanguageViewController: UIViewController {
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.language)
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loading)
         
-        updateTableView()
+//        updateTableView()
         
         btnSave.isEnabled = false
-        
-        if language != nil {
-            for index in 0..<languages!.count {
-                if language == languages![index].urlParam {
-                    cellChecked = IndexPath(row: index, section: 0)
-                    print(index)
-                    print(language!)
-                    break
-                }
-            }
-            languageTableView.selectRow(at: cellChecked, animated: true, scrollPosition: .middle)
-        }
-        
         
     }
     
@@ -75,8 +80,8 @@ class LanguageViewController: UIViewController {
     @IBAction func btnSave(_ sender: Any) {
         if cellChecked.row != -1 {
             languageItem = languages?[cellChecked.row]
+            delegate?.languageViewController(self, didFinishEditing: languageItem)
         }
-        delegate?.languageViewController(self, didFinishEditing: languageItem)
     }
     
     @IBAction func btnAllLanguage(_ sender: Any) {
