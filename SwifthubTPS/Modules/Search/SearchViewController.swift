@@ -26,9 +26,11 @@ class SearchViewController: UIViewController {
     var trendingRepositories: [TrendingRepository]?
     var trendingUsers: [TrendingUser]?
     var isLoading = false
+    var noResult = false
     
     func updateTableView(language: String? = "") {
         isLoading = true
+        noResult = false
         let queue = DispatchQueue.global()
         queue.async {
             if self.trendingType == .repository {
@@ -39,6 +41,9 @@ class SearchViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.isLoading = false
+                if self.trendingRepositories?.count == 0 || self.trendingUsers?.count == 0 {
+                    self.noResult = true
+                }
                 self.resultTableView.reloadData()
             }
         }
@@ -59,7 +64,7 @@ class SearchViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading)
-        
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResult)
         
         
     }
@@ -96,14 +101,13 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
       
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else if trendingType == . repository {
                 return trendingRepositories?.count ?? 0
         } else {
                 return trendingUsers?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,6 +116,10 @@ extension SearchViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
+            return cell
+        } else if noResult {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResult, for: indexPath)
+            
             return cell
         } else if trendingType == .repository {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell

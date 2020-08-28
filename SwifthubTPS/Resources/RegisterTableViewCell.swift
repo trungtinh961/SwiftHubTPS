@@ -14,6 +14,7 @@ struct TableViewCellIdentifiers {
     static let userTrending = "UserCell"
     static let language = "LanguageCell"
     static let loading = "LoadingCell"
+    static let noResult = "NoResultCell"
 }
 
 struct RegisterTableViewCell {

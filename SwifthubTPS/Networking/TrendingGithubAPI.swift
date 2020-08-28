@@ -47,7 +47,7 @@ class TrendingGithubAPI {
     
     static func getDatas<T: Mappable>(type: TrendingType, language: String = "", since: TrendingSince = .daily) -> [T] {
         
-        var trendingArray = [T]()
+        var trendingArray: [T] = []
         
         let url = self.createURL(type: type, language: language, since: since)
         print(url)
