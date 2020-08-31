@@ -60,24 +60,19 @@ class GitHubAPI<Element: Mappable> {
         }
         dataTask?.resume()
     }
-    
+        
+      
     private func updateSearchResults(_ data: Data) {
         
         elements.removeAll()
-        var jsonArray: Array<Any>?
         do {
-            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
+            if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
+                elements.append(Element(JSON: item)!)
+            }
         } catch {
             errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
             return
         }
-        if let jsonArray = jsonArray {
-            for json in jsonArray {
-                if let item = json as? [String: AnyObject] {
-                    elements.append(Element(JSON: item)!)
-                }
-            }
-        }        
     }
     
 }

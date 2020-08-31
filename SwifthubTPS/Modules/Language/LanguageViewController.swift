@@ -38,7 +38,9 @@ class LanguageViewController: UIViewController {
                 self?.languages = results
                 self?.isLoading = false
                 self?.languageTableView.reloadData()
-                self?.selectCell()
+//                if !self!.isFirstLaunch {
+                    self?.selectCell()
+//                }
             }
 
             if !errorMessage.isEmpty {
@@ -50,7 +52,7 @@ class LanguageViewController: UIViewController {
     func selectCell() {
         if language != nil, languages != nil {
             for index in 0..<languages!.count {
-                if language == languages![index].urlParam {
+                if language == languages![index].urlParam?.removingPercentEncoding {
                     cellChecked = IndexPath(row: index, section: 0)
                     break
                 }
@@ -85,6 +87,7 @@ class LanguageViewController: UIViewController {
         delegate?.languageViewControllerDidCancel(self)
     }
     @IBAction func btnSave(_ sender: Any) {
+        isFirstLaunch = false
         if cellChecked.row != -1 {
             languageItem = languages?[cellChecked.row]
             delegate?.languageViewController(self, didFinishEditing: languageItem)

@@ -173,6 +173,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="imgAuthor" destination="egu-ZY-meo" id="tgi-3v-zzV"/>
+                <outlet property="imgCurrentPeriodStars" destination="ApM-uC-W22" id="nDO-bv-ch6"/>
                 <outlet property="lbCurrentPeriodStars" destination="V8n-F2-aip" id="N2c-1I-q3P"/>
                 <outlet property="lbDescription" destination="5aj-nl-Oby" id="dmw-uD-iKS"/>
                 <outlet property="lbFullname" destination="UMY-e0-Qh6" id="lCS-8y-Jxj"/>

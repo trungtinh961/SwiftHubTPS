@@ -53,7 +53,7 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="O12-NJ-TaZ"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amp-bi-Mrb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amp-bi-Mrb">
                                 <rect key="frame" x="10" y="194" width="394" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
@@ -103,6 +103,7 @@
                         <outlet property="resultTableView" destination="5PL-VU-Sac" id="dum-1A-qpB"/>
                         <outlet property="searchBar" destination="KyJ-93-JmG" id="RwI-Sd-ht5"/>
                         <outlet property="sinceApiSegmentControl" destination="lM3-1I-IJi" id="sdx-GJ-344"/>
+                        <outlet property="titleConstraints" destination="cR7-Cz-HoU" id="GKU-Kq-P92"/>
                         <outlet property="typeApiSegmentControl" destination="UYs-Mq-agq" id="UUz-kX-OWP"/>
                     </connections>
                 </viewController>

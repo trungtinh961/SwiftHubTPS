@@ -15,6 +15,8 @@ class RepositoryCell: UITableViewCell {
 
     @IBOutlet weak var imgAuthor: UIImageView!
     
+    @IBOutlet weak var imgCurrentPeriodStars: UIImageView!
+    
     @IBOutlet weak var lbFullname: UILabel!
     
     @IBOutlet weak var lbDescription: UILabel!

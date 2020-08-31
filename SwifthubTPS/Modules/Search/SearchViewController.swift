@@ -33,6 +33,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var lbTitle: UILabel!
+    @IBOutlet weak var titleConstraints: NSLayoutConstraint!
     
     // MARK: - LifeCycle
     
@@ -81,6 +82,7 @@ class SearchViewController: UIViewController {
     
     private func updateTableView(language: String? = "", query: String = "") {
         isLoading = true
+        resultTableView.reloadData()
         noResult = false
         
         if getType == .repository {
@@ -175,12 +177,18 @@ extension SearchViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
             
             if isSearching {
+                sinceApiSegmentControl.isHidden = true
+                titleConstraints.constant = -32
+                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \nSearch"
                 let indexCell = searchRepostories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
                 cell.lbStars.text = indexCell.stargazersCount?.kFormatted()
-                cell.lbLanguage.isHidden = false
-                cell.lbLanguage.text = indexCell.language
+                cell.imgCurrentPeriodStars.isHidden = true
+                cell.viewLanguageColor.isHidden = true
+                cell.lbLanguage.isHidden = true
+                cell.lbCurrentPeriodStars.text = indexCell.language
+                cell.lbCurrentPeriodStars.sizeToFit()
                 if let smallURL = URL(string: indexCell.owner?.avatarUrl ?? "") {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
@@ -247,6 +255,9 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             isSearching = false
+            sinceApiSegmentControl.isHidden = false
+            titleConstraints.constant = 10
+            lbTitle.text = "Trending"
             updateTableView(language: language)
         }
     }
