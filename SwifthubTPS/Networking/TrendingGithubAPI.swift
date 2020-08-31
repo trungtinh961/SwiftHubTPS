@@ -55,6 +55,7 @@ class TrendingGithubAPI<Element: Mappable> {
         return components.url
     }
     
+    
     func getSearchResults(type: GetType, language: String = "", since: TrendingSince = .daily, completion: @escaping QueryResult) {
         dataTask?.cancel()
         guard let url = createURL(type: type, language: language, since: since) else {
@@ -97,40 +98,36 @@ class TrendingGithubAPI<Element: Mappable> {
      
     }
     
-    
-    
-    
-    
-    func getDatas<T: Mappable>(type: GetType, language: String = "", since: TrendingSince = .daily) -> [T] {
-        
-        
-        var trendingArray: [T] = []
-        
-        let url = self.createURL(type: type, language: language, since: since)
-        print(url!)
-        
-        var data = Data()
-        do {
-            data = try Data(contentsOf: url!)
-        } catch {
-            print("Download Error: \(error.localizedDescription)")
-            return trendingArray
-        }
-        
-        var jsonArray: Array<Any>!
-        do {
-            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
-        } catch {
-            print(error)
-            return trendingArray
-        }
-        
-        for json in jsonArray {
-          if let item = json as? [String: AnyObject] {
-            trendingArray.append(T(JSON: item)!)
-          }
-        }
-        return trendingArray
-    }
+//    func getDatas<T: Mappable>(type: GetType, language: String = "", since: TrendingSince = .daily) -> [T] {
+//        
+//        
+//        var trendingArray: [T] = []
+//        
+//        let url = self.createURL(type: type, language: language, since: since)
+//        print(url!)
+//        
+//        var data = Data()
+//        do {
+//            data = try Data(contentsOf: url!)
+//        } catch {
+//            print("Download Error: \(error.localizedDescription)")
+//            return trendingArray
+//        }
+//        
+//        var jsonArray: Array<Any>!
+//        do {
+//            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
+//        } catch {
+//            print(error)
+//            return trendingArray
+//        }
+//        
+//        for json in jsonArray {
+//          if let item = json as? [String: AnyObject] {
+//            trendingArray.append(T(JSON: item)!)
+//          }
+//        }
+//        return trendingArray
+//    }
     
 }

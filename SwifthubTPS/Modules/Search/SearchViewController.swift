@@ -22,7 +22,6 @@ class SearchViewController: UIViewController {
     private var trendingUsers: [TrendingUser]?
     private var isLoading = false
     private var noResult = false
-    private var searchResults: [TrendingRepository] = []
     
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
@@ -44,18 +43,7 @@ class SearchViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResult)
         
-        trendingRepositoryGithubAPI.getSearchResults(type: .repository) { [weak self] results, errorMessage in
-          if let results = results {
-            self?.searchResults = results
-            for element in results {
-                print(element.fullname!)
-            }
-          }
-          
-          if !errorMessage.isEmpty {
-            print("Search error: " + errorMessage)
-          }
-        }
+        
    }
     
     // MARK: - IBActions
@@ -68,7 +56,7 @@ class SearchViewController: UIViewController {
             trendingType = .user
         default: print("default")
         }
-        updateTableView()
+        updateTableView(language: language)
     }
     
     @IBAction func sinceApiSegmentControl(_ sender: Any) {
@@ -78,7 +66,7 @@ class SearchViewController: UIViewController {
         case 2: trendingSince = .monthly
         default: trendingSince = .daily
         }
-        updateTableView()
+        updateTableView(language: language)
     }
     
     // MARK: - Public
@@ -88,20 +76,36 @@ class SearchViewController: UIViewController {
     private func updateTableView(language: String? = "") {
         isLoading = true
         noResult = false
-        let queue = DispatchQueue.global()
-        queue.async {
-            if self.trendingType == .repository {
-                self.trendingRepositories = self.trendingRepositoryGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
-            } else if self.trendingType == .user {
-                self.trendingUsers = self.trendingUserGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
-            }
-            
-            DispatchQueue.main.async {
-                self.isLoading = false
-                if self.trendingRepositories?.count == 0 || self.trendingUsers?.count == 0 {
-                    self.noResult = true
+        
+        if trendingType == .repository {
+            trendingRepositoryGithubAPI.getSearchResults(type: trendingType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.trendingRepositories = results
+                    self?.isLoading = false
+                    if self?.trendingRepositories?.count == 0 || self?.trendingUsers?.count == 0 {
+                        self?.noResult = true
+                    }
+                    self?.resultTableView.reloadData()
                 }
-                self.resultTableView.reloadData()
+
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
+            }
+        } else if trendingType == .user {
+            trendingUserGithubAPI.getSearchResults(type: trendingType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.trendingUsers = results
+                    self?.isLoading = false
+                    if self?.trendingRepositories?.count == 0 || self?.trendingUsers?.count == 0 {
+                        self?.noResult = true
+                    }
+                    self?.resultTableView.reloadData()
+                }
+
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
         }
     }
@@ -137,7 +141,7 @@ extension SearchViewController: UITableViewDataSource {
             cell.lbFullname.text = indexCell.fullname
             cell.lbDescription.text = indexCell.description
             cell.lbStars.text = indexCell.stars!.kFormatted()
-            cell.lbCurrentPeriodStars.text = indexCell.currentPeriodStars!.kFormatted()
+            cell.lbCurrentPeriodStars.text = indexCell.currentPeriodStars!.kFormatted() + " " + trendingSince.rawValue
             cell.lbLanguage.isHidden = false
             cell.viewLanguageColor.isHidden = false
             cell.lbLanguage.text = indexCell.language
@@ -187,6 +191,7 @@ extension SearchViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text, !searchText.isEmpty else {
           return
         }
+        
     }
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {

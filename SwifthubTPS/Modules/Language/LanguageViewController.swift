@@ -32,15 +32,17 @@ class LanguageViewController: UIViewController {
     
     func updateTableView(language: String? = "") {
         isLoading = true
-        let queue = DispatchQueue.global()
-        queue.async {
-            
-            self.languages = self.trendingLanguageGithubAPI.getDatas(type: .language)
-            
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.languageTableView.reloadData()
-                self.selectCell()
+        
+        trendingLanguageGithubAPI.getSearchResults(type: .language) { [weak self] results, errorMessage in
+            if let results = results {
+                self?.languages = results
+                self?.isLoading = false
+                self?.languageTableView.reloadData()
+                self?.selectCell()
+            }
+
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
             }
         }
     }
