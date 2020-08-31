@@ -15,18 +15,28 @@ enum TrendingSince: String {
     case monthly = "monthly"
 }
 
-enum TrendingType: Int {
+enum GetType: Int {
     case repository
     case user
     case language
 }
 
-class TrendingGithubAPI {
+
+
+class TrendingGithubAPI<Element: Mappable> {
     
-    static func createURL(type: TrendingType, language: String, since: TrendingSince) -> URL {
+    let defaultSession = URLSession(configuration: .default)
+    var dataTask: URLSessionDataTask?
+    var errorMessage = ""
+    var elements: [Element] = []
+    
+    typealias JSONDictionary = [String: Any]
+    typealias QueryResult = ([Element]?, String) -> Void
+    
+    func createURL(type: GetType, language: String, since: TrendingSince) -> URL? {
         var components = URLComponents()
         
-        if type == .repository {
+        if type == .repository {            
             components.scheme = Router.getTrendingRepository(language: language, since: since).scheme
             components.host = Router.getTrendingRepository(language: language, since: since).host
             components.path = Router.getTrendingRepository(language: language, since: since).path
@@ -41,19 +51,67 @@ class TrendingGithubAPI {
             components.host = Router.languages.host
             components.path = Router.languages.path
         }
-        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")        
-        return components.url!
+        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        return components.url
     }
     
-    static func getDatas<T: Mappable>(type: TrendingType, language: String = "", since: TrendingSince = .daily) -> [T] {
+    func getSearchResults(type: GetType, language: String = "", since: TrendingSince = .daily, completion: @escaping QueryResult) {
+        dataTask?.cancel()
+        guard let url = createURL(type: type, language: language, since: since) else {
+          return
+        }
+        print(url)
+        dataTask = defaultSession.dataTask(with: url) { [weak self] data, response, error in
+            defer {
+                self?.dataTask = nil
+            }
+            if let error = error {
+                self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
+            } else if
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200 {
+                    self?.updateSearchResults(data)
+                    DispatchQueue.main.async {
+                        completion(self?.elements, self?.errorMessage ?? "")
+                    }
+                }
+        }
+        dataTask?.resume()
+    }
+    
+    private func updateSearchResults(_ data: Data) {
+        elements.removeAll()
+        var jsonArray: Array<Any>!
+        do {
+            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
+        } catch {
+            errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
+            return
+        }
+        for json in jsonArray {
+          if let item = json as? [String: AnyObject] {
+            elements.append(Element(JSON: item)!)
+          }
+        }
+     
+    }
+    
+    
+    
+    
+    
+    func getDatas<T: Mappable>(type: GetType, language: String = "", since: TrendingSince = .daily) -> [T] {
+        
         
         var trendingArray: [T] = []
         
         let url = self.createURL(type: type, language: language, since: since)
-        print(url)
+        print(url!)
+        
         var data = Data()
         do {
-            data = try Data(contentsOf: url)
+            data = try Data(contentsOf: url!)
         } catch {
             print("Download Error: \(error.localizedDescription)")
             return trendingArray

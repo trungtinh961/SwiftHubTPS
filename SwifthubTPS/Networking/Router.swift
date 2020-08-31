@@ -13,18 +13,18 @@ enum Router {
     case getTrendingUser(language: String, since: TrendingSince)
     case getTrendingRepository(language: String, since: TrendingSince)
     case languages
-    case searchReposytoryGithub(searchText: String, language: String)
+    case searchRepositories(query: String, language: String)
     
     var scheme: String {
         switch self {
-        case .getTrendingUser, .getTrendingRepository, .languages, .searchReposytoryGithub: return "https"
+        case .getTrendingUser, .getTrendingRepository, .languages, .searchRepositories: return "https"
         }
     }
     
     var host: String {
         switch self {
         case .getTrendingRepository, .getTrendingUser, .languages: return "ghapi.huchen.dev"
-        case .searchReposytoryGithub: return "api.github.com"
+        case .searchRepositories: return "api.github.com"
         }
         
     }
@@ -34,7 +34,7 @@ enum Router {
         case .getTrendingRepository: return "/repositories"
         case .getTrendingUser: return "/developers"
         case .languages: return "/languages"
-        case .searchReposytoryGithub: return "/search/repositories"
+        case .searchRepositories: return "/search/repositories"
         }
     }
     
@@ -47,11 +47,11 @@ enum Router {
                 params["language"] = language
             }
             params["since"] = since.rawValue
-        case .searchReposytoryGithub(let searchText, let language):
+        case .searchRepositories(let query, let language):
             if language != "" {
                 params["language"] = language
             }
-            params["q"] = searchText
+            params["q"] = query
             params["sort"] = "stars"
             params["order"] = "desc"
         default: break
@@ -61,8 +61,8 @@ enum Router {
     
     var method: String {
         switch self {
-        case .getTrendingRepository, .getTrendingUser, .languages, .searchReposytoryGithub:
-            return "GET"        
+        default:
+            return "GET"
         }
     }
     

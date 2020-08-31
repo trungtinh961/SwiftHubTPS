@@ -12,16 +12,18 @@ import UIColor_Hex_Swift
 
 class SearchViewController: UIViewController {
     // MARK: - Properties
-    
+    private var trendingRepositoryGithubAPI = TrendingGithubAPI<TrendingRepository>()
+    private var trendingUserGithubAPI = TrendingGithubAPI<TrendingUser>()
     private var trendingSince = TrendingSince.daily
-    private var trendingType = TrendingType.repository
+    private var trendingType = GetType.repository
     private var language: String?
     private var downloadTask: URLSessionDownloadTask?
     private var trendingRepositories: [TrendingRepository]?
     private var trendingUsers: [TrendingUser]?
     private var isLoading = false
     private var noResult = false
-
+    private var searchResults: [TrendingRepository] = []
+    
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
@@ -41,6 +43,19 @@ class SearchViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResult)
+        
+        trendingRepositoryGithubAPI.getSearchResults(type: .repository) { [weak self] results, errorMessage in
+          if let results = results {
+            self?.searchResults = results
+            for element in results {
+                print(element.fullname!)
+            }
+          }
+          
+          if !errorMessage.isEmpty {
+            print("Search error: " + errorMessage)
+          }
+        }
    }
     
     // MARK: - IBActions
@@ -76,9 +91,9 @@ class SearchViewController: UIViewController {
         let queue = DispatchQueue.global()
         queue.async {
             if self.trendingType == .repository {
-                self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
+                self.trendingRepositories = self.trendingRepositoryGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
             } else if self.trendingType == .user {
-                self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
+                self.trendingUsers = self.trendingUserGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
             }
             
             DispatchQueue.main.async {
@@ -169,7 +184,9 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        
+        guard let searchText = searchBar.text, !searchText.isEmpty else {
+          return
+        }
     }
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {

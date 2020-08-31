@@ -123,9 +123,9 @@
 		BA3D105C24F620530079C5A1 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */,
 				BA3D106924F76D2D0079C5A1 /* Router.swift */,
 				BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */,
-				BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";

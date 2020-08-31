@@ -20,7 +20,9 @@ class LanguageViewController: UIViewController {
     @IBOutlet weak var btnAllLanguage: UIButton!
     @IBOutlet weak var btnSave: UIBarButtonItem!
     
+    
     weak var delegate: LanguageViewControllerDelegate?
+    private var trendingLanguageGithubAPI = TrendingGithubAPI<Language>()
     var languageItem: Language!
     var language: String?
     var languages: [Language]?
@@ -33,7 +35,7 @@ class LanguageViewController: UIViewController {
         let queue = DispatchQueue.global()
         queue.async {
             
-            self.languages = TrendingGithubAPI.getDatas(type: .language)
+            self.languages = self.trendingLanguageGithubAPI.getDatas(type: .language)
             
             DispatchQueue.main.async {
                 self.isLoading = false
