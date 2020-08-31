@@ -13,25 +13,28 @@ enum Router {
     case getTrendingUser(language: String, since: TrendingSince)
     case getTrendingRepository(language: String, since: TrendingSince)
     case languages
+    case searchReposytoryGithub(searchText: String, language: String)
     
     var scheme: String {
         switch self {
-        case .getTrendingUser, .getTrendingRepository, .languages: return "https"
+        case .getTrendingUser, .getTrendingRepository, .languages, .searchReposytoryGithub: return "https"
         }
     }
     
     var host: String {
         switch self {
         case .getTrendingRepository, .getTrendingUser, .languages: return "ghapi.huchen.dev"
+        case .searchReposytoryGithub: return "api.github.com"
         }
         
     }
  
     var path: String {
         switch self {
-            case .getTrendingRepository: return "/repositories"
-            case .getTrendingUser: return "/developers"
-            case .languages: return "/languages"
+        case .getTrendingRepository: return "/repositories"
+        case .getTrendingUser: return "/developers"
+        case .languages: return "/languages"
+        case .searchReposytoryGithub: return "/search/repositories"
         }
     }
     
@@ -44,6 +47,13 @@ enum Router {
                 params["language"] = language
             }
             params["since"] = since.rawValue
+        case .searchReposytoryGithub(let searchText, let language):
+            if language != "" {
+                params["language"] = language
+            }
+            params["q"] = searchText
+            params["sort"] = "stars"
+            params["order"] = "desc"
         default: break
         }
         return params
@@ -51,9 +61,8 @@ enum Router {
     
     var method: String {
         switch self {
-        case .getTrendingRepository, .getTrendingUser, .languages:
-            return "GET"
-        
+        case .getTrendingRepository, .getTrendingUser, .languages, .searchReposytoryGithub:
+            return "GET"        
         }
     }
     

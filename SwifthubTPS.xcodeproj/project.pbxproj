@@ -15,6 +15,7 @@
 		BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */; };
 		BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5824F7B91400971F23 /* UserCell.swift */; };
 		BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6C5A5924F7B91400971F23 /* UserCell.xib */; };
+		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
 		BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */; };
 		BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FE24F8AB11002779B2 /* LanguageCell.swift */; };
 		BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB786FF24F8AB11002779B2 /* LanguageCell.xib */; };
@@ -50,6 +51,7 @@
 		BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingGithubAPI.swift; sourceTree = "<group>"; };
 		BA6C5A5824F7B91400971F23 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		BA6C5A5924F7B91400971F23 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		BAB786FE24F8AB11002779B2 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		BAB786FF24F8AB11002779B2 /* LanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageCell.xib; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				BA3D106924F76D2D0079C5A1 /* Router.swift */,
 				BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */,
+				BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				BA3D106A24F76D2D0079C5A1 /* Router.swift in Sources */,
 				BAB7870324F8B453002779B2 /* Language.swift in Sources */,
 				BAB7870F24F91619002779B2 /* NoResultCell.swift in Sources */,
+				BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */,
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
 				BAB7870824F8F43F002779B2 /* LoadingCell.swift in Sources */,

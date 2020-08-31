@@ -12,53 +12,22 @@ import UIColor_Hex_Swift
 
 class SearchViewController: UIViewController {
     // MARK: - Properties
+    
+    private var trendingSince = TrendingSince.daily
+    private var trendingType = TrendingType.repository
+    private var language: String?
+    private var downloadTask: URLSessionDownloadTask?
+    private var trendingRepositories: [TrendingRepository]?
+    private var trendingUsers: [TrendingUser]?
+    private var isLoading = false
+    private var noResult = false
 
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var trendingSince = TrendingSince.daily
-    var trendingType = TrendingType.repository
-    var language: String?
-    
-    var downloadTask: URLSessionDownloadTask?
-    var trendingRepositories: [TrendingRepository]?
-    var trendingUsers: [TrendingUser]?
-    private var isLoading = false
-    var noResult = false
-    
     // MARK: - LifeCycle
-    
-    // MARK: - IBActions
-    
-    // MARK: - Public
-    
-    // MARK: - Private
-    
-    
-    private func updateTableView(language: String? = "") {
-        isLoading = true
-        noResult = false
-        let queue = DispatchQueue.global()
-        queue.async {
-            if self.trendingType == .repository {
-                self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
-            } else if self.trendingType == .user {
-                self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
-            }
-            
-            DispatchQueue.main.async {
-                self.isLoading = false
-                if self.trendingRepositories?.count == 0 || self.trendingUsers?.count == 0 {
-                    self.noResult = true
-                }
-                self.resultTableView.reloadData()
-            }
-        }
-        
-        
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         updateTableView()
@@ -67,19 +36,14 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        
         /// Register cell
-        
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResult)
-        
-        
-    }
+   }
     
-    // MARK:- Action
-    
+    // MARK: - IBActions
     
     @IBAction func typeApiSegmentControl(_ sender: Any) {
         switch typeApiSegmentControl.selectedSegmentIndex {
@@ -100,6 +64,31 @@ class SearchViewController: UIViewController {
         default: trendingSince = .daily
         }
         updateTableView()
+    }
+    
+    // MARK: - Public
+    
+    // MARK: - Private
+    
+    private func updateTableView(language: String? = "") {
+        isLoading = true
+        noResult = false
+        let queue = DispatchQueue.global()
+        queue.async {
+            if self.trendingType == .repository {
+                self.trendingRepositories = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingRepository]
+            } else if self.trendingType == .user {
+                self.trendingUsers = TrendingGithubAPI.getDatas(type: self.trendingType, language: language ?? "", since: self.trendingSince) as [TrendingUser]
+            }
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
+                if self.trendingRepositories?.count == 0 || self.trendingUsers?.count == 0 {
+                    self.noResult = true
+                }
+                self.resultTableView.reloadData()
+            }
+        }
     }
 }
 
@@ -163,23 +152,24 @@ extension SearchViewController: UITableViewDataSource {
     }    
 }
 
+// MARK: - UITableViewDelegate
+
 extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
         print(trendingRepositories?[indexPath.row].fullname ?? "")
-        
     }
     
 }
 
-// MARK:- Search Bar
+// MARK:- UISearchBarDelegate
 
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        
     }
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {
