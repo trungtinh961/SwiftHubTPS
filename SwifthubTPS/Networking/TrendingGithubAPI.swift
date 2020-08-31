@@ -21,8 +21,6 @@ enum GetType: Int {
     case language
 }
 
-
-
 class TrendingGithubAPI<Element: Mappable> {
     
     let defaultSession = URLSession(configuration: .default)
@@ -95,39 +93,6 @@ class TrendingGithubAPI<Element: Mappable> {
             elements.append(Element(JSON: item)!)
           }
         }
-     
     }
-    
-//    func getDatas<T: Mappable>(type: GetType, language: String = "", since: TrendingSince = .daily) -> [T] {
-//        
-//        
-//        var trendingArray: [T] = []
-//        
-//        let url = self.createURL(type: type, language: language, since: since)
-//        print(url!)
-//        
-//        var data = Data()
-//        do {
-//            data = try Data(contentsOf: url!)
-//        } catch {
-//            print("Download Error: \(error.localizedDescription)")
-//            return trendingArray
-//        }
-//        
-//        var jsonArray: Array<Any>!
-//        do {
-//            jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
-//        } catch {
-//            print(error)
-//            return trendingArray
-//        }
-//        
-//        for json in jsonArray {
-//          if let item = json as? [String: AnyObject] {
-//            trendingArray.append(T(JSON: item)!)
-//          }
-//        }
-//        return trendingArray
-//    }
     
 }

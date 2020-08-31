@@ -14,19 +14,25 @@ class SearchViewController: UIViewController {
     // MARK: - Properties
     private var trendingRepositoryGithubAPI = TrendingGithubAPI<TrendingRepository>()
     private var trendingUserGithubAPI = TrendingGithubAPI<TrendingUser>()
+    private var searchRepositoryGithubAPI = GitHubAPI<RepositorySearch>()
     private var trendingSince = TrendingSince.daily
-    private var trendingType = GetType.repository
-    private var language: String?
+    private var getType = GetType.repository
     private var downloadTask: URLSessionDownloadTask?
     private var trendingRepositories: [TrendingRepository]?
     private var trendingUsers: [TrendingUser]?
+    private var searchRepositoryInfor: RepositorySearch?
+    private var searchRepostories: [Repository]?
+    private var searchUsers: [User]?
+    private var language: String?
     private var isLoading = false
+    private var isSearching = false
     private var noResult = false
     
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var lbTitle: UILabel!
     
     // MARK: - LifeCycle
     
@@ -51,9 +57,9 @@ class SearchViewController: UIViewController {
     @IBAction func typeApiSegmentControl(_ sender: Any) {
         switch typeApiSegmentControl.selectedSegmentIndex {
         case 0:
-            trendingType = .repository
+            getType = .repository
         case 1:
-            trendingType = .user
+            getType = .user
         default: print("default")
         }
         updateTableView(language: language)
@@ -73,39 +79,64 @@ class SearchViewController: UIViewController {
     
     // MARK: - Private
     
-    private func updateTableView(language: String? = "") {
+    private func updateTableView(language: String? = "", query: String = "") {
         isLoading = true
         noResult = false
         
-        if trendingType == .repository {
-            trendingRepositoryGithubAPI.getSearchResults(type: trendingType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
-                if let results = results {
-                    self?.trendingRepositories = results
-                    self?.isLoading = false
-                    if self?.trendingRepositories?.count == 0 || self?.trendingUsers?.count == 0 {
-                        self?.noResult = true
+        if getType == .repository {
+            if !isSearching {
+                trendingRepositoryGithubAPI.getSearchResults(type: .repository, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                    if let results = results {
+                        self?.trendingRepositories = results
+                        self?.isLoading = false
+                        if self?.trendingRepositories?.count == 0 {
+                            self?.noResult = true
+                        }
+                        self?.resultTableView.reloadData()
                     }
-                    self?.resultTableView.reloadData()
-                }
 
-                if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    if !errorMessage.isEmpty {
+                        print("Search error: " + errorMessage)
+                    }
+                }
+            } else {
+                searchRepositoryGithubAPI.getSearchResults(type: .repository, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                  
+                    if let results = results {
+                        if results.count == 0 {
+                            self?.noResult = true
+                            self?.isLoading = false
+                        } else {
+                            self?.searchRepositoryInfor = results[0]
+                            self?.searchRepostories = self?.searchRepositoryInfor?.items
+                            self?.isLoading = false
+                        }
+                        self?.resultTableView.reloadData()
+                    }
+                  
+                    if !errorMessage.isEmpty {
+                        print("Search error: " + errorMessage)
+                    }
                 }
             }
-        } else if trendingType == .user {
-            trendingUserGithubAPI.getSearchResults(type: trendingType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
-                if let results = results {
-                    self?.trendingUsers = results
-                    self?.isLoading = false
-                    if self?.trendingRepositories?.count == 0 || self?.trendingUsers?.count == 0 {
-                        self?.noResult = true
+        } else if getType == .user {
+            if !isSearching {
+                trendingUserGithubAPI.getSearchResults(type: getType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                    if let results = results {
+                        self?.trendingUsers = results
+                        self?.isLoading = false
+                        if self?.trendingRepositories?.count == 0 || self?.trendingUsers?.count == 0 {
+                            self?.noResult = true
+                        }
+                        self?.resultTableView.reloadData()
                     }
-                    self?.resultTableView.reloadData()
-                }
 
-                if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    if !errorMessage.isEmpty {
+                        print("Search error: " + errorMessage)
+                    }
                 }
+            } else {
+                
             }
         }
     }
@@ -117,8 +148,12 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
             return 1
-        } else if trendingType == . repository {
+        } else if getType == . repository {
+            if isSearching {
+                return searchRepostories?.count ?? 0
+            } else {
                 return trendingRepositories?.count ?? 0
+            }
         } else {
                 return trendingUsers?.count ?? 0
         }
@@ -135,24 +170,38 @@ extension SearchViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResult, for: indexPath)
             
             return cell
-        } else if trendingType == .repository {
+        } else if getType == .repository {
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
-            let indexCell = trendingRepositories![indexPath.row]
-            cell.lbFullname.text = indexCell.fullname
-            cell.lbDescription.text = indexCell.description
-            cell.lbStars.text = indexCell.stars!.kFormatted()
-            cell.lbCurrentPeriodStars.text = indexCell.currentPeriodStars!.kFormatted() + " " + trendingSince.rawValue
-            cell.lbLanguage.isHidden = false
-            cell.viewLanguageColor.isHidden = false
-            cell.lbLanguage.text = indexCell.language
-            if let color = indexCell.languageColor {
-                cell.viewLanguageColor.backgroundColor = UIColor(color)
+            
+            if isSearching {
+                let indexCell = searchRepostories![indexPath.row]
+                cell.lbFullname.text = indexCell.fullname
+                cell.lbDescription.text = indexCell.description
+                cell.lbStars.text = indexCell.stargazersCount?.kFormatted()
+                cell.lbLanguage.isHidden = false
+                cell.lbLanguage.text = indexCell.language
+                if let smallURL = URL(string: indexCell.owner?.avatarUrl ?? "") {
+                    downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+                }
             } else {
-                cell.viewLanguageColor.isHidden = true
-                cell.lbLanguage.isHidden = true
-            }
-            if let smallURL = URL(string: indexCell.avatarUrl ?? "") {
-                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+                let indexCell = trendingRepositories![indexPath.row]
+                cell.lbFullname.text = indexCell.fullname
+                cell.lbDescription.text = indexCell.description
+                cell.lbStars.text = indexCell.stars!.kFormatted()
+                cell.lbCurrentPeriodStars.text = indexCell.currentPeriodStars!.kFormatted() + " " + trendingSince.rawValue
+                cell.lbLanguage.isHidden = false
+                cell.viewLanguageColor.isHidden = false
+                cell.lbLanguage.text = indexCell.language
+                if let color = indexCell.languageColor {
+                    cell.viewLanguageColor.backgroundColor = UIColor(color)
+                } else {
+                    cell.viewLanguageColor.isHidden = true
+                    cell.lbLanguage.isHidden = true
+                }
+                if let smallURL = URL(string: indexCell.avatarUrl ?? "") {
+                    downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+                }
             }
             return cell
         } else {
@@ -191,7 +240,15 @@ extension SearchViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text, !searchText.isEmpty else {
           return
         }
-        
+        isSearching = true
+        updateTableView(language: language, query: searchText)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            isSearching = false
+            updateTableView(language: language)
+        }
     }
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {

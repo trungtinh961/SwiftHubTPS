@@ -99,6 +99,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="lbTitle" destination="amp-bi-Mrb" id="zVn-NT-Cvj"/>
                         <outlet property="resultTableView" destination="5PL-VU-Sac" id="dum-1A-qpB"/>
                         <outlet property="searchBar" destination="KyJ-93-JmG" id="RwI-Sd-ht5"/>
                         <outlet property="sinceApiSegmentControl" destination="lM3-1I-IJi" id="sdx-GJ-344"/>
