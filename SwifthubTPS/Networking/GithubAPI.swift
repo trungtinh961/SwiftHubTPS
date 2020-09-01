@@ -14,10 +14,10 @@ class GitHubAPI<Element: Mappable> {
     let defaultSession = URLSession(configuration: .default)
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
-    var elements: [Element] = []
+    var element: Element?
     
     typealias JSONDictionary = [String: Any]
-    typealias QueryResult = ([Element]?, String) -> Void
+    typealias QueryResult = (Element?, String) -> Void
     
     func createURL(type: GetType, query: String, language: String) -> URL? {
         var components = URLComponents()
@@ -54,7 +54,7 @@ class GitHubAPI<Element: Mappable> {
                 response.statusCode == 200 {
                     self?.updateSearchResults(data)
                     DispatchQueue.main.async {
-                        completion(self?.elements, self?.errorMessage ?? "")
+                        completion(self?.element, self?.errorMessage ?? "")
                     }
                 }
         }
@@ -64,10 +64,10 @@ class GitHubAPI<Element: Mappable> {
       
     private func updateSearchResults(_ data: Data) {
         
-        elements.removeAll()
+//        elements.removeAll()
         do {
             if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
-                elements.append(Element(JSON: item)!)
+                element = Element(JSON: item)!
             }
         } catch {
             errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"

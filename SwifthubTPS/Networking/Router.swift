@@ -49,9 +49,10 @@ enum Router {
             params["since"] = since.rawValue
         case .searchRepositories(let query, let language):
             if language != "" {
-                params["language"] = language
-            }
-            params["q"] = query
+                params["q"] = "\(query)+language:\(language)"
+            } else {
+                params["q"] = query
+            }            
             params["sort"] = "stars"
             params["order"] = "desc"
         default: break

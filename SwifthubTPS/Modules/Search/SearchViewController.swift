@@ -24,6 +24,7 @@ class SearchViewController: UIViewController {
     private var searchRepostories: [Repository]?
     private var searchUsers: [User]?
     private var language: String?
+    private var searchTextCurrent = ""
     private var isLoading = false
     private var isSearching = false
     private var noResult = false
@@ -105,11 +106,11 @@ class SearchViewController: UIViewController {
                 searchRepositoryGithubAPI.getSearchResults(type: .repository, query: query, language: language ?? "") { [weak self] results, errorMessage in
                   
                     if let results = results {
-                        if results.count == 0 {
+                        if results.totalCount == 0 {
                             self?.noResult = true
                             self?.isLoading = false
                         } else {
-                            self?.searchRepositoryInfor = results[0]
+                            self?.searchRepositoryInfor = results
                             self?.searchRepostories = self?.searchRepositoryInfor?.items
                             self?.isLoading = false
                         }
@@ -169,6 +170,9 @@ extension SearchViewController: UITableViewDataSource {
             spinner.startAnimating()
             return cell
         } else if noResult {
+            if isSearching {
+                lbTitle.text = "0 repositories \nSearch"
+            }
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResult, for: indexPath)
             
             return cell
@@ -248,12 +252,14 @@ extension SearchViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text, !searchText.isEmpty else {
           return
         }
+        searchTextCurrent = searchText
         isSearching = true
         updateTableView(language: language, query: searchText)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
+            searchTextCurrent = ""
             isSearching = false
             sinceApiSegmentControl.isHidden = false
             titleConstraints.constant = 10
@@ -288,8 +294,13 @@ extension SearchViewController: LanguageViewControllerDelegate {
     
     func languageViewController(_ controller: LanguageViewController, didFinishEditing item: Language) {
         if let urlParam = item.urlParam {
+//            if isSearching {
+//                language = urlParam
+//            } else {
+//                language = urlParam.removingPercentEncoding
+//            }
             language = urlParam.removingPercentEncoding
-            updateTableView(language: language)
+            updateTableView(language: language, query: searchTextCurrent)
         }
         dismiss(animated: true, completion: nil)
     }
