@@ -106,33 +106,52 @@ extension RepositoryViewController: UITableViewDataSource {
             cell.imgCell.image = UIImage(named: ImageName.icon_cell_created.rawValue)
             cell.imgDisclosure.isHidden = true
         case 1:
+            cell.lbTypeCell.text = "Created"
+            cell.lbDetails.text = repositoryItem?.createdAt?.timeAgo()
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_created.rawValue)
+            cell.imgDisclosure.isHidden = true
+        case 2:
+            cell.lbTypeCell.text = "Updated"
+            cell.lbDetails.text = repositoryItem?.updatedAt?.timeAgo()
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_updated.rawValue)
+            cell.imgDisclosure.isHidden = true
+        case 3:
             cell.lbTypeCell.text = "Issues"
             cell.lbDetails.text = "\(repositoryItem?.openIssuesCount ?? 0)"
             cell.imgCell.image = UIImage(named: ImageName.icon_cell_issues.rawValue)
-            cell.imgDisclosure.isHidden = true
-        case 2:
-            cell.lbTypeCell.text = "Created"
+            cell.imgDisclosure.isHidden = false
+        case 4:
+            cell.lbTypeCell.text = "Pull Requests"
             cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_created.rawValue)
-            cell.imgDisclosure.isHidden = true
-        case 3:
-            cell.lbTypeCell.text = "Updated"
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_git_pull_request.rawValue)
+            cell.imgDisclosure.isHidden = false
+        case 5:
+            cell.lbTypeCell.text = "Commits"
             cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_updated.rawValue)
-            cell.imgDisclosure.isHidden = true
-//        case 4:
-//
-//        case 5:
-//
-//        case 6:
-//
-//        case 7:
-//
-//        case 8:
-//
-//        case 9:
-//
-//
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_git_commit.rawValue)
+            cell.imgDisclosure.isHidden = false
+        case 6:
+            cell.lbTypeCell.text = "Branches"
+            cell.lbDetails.text = ""
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_git_branch.rawValue)
+            cell.imgDisclosure.isHidden = false
+        case 7:
+            cell.lbTypeCell.text = "Releases"
+            cell.lbDetails.text = ""
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_releases.rawValue)
+            cell.imgDisclosure.isHidden = false
+        case 8:
+            cell.lbTypeCell.text = "Contributors"
+            cell.lbDetails.text = ""
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_company.rawValue)
+            cell.imgDisclosure.isHidden = false
+        case 9:
+            cell.lbTypeCell.text = "Events"
+            cell.lbDetails.text = ""
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_events.rawValue)
+            cell.imgDisclosure.isHidden = false
+            
+            
         default: break
         }
         

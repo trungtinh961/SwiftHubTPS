@@ -66,7 +66,7 @@ class SearchViewController: UIViewController {
             getType = .user
         default: print("default")
         }
-        updateTableView(language: language)
+        updateTableView(language: language, query: searchTextCurrent)
     }
     
     @IBAction func sinceApiSegmentControl(_ sender: Any) {
