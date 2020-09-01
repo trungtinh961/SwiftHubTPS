@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct StoryboardIdentifier {
-    static let languageVC = "LanguageViewController"
-    static let repositoryVC = "RepositoryViewController"
+enum StoryboardIdentifier: String {
+    case languageVC = "LanguageViewController"
+    case repositoryVC = "RepositoryViewController"
 }

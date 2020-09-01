@@ -50,7 +50,7 @@ class TrendingGithubAPI<Element: Mappable> {
     }
     
     
-    func getSearchResults(type: GetType, language: String = "", since: TrendingSince = .daily, completion: @escaping QueryResult) {
+    func getResults(type: GetType, language: String = "", since: TrendingSince = .daily, completion: @escaping QueryResult) {
         dataTask?.cancel()
         guard let url = createURL(type: type, language: language, since: since) else {
           return

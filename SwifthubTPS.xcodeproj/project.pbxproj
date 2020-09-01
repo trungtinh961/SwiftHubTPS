@@ -18,6 +18,9 @@
 		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
 		BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */; };
 		BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */; };
+		BAB51E6624FE26D1005A4F7D /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6424FE26D1005A4F7D /* DetailCell.swift */; };
+		BAB51E6724FE26D1005A4F7D /* DetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB51E6524FE26D1005A4F7D /* DetailCell.xib */; };
+		BAB51E6924FE3DF2005A4F7D /* ImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6824FE3DF2005A4F7D /* ImageName.swift */; };
 		BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */; };
 		BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FE24F8AB11002779B2 /* LanguageCell.swift */; };
 		BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB786FF24F8AB11002779B2 /* LanguageCell.xib */; };
@@ -56,6 +59,9 @@
 		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifier.swift; sourceTree = "<group>"; };
+		BAB51E6424FE26D1005A4F7D /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
+		BAB51E6524FE26D1005A4F7D /* DetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailCell.xib; sourceTree = "<group>"; };
+		BAB51E6824FE3DF2005A4F7D /* ImageName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageName.swift; sourceTree = "<group>"; };
 		BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		BAB786FE24F8AB11002779B2 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		BAB786FF24F8AB11002779B2 /* LanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageCell.xib; sourceTree = "<group>"; };
@@ -193,6 +199,8 @@
 				BAB7870724F8F43F002779B2 /* LoadingCell.xib */,
 				BAB7870D24F91619002779B2 /* NoResultCell.swift */,
 				BAB7870E24F91619002779B2 /* NoResultCell.xib */,
+				BAB51E6424FE26D1005A4F7D /* DetailCell.swift */,
+				BAB51E6524FE26D1005A4F7D /* DetailCell.xib */,
 			);
 			path = "Table Cell";
 			sourceTree = "<group>";
@@ -254,6 +262,7 @@
 				BAC5D29D24F3C13B00A731F0 /* Info.plist */,
 				BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */,
 				BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */,
+				BAB51E6824FE3DF2005A4F7D /* ImageName.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 				BAC5D29924F3C13B00A731F0 /* Assets.xcassets in Resources */,
 				BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */,
 				BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */,
+				BAB51E6724FE26D1005A4F7D /* DetailCell.xib in Resources */,
 				BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */,
 				BAC5D2AC24F5215D00A731F0 /* Icons.xcassets in Resources */,
 				BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */,
@@ -429,9 +439,11 @@
 				BAB7870C24F91367002779B2 /* UIViewController.swift in Sources */,
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */,
+				BAB51E6924FE3DF2005A4F7D /* ImageName.swift in Sources */,
 				BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */,
 				BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */,
 				BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */,
+				BAB51E6624FE26D1005A4F7D /* DetailCell.swift in Sources */,
 				BA3D106A24F76D2D0079C5A1 /* Router.swift in Sources */,
 				BAB7870324F8B453002779B2 /* Language.swift in Sources */,
 				BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */,

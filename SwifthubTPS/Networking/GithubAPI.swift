@@ -42,7 +42,7 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getSearchResults(type: GetType, query: String, language: String = "", fullname: String = "", completion: @escaping QueryResult) {
+    func getResults(type: GetType, query: String = "", language: String = "", fullname: String = "", completion: @escaping QueryResult) {
         dataTask?.cancel()
         guard let url = createURL(type: type, query: query, language: language, fullname: fullname) else {
           return

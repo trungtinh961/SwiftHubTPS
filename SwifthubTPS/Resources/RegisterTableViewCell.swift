@@ -9,12 +9,13 @@
 import Foundation
 import UIKit
 
-struct TableViewCellIdentifiers {
-    static let repositoryTrending = "RepositoryCell"
-    static let userTrending = "UserCell"
-    static let language = "LanguageCell"
-    static let loading = "LoadingCell"
-    static let noResult = "NoResultCell"
+enum TableViewCellIdentifiers: String {
+    case repositoryTrending = "RepositoryCell"
+    case userTrending = "UserCell"
+    case language = "LanguageCell"
+    case loading = "LoadingCell"
+    case noResult = "NoResultCell"
+    case detailCell = "DetailCell"
 }
 
 struct RegisterTableViewCell {

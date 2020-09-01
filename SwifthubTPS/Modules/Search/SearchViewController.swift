@@ -48,10 +48,10 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         /// Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResult)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResult.rawValue)
         
         
    }
@@ -90,7 +90,7 @@ class SearchViewController: UIViewController {
         
         if getType == .repository {
             if !isSearching {
-                trendingRepositoryGithubAPI.getSearchResults(type: .repository, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                trendingRepositoryGithubAPI.getResults(type: .repository, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
                     if let results = results {
                         self?.trendingRepositories = results
                         self?.isLoading = false
@@ -105,7 +105,7 @@ class SearchViewController: UIViewController {
                     }
                 }
             } else {
-                searchRepositoryGithubAPI.getSearchResults(type: .repository, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                searchRepositoryGithubAPI.getResults(type: .repository, query: query, language: language ?? "") { [weak self] results, errorMessage in
                   
                     if let result = results {
                         if result.totalCount == 0 {
@@ -126,7 +126,7 @@ class SearchViewController: UIViewController {
             }
         } else if getType == .user {
             if !isSearching {
-                trendingUserGithubAPI.getSearchResults(type: getType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                trendingUserGithubAPI.getResults(type: getType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
                     if let results = results {
                         self?.trendingUsers = results
                         self?.isLoading = false
@@ -141,7 +141,7 @@ class SearchViewController: UIViewController {
                     }
                 }
             } else {
-                searchUserGithubAPI.getSearchResults(type: .user, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                searchUserGithubAPI.getResults(type: .user, query: query, language: language ?? "") { [weak self] results, errorMessage in
                   
                     if let result = results {
                         if result.totalCount == 0 {
@@ -188,7 +188,7 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
@@ -200,11 +200,11 @@ extension SearchViewController: UITableViewDataSource {
                     lbTitle.text = "0 users \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
                 }
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResult, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResult.rawValue, for: indexPath)
             return cell
         } else if getType == .repository {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending, for: indexPath) as! RepositoryCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending.rawValue, for: indexPath) as! RepositoryCell
             
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
@@ -243,7 +243,7 @@ extension SearchViewController: UITableViewDataSource {
             }
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userTrending, for: indexPath) as! UserCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userTrending.rawValue, for: indexPath) as! UserCell
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
@@ -276,15 +276,15 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        if getType == .repository {
+        if getType == .repository, !isLoading {
             let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
             
-            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC) as! RepositoryViewController
+            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
             repositoryViewController.modalPresentationStyle = .automatic
             self.present(repositoryViewController, animated:true, completion:nil)
             
-        } else if getType == .user {
+        } else if getType == .user, !isLoading {
             let cell = tableView.cellForRow(at: indexPath) as! UserCell
             print(cell.lbFullname.text ?? "")
             
