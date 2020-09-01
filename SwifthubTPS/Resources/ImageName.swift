@@ -19,5 +19,6 @@ enum ImageName: String {
     case icon_cell_events = "icon_cell_events"
     case icon_cell_dir = "icon_cell_dir"
     case icon_cell_stars_history = "icon_cell_stars_history"
+    case icon_cell_updated = "icon_cell_updated"
 }
 

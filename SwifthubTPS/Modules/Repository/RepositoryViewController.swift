@@ -79,6 +79,7 @@ class RepositoryViewController: UIViewController {
                 self?.lbWatches.text = "\(self?.repositoryItem?.subscribersCount ?? 0)"
                 self?.lbStars.text = "\(self?.repositoryItem?.stargazersCount ?? 0)"
                 self?.lbForks.text = "\(self?.repositoryItem?.forks ?? 0)"
+                print(self!.repositoryItem?.updatedAt!.timeAgo() ?? 0)
             }
             if !errorMessage.isEmpty {
                 print("Search error: " + errorMessage)
@@ -103,16 +104,22 @@ extension RepositoryViewController: UITableViewDataSource {
             cell.lbTypeCell.text = "Languages"
             cell.lbDetails.text = repositoryItem?.language ?? ""
             cell.imgCell.image = UIImage(named: ImageName.icon_cell_created.rawValue)
-//            cell.imgDisclosure.isHidden = true
+            cell.imgDisclosure.isHidden = true
         case 1:
             cell.lbTypeCell.text = "Issues"
-            cell.lbDetails.text = ""
+            cell.lbDetails.text = "\(repositoryItem?.openIssuesCount ?? 0)"
             cell.imgCell.image = UIImage(named: ImageName.icon_cell_issues.rawValue)
-//            cell.imgDisclosure.isHidden = false
-//        case 2:
-//
-//        case 3:
-//
+            cell.imgDisclosure.isHidden = true
+        case 2:
+            cell.lbTypeCell.text = "Created"
+            cell.lbDetails.text = ""
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_created.rawValue)
+            cell.imgDisclosure.isHidden = true
+        case 3:
+            cell.lbTypeCell.text = "Updated"
+            cell.lbDetails.text = ""
+            cell.imgCell.image = UIImage(named: ImageName.icon_cell_updated.rawValue)
+            cell.imgDisclosure.isHidden = true
 //        case 4:
 //
 //        case 5:
