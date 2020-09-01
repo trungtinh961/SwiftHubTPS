@@ -15,11 +15,7 @@ enum TrendingSince: String {
     case monthly = "monthly"
 }
 
-enum GetType: Int {
-    case repository
-    case user
-    case language
-}
+
 
 class TrendingGithubAPI<Element: Mappable> {
     

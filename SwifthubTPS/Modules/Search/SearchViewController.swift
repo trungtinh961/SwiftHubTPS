@@ -275,7 +275,21 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print(trendingRepositories?[indexPath.row].fullname ?? "")
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        if getType == .repository {
+            let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
+            
+            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC) as! RepositoryViewController
+            repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
+            repositoryViewController.modalPresentationStyle = .automatic
+            self.present(repositoryViewController, animated:true, completion:nil)
+            
+        } else if getType == .user {
+            let cell = tableView.cellForRow(at: indexPath) as! UserCell
+            print(cell.lbFullname.text ?? "")
+            
+        }
+        
     }    
 }
 
@@ -315,9 +329,9 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let controller = segue.destination as! LanguageViewController
-        controller.delegate = self
-        controller.language = language?.removingPercentEncoding
+            let controller = segue.destination as! LanguageViewController
+            controller.delegate = self
+            controller.language = language?.removingPercentEncoding
     }
 }
 

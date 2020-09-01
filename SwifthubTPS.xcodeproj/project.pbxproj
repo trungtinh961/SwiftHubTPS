@@ -16,6 +16,8 @@
 		BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5824F7B91400971F23 /* UserCell.swift */; };
 		BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6C5A5924F7B91400971F23 /* UserCell.xib */; };
 		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
+		BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */; };
+		BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */; };
 		BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */; };
 		BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB786FE24F8AB11002779B2 /* LanguageCell.swift */; };
 		BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB786FF24F8AB11002779B2 /* LanguageCell.xib */; };
@@ -52,6 +54,8 @@
 		BA6C5A5824F7B91400971F23 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		BA6C5A5924F7B91400971F23 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
+		BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
+		BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifier.swift; sourceTree = "<group>"; };
 		BAB786FA24F8A6FF002779B2 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		BAB786FE24F8AB11002779B2 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		BAB786FF24F8AB11002779B2 /* LanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageCell.xib; sourceTree = "<group>"; };
@@ -156,6 +160,14 @@
 			path = UIImageView;
 			sourceTree = "<group>";
 		};
+		BAB51E5F24FDFC26005A4F7D /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		BAB786F924F8A6CE002779B2 /* Language */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +253,7 @@
 				BAC5D2AB24F5215D00A731F0 /* Icons.xcassets */,
 				BAC5D29D24F3C13B00A731F0 /* Info.plist */,
 				BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */,
+				BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -251,8 +264,9 @@
 				BAB786F924F8A6CE002779B2 /* Language */,
 				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
-				BA3D105B24F61FFE0079C5A1 /* Setting */,
+				BAB51E5F24FDFC26005A4F7D /* Repository */,
 				BAD3886624F608BD0045C10E /* Search */,
+				BA3D105B24F61FFE0079C5A1 /* Setting */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -411,6 +425,7 @@
 			files = (
 				BA3D106224F751500079C5A1 /* Foundation.swift in Sources */,
 				BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */,
+				BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */,
 				BAB7870C24F91367002779B2 /* UIViewController.swift in Sources */,
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */,
@@ -419,6 +434,7 @@
 				BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */,
 				BA3D106A24F76D2D0079C5A1 /* Router.swift in Sources */,
 				BAB7870324F8B453002779B2 /* Language.swift in Sources */,
+				BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */,
 				BAB7870F24F91619002779B2 /* NoResultCell.swift in Sources */,
 				BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */,
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,

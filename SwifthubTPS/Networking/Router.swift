@@ -8,6 +8,13 @@
 
 import Foundation
 
+enum GetType: Int {
+    case repository
+    case user
+    case language
+    case getRepository
+}
+
 enum Router {
     
     case getTrendingUser(language: String, since: TrendingSince)
@@ -15,6 +22,8 @@ enum Router {
     case languages
     case searchRepositories(query: String, language: String)
     case searchUsers(query: String, language: String)
+    case getRepository(fullname: String)
+    
     
     var scheme: String {
         switch self {
@@ -37,6 +46,7 @@ enum Router {
         case .languages: return "/languages"
         case .searchRepositories: return "/search/repositories"
         case .searchUsers: return "/search/users"
+        case .getRepository(let fullname): return "/repos/\(fullname)"
         }
     }
     
