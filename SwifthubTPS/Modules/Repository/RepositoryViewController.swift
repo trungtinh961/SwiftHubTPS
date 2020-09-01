@@ -155,9 +155,6 @@ extension RepositoryViewController: UITableViewDataSource {
         default: break
         }
         
-        
-        
-        
         return cell
     }
     
