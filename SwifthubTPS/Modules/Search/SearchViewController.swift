@@ -15,6 +15,7 @@ class SearchViewController: UIViewController {
     private var trendingRepositoryGithubAPI = TrendingGithubAPI<TrendingRepository>()
     private var trendingUserGithubAPI = TrendingGithubAPI<TrendingUser>()
     private var searchRepositoryGithubAPI = GitHubAPI<RepositorySearch>()
+    private var searchUserGithubAPI = GitHubAPI<UserSearch>()
     private var trendingSince = TrendingSince.daily
     private var getType = GetType.repository
     private var downloadTask: URLSessionDownloadTask?
@@ -22,6 +23,7 @@ class SearchViewController: UIViewController {
     private var trendingUsers: [TrendingUser]?
     private var searchRepositoryInfor: RepositorySearch?
     private var searchRepostories: [Repository]?
+    private var searchUserInfor: UserSearch?
     private var searchUsers: [User]?
     private var language: String?
     private var searchTextCurrent = ""
@@ -105,12 +107,12 @@ class SearchViewController: UIViewController {
             } else {
                 searchRepositoryGithubAPI.getSearchResults(type: .repository, query: query, language: language ?? "") { [weak self] results, errorMessage in
                   
-                    if let results = results {
-                        if results.totalCount == 0 {
+                    if let result = results {
+                        if result.totalCount == 0 {
                             self?.noResult = true
                             self?.isLoading = false
                         } else {
-                            self?.searchRepositoryInfor = results
+                            self?.searchRepositoryInfor = result
                             self?.searchRepostories = self?.searchRepositoryInfor?.items
                             self?.isLoading = false
                         }
@@ -139,7 +141,24 @@ class SearchViewController: UIViewController {
                     }
                 }
             } else {
-                
+                searchUserGithubAPI.getSearchResults(type: .user, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                  
+                    if let result = results {
+                        if result.totalCount == 0 {
+                            self?.noResult = true
+                            self?.isLoading = false
+                        } else {
+                            self?.searchUserInfor = result
+                            self?.searchUsers = self?.searchUserInfor?.items
+                            self?.isLoading = false
+                        }
+                        self?.resultTableView.reloadData()
+                    }
+                  
+                    if !errorMessage.isEmpty {
+                        print("Search error: " + errorMessage)
+                    }
+                }
             }
         }
     }
@@ -158,7 +177,11 @@ extension SearchViewController: UITableViewDataSource {
                 return trendingRepositories?.count ?? 0
             }
         } else {
+            if isSearching {
+                return searchUsers?.count ?? 0
+            } else {
                 return trendingUsers?.count ?? 0
+            }
         }
     }
     
@@ -171,10 +194,13 @@ extension SearchViewController: UITableViewDataSource {
             return cell
         } else if noResult {
             if isSearching {
-                lbTitle.text = "0 repositories \nSearch"
+                if getType == .repository {
+                    lbTitle.text = "0 repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
+                } else if getType == .user {
+                    lbTitle.text = "0 users \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
+                }
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResult, for: indexPath)
-            
             return cell
         } else if getType == .repository {
             
@@ -183,7 +209,7 @@ extension SearchViewController: UITableViewDataSource {
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
-                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \nSearch"
+                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
                 let indexCell = searchRepostories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
@@ -218,17 +244,28 @@ extension SearchViewController: UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userTrending, for: indexPath) as! UserCell
-            let indexCell = trendingUsers![indexPath.row]
-            cell.lbFullname.text = "\(indexCell.username ?? "") (\(indexCell.name ?? ""))"
-            cell.lbDescription.text = "\(indexCell.username ?? "")/\(indexCell.repo?.name ?? "")"
-            
-            cell.imgAuthor.image = UIImage(named: "Placeholder")
-            if let smallURL = URL(string: indexCell.avatar ?? "") {
-                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            if isSearching {
+                sinceApiSegmentControl.isHidden = true
+                titleConstraints.constant = -32
+                lbTitle.text = (searchUserInfor?.totalCount.kFormatted())! + " users \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
+                let indexCell = searchUsers![indexPath.row]
+                cell.lbFullname.text = indexCell.login
+                cell.lbDescription.isHidden = true
+                if let smallURL = URL(string: indexCell.avatarUrl ?? "") {
+                    downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+                }
+            } else {
+                cell.lbDescription.isHidden = false
+                let indexCell = trendingUsers![indexPath.row]
+                cell.lbFullname.text = "\(indexCell.username ?? "") (\(indexCell.name ?? ""))"
+                cell.lbDescription.text = "\(indexCell.username ?? "")/\(indexCell.repo?.name ?? "")"
+                cell.imgAuthor.image = UIImage(named: "Placeholder")
+                if let smallURL = URL(string: indexCell.avatar ?? "") {
+                    downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+                }
             }
             return cell
         }
-        
     }    
 }
 
@@ -239,8 +276,7 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         print(trendingRepositories?[indexPath.row].fullname ?? "")
-    }
-    
+    }    
 }
 
 // MARK:- UISearchBarDelegate
@@ -270,8 +306,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached        
-    }
-    
+    }    
 }
 
 
@@ -282,28 +317,20 @@ extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as! LanguageViewController
         controller.delegate = self
-        controller.language = language
+        controller.language = language?.removingPercentEncoding
     }
 }
 
 extension SearchViewController: LanguageViewControllerDelegate {
     func languageViewControllerDidCancel(_ controller: LanguageViewController) {
-        updateTableView()
         dismiss(animated: true, completion: nil)
     }
     
     func languageViewController(_ controller: LanguageViewController, didFinishEditing item: Language) {
         if let urlParam = item.urlParam {
-//            if isSearching {
-//                language = urlParam
-//            } else {
-//                language = urlParam.removingPercentEncoding
-//            }
-            language = urlParam.removingPercentEncoding
+            language = urlParam
             updateTableView(language: language, query: searchTextCurrent)
         }
         dismiss(animated: true, completion: nil)
     }
-    
-    
 }

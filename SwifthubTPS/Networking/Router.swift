@@ -14,17 +14,18 @@ enum Router {
     case getTrendingRepository(language: String, since: TrendingSince)
     case languages
     case searchRepositories(query: String, language: String)
+    case searchUsers(query: String, language: String)
     
     var scheme: String {
         switch self {
-        case .getTrendingUser, .getTrendingRepository, .languages, .searchRepositories: return "https"
+        default: return "https"
         }
     }
     
     var host: String {
         switch self {
         case .getTrendingRepository, .getTrendingUser, .languages: return "ghapi.huchen.dev"
-        case .searchRepositories: return "api.github.com"
+        default: return "api.github.com"
         }
         
     }
@@ -35,6 +36,7 @@ enum Router {
         case .getTrendingUser: return "/developers"
         case .languages: return "/languages"
         case .searchRepositories: return "/search/repositories"
+        case .searchUsers: return "/search/users"
         }
     }
     
@@ -55,6 +57,12 @@ enum Router {
             }            
             params["sort"] = "stars"
             params["order"] = "desc"
+        case .searchUsers(let query, let language):
+            if language != "" {
+                params["q"] = "\(query)+language:\(language)"
+            } else {
+                params["q"] = query
+            }   
         default: break
         }
         return params

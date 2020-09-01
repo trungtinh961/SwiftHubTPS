@@ -49,7 +49,7 @@ class TrendingGithubAPI<Element: Mappable> {
             components.host = Router.languages.host
             components.path = Router.languages.path
         }
-        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
         return components.url
     }
     

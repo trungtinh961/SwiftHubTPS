@@ -15,52 +15,23 @@ protocol LanguageViewControllerDelegate: class {
 
 class LanguageViewController: UIViewController {
 
+    //MARK: - Properties
+    
+    weak var delegate: LanguageViewControllerDelegate?
+    private var trendingLanguageGithubAPI = TrendingGithubAPI<Language>()
+    private var languageItem: Language!
+    var language: String?
+    private var languages: [Language]?
+    private var cellChecked = IndexPath(row: -1, section: 0)
+    private var isLoading = false
+    private var isFirstLaunch = true
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var languageTableView: UITableView!
     @IBOutlet weak var btnAllLanguage: UIButton!
     @IBOutlet weak var btnSave: UIBarButtonItem!
     
-    
-    weak var delegate: LanguageViewControllerDelegate?
-    private var trendingLanguageGithubAPI = TrendingGithubAPI<Language>()
-    var languageItem: Language!
-    var language: String?
-    var languages: [Language]?
-    var cellChecked = IndexPath(row: -1, section: 0)
-    var isLoading = false
-    var isFirstLaunch = true
-    
-    func updateTableView(language: String? = "") {
-        isLoading = true
-        
-        trendingLanguageGithubAPI.getSearchResults(type: .language) { [weak self] results, errorMessage in
-            if let results = results {
-                self?.languages = results
-                self?.isLoading = false
-                self?.languageTableView.reloadData()
-//                if !self!.isFirstLaunch {
-                    self?.selectCell()
-//                }
-            }
-
-            if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
-            }
-        }
-    }
-    
-    func selectCell() {
-        if language != nil, languages != nil {
-            for index in 0..<languages!.count {
-                if language == languages![index].urlParam?.removingPercentEncoding {
-                    cellChecked = IndexPath(row: index, section: 0)
-                    break
-                }
-            }
-            tableView(languageTableView, didSelectRowAt: cellChecked)
-            languageTableView.scrollToRow(at: cellChecked, at: .middle, animated: true)
-        }
-    }
+    //MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -83,6 +54,8 @@ class LanguageViewController: UIViewController {
         
     }
     
+    //MARK: - IBActions
+    
     @IBAction func btnClose(_ sender: Any) {
         delegate?.languageViewControllerDidCancel(self)
     }
@@ -98,11 +71,42 @@ class LanguageViewController: UIViewController {
         delegate?.languageViewControllerDidCancel(self)
     }
     
+    // MARK: - Public method
+    
+    func updateTableView(language: String? = "") {
+        isLoading = true
+        
+        trendingLanguageGithubAPI.getSearchResults(type: .language) { [weak self] results, errorMessage in
+            if let results = results {
+                self?.languages = results
+                self?.isLoading = false
+                self?.languageTableView.reloadData()
+                self?.selectCell()
+            }
+
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
+            }
+        }
+    }
+    
+    func selectCell() {
+        if language != nil, languages != nil {
+            for index in 0..<languages!.count {
+                if language == languages![index].urlParam?.removingPercentEncoding {
+                    cellChecked = IndexPath(row: index, section: 0)
+                    break
+                }
+            }
+            tableView(languageTableView, didSelectRowAt: cellChecked)
+            languageTableView.scrollToRow(at: cellChecked, at: .middle, animated: true)
+        }
+    }
    
 }
 
 
-// MARK:- Table View Cell
+// MARK:- UITableViewDataSource
    
 extension LanguageViewController: UITableViewDataSource {
     
@@ -135,6 +139,7 @@ extension LanguageViewController: UITableViewDataSource {
    
 }
 
+// MARK:- UITableViewDelegate
 
 extension LanguageViewController: UITableViewDelegate {
     

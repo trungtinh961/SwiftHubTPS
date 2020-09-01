@@ -27,9 +27,14 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.searchRepositories(query: query, language: language).host
             components.path = Router.searchRepositories(query: query, language: language).path
             components.setQueryItems(with: Router.searchRepositories(query: query, language: language).parameters!)
+        } else if type == .user {
+            components.scheme = Router.searchUsers(query: query, language: language).scheme
+            components.host = Router.searchUsers(query: query, language: language).host
+            components.path = Router.searchUsers(query: query, language: language).path
+            components.setQueryItems(with: Router.searchUsers(query: query, language: language).parameters!)
         }
-        
-        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
+
         return components.url
     }
     
@@ -63,8 +68,6 @@ class GitHubAPI<Element: Mappable> {
         
       
     private func updateSearchResults(_ data: Data) {
-        
-//        elements.removeAll()
         do {
             if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
                 element = Element(JSON: item)!
