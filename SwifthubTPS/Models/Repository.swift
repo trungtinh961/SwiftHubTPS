@@ -208,21 +208,19 @@ extension Repository {
             detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_link.rawValue, titleCell: "Homepage", detail: homepage, hideDisclosure: false))
         }
         
-        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_issues.rawValue, titleCell: "Issues", detail: self.openIssuesCount?.kFormatted() ?? "", hideDisclosure: false))
+        detailCellProperties.append(DetailCellProperty(id: "issues", imgName: ImageName.icon_cell_issues.rawValue, titleCell: "Issues", detail: self.openIssuesCount?.kFormatted() ?? "", hideDisclosure: false))
         
-        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_pull_request.rawValue, titleCell: "Pull Requests", hideDisclosure: false))
+        detailCellProperties.append(DetailCellProperty(id: "pulls", imgName: ImageName.icon_cell_git_pull_request.rawValue, titleCell: "Pull Requests", hideDisclosure: false))
         
-        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_commit.rawValue, titleCell: "Commits", hideDisclosure: false))
+        detailCellProperties.append(DetailCellProperty(id: "commits", imgName: ImageName.icon_cell_git_commit.rawValue, titleCell: "Commits", hideDisclosure: false))
 
-        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_branch.rawValue, titleCell: "Branches", detail: defaultBranch, hideDisclosure: false))
+        detailCellProperties.append(DetailCellProperty(id: "branches", imgName: ImageName.icon_cell_git_branch.rawValue, titleCell: "Branches", detail: defaultBranch, hideDisclosure: false))
 
-        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Releases", hideDisclosure: false))
+        detailCellProperties.append(DetailCellProperty(id: "releases", imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Releases", hideDisclosure: false))
         
-        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_company.rawValue, titleCell: "Contributors", hideDisclosure: false))
+        detailCellProperties.append(DetailCellProperty(id: "contributors", imgName: ImageName.icon_cell_company.rawValue, titleCell: "Contributors", hideDisclosure: false))
         
-        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Events", hideDisclosure: false))
-        
-       
+        detailCellProperties.append(DetailCellProperty(id: "events", imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Events", hideDisclosure: false))
         
         return detailCellProperties
     }

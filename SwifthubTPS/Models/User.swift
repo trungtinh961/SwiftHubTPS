@@ -146,5 +146,38 @@ struct TrendingUser: Mappable {
 }
 
 extension User {
-    
+    func getDetailCell() -> [DetailCellProperty] {
+        var detailCellProperties: [DetailCellProperty] = []
+//        if let language = self.language {
+//            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_language.rawValue, titleCell: "Language", detail: language, hideDisclosure: true))
+//        }
+//        if let size = self.size {
+//            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_size.rawValue, titleCell: "Size", detail: size.sizeFromKB(), hideDisclosure: true))
+//        }
+//        if let created = self.createdAt {
+//            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_created.rawValue, titleCell: "Created", detail: created.timeAgo(), hideDisclosure: true))
+//        }
+//        if let updated = self.updatedAt {
+//            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.timeAgo(), hideDisclosure: true))
+//        }
+//        if let homepage = self.homepage {
+//            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_link.rawValue, titleCell: "Homepage", detail: homepage, hideDisclosure: false))
+//        }
+//        
+//        detailCellProperties.append(DetailCellProperty(id: "issues", imgName: ImageName.icon_cell_issues.rawValue, titleCell: "Issues", detail: self.openIssuesCount?.kFormatted() ?? "", hideDisclosure: false))
+//        
+//        detailCellProperties.append(DetailCellProperty(id: "pulls", imgName: ImageName.icon_cell_git_pull_request.rawValue, titleCell: "Pull Requests", hideDisclosure: false))
+//        
+//        detailCellProperties.append(DetailCellProperty(id: "commits", imgName: ImageName.icon_cell_git_commit.rawValue, titleCell: "Commits", hideDisclosure: false))
+//
+//        detailCellProperties.append(DetailCellProperty(id: "branches", imgName: ImageName.icon_cell_git_branch.rawValue, titleCell: "Branches", detail: defaultBranch, hideDisclosure: false))
+//
+//        detailCellProperties.append(DetailCellProperty(id: "releases", imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Releases", hideDisclosure: false))
+//        
+//        detailCellProperties.append(DetailCellProperty(id: "contributors", imgName: ImageName.icon_cell_company.rawValue, titleCell: "Contributors", hideDisclosure: false))
+//        
+//        detailCellProperties.append(DetailCellProperty(id: "events", imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Events", hideDisclosure: false))
+        
+        return detailCellProperties
+    }
 }

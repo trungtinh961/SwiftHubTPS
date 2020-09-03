@@ -30,6 +30,7 @@ class DetailCell: UITableViewCell {
 }
 
 struct DetailCellProperty {
+    var id: String = ""
     var imgName: String
     var titleCell: String
     var detail: String = ""

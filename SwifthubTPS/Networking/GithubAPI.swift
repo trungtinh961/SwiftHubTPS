@@ -19,7 +19,7 @@ class GitHubAPI<Element: Mappable> {
     typealias JSONDictionary = [String: Any]
     typealias QueryResult = (Element?, String) -> Void
     
-    func createURL(type: GetType, query: String, language: String, fullname: String) -> URL? {
+    func createURL(type: GetType, query: String, language: String, fullname: String, username: String) -> URL? {
         var components = URLComponents()
         
         if type == .repository {
@@ -36,15 +36,19 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getRepository(fullname: fullname).scheme
             components.host = Router.getRepository(fullname: fullname).host
             components.path = Router.getRepository(fullname: fullname).path
+        } else if type == .getUser {
+            components.scheme = Router.getUser(username: username).scheme
+            components.host = Router.getUser(username: username).host
+            components.path = Router.getUser(username: username).path
         }
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
         return components.url
     }
     
     
-    func getResults(type: GetType, query: String = "", language: String = "", fullname: String = "", completion: @escaping QueryResult) {
+    func getResults(type: GetType, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResult) {
         dataTask?.cancel()
-        guard let url = createURL(type: type, query: query, language: language, fullname: fullname) else {
+        guard let url = createURL(type: type, query: query, language: language, fullname: fullname, username: username) else {
           return
         }
         var request = URLRequest(url: url)

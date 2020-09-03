@@ -257,7 +257,7 @@ extension SearchViewController: UITableViewDataSource {
             } else {
                 cell.lbDescription.isHidden = false
                 let indexCell = trendingUsers![indexPath.row]
-                cell.lbFullname.text = "\(indexCell.username ?? "") (\(indexCell.name ?? ""))"
+                cell.lbFullname.text = "\(indexCell.username ?? "")"
                 cell.lbDescription.text = "\(indexCell.username ?? "")/\(indexCell.repo?.name ?? "")"
                 cell.imgAuthor.image = UIImage(named: "Placeholder")
                 if let smallURL = URL(string: indexCell.avatar ?? "") {
@@ -278,7 +278,6 @@ extension SearchViewController: UITableViewDelegate {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         if getType == .repository, !isLoading {
             let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
-            
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
             repositoryViewController.modalPresentationStyle = .automatic
@@ -286,7 +285,10 @@ extension SearchViewController: UITableViewDelegate {
             
         } else if getType == .user, !isLoading {
             let cell = tableView.cellForRow(at: indexPath) as! UserCell
-            print(cell.lbFullname.text ?? "")
+            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+            userViewController.username = cell.lbFullname.text ?? ""
+            userViewController.modalPresentationStyle = .automatic
+            self.present(userViewController, animated:true, completion:nil)
             
         }
         

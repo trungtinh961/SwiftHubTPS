@@ -70,7 +70,6 @@ class RepositoryViewController: UIViewController {
             if let result = results {
                 self?.repositoryItem = result
                 self?.isLoading = false
-                self?.resultTableView.reloadData()
                 if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
                     self?.downloadTask = self?.imgAvatar.loadImage(url: smallURL)
                 }
@@ -79,6 +78,7 @@ class RepositoryViewController: UIViewController {
                 self?.lbStars.text = "\(self?.repositoryItem?.stargazersCount ?? 0)"
                 self?.lbForks.text = "\(self?.repositoryItem?.forks ?? 0)"
                 self?.repositoryDetails = self?.repositoryItem?.getDetailCell()
+                self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
                 print("Search error: " + errorMessage)
@@ -93,7 +93,7 @@ class RepositoryViewController: UIViewController {
 extension RepositoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return repositoryDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,12 +114,13 @@ extension RepositoryViewController: UITableViewDataSource {
 }
 
 
-// MARK: -
+// MARK: - UITableViewDelegate
 extension RepositoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)        
         
+        print(repositoryDetails?[indexPath.row].id ?? "")
     }
 }
 

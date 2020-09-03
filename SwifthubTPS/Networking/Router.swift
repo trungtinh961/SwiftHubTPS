@@ -13,6 +13,7 @@ enum GetType: Int {
     case user
     case language
     case getRepository
+    case getUser
 }
 
 enum Router {
@@ -23,6 +24,7 @@ enum Router {
     case searchRepositories(query: String, language: String)
     case searchUsers(query: String, language: String)
     case getRepository(fullname: String)
+    case getUser(username: String)
     
     
     var scheme: String {
@@ -47,6 +49,7 @@ enum Router {
         case .searchRepositories: return "/search/repositories"
         case .searchUsers: return "/search/users"
         case .getRepository(let fullname): return "/repos/\(fullname)"
+        case .getUser(let username): return "/users/\(username)"
         }
     }
     
