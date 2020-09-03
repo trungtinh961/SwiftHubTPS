@@ -17,7 +17,7 @@ class RepositoryViewController: UIViewController {
     private var repositoryGithubAPI = GitHubAPI<Repository>()
     private var repositoryItem: Repository?
     private var isLoading = false
-    
+    private var repositoryDetails: [DetailCellProperty]?
     
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var imgAvatar: UIImageView!
@@ -37,7 +37,6 @@ class RepositoryViewController: UIViewController {
         super.viewWillAppear(animated)
         navItem.title = repoFullname!
         getData()
-        
     }
     
     override func viewDidLoad() {
@@ -79,7 +78,7 @@ class RepositoryViewController: UIViewController {
                 self?.lbWatches.text = "\(self?.repositoryItem?.subscribersCount ?? 0)"
                 self?.lbStars.text = "\(self?.repositoryItem?.stargazersCount ?? 0)"
                 self?.lbForks.text = "\(self?.repositoryItem?.forks ?? 0)"
-                print(self!.repositoryItem?.updatedAt!.timeAgo() ?? 0)
+                self?.repositoryDetails = self?.repositoryItem?.getDetailCell()
             }
             if !errorMessage.isEmpty {
                 print("Search error: " + errorMessage)
@@ -99,61 +98,14 @@ extension RepositoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
-        switch indexPath.row {
-        case 0:
-            cell.lbTypeCell.text = "Languages"
-            cell.lbDetails.text = repositoryItem?.language ?? ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_created.rawValue)
-            cell.imgDisclosure.isHidden = true
-        case 1:
-            cell.lbTypeCell.text = "Created"
-            cell.lbDetails.text = repositoryItem?.createdAt?.timeAgo()
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_created.rawValue)
-            cell.imgDisclosure.isHidden = true
-        case 2:
-            cell.lbTypeCell.text = "Updated"
-            cell.lbDetails.text = repositoryItem?.updatedAt?.timeAgo()
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_updated.rawValue)
-            cell.imgDisclosure.isHidden = true
-        case 3:
-            cell.lbTypeCell.text = "Issues"
-            cell.lbDetails.text = "\(repositoryItem?.openIssuesCount ?? 0)"
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_issues.rawValue)
-            cell.imgDisclosure.isHidden = false
-        case 4:
-            cell.lbTypeCell.text = "Pull Requests"
-            cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_git_pull_request.rawValue)
-            cell.imgDisclosure.isHidden = false
-        case 5:
-            cell.lbTypeCell.text = "Commits"
-            cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_git_commit.rawValue)
-            cell.imgDisclosure.isHidden = false
-        case 6:
-            cell.lbTypeCell.text = "Branches"
-            cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_git_branch.rawValue)
-            cell.imgDisclosure.isHidden = false
-        case 7:
-            cell.lbTypeCell.text = "Releases"
-            cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_releases.rawValue)
-            cell.imgDisclosure.isHidden = false
-        case 8:
-            cell.lbTypeCell.text = "Contributors"
-            cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_company.rawValue)
-            cell.imgDisclosure.isHidden = false
-        case 9:
-            cell.lbTypeCell.text = "Events"
-            cell.lbDetails.text = ""
-            cell.imgCell.image = UIImage(named: ImageName.icon_cell_events.rawValue)
-            cell.imgDisclosure.isHidden = false
-            
-            
-        default: break
-        }
+
+        let itemCell = repositoryDetails?[indexPath.row]
+        cell.lbTitleCell.text = itemCell?.titleCell
+        cell.lbDetails.text = itemCell?.detail
+        if let img = itemCell?.imgName {
+            cell.imgCell.image = UIImage(named: img)
+        }        
+        cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
         
         return cell
     }

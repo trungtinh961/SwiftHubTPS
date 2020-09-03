@@ -13,49 +13,48 @@ struct Repository: Mappable {
 
     var archived: Bool?
     var cloneUrl: String?
-    var createdAt: Date?  // Identifies the date and time when the object was created.
-    var defaultBranch = "master"  // The Ref name associated with the repository's default branch.
-    var description: String?  // The description of the repository.
-    var fork: Bool?  // Identifies if the repository is a fork.
-    var forks: Int?  // Identifies the total count of direct forked repositories
+    var createdAt: Date?
+    var defaultBranch = "master"
+    var description: String?
+    var fork: Bool?
+    var forks: Int?
     var forksCount: Int?
-    var fullname: String?  // The repository's name with owner.
+    var fullname: String?
     var hasDownloads: Bool?
     var hasIssues: Bool?
     var hasPages: Bool?
     var hasProjects: Bool?
     var hasWiki: Bool?
-    var homepage: String?  // The repository's URL.
+    var homepage: String?
     var htmlUrl: String?
-    var language: String?  // The name of the current language.
-    var languageColor: String?  // The color defined for the current language.
+    var language: String?
+    var languageColor: String?
     
-    var name: String?  // The name of the repository.
+    var name: String?
     var networkCount: Int?
     var nodeId: String?
     var openIssues: Int?
-    var openIssuesCount: Int?  // Identifies the total count of issues that have been opened in the repository.
+    var openIssuesCount: Int?
     var organization: User?
-    var owner: User?  // The User owner of the repository.
+    var owner: User?
     var privateField: Bool?
     var pushedAt: String?
-    var size: Int?  // The number of kilobytes this repository occupies on disk.
+    var size: Int?
     var sshUrl: String?
-    var stargazersCount: Int?  // Identifies the total count of items who have starred this starrable.
-    var subscribersCount: Int?  // Identifies the total count of users watching the repository
-    var updatedAt: Date?  // Identifies the date and time when the object was last updated.
-    var url: String?  // The HTTP URL for this repository
+    var stargazersCount: Int?
+    var subscribersCount: Int?
+    var updatedAt: Date?
+    var url: String?
     var watchers: Int?
     var watchersCount: Int?
-    var parentFullname: String?  // The parent repository's name with owner, if this is a fork.
+    var parentFullname: String?
 
-    var commitsCount: Int?  // Identifies the total count of the commits
-    var pullRequestsCount: Int?  // Identifies the total count of a list of pull requests that have been opened in the repository.
+    var commitsCount: Int?
+    var pullRequestsCount: Int?
     var branchesCount: Int?
-    var releasesCount: Int?  // Identifies the total count of releases which are dependent on this repository.
-    var contributorsCount: Int?  // Identifies the total count of Users that can be mentioned in the context of the repository.
-
-    var viewerHasStarred: Bool?  // Returns a boolean indicating whether the viewing user has starred this starrable.
+    var releasesCount: Int?
+    var contributorsCount: Int?
+    var viewerHasStarred: Bool?
 
     init?(map: Map) {}
     init() {}
@@ -190,5 +189,42 @@ struct TrendingRepository: Mappable {
 }
 
 
+extension Repository {
+    func getDetailCell() -> [DetailCellProperty] {
+        var detailCellProperties: [DetailCellProperty] = []
+        if let language = self.language {
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_language.rawValue, titleCell: "Language", detail: language, hideDisclosure: true))
+        }
+        if let size = self.size {
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_size.rawValue, titleCell: "Size", detail: size.sizeFromKB(), hideDisclosure: true))
+        }
+        if let created = self.createdAt {
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_created.rawValue, titleCell: "Created", detail: created.timeAgo(), hideDisclosure: true))
+        }
+        if let updated = self.updatedAt {
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.timeAgo(), hideDisclosure: true))
+        }
+        if let homepage = self.homepage {
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_link.rawValue, titleCell: "Homepage", detail: homepage, hideDisclosure: false))
+        }
+        
+        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_issues.rawValue, titleCell: "Issues", detail: self.openIssuesCount?.kFormatted() ?? "", hideDisclosure: false))
+        
+        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_pull_request.rawValue, titleCell: "Pull Requests", hideDisclosure: false))
+        
+        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_commit.rawValue, titleCell: "Commits", hideDisclosure: false))
 
+        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_git_branch.rawValue, titleCell: "Branches", detail: defaultBranch, hideDisclosure: false))
+
+        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Releases", hideDisclosure: false))
+        
+        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_company.rawValue, titleCell: "Contributors", hideDisclosure: false))
+        
+        detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Events", hideDisclosure: false))
+        
+       
+        
+        return detailCellProperties
+    }
+}
 

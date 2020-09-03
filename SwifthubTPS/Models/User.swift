@@ -144,3 +144,7 @@ struct TrendingUser: Mappable {
     }
     
 }
+
+extension User {
+    
+}

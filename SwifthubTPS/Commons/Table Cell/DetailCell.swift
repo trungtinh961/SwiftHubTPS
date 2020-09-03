@@ -12,12 +12,9 @@ class DetailCell: UITableViewCell {
 
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var imgCell: UIImageView!
-    @IBOutlet weak var lbTypeCell: UILabel!
+    @IBOutlet weak var lbTitleCell: UILabel!
     @IBOutlet weak var lbDetails: UILabel!
     @IBOutlet weak var imgDisclosure: UIImageView!
-    
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,4 +27,11 @@ class DetailCell: UITableViewCell {
 
     }
     
+}
+
+struct DetailCellProperty {
+    var imgName: String
+    var titleCell: String
+    var detail: String = ""
+    var hideDisclosure: Bool
 }
