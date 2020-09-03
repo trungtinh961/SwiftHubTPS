@@ -67,7 +67,7 @@ class UserViewController: UIViewController {
     func getData() {
         isLoading = true
         userGithubAPI.getResults(type: .getUser, username: username!) { [weak self] results, errorMessage in
-            if let result = results {
+            if let result = results?[0] {
                 self?.userItem = result
                 self?.isLoading = false
                 if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {

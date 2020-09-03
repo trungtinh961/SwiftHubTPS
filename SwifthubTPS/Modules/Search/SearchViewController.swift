@@ -89,25 +89,9 @@ class SearchViewController: UIViewController {
         noResult = false
         
         if getType == .repository {
-            if !isSearching {
-                trendingRepositoryGithubAPI.getResults(type: .repository, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
-                    if let results = results {
-                        self?.trendingRepositories = results
-                        self?.isLoading = false
-                        if self?.trendingRepositories?.count == 0 {
-                            self?.noResult = true
-                        }
-                        self?.resultTableView.reloadData()
-                    }
-
-                    if !errorMessage.isEmpty {
-                        print("Search error: " + errorMessage)
-                    }
-                }
-            } else {
+            if isSearching {
                 searchRepositoryGithubAPI.getResults(type: .repository, query: query, language: language ?? "") { [weak self] results, errorMessage in
-                  
-                    if let result = results {
+                    if let result = results?[0] {
                         if result.totalCount == 0 {
                             self?.noResult = true
                             self?.isLoading = false
@@ -123,14 +107,12 @@ class SearchViewController: UIViewController {
                         print("Search error: " + errorMessage)
                     }
                 }
-            }
-        } else if getType == .user {
-            if !isSearching {
-                trendingUserGithubAPI.getResults(type: getType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+            } else {
+                trendingRepositoryGithubAPI.getResults(type: .repository, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
                     if let results = results {
-                        self?.trendingUsers = results
+                        self?.trendingRepositories = results
                         self?.isLoading = false
-                        if self?.trendingRepositories?.count == 0 || self?.trendingUsers?.count == 0 {
+                        if self?.trendingRepositories?.count == 0 {
                             self?.noResult = true
                         }
                         self?.resultTableView.reloadData()
@@ -140,10 +122,12 @@ class SearchViewController: UIViewController {
                         print("Search error: " + errorMessage)
                     }
                 }
-            } else {
+            }
+        } else if getType == .user {
+            if isSearching {
                 searchUserGithubAPI.getResults(type: .user, query: query, language: language ?? "") { [weak self] results, errorMessage in
                   
-                    if let result = results {
+                    if let result = results?[0] {
                         if result.totalCount == 0 {
                             self?.noResult = true
                             self?.isLoading = false
@@ -155,6 +139,21 @@ class SearchViewController: UIViewController {
                         self?.resultTableView.reloadData()
                     }
                   
+                    if !errorMessage.isEmpty {
+                        print("Search error: " + errorMessage)
+                    }
+                }
+            } else {
+                trendingUserGithubAPI.getResults(type: getType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                    if let results = results {
+                        self?.trendingUsers = results
+                        self?.isLoading = false
+                        if self?.trendingRepositories?.count == 0 || self?.trendingUsers?.count == 0 {
+                            self?.noResult = true
+                        }
+                        self?.resultTableView.reloadData()
+                    }
+
                     if !errorMessage.isEmpty {
                         print("Search error: " + errorMessage)
                     }

@@ -14,10 +14,10 @@ class GitHubAPI<Element: Mappable> {
     let defaultSession = URLSession(configuration: .default)
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
-    var element: Element?
+    var elements: [Element] = []
     
     typealias JSONDictionary = [String: Any]
-    typealias QueryResult = (Element?, String) -> Void
+    typealias QueryResults = ([Element]?, String) -> Void
     
     func createURL(type: GetType, query: String, language: String, fullname: String, username: String) -> URL? {
         var components = URLComponents()
@@ -40,13 +40,18 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getUser(username: username).scheme
             components.host = Router.getUser(username: username).host
             components.path = Router.getUser(username: username).path
+        } else if type == .getOpenIssues {
+            components.scheme = Router.getOpenIssues(fullname: fullname).scheme
+            components.host = Router.getOpenIssues(fullname: fullname).host
+            components.path = Router.getOpenIssues(fullname: fullname).path
         }
+        
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
         return components.url
     }
     
     
-    func getResults(type: GetType, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResult) {
+    func getResults(type: GetType, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
         dataTask?.cancel()
         guard let url = createURL(type: type, query: query, language: language, fullname: fullname, username: username) else {
           return
@@ -64,9 +69,9 @@ class GitHubAPI<Element: Mappable> {
                 let data = data,
                 let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
-                    self?.updateSearchResults(data)
+                self?.updateSearchResults(type: type, data)
                     DispatchQueue.main.async {
-                        completion(self?.element, self?.errorMessage ?? "")
+                        completion(self?.elements, self?.errorMessage ?? "")
                     }
                 }
         }
@@ -74,15 +79,34 @@ class GitHubAPI<Element: Mappable> {
     }
         
       
-    private func updateSearchResults(_ data: Data) {
-        do {
-            if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
-                element = Element(JSON: item)!
+    private func updateSearchResults(type: GetType, _ data: Data) {
+        elements.removeAll()
+        var jsonArray: Array<Any>!
+        switch type {
+        case .getRepository, .getUser, .repository, .user: /// Json return 1 element
+            do {
+                if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
+                    elements.append(Element(JSON: item)!)
+                }
+            } catch {
+                errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
+                return
             }
-        } catch {
-            errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
-            return
+        case .getOpenIssues: /// Json return array
+            do {
+                jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
+            } catch {
+                errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
+                return
+            }
+            for json in jsonArray {
+              if let item = json as? [String: AnyObject] {
+                elements.append(Element(JSON: item)!)
+              }
+            }
+        default: break
         }
+        
     }
     
 }

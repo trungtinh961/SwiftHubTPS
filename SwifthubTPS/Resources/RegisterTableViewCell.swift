@@ -16,6 +16,7 @@ enum TableViewCellIdentifiers: String {
     case loading = "LoadingCell"
     case noResult = "NoResultCell"
     case detailCell = "DetailCell"
+    case issueCell = "IssueCell"
 }
 
 struct RegisterTableViewCell {

@@ -204,8 +204,8 @@ extension Repository {
         if let updated = self.updatedAt {
             detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.timeAgo(), hideDisclosure: true))
         }
-        if let homepage = self.homepage {
-            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_link.rawValue, titleCell: "Homepage", detail: homepage, hideDisclosure: false))
+        if let homepage = self.homepage, homepage != "" {
+            detailCellProperties.append(DetailCellProperty(id: "homepage", imgName: ImageName.icon_cell_link.rawValue, titleCell: "Homepage", detail: homepage, hideDisclosure: false))
         }
         
         detailCellProperties.append(DetailCellProperty(id: "issues", imgName: ImageName.icon_cell_issues.rawValue, titleCell: "Issues", detail: self.openIssuesCount?.kFormatted() ?? "", hideDisclosure: false))

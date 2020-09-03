@@ -67,7 +67,7 @@ class RepositoryViewController: UIViewController {
     func getData() {
         isLoading = true
         repositoryGithubAPI.getResults(type: .getRepository, fullname: repoFullname!) { [weak self] results, errorMessage in
-            if let result = results {
+            if let result = results?[0] {
                 self?.repositoryItem = result
                 self?.isLoading = false
                 if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
@@ -119,8 +119,30 @@ extension RepositoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)        
-        
+        let itemCell = repositoryDetails?[indexPath.row]
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         print(repositoryDetails?[indexPath.row].id ?? "")
+        
+        switch itemCell!.id {
+        case "homepage":
+            print("home00000000")
+            if let url = URL(string: repositoryItem?.homepage ?? "") {
+                UIApplication.shared.open(url)
+            }
+        case "issues":            
+            let issuesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.issueVC.rawValue) as! IssueViewController
+            issuesViewController.modalPresentationStyle = .automatic
+            issuesViewController.repoItem = repositoryItem
+            self.present(issuesViewController, animated:true, completion:nil)
+        default:
+            break
+        }
+        
+        
+        
+        
+        
+        
     }
 }
 

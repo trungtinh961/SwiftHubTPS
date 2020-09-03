@@ -32,6 +32,12 @@
 		BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB7870E24F91619002779B2 /* NoResultCell.xib */; };
 		BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE486F2500A2CF00A5AB12 /* UserViewController.swift */; };
 		BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48722500C77A00A5AB12 /* UINavigationItem.swift */; };
+		BABE48752500D87800A5AB12 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48742500D87800A5AB12 /* Issue.swift */; };
+		BABE48772500DB4E00A5AB12 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48762500DB4E00A5AB12 /* State.swift */; };
+		BABE48792500DB8A00A5AB12 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48782500DB8A00A5AB12 /* PullRequest.swift */; };
+		BABE487C2500DBFF00A5AB12 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE487B2500DBFF00A5AB12 /* IssueViewController.swift */; };
+		BABE487F2500DC3700A5AB12 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE487D2500DC3700A5AB12 /* IssueCell.swift */; };
+		BABE48802500DC3700A5AB12 /* IssueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABE487E2500DC3700A5AB12 /* IssueCell.xib */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -75,6 +81,12 @@
 		BAB7870E24F91619002779B2 /* NoResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultCell.xib; sourceTree = "<group>"; };
 		BABE486F2500A2CF00A5AB12 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		BABE48722500C77A00A5AB12 /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
+		BABE48742500D87800A5AB12 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		BABE48762500DB4E00A5AB12 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		BABE48782500DB8A00A5AB12 /* PullRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequest.swift; sourceTree = "<group>"; };
+		BABE487B2500DBFF00A5AB12 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
+		BABE487D2500DC3700A5AB12 /* IssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
+		BABE487E2500DC3700A5AB12 /* IssueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueCell.xib; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,6 +246,16 @@
 			path = UINavigationItem;
 			sourceTree = "<group>";
 		};
+		BABE487A2500DBE400A5AB12 /* Issue */ = {
+			isa = PBXGroup;
+			children = (
+				BABE487B2500DBFF00A5AB12 /* IssueViewController.swift */,
+				BABE487D2500DC3700A5AB12 /* IssueCell.swift */,
+				BABE487E2500DC3700A5AB12 /* IssueCell.xib */,
+			);
+			path = Issue;
+			sourceTree = "<group>";
+		};
 		BAC5D28124F3C13800A731F0 = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +313,7 @@
 		BAC5D2A524F3C21900A731F0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BABE487A2500DBE400A5AB12 /* Issue */,
 				BAB786F924F8A6CE002779B2 /* Language */,
 				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
@@ -326,8 +349,11 @@
 		BAD3886E24F60B370045C10E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BABE48742500D87800A5AB12 /* Issue.swift */,
 				BAB7870224F8B453002779B2 /* Language.swift */,
+				BABE48782500DB8A00A5AB12 /* PullRequest.swift */,
 				BAD3886F24F60B830045C10E /* Repository.swift */,
+				BABE48762500DB4E00A5AB12 /* State.swift */,
 				BA3D105824F616550079C5A1 /* User.swift */,
 			);
 			path = Models;
@@ -393,6 +419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BABE48802500DC3700A5AB12 /* IssueCell.xib in Resources */,
 				BAC5D29C24F3C13B00A731F0 /* LaunchScreen.storyboard in Resources */,
 				BAC5D29924F3C13B00A731F0 /* Assets.xcassets in Resources */,
 				BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */,
@@ -455,10 +482,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BABE487C2500DBFF00A5AB12 /* IssueViewController.swift in Sources */,
 				BA3D106224F751500079C5A1 /* Foundation.swift in Sources */,
 				BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */,
 				BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */,
 				BAB7870C24F91367002779B2 /* UIViewController.swift in Sources */,
+				BABE487F2500DC3700A5AB12 /* IssueCell.swift in Sources */,
 				BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */,
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */,
@@ -469,11 +498,13 @@
 				BAB51E6624FE26D1005A4F7D /* DetailCell.swift in Sources */,
 				BA3D106A24F76D2D0079C5A1 /* Router.swift in Sources */,
 				BAB7870324F8B453002779B2 /* Language.swift in Sources */,
+				BABE48792500DB8A00A5AB12 /* PullRequest.swift in Sources */,
 				BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */,
 				BAB7870F24F91619002779B2 /* NoResultCell.swift in Sources */,
 				BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */,
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
+				BABE48772500DB4E00A5AB12 /* State.swift in Sources */,
 				BAB7870824F8F43F002779B2 /* LoadingCell.swift in Sources */,
 				BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
@@ -481,6 +512,7 @@
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,
 				BA3D105924F616550079C5A1 /* User.swift in Sources */,
 				BA3D106824F763D50079C5A1 /* UIImageView+DownloadImage.swift in Sources */,
+				BABE48752500D87800A5AB12 /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

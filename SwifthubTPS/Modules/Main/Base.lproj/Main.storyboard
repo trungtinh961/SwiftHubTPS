@@ -299,6 +299,82 @@
             </objects>
             <point key="canvasLocation" x="2541" y="-320"/>
         </scene>
+        <!--Issue View Controller-->
+        <scene sceneID="kas-mh-Bdt">
+            <objects>
+                <viewController storyboardIdentifier="IssueViewController" id="YQX-KP-OGm" customClass="IssueViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yYa-gJ-yWF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWS-GB-UdU">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="TSm-B3-gwo"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="oU2-8c-wlR">
+                                        <nil key="title"/>
+                                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="sOr-CD-1uQ">
+                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="btnBack:" destination="YQX-KP-OGm" id="pPk-CY-Y1z"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="4GX-Ik-orl">
+                                            <rect key="frame" x="124.5" y="5.5" width="165" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Open"/>
+                                                <segment title="Close"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="stateSegmentControl:" destination="YQX-KP-OGm" eventType="valueChanged" id="5sb-uS-QfH"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="hqU-OZ-M0D">
+                                <rect key="frame" x="167" y="104" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="g3z-st-bhd"/>
+                                    <constraint firstAttribute="height" constant="80" id="pwT-Vk-opT"/>
+                                </constraints>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RaP-d3-wnp">
+                                <rect key="frame" x="8" y="192" width="406" height="662"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="YQX-KP-OGm" id="Xdv-U2-C7x"/>
+                                    <outlet property="delegate" destination="YQX-KP-OGm" id="uF0-Dh-56b"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="hqU-OZ-M0D" firstAttribute="top" secondItem="gWS-GB-UdU" secondAttribute="bottom" constant="16" id="2os-f3-7C0"/>
+                            <constraint firstItem="cVz-Qi-uGm" firstAttribute="bottom" secondItem="RaP-d3-wnp" secondAttribute="bottom" constant="8" id="A2F-pw-LvR"/>
+                            <constraint firstItem="RaP-d3-wnp" firstAttribute="top" secondItem="hqU-OZ-M0D" secondAttribute="bottom" constant="8" id="EtW-tB-jFD"/>
+                            <constraint firstItem="hqU-OZ-M0D" firstAttribute="centerX" secondItem="yYa-gJ-yWF" secondAttribute="centerX" id="JBo-Q2-1LD"/>
+                            <constraint firstItem="gWS-GB-UdU" firstAttribute="top" secondItem="cVz-Qi-uGm" secondAttribute="top" id="JLv-XK-NOo"/>
+                            <constraint firstItem="RaP-d3-wnp" firstAttribute="leading" secondItem="cVz-Qi-uGm" secondAttribute="leading" constant="8" id="cot-i0-b5z"/>
+                            <constraint firstItem="gWS-GB-UdU" firstAttribute="leading" secondItem="cVz-Qi-uGm" secondAttribute="leading" id="gix-W2-fzD"/>
+                            <constraint firstItem="cVz-Qi-uGm" firstAttribute="trailing" secondItem="RaP-d3-wnp" secondAttribute="trailing" id="miz-bG-dfq"/>
+                            <constraint firstAttribute="trailing" secondItem="gWS-GB-UdU" secondAttribute="trailing" id="zLh-Bg-8jR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cVz-Qi-uGm"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgAuthor" destination="hqU-OZ-M0D" id="EmM-bG-ajl"/>
+                        <outlet property="resultTableView" destination="RaP-d3-wnp" id="YED-77-hbN"/>
+                        <outlet property="stateSegmentControl" destination="4GX-Ik-orl" id="l1f-IM-5WJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EAe-do-fvx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3446" y="-320"/>
+        </scene>
         <!--User View Controller-->
         <scene sceneID="q1a-dn-stS">
             <objects>
@@ -667,6 +743,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_navigation_back" width="27" height="27"/>
         <image name="icon_navigation_close" width="27" height="27"/>
         <image name="icon_navigation_github" width="25" height="25"/>
         <image name="icon_navigation_language" width="27" height="17"/>
