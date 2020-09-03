@@ -15,6 +15,8 @@ class RepositoryCell: UITableViewCell {
 
     @IBOutlet weak var imgAuthor: UIImageView!
     
+    @IBOutlet weak var imgRepo: UIImageView!
+    
     @IBOutlet weak var imgCurrentPeriodStars: UIImageView!
     
     @IBOutlet weak var lbFullname: UILabel!
@@ -36,7 +38,9 @@ class RepositoryCell: UITableViewCell {
         mainView.layer.cornerRadius = 5
         viewLanguageColor.layer.cornerRadius = viewLanguageColor.frame.width / 2
         imgAuthor.layer.cornerRadius = imgAuthor.frame.height / 2
+        imgRepo.layer.cornerRadius = imgRepo.frame.height / 2
         imgAuthor.layer.masksToBounds = true
+        imgRepo.layer.masksToBounds = true
         
     }
 

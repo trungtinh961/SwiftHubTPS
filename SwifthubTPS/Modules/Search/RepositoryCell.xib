@@ -17,10 +17,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhs-8N-igS">
-                        <rect key="frame" x="0.0" y="0.0" width="402" height="73"/>
+                        <rect key="frame" x="0.0" y="2" width="400" height="73"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="roM-Gv-gfD">
-                                <rect key="frame" x="6" y="0.0" width="390" height="73"/>
+                                <rect key="frame" x="6" y="0.0" width="388" height="73"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="egu-ZY-meo">
                                         <rect key="frame" x="0.0" y="6.5" width="60" height="60"/>
@@ -30,7 +30,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="BTw-cz-c5Z">
-                                        <rect key="frame" x="68" y="9" width="300" height="55.5"/>
+                                        <rect key="frame" x="68" y="9" width="298" height="55.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="full name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMY-e0-Qh6">
                                                 <rect key="frame" x="0.0" y="0.0" width="59" height="17"/>
@@ -48,7 +48,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zY9-bA-p2s">
-                                                <rect key="frame" x="0.0" y="35.5" width="300" height="20"/>
+                                                <rect key="frame" x="0.0" y="35.5" width="298" height="20"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_star" translatesAutoresizingMaskIntoConstraints="NO" id="qiF-3l-tWv">
                                                         <rect key="frame" x="0.0" y="4" width="12" height="12"/>
@@ -126,7 +126,7 @@
                                         </constraints>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="nN4-vF-AjW">
-                                        <rect key="frame" x="376" y="29.5" width="14" height="14"/>
+                                        <rect key="frame" x="374" y="29.5" width="14" height="14"/>
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="14" id="ISD-sa-z6s"/>
@@ -150,23 +150,23 @@
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_repository" translatesAutoresizingMaskIntoConstraints="NO" id="ixs-7g-Tcq">
-                        <rect key="frame" x="6" y="50.5" width="16" height="16"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <rect key="frame" x="6" y="48.5" width="20" height="20"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.08454962819814682" green="0.29079863429069519" blue="0.067289978265762329" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="16" id="V4V-kQ-t7L"/>
-                            <constraint firstAttribute="width" constant="16" id="XcP-wi-uaD"/>
+                            <constraint firstAttribute="height" constant="20" id="V4V-kQ-t7L"/>
+                            <constraint firstAttribute="width" constant="20" id="XcP-wi-uaD"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="xhs-8N-igS" secondAttribute="trailing" constant="6" id="c1L-zI-zcw"/>
-                    <constraint firstAttribute="bottom" secondItem="xhs-8N-igS" secondAttribute="bottom" constant="4" id="dZ2-OV-2zd"/>
+                    <constraint firstAttribute="trailing" secondItem="xhs-8N-igS" secondAttribute="trailing" constant="8" id="c1L-zI-zcw"/>
+                    <constraint firstAttribute="bottom" secondItem="xhs-8N-igS" secondAttribute="bottom" constant="2" id="dZ2-OV-2zd"/>
                     <constraint firstItem="ixs-7g-Tcq" firstAttribute="leading" secondItem="egu-ZY-meo" secondAttribute="leading" id="fBk-Mw-sMF"/>
                     <constraint firstItem="ixs-7g-Tcq" firstAttribute="bottom" secondItem="egu-ZY-meo" secondAttribute="bottom" id="kOc-ug-nE7"/>
                     <constraint firstItem="xhs-8N-igS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="lfH-5A-wE9"/>
-                    <constraint firstItem="xhs-8N-igS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="rqd-4z-RQF"/>
+                    <constraint firstItem="xhs-8N-igS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="rqd-4z-RQF"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -174,6 +174,7 @@
             <connections>
                 <outlet property="imgAuthor" destination="egu-ZY-meo" id="tgi-3v-zzV"/>
                 <outlet property="imgCurrentPeriodStars" destination="ApM-uC-W22" id="nDO-bv-ch6"/>
+                <outlet property="imgRepo" destination="ixs-7g-Tcq" id="iYP-rZ-mrI"/>
                 <outlet property="lbCurrentPeriodStars" destination="V8n-F2-aip" id="N2c-1I-q3P"/>
                 <outlet property="lbDescription" destination="5aj-nl-Oby" id="dmw-uD-iKS"/>
                 <outlet property="lbFullname" destination="UMY-e0-Qh6" id="lCS-8y-Jxj"/>

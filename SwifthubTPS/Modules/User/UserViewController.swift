@@ -35,7 +35,7 @@ class UserViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navItem.title = username!
+        
         getData()
     }
     
@@ -77,7 +77,8 @@ class UserViewController: UIViewController {
                 self?.lbRepositories.text = "\(self?.userItem?.repositoriesCount ?? 0)"
                 self?.lbFollowers.text = "\(self?.userItem?.followers ?? 0)"
                 self?.lbFollowing.text = "\(self?.userItem?.following ?? 0)"
-//                self?.userDetails = self?.userItem?.getDetailCell()
+                self?.navItem.setTitle(title: self?.userItem?.login ?? self!.username!, subtitle: self?.userItem?.name ?? "")
+                self?.userDetails = self?.userItem?.getDetailCell()
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
@@ -92,11 +93,19 @@ class UserViewController: UIViewController {
 extension UserViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return userDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+        
+        let itemCell = userDetails?[indexPath.row]
+        cell.lbTitleCell.text = itemCell?.titleCell
+        cell.lbDetails.text = itemCell?.detail
+        if let img = itemCell?.imgName {
+            cell.imgCell.image = UIImage(named: img)
+        }
+        cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
         
         return cell
     }

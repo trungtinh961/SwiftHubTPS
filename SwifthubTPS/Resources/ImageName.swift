@@ -23,5 +23,8 @@ enum ImageName: String {
     case icon_cell_git_language = "icon_cell_git_language"
     case icon_cell_size = "icon_cell_size"
     case icon_cell_link = "icon_cell_link"
+    case icon_cell_star = "icon_cell_star"
+    case icon_cell_theme = "icon_cell_theme"
+    case icon_cell_profile_summary = "icon_cell_profile_summary"
 }
 

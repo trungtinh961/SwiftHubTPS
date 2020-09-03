@@ -14,6 +14,8 @@ class UserCell: UITableViewCell {
 
     @IBOutlet weak var imgAuthor: UIImageView!
     
+    @IBOutlet weak var imgUser: UIImageView!
+    
     @IBOutlet weak var lbFullname: UILabel!
     
     @IBOutlet weak var lbDescription: UILabel!
@@ -24,8 +26,9 @@ class UserCell: UITableViewCell {
       
         mainView.layer.cornerRadius = 5
         imgAuthor.layer.cornerRadius = imgAuthor.frame.height / 2
+        imgUser.layer.cornerRadius = imgUser.frame.height / 2
         imgAuthor.layer.masksToBounds = true
-        
+        imgUser.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
