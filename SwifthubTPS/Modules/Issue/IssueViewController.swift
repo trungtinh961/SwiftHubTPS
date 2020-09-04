@@ -37,6 +37,7 @@ class IssueViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.issueCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
         
         ///Config layout
         imgAuthor.layer.masksToBounds = true
@@ -102,38 +103,50 @@ class IssueViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension IssueViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return issueItems?.count ?? 0
+        if isLoading {
+            return 1
+        } else {
+            return issueItems?.count ?? 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.issueCell.rawValue, for: indexPath) as! IssueCell
-        let itemCell = issueItems?[indexPath.row]
-        if let smallURL = URL(string: itemCell?.user?.avatarUrl ?? "") {
-            downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.issueCell.rawValue, for: indexPath) as! IssueCell
+            let itemCell = issueItems?[indexPath.row]
+            if let smallURL = URL(string: itemCell?.user?.avatarUrl ?? "") {
+                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            }
+            cell.lbTitle.text = itemCell?.title
+            if state == .open {
+                cell.lbDescription.text = "#\(itemCell!.number!) opened \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
+                cell.imgState.tintColor = UIColor("#00934E")
+            } else if state == .closed {
+                cell.lbDescription.text = "#\(itemCell!.number!) closed \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
+                cell.imgState.tintColor = .red
+            }
+            
+            cell.lbCommentCount.text = "\(itemCell?.comments ?? 0)"
+            cell.lbCommentCount.subviews.forEach({ $0.removeFromSuperview() })
+            let labels = itemCell!.labels!
+            var currentX: CGFloat = 16
+            for tag in labels {
+                let tagLabel = UILabel(frame: CGRect(x: currentX, y: 0, width: 35, height: 12))
+                tagLabel.text = tag.name
+                tagLabel.font = tagLabel.font.withSize(10)
+                tagLabel.backgroundColor = UIColor("#\(tag.color!)")
+                tagLabel.sizeToFit()
+                cell.lbCommentCount.addSubview(tagLabel)
+                currentX += tagLabel.frame.width + 2
+            }
+            return cell
         }
-        cell.lbTitle.text = itemCell?.title
-        if state == .open {
-            cell.lbDescription.text = "#\(itemCell!.number!) opened \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
-            cell.imgState.tintColor = UIColor("#00934E")
-        } else if state == .closed {
-            cell.lbDescription.text = "#\(itemCell!.number!) closed \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
-            cell.imgState.tintColor = .red
-        }
-        
-        cell.lbCommentCount.text = "\(itemCell?.comments ?? 0)"
-        cell.lbCommentCount.subviews.forEach({ $0.removeFromSuperview() })
-        let labels = itemCell!.labels!
-        var currentX: CGFloat = 16
-        for tag in labels {
-            let tagLabel = UILabel(frame: CGRect(x: currentX, y: 0, width: 35, height: 12))
-            tagLabel.text = tag.name
-            tagLabel.font = tagLabel.font.withSize(10)
-            tagLabel.backgroundColor = UIColor("#\(tag.color!)")
-            tagLabel.sizeToFit()
-            cell.lbCommentCount.addSubview(tagLabel)
-            currentX += tagLabel.frame.width + 2
-        }
-        return cell
     }
     
     

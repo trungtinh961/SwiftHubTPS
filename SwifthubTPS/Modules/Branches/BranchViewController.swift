@@ -40,6 +40,8 @@ class BranchViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
+        
     }
     
     // MARK: - IBActions
@@ -72,16 +74,28 @@ class BranchViewController: UIViewController {
 
 extension BranchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return branchItems?.count ?? 0
+        if isLoading {
+            return 1
+        } else {
+            return branchItems?.count ?? 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
-            
-        cell.imgCell?.image = UIImage(named: ImageName.icon_cell_git_branch.rawValue)
-        cell.lbTitleCell.text = branchItems![indexPath.row].name
-        cell.lbDetails.isHidden = true
-        return cell
+        if isLoading {
+                  let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+                  let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+                  spinner.startAnimating()
+                  return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+                
+            cell.imgCell?.image = UIImage(named: ImageName.icon_cell_git_branch.rawValue)
+            cell.lbTitleCell.text = branchItems![indexPath.row].name
+            cell.lbDetails.isHidden = true
+            return cell
+        }
     }
     
     

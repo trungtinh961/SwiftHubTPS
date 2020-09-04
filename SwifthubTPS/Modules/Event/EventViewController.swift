@@ -1,5 +1,5 @@
 //
-//  CommitViewController.swift
+//  EventViewController.swift
 //  SwifthubTPS
 //
 //  Created by TPS on 9/4/20.
@@ -8,54 +8,60 @@
 
 import UIKit
 
-class CommitViewController: UIViewController {
+class EventViewController: UIViewController {
 
     // MARK: - Properties
     
     var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
-    private var commitGithubAPI = GitHubAPI<Commit>()
-    private var commitItems: [Commit]?
+    private var eventGithubAPI = GitHubAPI<Event>()
+    private var eventItems: [Event]?
     
-    @IBOutlet weak var navItem: UINavigationItem!
+    @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
+    
     
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navItem.title = repoItem?.fullname!
         updateTableView()
-        
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.commitCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.eventCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
+        
+        ///Config layout
+        imgAuthor.layer.masksToBounds = true
+        imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
         
     }
     
-    // MARK: - IBActions
 
+    // MARK: - IBActions
+    
     @IBAction func btnBack(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Private Method
-    
+
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        
-        commitGithubAPI.getResults(type: .getCommits, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        eventGithubAPI.getResults(type: .getEvents, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
-                self?.commitItems = results
+                self?.eventItems = results
                 self?.isLoading = false
+                if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                    self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                }
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
@@ -67,45 +73,43 @@ class CommitViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension CommitViewController: UITableViewDataSource {
+extension EventViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading {
             return 1
         } else {
-            return commitItems?.count ?? 0
+            return eventItems?.count ?? 0
         }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-                  let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
-                  let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-                  spinner.startAnimating()
-                  return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.commitCell.rawValue, for: indexPath) as! CommitCell
-            let itemCell = commitItems?[indexPath.row]
-            if let smallURL = URL(string: itemCell?.author?.avatarUrl ?? "") {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.eventCell.rawValue, for: indexPath) as! EventCell
+            let itemCell = eventItems?[indexPath.row]
+            if let smallURL = URL(string: itemCell?.actor?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
-            cell.lbMessage.text = itemCell?.commit?.message
-            cell.lbDescription.text = itemCell?.commit?.author?.date?.timeAgo()
-            let index = itemCell?.sha?.index((itemCell?.sha!.startIndex)!, offsetBy: 7)
-            let subSHA = itemCell?.sha?.prefix(upTo: index!)
-            cell.lbTag.text = String(subSHA!)
+            cell.lbTitle.text = "\(itemCell?.actor?.login ?? "") starred \(itemCell?.repository?.name ?? "")"
+            cell.lbTime.text = itemCell?.createdAt?.timeAgo()
             return cell
         }
+
+       
     }
+    
     
 }
 
 // MARK: - UITableViewDelegate
-extension CommitViewController: UITableViewDelegate {
+extension EventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let url = URL(string: commitItems![indexPath.row].htmlUrl ?? "") {
-            UIApplication.shared.open(url)
-        }
+        
     }
 }

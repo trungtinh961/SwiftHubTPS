@@ -44,6 +44,7 @@ class UserViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
         
         
         /// Config layout
@@ -93,21 +94,32 @@ class UserViewController: UIViewController {
 extension UserViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userDetails?.count ?? 0
+        if isLoading {
+            return 1
+        } else {
+            return userDetails?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
-        
-        let itemCell = userDetails?[indexPath.row]
-        cell.lbTitleCell.text = itemCell?.titleCell
-        cell.lbDetails.text = itemCell?.detail
-        if let img = itemCell?.imgName {
-            cell.imgCell.image = UIImage(named: img)
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+            
+            let itemCell = userDetails?[indexPath.row]
+            cell.lbTitleCell.text = itemCell?.titleCell
+            cell.lbDetails.text = itemCell?.detail
+            if let img = itemCell?.imgName {
+                cell.imgCell.image = UIImage(named: img)
+            }
+            cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
+            
+            return cell
         }
-        cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
-        
-        return cell
     }
     
 }

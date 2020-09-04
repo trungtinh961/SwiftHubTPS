@@ -70,6 +70,11 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getContributors(fullname: fullname).host
             components.path = Router.getContributors(fullname: fullname).path
             components.setQueryItems(with: Router.getContributors(fullname: fullname).parameters!)
+        } else if type == .getEvents {
+            components.scheme = Router.getEvents(fullname: fullname).scheme
+            components.host = Router.getEvents(fullname: fullname).host
+            components.path = Router.getEvents(fullname: fullname).path
+            components.setQueryItems(with: Router.getEvents(fullname: fullname).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -118,7 +123,7 @@ class GitHubAPI<Element: Mappable> {
                 errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
                 return
             }
-        case .getIssues, .getPullRequests, .getCommits, .getBranches, .getReleases, .getContributors: /// Json return array
+        case .getIssues, .getPullRequests, .getCommits, .getBranches, .getReleases, .getContributors, .getEvents: /// Json return array
             do {
                 jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
             } catch {

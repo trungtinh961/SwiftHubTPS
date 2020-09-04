@@ -37,6 +37,7 @@ class ReleaseViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.releaseCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
         
     }
     
@@ -69,19 +70,31 @@ class ReleaseViewController: UIViewController {
 
 extension ReleaseViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return releaseItems?.count ?? 0
+        if isLoading {
+            return 1
+        } else {
+            return releaseItems?.count ?? 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.releaseCell.rawValue, for: indexPath) as! ReleaseCell
-        let itemCell = releaseItems![indexPath.row]
-        if let smallURL = URL(string: itemCell.author?.avatarUrl ?? "") {
-            downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.releaseCell.rawValue, for: indexPath) as! ReleaseCell
+            let itemCell = releaseItems![indexPath.row]
+            if let smallURL = URL(string: itemCell.author?.avatarUrl ?? "") {
+                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            }
+            cell.lbName.text = "\(itemCell.tagName ?? "") - \(itemCell.name  ?? "")"
+            cell.lbTime.text = itemCell.createdAt?.timeAgo()
+            cell.lbBody.text = itemCell.body
+            return cell
         }
-        cell.lbName.text = "\(itemCell.tagName ?? "") - \(itemCell.name  ?? "")"
-        cell.lbTime.text = itemCell.createdAt?.timeAgo()
-        cell.lbBody.text = itemCell.body
-        return cell
     }
     
     

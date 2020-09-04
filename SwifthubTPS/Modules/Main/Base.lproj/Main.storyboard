@@ -604,6 +604,70 @@
             </objects>
             <point key="canvasLocation" x="7162" y="-320"/>
         </scene>
+        <!--Event View Controller-->
+        <scene sceneID="Udn-1e-rZA">
+            <objects>
+                <viewController storyboardIdentifier="EventViewController" id="WaU-GU-hi0" customClass="EventViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ucd-hq-7hM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFs-jl-a4q">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="o6C-dm-KgJ"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Events" id="EEa-fp-t5y">
+                                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="R3n-cB-gsr">
+                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="btnBack:" destination="WaU-GU-hi0" id="2LK-wP-2WF"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="MIx-Rs-gWX">
+                                <rect key="frame" x="167" y="104" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="O0U-Zr-VxX"/>
+                                    <constraint firstAttribute="height" constant="80" id="t52-pP-85c"/>
+                                </constraints>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uTT-CV-vta">
+                                <rect key="frame" x="8" y="192" width="406" height="662"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="WaU-GU-hi0" id="w1A-GH-Tha"/>
+                                    <outlet property="delegate" destination="WaU-GU-hi0" id="sqp-fR-sHx"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="EDR-Md-y25" firstAttribute="bottom" secondItem="uTT-CV-vta" secondAttribute="bottom" constant="8" id="EGx-gW-9mM"/>
+                            <constraint firstItem="EDR-Md-y25" firstAttribute="trailing" secondItem="jFs-jl-a4q" secondAttribute="trailing" id="R4i-Tz-hDP"/>
+                            <constraint firstItem="jFs-jl-a4q" firstAttribute="top" secondItem="EDR-Md-y25" secondAttribute="top" id="S8r-1f-sEj"/>
+                            <constraint firstItem="uTT-CV-vta" firstAttribute="leading" secondItem="EDR-Md-y25" secondAttribute="leading" constant="8" id="i4H-0C-ZT8"/>
+                            <constraint firstItem="EDR-Md-y25" firstAttribute="trailing" secondItem="uTT-CV-vta" secondAttribute="trailing" id="icz-YN-aI5"/>
+                            <constraint firstItem="jFs-jl-a4q" firstAttribute="leading" secondItem="ucd-hq-7hM" secondAttribute="leading" id="q5i-VP-7hA"/>
+                            <constraint firstItem="MIx-Rs-gWX" firstAttribute="top" secondItem="jFs-jl-a4q" secondAttribute="bottom" constant="16" id="s9P-O1-Cwt"/>
+                            <constraint firstItem="MIx-Rs-gWX" firstAttribute="centerX" secondItem="ucd-hq-7hM" secondAttribute="centerX" id="x5V-e9-Vgq"/>
+                            <constraint firstItem="uTT-CV-vta" firstAttribute="top" secondItem="MIx-Rs-gWX" secondAttribute="bottom" constant="8" id="ylK-Ne-e42"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EDR-Md-y25"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgAuthor" destination="MIx-Rs-gWX" id="sSD-tJ-grl"/>
+                        <outlet property="resultTableView" destination="uTT-CV-vta" id="YDS-DU-mxk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lnq-h1-rvx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7939" y="-320"/>
+        </scene>
         <!--Issue View Controller-->
         <scene sceneID="kas-mh-Bdt">
             <objects>

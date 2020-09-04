@@ -46,6 +46,7 @@ class RepositoryViewController: UIViewController {
         getData()
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
         
         
         /// Config layout
@@ -96,25 +97,37 @@ class RepositoryViewController: UIViewController {
 extension RepositoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repositoryDetails?.count ?? 0
+        if isLoading {
+            return 1
+        } else {
+            return repositoryDetails?.count ?? 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
-
-        let itemCell = repositoryDetails?[indexPath.row]
-        cell.lbTitleCell.text = itemCell?.titleCell
-        if repositoryDetails?[indexPath.row].id == "branches" {
-            cell.lbDetails.text = branch
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
         } else {
-            cell.lbDetails.text = itemCell?.detail
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+
+            let itemCell = repositoryDetails?[indexPath.row]
+            cell.lbTitleCell.text = itemCell?.titleCell
+            if repositoryDetails?[indexPath.row].id == "branches" {
+                cell.lbDetails.text = branch
+            } else {
+                cell.lbDetails.text = itemCell?.detail
+            }
+            if let img = itemCell?.imgName {
+                cell.imgCell.image = UIImage(named: img)
+            }
+            cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
+            
+            return cell
         }
-        if let img = itemCell?.imgName {
-            cell.imgCell.image = UIImage(named: img)
-        }        
-        cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
-        
-        return cell
     }
     
     
@@ -166,6 +179,11 @@ extension RepositoryViewController: UITableViewDelegate {
             contributorViewController.modalPresentationStyle = .automatic
             contributorViewController.repoItem = repositoryItem
             self.present(contributorViewController, animated:true, completion:nil)
+        case "events":
+            let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.eventVC.rawValue) as! EventViewController
+            eventViewController.modalPresentationStyle = .automatic
+            eventViewController.repoItem = repositoryItem
+            self.present(eventViewController, animated:true, completion:nil)
             
         default:
             break
