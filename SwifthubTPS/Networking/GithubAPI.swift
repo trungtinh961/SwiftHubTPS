@@ -19,7 +19,7 @@ class GitHubAPI<Element: Mappable> {
     typealias JSONDictionary = [String: Any]
     typealias QueryResults = ([Element]?, String) -> Void
     
-    func createURL(type: GetType, query: String, language: String, fullname: String, username: String) -> URL? {
+    func createURL(type: GetType, state: State, query: String, language: String, fullname: String, username: String) -> URL? {
         var components = URLComponents()
         
         if type == .repository {
@@ -40,10 +40,11 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getUser(username: username).scheme
             components.host = Router.getUser(username: username).host
             components.path = Router.getUser(username: username).path
-        } else if type == .getOpenIssues {
-            components.scheme = Router.getOpenIssues(fullname: fullname).scheme
-            components.host = Router.getOpenIssues(fullname: fullname).host
-            components.path = Router.getOpenIssues(fullname: fullname).path
+        } else if type == .getIssues {
+            components.scheme = Router.getIssues(fullname: fullname, state: state).scheme
+            components.host = Router.getIssues(fullname: fullname, state: state).host
+            components.path = Router.getIssues(fullname: fullname, state: state).path
+            components.setQueryItems(with: Router.getIssues(fullname: fullname, state: state).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -51,9 +52,9 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getResults(type: GetType, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
+    func getResults(type: GetType, state: State = .open, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
         dataTask?.cancel()
-        guard let url = createURL(type: type, query: query, language: language, fullname: fullname, username: username) else {
+        guard let url = createURL(type: type, state: state, query: query, language: language, fullname: fullname, username: username) else {
           return
         }
         var request = URLRequest(url: url)
@@ -92,7 +93,7 @@ class GitHubAPI<Element: Mappable> {
                 errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
                 return
             }
-        case .getOpenIssues: /// Json return array
+        case .getIssues: /// Json return array
             do {
                 jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
             } catch {

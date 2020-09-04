@@ -28,7 +28,7 @@ class IssueViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getData()
+        updateTableView()
     }
     
     
@@ -52,6 +52,7 @@ class IssueViewController: UIViewController {
         case 1: state = .closed
         default: break
         }
+        updateTableView()
     }
     
     @IBAction func btnBack(_ sender: Any) {
@@ -61,21 +62,38 @@ class IssueViewController: UIViewController {
     
     // MARK: - Public Method
     
-    func getData(){
+    func updateTableView(){
         isLoading = true
-        issueGithubAPI.getResults(type: .getOpenIssues, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
-            if let results = results {
-                self?.issueItems = results
-                self?.isLoading = false
-                if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
-                    self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+        if state == .open {
+            issueGithubAPI.getResults(type: .getIssues, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.issueItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
+                    self?.resultTableView.reloadData()
                 }
-                self?.resultTableView.reloadData()
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
-            if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+        } else if state == .closed {
+            issueGithubAPI.getResults(type: .getIssues, state: .closed, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.issueItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
+                    self?.resultTableView.reloadData()
+                }
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
         }
+        
     }
     
     
@@ -94,7 +112,14 @@ extension IssueViewController: UITableViewDataSource {
             downloadTask = cell.imgAuthor.loadImage(url: smallURL)
         }
         cell.lbTitle.text = itemCell?.title
-        cell.lbDescription.text = "#\(itemCell!.number!) opened \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
+        if state == .open {
+            cell.lbDescription.text = "#\(itemCell!.number!) opened \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
+            cell.imgState.tintColor = UIColor("#00934E")
+        } else if state == .closed {
+            cell.lbDescription.text = "#\(itemCell!.number!) closed \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
+            cell.imgState.tintColor = .red
+        }
+        
         cell.lbCommentCount.text = "\(itemCell?.comments ?? 0)"
         cell.lbCommentCount.subviews.forEach({ $0.removeFromSuperview() })
         let labels = itemCell!.labels!

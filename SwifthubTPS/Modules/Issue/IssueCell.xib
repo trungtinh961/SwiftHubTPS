@@ -110,7 +110,7 @@ https://api.github.com/repos/bottlerocket-os/bottlerocket/issues
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_issue" translatesAutoresizingMaskIntoConstraints="NO" id="KX3-jc-kAX">
                                 <rect key="frame" x="6" y="46" width="20" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" red="0.20883429050445557" green="0.70090115070343018" blue="0.32071930170059204" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.18135777115821838" green="0.61846274137496948" blue="0.33028650283813477" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
