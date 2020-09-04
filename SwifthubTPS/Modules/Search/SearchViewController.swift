@@ -48,10 +48,10 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         /// Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryTrending.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userTrending.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResult.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
         
         
    }
@@ -187,7 +187,7 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
@@ -199,11 +199,11 @@ extension SearchViewController: UITableViewDataSource {
                     lbTitle.text = "0 users \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
                 }
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResult.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else if getType == .repository {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryTrending.rawValue, for: indexPath) as! RepositoryCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
             
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
@@ -242,7 +242,7 @@ extension SearchViewController: UITableViewDataSource {
             }
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userTrending.rawValue, for: indexPath) as! UserCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32

@@ -44,8 +44,8 @@ class LanguageViewController: UIViewController {
         
         /// Register Cell
         
-        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.language.rawValue)
-        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
+        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.languageCell.rawValue)
+        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
 
         /// Config layouts
         btnAllLanguage.layer.cornerRadius = 5
@@ -121,12 +121,12 @@ extension LanguageViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.language.rawValue, for: indexPath) as! LanguageCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.languageCell.rawValue, for: indexPath) as! LanguageCell
             cell.lbLanguage.text = languages![indexPath.row].name
             cell.imgCheck.isHidden = true
             if !isFirstLaunch, indexPath == cellChecked {

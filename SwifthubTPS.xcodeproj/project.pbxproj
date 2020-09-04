@@ -71,6 +71,7 @@
 		BAFF2380250243F400843E38 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF237F250243F400843E38 /* Comment.swift */; };
 		BAFF238525024D4A00843E38 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF238325024D4A00843E38 /* EventCell.swift */; };
 		BAFF238625024D4A00843E38 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAFF238425024D4A00843E38 /* EventCell.xib */; };
+		BAFF23892502562200843E38 /* StarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23882502562200843E38 /* StarViewController.swift */; };
 		D2C57271620F948D548D8370 /* Pods_SwifthubTPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +145,7 @@
 		BAFF237F250243F400843E38 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BAFF238325024D4A00843E38 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		BAFF238425024D4A00843E38 /* EventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
+		BAFF23882502562200843E38 /* StarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +382,7 @@
 				BAB51E5F24FDFC26005A4F7D /* Repository */,
 				BAD3886624F608BD0045C10E /* Search */,
 				BA3D105B24F61FFE0079C5A1 /* Setting */,
+				BAFF2387250255F800843E38 /* Star */,
 				BABE486E2500A29800A5AB12 /* User */,
 			);
 			path = Modules;
@@ -471,6 +474,14 @@
 				BAFF238425024D4A00843E38 /* EventCell.xib */,
 			);
 			path = Event;
+			sourceTree = "<group>";
+		};
+		BAFF2387250255F800843E38 /* Star */ = {
+			isa = PBXGroup;
+			children = (
+				BAFF23882502562200843E38 /* StarViewController.swift */,
+			);
+			path = Star;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -648,6 +659,7 @@
 				BAFF235D2501F64200843E38 /* CommitViewController.swift in Sources */,
 				BA3D106824F763D50079C5A1 /* UIImageView+DownloadImage.swift in Sources */,
 				BAFF23732502380400843E38 /* ContributorCell.swift in Sources */,
+				BAFF23892502562200843E38 /* StarViewController.swift in Sources */,
 				BABE48752500D87800A5AB12 /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

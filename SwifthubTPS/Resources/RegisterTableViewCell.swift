@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 enum TableViewCellIdentifiers: String {
-    case repositoryTrending = "RepositoryCell"
-    case userTrending = "UserCell"
-    case language = "LanguageCell"
-    case loading = "LoadingCell"
-    case noResult = "NoResultCell"
+    case repositoryCell = "RepositoryCell"
+    case userCell = "UserCell"
+    case languageCell = "LanguageCell"
+    case loadingCell = "LoadingCell"
+    case noResultCell = "NoResultCell"
     case detailCell = "DetailCell"
     case issueCell = "IssueCell"
     case pullRequestCell = "PullRequestCell"

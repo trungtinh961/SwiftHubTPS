@@ -37,7 +37,7 @@ class ReleaseViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.releaseCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
     }
     
@@ -80,7 +80,7 @@ extension ReleaseViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell

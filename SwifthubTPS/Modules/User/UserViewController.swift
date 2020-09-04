@@ -44,7 +44,7 @@ class UserViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loading.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
         
         /// Config layout
@@ -103,7 +103,7 @@ extension UserViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loading.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
@@ -129,6 +129,20 @@ extension UserViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let itemCell = userDetails?[indexPath.row]
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        print(userDetails?[indexPath.row].id ?? "")
+        
+        switch itemCell!.id {
+        case "starred":
+            let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
+            starsViewController.modalPresentationStyle = .automatic
+            starsViewController.userItem = userItem
+            self.present(starsViewController, animated:true, completion:nil)
+        
+        default:
+            break
+        }
                 
     }
     
