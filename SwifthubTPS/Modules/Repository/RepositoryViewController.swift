@@ -134,15 +134,14 @@ extension RepositoryViewController: UITableViewDelegate {
             issuesViewController.modalPresentationStyle = .automatic
             issuesViewController.repoItem = repositoryItem
             self.present(issuesViewController, animated:true, completion:nil)
+        case "pulls":
+            let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.pullVC.rawValue) as! PullRequestViewController
+            pullsViewController.modalPresentationStyle = .automatic
+            pullsViewController.repoItem = repositoryItem
+            self.present(pullsViewController, animated:true, completion:nil)
         default:
             break
         }
-        
-        
-        
-        
-        
-        
     }
 }
 

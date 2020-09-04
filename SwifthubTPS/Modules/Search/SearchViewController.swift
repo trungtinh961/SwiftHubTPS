@@ -289,8 +289,7 @@ extension SearchViewController: UITableViewDelegate {
             userViewController.modalPresentationStyle = .automatic
             self.present(userViewController, animated:true, completion:nil)
             
-        }
-        
+        }        
     }    
 }
 

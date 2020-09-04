@@ -1,26 +1,23 @@
 //
-//  IssueCell.swift
+//  PullRequestCell.swift
 //  SwifthubTPS
 //
-//  Created by TPS on 9/3/20.
+//  Created by TPS on 9/4/20.
 //  Copyright © 2020 Trung Tinh. All rights reserved.
 //
 
 import UIKit
 
-class IssueCell: UITableViewCell {
-    
-    
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var labelView: UIView!
+class PullRequestCell: UITableViewCell {
+
     @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var imgState: UIImageView!
-    @IBOutlet weak var imgDisclosure: UIImageView!
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbDescription: UILabel!
-    @IBOutlet weak var lbCommentCount: UILabel!
+    @IBOutlet weak var labelView: UIView!
+    @IBOutlet weak var mainView: UIView!
     
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -29,12 +26,10 @@ class IssueCell: UITableViewCell {
         imgState.layer.cornerRadius = imgState.frame.width / 2
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         
     }
     

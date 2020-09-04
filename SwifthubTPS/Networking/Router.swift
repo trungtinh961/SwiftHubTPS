@@ -15,6 +15,7 @@ enum GetType: Int {
     case getRepository
     case getUser
     case getIssues
+    case getPullRequests
 }
 
 enum Router {
@@ -27,7 +28,7 @@ enum Router {
     case getRepository(fullname: String)
     case getUser(username: String)
     case getIssues(fullname: String, state: State)
-    
+    case getPullRequests(fullname: String, state: State)
     
     var scheme: String {
         switch self {
@@ -53,7 +54,7 @@ enum Router {
         case .getRepository(let fullname): return "/repos/\(fullname)"
         case .getUser(let username): return "/users/\(username)"
         case .getIssues(let fullname, _): return "/repos/\(fullname)/issues"
-        
+        case .getPullRequests(let fullname, _): return "/repos/\(fullname)/pulls"
         }
     }
     
@@ -80,7 +81,7 @@ enum Router {
             } else {
                 params["q"] = query
             }
-        case .getIssues(_, let state): params["state"] = state.rawValue
+        case .getIssues(_, let state), .getPullRequests(_, let state): params["state"] = state.rawValue
         default: break
         }
         params["per_page"] = "50"

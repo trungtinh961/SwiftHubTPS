@@ -38,6 +38,9 @@
 		BABE487C2500DBFF00A5AB12 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE487B2500DBFF00A5AB12 /* IssueViewController.swift */; };
 		BABE487F2500DC3700A5AB12 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE487D2500DC3700A5AB12 /* IssueCell.swift */; };
 		BABE48802500DC3700A5AB12 /* IssueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABE487E2500DC3700A5AB12 /* IssueCell.xib */; };
+		BABE48842501EA3F00A5AB12 /* PullRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48822501EA3F00A5AB12 /* PullRequestCell.swift */; };
+		BABE48852501EA3F00A5AB12 /* PullRequestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABE48832501EA3F00A5AB12 /* PullRequestCell.xib */; };
+		BABE48872501EA5700A5AB12 /* PullRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48862501EA5700A5AB12 /* PullRequestViewController.swift */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -49,6 +52,8 @@
 		BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD3886A24F60A790045C10E /* RepositoryCell.swift */; };
 		BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAD3886B24F60A790045C10E /* RepositoryCell.xib */; };
 		BAD3887024F60B830045C10E /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD3886F24F60B830045C10E /* Repository.swift */; };
+		BAFF23582501F48E00843E38 /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23572501F48E00843E38 /* Commit.swift */; };
+		BAFF235A2501F4C600843E38 /* Committer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23592501F4C600843E38 /* Committer.swift */; };
 		D2C57271620F948D548D8370 /* Pods_SwifthubTPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +92,9 @@
 		BABE487B2500DBFF00A5AB12 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		BABE487D2500DC3700A5AB12 /* IssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
 		BABE487E2500DC3700A5AB12 /* IssueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueCell.xib; sourceTree = "<group>"; };
+		BABE48822501EA3F00A5AB12 /* PullRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestCell.swift; sourceTree = "<group>"; };
+		BABE48832501EA3F00A5AB12 /* PullRequestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PullRequestCell.xib; sourceTree = "<group>"; };
+		BABE48862501EA5700A5AB12 /* PullRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestViewController.swift; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +108,8 @@
 		BAD3886A24F60A790045C10E /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
 		BAD3886B24F60A790045C10E /* RepositoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepositoryCell.xib; sourceTree = "<group>"; };
 		BAD3886F24F60B830045C10E /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		BAFF23572501F48E00843E38 /* Commit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
+		BAFF23592501F4C600843E38 /* Committer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Committer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +266,16 @@
 			path = Issue;
 			sourceTree = "<group>";
 		};
+		BABE48812501EA0200A5AB12 /* Pull Request */ = {
+			isa = PBXGroup;
+			children = (
+				BABE48862501EA5700A5AB12 /* PullRequestViewController.swift */,
+				BABE48822501EA3F00A5AB12 /* PullRequestCell.swift */,
+				BABE48832501EA3F00A5AB12 /* PullRequestCell.xib */,
+			);
+			path = "Pull Request";
+			sourceTree = "<group>";
+		};
 		BAC5D28124F3C13800A731F0 = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +337,7 @@
 				BAB786F924F8A6CE002779B2 /* Language */,
 				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
+				BABE48812501EA0200A5AB12 /* Pull Request */,
 				BAB51E5F24FDFC26005A4F7D /* Repository */,
 				BAD3886624F608BD0045C10E /* Search */,
 				BA3D105B24F61FFE0079C5A1 /* Setting */,
@@ -349,6 +370,8 @@
 		BAD3886E24F60B370045C10E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BAFF23572501F48E00843E38 /* Commit.swift */,
+				BAFF23592501F4C600843E38 /* Committer.swift */,
 				BABE48742500D87800A5AB12 /* Issue.swift */,
 				BAB7870224F8B453002779B2 /* Language.swift */,
 				BABE48782500DB8A00A5AB12 /* PullRequest.swift */,
@@ -425,6 +448,7 @@
 				BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */,
 				BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */,
 				BAB51E6724FE26D1005A4F7D /* DetailCell.xib in Resources */,
+				BABE48852501EA3F00A5AB12 /* PullRequestCell.xib in Resources */,
 				BAB7870124F8AB11002779B2 /* LanguageCell.xib in Resources */,
 				BAC5D2AC24F5215D00A731F0 /* Icons.xcassets in Resources */,
 				BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */,
@@ -484,6 +508,8 @@
 			files = (
 				BABE487C2500DBFF00A5AB12 /* IssueViewController.swift in Sources */,
 				BA3D106224F751500079C5A1 /* Foundation.swift in Sources */,
+				BAFF235A2501F4C600843E38 /* Committer.swift in Sources */,
+				BAFF23582501F48E00843E38 /* Commit.swift in Sources */,
 				BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */,
 				BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */,
 				BAB7870C24F91367002779B2 /* UIViewController.swift in Sources */,
@@ -504,8 +530,10 @@
 				BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */,
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
+				BABE48842501EA3F00A5AB12 /* PullRequestCell.swift in Sources */,
 				BABE48772500DB4E00A5AB12 /* State.swift in Sources */,
 				BAB7870824F8F43F002779B2 /* LoadingCell.swift in Sources */,
+				BABE48872501EA5700A5AB12 /* PullRequestViewController.swift in Sources */,
 				BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */,
