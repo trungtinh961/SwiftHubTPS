@@ -18,6 +18,7 @@ enum TableViewCellIdentifiers: String {
     case detailCell = "DetailCell"
     case issueCell = "IssueCell"
     case pullRequestCell = "PullRequestCell"
+    case commitCell = "CommitCell"
 }
 
 struct RegisterTableViewCell {

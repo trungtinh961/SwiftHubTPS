@@ -66,7 +66,7 @@ class PullRequestViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         if state == .open {
-            pullGithubAPI.getResults(type: .getIssues, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+            pullGithubAPI.getResults(type: .getPullRequests, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
                     self?.pullItems = results
                     self?.isLoading = false

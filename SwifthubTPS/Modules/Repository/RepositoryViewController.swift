@@ -125,7 +125,6 @@ extension RepositoryViewController: UITableViewDelegate {
         
         switch itemCell!.id {
         case "homepage":
-            print("home00000000")
             if let url = URL(string: repositoryItem?.homepage ?? "") {
                 UIApplication.shared.open(url)
             }
@@ -139,6 +138,17 @@ extension RepositoryViewController: UITableViewDelegate {
             pullsViewController.modalPresentationStyle = .automatic
             pullsViewController.repoItem = repositoryItem
             self.present(pullsViewController, animated:true, completion:nil)
+        case "commits":
+            let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
+            pullsViewController.modalPresentationStyle = .automatic
+            pullsViewController.repoItem = repositoryItem
+            self.present(pullsViewController, animated:true, completion:nil)
+        case "branches":
+            let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
+            pullsViewController.modalPresentationStyle = .automatic
+            pullsViewController.repoItem = repositoryItem
+            self.present(pullsViewController, animated:true, completion:nil)
+            
         default:
             break
         }

@@ -373,7 +373,62 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhj-qE-ieL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3471" y="10"/>
+            <point key="canvasLocation" x="4033" y="-320"/>
+        </scene>
+        <!--Commit View Controller-->
+        <scene sceneID="039-6c-3h8">
+            <objects>
+                <viewController storyboardIdentifier="CommitViewController" id="a00-H3-klt" customClass="CommitViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pYP-PF-bgC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A3T-ol-u5J">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="4SZ-dF-Btv"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Commit" id="2Ra-iF-QaH">
+                                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="bxD-xC-7fp">
+                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="btnBack:" destination="a00-H3-klt" id="sqZ-Ya-CbY"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sPV-qt-hUL">
+                                <rect key="frame" x="8" y="108" width="406" height="746"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="a00-H3-klt" id="Opn-W5-rPc"/>
+                                    <outlet property="delegate" destination="a00-H3-klt" id="SKd-aA-017"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="yg9-KZ-l0o" firstAttribute="trailing" secondItem="A3T-ol-u5J" secondAttribute="trailing" id="0fd-mB-KmT"/>
+                            <constraint firstItem="yg9-KZ-l0o" firstAttribute="bottom" secondItem="sPV-qt-hUL" secondAttribute="bottom" constant="8" id="Gp9-OE-ddj"/>
+                            <constraint firstItem="sPV-qt-hUL" firstAttribute="top" secondItem="A3T-ol-u5J" secondAttribute="bottom" constant="20" id="U7b-m2-HzO"/>
+                            <constraint firstItem="yg9-KZ-l0o" firstAttribute="trailing" secondItem="sPV-qt-hUL" secondAttribute="trailing" id="dBT-gd-dNi"/>
+                            <constraint firstItem="sPV-qt-hUL" firstAttribute="leading" secondItem="yg9-KZ-l0o" secondAttribute="leading" constant="8" id="sCt-mV-SZc"/>
+                            <constraint firstItem="A3T-ol-u5J" firstAttribute="leading" secondItem="pYP-PF-bgC" secondAttribute="leading" id="sPQ-kD-b49"/>
+                            <constraint firstItem="A3T-ol-u5J" firstAttribute="top" secondItem="yg9-KZ-l0o" secondAttribute="top" id="seF-QE-boc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yg9-KZ-l0o"/>
+                    </view>
+                    <connections>
+                        <outlet property="navItem" destination="2Ra-iF-QaH" id="UBk-61-PL2"/>
+                        <outlet property="resultTableView" destination="sPV-qt-hUL" id="lJ8-WQ-86w"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gqH-aq-caU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4812" y="-320"/>
         </scene>
         <!--Issue View Controller-->
         <scene sceneID="kas-mh-Bdt">
@@ -449,7 +504,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EAe-do-fvx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3472" y="-660"/>
+            <point key="canvasLocation" x="3284" y="-320"/>
         </scene>
         <!--User View Controller-->
         <scene sceneID="q1a-dn-stS">

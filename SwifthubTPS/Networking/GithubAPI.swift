@@ -45,6 +45,16 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getIssues(fullname: fullname, state: state).host
             components.path = Router.getIssues(fullname: fullname, state: state).path
             components.setQueryItems(with: Router.getIssues(fullname: fullname, state: state).parameters!)
+        } else if type == .getPullRequests {
+            components.scheme = Router.getPullRequests(fullname: fullname, state: state).scheme
+            components.host = Router.getPullRequests(fullname: fullname, state: state).host
+            components.path = Router.getPullRequests(fullname: fullname, state: state).path
+            components.setQueryItems(with: Router.getPullRequests(fullname: fullname, state: state).parameters!)
+        } else if type == .getCommits {
+            components.scheme = Router.getCommits(fullname: fullname).scheme
+            components.host = Router.getCommits(fullname: fullname).host
+            components.path = Router.getCommits(fullname: fullname).path
+            components.setQueryItems(with: Router.getCommits(fullname: fullname).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -93,7 +103,7 @@ class GitHubAPI<Element: Mappable> {
                 errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
                 return
             }
-        case .getIssues, .getPullRequests: /// Json return array
+        case .getIssues, .getPullRequests, .getCommits: /// Json return array
             do {
                 jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
             } catch {
