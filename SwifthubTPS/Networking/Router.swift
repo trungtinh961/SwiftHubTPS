@@ -13,7 +13,6 @@ enum GetType: Int {
     case user
     case language
     case getRepository
-    case getUser
     case getIssues
     case getPullRequests
     case getCommits
@@ -21,6 +20,8 @@ enum GetType: Int {
     case getReleases
     case getContributors
     case getEvents
+    case getUser
+    case getStarred
 }
 
 enum Router {
@@ -31,7 +32,6 @@ enum Router {
     case searchRepositories(query: String, language: String)
     case searchUsers(query: String, language: String)
     case getRepository(fullname: String)
-    case getUser(username: String)
     case getIssues(fullname: String, state: State)
     case getPullRequests(fullname: String, state: State)
     case getCommits(fullname: String)
@@ -39,6 +39,8 @@ enum Router {
     case getReleases(fullname: String)
     case getContributors(fullname: String)
     case getEvents(fullname: String)
+    case getUser(username: String)
+    case getStarred(username: String)
     
     var scheme: String {
         switch self {
@@ -62,7 +64,6 @@ enum Router {
         case .searchRepositories: return "/search/repositories"
         case .searchUsers: return "/search/users"
         case .getRepository(let fullname): return "/repos/\(fullname)"
-        case .getUser(let username): return "/users/\(username)"
         case .getIssues(let fullname, _): return "/repos/\(fullname)/issues"
         case .getPullRequests(let fullname, _): return "/repos/\(fullname)/pulls"
         case .getCommits(let fullname): return "/repos/\(fullname)/commits"
@@ -70,8 +71,8 @@ enum Router {
         case .getReleases(let fullname): return "/repos/\(fullname)/releases"
         case .getContributors(let fullname): return "/repos/\(fullname)/contributors"
         case .getEvents(let fullname): return "/repos/\(fullname)/events"
-            
-            
+        case .getUser(let username): return "/users/\(username)"
+        case .getStarred(let username): return "/users/\(username)/starred"
             
         }
     }
@@ -104,7 +105,7 @@ enum Router {
         case .getIssues(_, let state), .getPullRequests(_, let state):
             params["state"] = state.rawValue
             params["per_page"] = "50"
-        case .getCommits, .getBranches, .getReleases, .getContributors, .getEvents:
+        case .getCommits, .getBranches, .getReleases, .getContributors, .getEvents, .getStarred:
             params["per_page"] = "50"
         default: break
         }

@@ -15,13 +15,19 @@ class StarViewController: UIViewController {
     var userItem: User?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
-    private var eventGithubAPI = GitHubAPI<Event>()
-    private var eventItems: [Event]?
+    private var starredGithubAPI = GitHubAPI<Repository>()
+    private var starredItems: [Repository]?
     
     @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
     
     // MARK: - Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTableView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,6 +50,23 @@ class StarViewController: UIViewController {
     
     // MARK: - Private Method
     
+    private func updateTableView(){
+        isLoading = true
+        resultTableView.reloadData()
+        starredGithubAPI.getResults(type: .getStarred, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+            if let results = results {
+                self?.starredItems = results
+                self?.isLoading = false
+                if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
+                    self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                }
+                self?.resultTableView.reloadData()
+            }
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -53,7 +76,7 @@ extension StarViewController: UITableViewDataSource {
         if isLoading {
             return 1
         } else {
-            return 0
+            return starredItems?.count ?? 0
         }
     }
     

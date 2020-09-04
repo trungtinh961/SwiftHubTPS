@@ -36,10 +36,6 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getRepository(fullname: fullname).scheme
             components.host = Router.getRepository(fullname: fullname).host
             components.path = Router.getRepository(fullname: fullname).path
-        } else if type == .getUser {
-            components.scheme = Router.getUser(username: username).scheme
-            components.host = Router.getUser(username: username).host
-            components.path = Router.getUser(username: username).path
         } else if type == .getIssues {
             components.scheme = Router.getIssues(fullname: fullname, state: state).scheme
             components.host = Router.getIssues(fullname: fullname, state: state).host
@@ -75,6 +71,15 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getEvents(fullname: fullname).host
             components.path = Router.getEvents(fullname: fullname).path
             components.setQueryItems(with: Router.getEvents(fullname: fullname).parameters!)
+        } else if type == .getUser {
+            components.scheme = Router.getUser(username: username).scheme
+            components.host = Router.getUser(username: username).host
+            components.path = Router.getUser(username: username).path
+        } else if type == .getStarred {
+            components.scheme = Router.getStarred(username: username).scheme
+            components.host = Router.getStarred(username: username).host
+            components.path = Router.getStarred(username: username).path
+            components.setQueryItems(with: Router.getStarred(username: username).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -123,7 +128,7 @@ class GitHubAPI<Element: Mappable> {
                 errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
                 return
             }
-        case .getIssues, .getPullRequests, .getCommits, .getBranches, .getReleases, .getContributors, .getEvents: /// Json return array
+        case .getIssues, .getPullRequests, .getCommits, .getBranches, .getReleases, .getContributors, .getEvents, .getStarred: /// Json return array
             do {
                 jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
             } catch {
