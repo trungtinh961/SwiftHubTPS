@@ -70,56 +70,16 @@ https://api.github.com/repos/bottlerocket-os/bottlerocket/issues
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNH-fG-dq6">
-                                                        <rect key="frame" x="77.5" y="4" width="26.5" height="12"/>
-                                                        <color key="backgroundColor" red="0.21978607773780823" green="0.61405831575393677" blue="0.98477357625961304" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IT9-Go-2WV">
-                                                        <rect key="frame" x="106" y="4" width="26.5" height="12"/>
-                                                        <color key="backgroundColor" red="0.21978607773780823" green="0.61405831575393677" blue="0.98477357625961304" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZM-nH-IaR">
-                                                        <rect key="frame" x="134.5" y="4" width="26.5" height="12"/>
-                                                        <color key="backgroundColor" red="0.21978607773780823" green="0.61405831575393677" blue="0.98477357625961304" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLo-CV-dUI">
-                                                        <rect key="frame" x="49" y="4" width="26.5" height="12"/>
-                                                        <color key="backgroundColor" red="0.21978607773780823" green="0.61405831575393677" blue="0.98477357625961304" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="KYd-N5-kZo" secondAttribute="bottom" constant="4" id="57d-fx-TzJ"/>
-                                                    <constraint firstItem="OLo-CV-dUI" firstAttribute="top" secondItem="XsG-GN-ut4" secondAttribute="top" constant="4" id="6Cj-og-8a0"/>
                                                     <constraint firstItem="KYd-N5-kZo" firstAttribute="top" secondItem="XsG-GN-ut4" secondAttribute="top" constant="4" id="6GU-B0-8f8"/>
                                                     <constraint firstItem="SPb-Y5-Xhy" firstAttribute="top" secondItem="XsG-GN-ut4" secondAttribute="top" constant="4" id="83z-n9-JOu"/>
-                                                    <constraint firstItem="OLo-CV-dUI" firstAttribute="leading" secondItem="KYd-N5-kZo" secondAttribute="trailing" constant="24.5" id="BIN-2O-cJb"/>
-                                                    <constraint firstItem="cNH-fG-dq6" firstAttribute="leading" secondItem="OLo-CV-dUI" secondAttribute="trailing" constant="2" id="CfX-Hf-q0e"/>
-                                                    <constraint firstAttribute="bottom" secondItem="vZM-nH-IaR" secondAttribute="bottom" constant="4" id="ExX-M7-imh"/>
                                                     <constraint firstItem="KYd-N5-kZo" firstAttribute="leading" secondItem="SPb-Y5-Xhy" secondAttribute="trailing" constant="6" id="JQh-o5-2pw"/>
-                                                    <constraint firstAttribute="bottom" secondItem="IT9-Go-2WV" secondAttribute="bottom" constant="4" id="NPg-C2-CLU"/>
                                                     <constraint firstAttribute="height" constant="20" id="PgW-01-qfv"/>
                                                     <constraint firstAttribute="bottom" secondItem="SPb-Y5-Xhy" secondAttribute="bottom" constant="4" id="Tmg-Rp-Bxd"/>
-                                                    <constraint firstAttribute="bottom" secondItem="OLo-CV-dUI" secondAttribute="bottom" constant="4" id="XZZ-T3-aXB"/>
                                                     <constraint firstItem="SPb-Y5-Xhy" firstAttribute="leading" secondItem="XsG-GN-ut4" secondAttribute="leading" id="bZw-3H-qNG"/>
-                                                    <constraint firstItem="IT9-Go-2WV" firstAttribute="top" secondItem="XsG-GN-ut4" secondAttribute="top" constant="4" id="hGU-Op-1gr"/>
-                                                    <constraint firstAttribute="bottom" secondItem="cNH-fG-dq6" secondAttribute="bottom" constant="4" id="hd2-Ot-IqT"/>
-                                                    <constraint firstItem="IT9-Go-2WV" firstAttribute="leading" secondItem="cNH-fG-dq6" secondAttribute="trailing" constant="2" id="m2h-XA-cPJ"/>
-                                                    <constraint firstItem="cNH-fG-dq6" firstAttribute="top" secondItem="XsG-GN-ut4" secondAttribute="top" constant="4" id="mtS-Sr-8U3"/>
-                                                    <constraint firstItem="vZM-nH-IaR" firstAttribute="top" secondItem="XsG-GN-ut4" secondAttribute="top" constant="4" id="o98-BI-Qgp"/>
-                                                    <constraint firstItem="vZM-nH-IaR" firstAttribute="leading" secondItem="IT9-Go-2WV" secondAttribute="trailing" constant="2" id="oXy-Ms-gWW"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -179,12 +139,9 @@ https://api.github.com/repos/bottlerocket-os/bottlerocket/issues
                 <outlet property="imgState" destination="KX3-jc-kAX" id="dC6-Lw-EOO"/>
                 <outlet property="lbCommentCount" destination="KYd-N5-kZo" id="p7a-BS-Ihd"/>
                 <outlet property="lbDescription" destination="Gim-hN-9aW" id="X6A-p0-1eb"/>
-                <outlet property="lbTag1" destination="OLo-CV-dUI" id="qv4-qX-LqO"/>
-                <outlet property="lbTag2" destination="cNH-fG-dq6" id="A4Y-Ub-wmL"/>
-                <outlet property="lbTag3" destination="IT9-Go-2WV" id="ssQ-sG-yVr"/>
-                <outlet property="lbTag4" destination="vZM-nH-IaR" id="zJQ-UG-COf"/>
                 <outlet property="lbTitle" destination="Q5y-O3-YMN" id="sIE-M3-M1g"/>
                 <outlet property="mainView" destination="1rW-rp-xba" id="PoK-dG-o8K"/>
+                <outlet property="tagView" destination="XsG-GN-ut4" id="I0O-hm-LL4"/>
             </connections>
             <point key="canvasLocation" x="88.405797101449281" y="128.57142857142856"/>
         </tableViewCell>

@@ -96,10 +96,18 @@ extension IssueViewController: UITableViewDataSource {
         cell.lbTitle.text = itemCell?.title
         cell.lbDescription.text = "#\(itemCell!.number!) opened \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
         cell.lbCommentCount.text = "\(itemCell?.comments ?? 0)"
-//        var labels = itemCell!.labels!
-//        for tag in itemCell!.labels! {
-//            cell.
-//        }
+        cell.lbCommentCount.subviews.forEach({ $0.removeFromSuperview() })
+        let labels = itemCell!.labels!
+        var currentX: CGFloat = 16
+        for tag in labels {
+            let tagLabel = UILabel(frame: CGRect(x: currentX, y: 0, width: 35, height: 12))
+            tagLabel.text = tag.name
+            tagLabel.font = tagLabel.font.withSize(10)
+            tagLabel.backgroundColor = UIColor("#\(tag.color!)")
+            tagLabel.sizeToFit()
+            cell.lbCommentCount.addSubview(tagLabel)
+            currentX += tagLabel.frame.width + 2
+        }
         return cell
     }
     
