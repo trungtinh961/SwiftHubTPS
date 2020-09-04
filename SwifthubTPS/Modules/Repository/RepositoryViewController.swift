@@ -161,6 +161,11 @@ extension RepositoryViewController: UITableViewDelegate {
             releaseViewController.modalPresentationStyle = .automatic
             releaseViewController.repoItem = repositoryItem            
             self.present(releaseViewController, animated:true, completion:nil)
+        case "contributors":
+            let contributorViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contributorVC.rawValue) as! ContributorViewController
+            contributorViewController.modalPresentationStyle = .automatic
+            contributorViewController.repoItem = repositoryItem
+            self.present(contributorViewController, animated:true, completion:nil)
             
         default:
             break
