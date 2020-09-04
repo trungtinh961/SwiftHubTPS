@@ -26,5 +26,6 @@ enum ImageName: String {
     case icon_cell_star = "icon_cell_star"
     case icon_cell_theme = "icon_cell_theme"
     case icon_cell_profile_summary = "icon_cell_profile_summary"
+    case icon_cell_badge_tag = "icon_cell_badge_tag"
 }
 

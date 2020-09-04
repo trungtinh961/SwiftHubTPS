@@ -17,6 +17,8 @@ enum GetType: Int {
     case getIssues
     case getPullRequests
     case getCommits
+    case getBranches
+    case getReleases
 }
 
 enum Router {
@@ -31,6 +33,8 @@ enum Router {
     case getIssues(fullname: String, state: State)
     case getPullRequests(fullname: String, state: State)
     case getCommits(fullname: String)
+    case getBranches(fullname: String)
+    case getReleases(fullname: String)
     
     var scheme: String {
         switch self {
@@ -58,8 +62,8 @@ enum Router {
         case .getIssues(let fullname, _): return "/repos/\(fullname)/issues"
         case .getPullRequests(let fullname, _): return "/repos/\(fullname)/pulls"
         case .getCommits(let fullname): return "/repos/\(fullname)/commits"
-            
-            
+        case .getBranches(let fullname): return "/repos/\(fullname)/branches"
+        case .getReleases(let fullname): return "/repos/\(fullname)/releases"
         }
     }
     
@@ -91,7 +95,7 @@ enum Router {
         case .getIssues(_, let state), .getPullRequests(_, let state):
             params["state"] = state.rawValue
             params["per_page"] = "50"
-        case .getCommits:
+        case .getCommits, .getBranches, .getReleases:
             params["per_page"] = "50"
         default: break
         }

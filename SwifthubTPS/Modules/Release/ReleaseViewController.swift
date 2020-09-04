@@ -1,5 +1,5 @@
 //
-//  CommitViewController.swift
+//  ReleaseViewController.swift
 //  SwifthubTPS
 //
 //  Created by TPS on 9/4/20.
@@ -8,18 +8,19 @@
 
 import UIKit
 
-class CommitViewController: UIViewController {
+class ReleaseViewController: UIViewController {
 
     // MARK: - Properties
     
     var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
-    private var commitGithubAPI = GitHubAPI<Commit>()
-    private var commitItems: [Commit]?
+    private var releaseGithubAPI = GitHubAPI<Release>()
+    private var releaseItems: [Release]?
     
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var resultTableView: UITableView!
+    
     
     // MARK: - Life Cycle
     
@@ -35,25 +36,23 @@ class CommitViewController: UIViewController {
         super.viewDidLoad()
 
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.commitCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.releaseCell.rawValue)
         
     }
     
-    // MARK: - IBActions
-
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
     }
-    
+        
     // MARK: - Private Method
-    
+   
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
         
-        commitGithubAPI.getResults(type: .getCommits, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        releaseGithubAPI.getResults(type: .getReleases, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
-                self?.commitItems = results
+                self?.releaseItems = results
                 self?.isLoading = false
                 self?.resultTableView.reloadData()
             }
@@ -62,36 +61,39 @@ class CommitViewController: UIViewController {
             }
         }
     }
-    
+        
 }
 
+
 // MARK: - UITableViewDataSource
-extension CommitViewController: UITableViewDataSource {
+
+extension ReleaseViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return commitItems?.count ?? 0
+        return releaseItems?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.commitCell.rawValue, for: indexPath) as! CommitCell
-        let itemCell = commitItems?[indexPath.row]
-        if let smallURL = URL(string: itemCell?.author?.avatarUrl ?? "") {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.releaseCell.rawValue, for: indexPath) as! ReleaseCell
+        let itemCell = releaseItems![indexPath.row]
+        if let smallURL = URL(string: itemCell.author?.avatarUrl ?? "") {
             downloadTask = cell.imgAuthor.loadImage(url: smallURL)
         }
-        cell.lbMessage.text = itemCell?.commit?.message
-        cell.lbDescription.text = itemCell?.commit?.author?.date?.timeAgo()
-        let index = itemCell?.sha?.index((itemCell?.sha!.startIndex)!, offsetBy: 7)
-        let subSHA = itemCell?.sha?.prefix(upTo: index!)
-        cell.lbTag.text = String(subSHA!)
+        cell.lbName.text = "\(itemCell.tagName ?? "") - \(itemCell.name  ?? "")"
+        cell.lbTime.text = itemCell.createdAt?.timeAgo()
+        cell.lbBody.text = itemCell.body
         return cell
     }
+    
     
 }
 
 // MARK: - UITableViewDelegate
-extension CommitViewController: UITableViewDelegate {
+
+extension ReleaseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let url = URL(string: commitItems![indexPath.row].htmlUrl ?? "") {
+        
+        if let url = URL(string: releaseItems![indexPath.row].htmlUrl ?? "") {
             UIApplication.shared.open(url)
         }
     }

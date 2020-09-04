@@ -60,9 +60,9 @@ class PullRequestViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Public Method
+    // MARK: - Private Method
     
-    func updateTableView(){
+    private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
         if state == .open {

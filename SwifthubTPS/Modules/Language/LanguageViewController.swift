@@ -71,9 +71,9 @@ class LanguageViewController: UIViewController {
         delegate?.languageViewControllerDidCancel(self)
     }
     
-    // MARK: - Public method
+    // MARK: - Private Method
     
-    func updateTableView(language: String? = "") {
+    private func updateTableView(language: String? = "") {
         isLoading = true
         
         trendingLanguageGithubAPI.getResults(type: .language) { [weak self] results, errorMessage in

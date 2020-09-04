@@ -62,9 +62,9 @@ class UserViewController: UIViewController {
     }
     
     
-    // MARK: - Public Methods
-   
-    func getData() {
+    // MARK: - Private Method
+    
+    private func getData() {
         isLoading = true
         userGithubAPI.getResults(type: .getUser, username: username!) { [weak self] results, errorMessage in
             if let result = results?[0] {

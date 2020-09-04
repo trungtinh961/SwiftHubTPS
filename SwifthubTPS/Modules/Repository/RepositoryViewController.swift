@@ -18,6 +18,7 @@ class RepositoryViewController: UIViewController {
     private var repositoryItem: Repository?
     private var isLoading = false
     private var repositoryDetails: [DetailCellProperty]?
+    private var branch: String?
     
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var imgAvatar: UIImageView!
@@ -35,13 +36,14 @@ class RepositoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navItem.title = repoFullname!
-        getData()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navItem.title = repoFullname
+        getData()
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         
@@ -62,9 +64,9 @@ class RepositoryViewController: UIViewController {
     
     
     
-    // MARK: - Public methods
+    // MARK: - Private Method
     
-    func getData() {
+    private func getData() {
         isLoading = true
         repositoryGithubAPI.getResults(type: .getRepository, fullname: repoFullname!) { [weak self] results, errorMessage in
             if let result = results?[0] {
@@ -77,6 +79,7 @@ class RepositoryViewController: UIViewController {
                 self?.lbWatches.text = "\(self?.repositoryItem?.subscribersCount ?? 0)"
                 self?.lbStars.text = "\(self?.repositoryItem?.stargazersCount ?? 0)"
                 self?.lbForks.text = "\(self?.repositoryItem?.forks ?? 0)"
+                self?.branch = self?.repositoryItem?.defaultBranch
                 self?.repositoryDetails = self?.repositoryItem?.getDetailCell()
                 self?.resultTableView.reloadData()
             }
@@ -101,7 +104,11 @@ extension RepositoryViewController: UITableViewDataSource {
 
         let itemCell = repositoryDetails?[indexPath.row]
         cell.lbTitleCell.text = itemCell?.titleCell
-        cell.lbDetails.text = itemCell?.detail
+        if repositoryDetails?[indexPath.row].id == "branches" {
+            cell.lbDetails.text = branch
+        } else {
+            cell.lbDetails.text = itemCell?.detail
+        }
         if let img = itemCell?.imgName {
             cell.imgCell.image = UIImage(named: img)
         }        
@@ -139,15 +146,21 @@ extension RepositoryViewController: UITableViewDelegate {
             pullsViewController.repoItem = repositoryItem
             self.present(pullsViewController, animated:true, completion:nil)
         case "commits":
-            let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
-            pullsViewController.modalPresentationStyle = .automatic
-            pullsViewController.repoItem = repositoryItem
-            self.present(pullsViewController, animated:true, completion:nil)
+            let commitsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
+            commitsViewController.modalPresentationStyle = .automatic
+            commitsViewController.repoItem = repositoryItem
+            self.present(commitsViewController, animated:true, completion:nil)
         case "branches":
-            let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
-            pullsViewController.modalPresentationStyle = .automatic
-            pullsViewController.repoItem = repositoryItem
-            self.present(pullsViewController, animated:true, completion:nil)
+            let branchesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.branchVC.rawValue) as! BranchViewController
+            branchesViewController.modalPresentationStyle = .automatic
+            branchesViewController.repoItem = repositoryItem
+            branchesViewController.delegate = self
+            self.present(branchesViewController, animated:true, completion:nil)
+        case "releases":
+            let releaseViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.releaseVC.rawValue) as! ReleaseViewController
+            releaseViewController.modalPresentationStyle = .automatic
+            releaseViewController.repoItem = repositoryItem            
+            self.present(releaseViewController, animated:true, completion:nil)
             
         default:
             break
@@ -155,3 +168,15 @@ extension RepositoryViewController: UITableViewDelegate {
     }
 }
 
+
+// MARK: - Delegate
+
+extension RepositoryViewController: BranchViewControllerDelegate {
+    
+    func branchViewController(_ controller: BranchViewController, didFinishEditing branchSelected: String) {
+        self.branch = branchSelected
+        resultTableView.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
+    
+}
