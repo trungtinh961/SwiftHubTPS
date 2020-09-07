@@ -31,6 +31,7 @@
 		BAB7870F24F91619002779B2 /* NoResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB7870D24F91619002779B2 /* NoResultCell.swift */; };
 		BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB7870E24F91619002779B2 /* NoResultCell.xib */; };
 		BAB8542F2505D27100ABDD49 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */; };
+		BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB854302505DF5300ABDD49 /* UserEventViewController.swift */; };
 		BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE486F2500A2CF00A5AB12 /* UserViewController.swift */; };
 		BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48722500C77A00A5AB12 /* UINavigationItem.swift */; };
 		BABE48752500D87800A5AB12 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48742500D87800A5AB12 /* Issue.swift */; };
@@ -67,7 +68,7 @@
 		BAFF23732502380400843E38 /* ContributorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23712502380300843E38 /* ContributorCell.swift */; };
 		BAFF23742502380400843E38 /* ContributorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAFF23722502380300843E38 /* ContributorCell.xib */; };
 		BAFF23762502381A00843E38 /* ContributorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23752502381A00843E38 /* ContributorViewController.swift */; };
-		BAFF23792502408900843E38 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23782502408900843E38 /* EventViewController.swift */; };
+		BAFF23792502408900843E38 /* RepositoryEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23782502408900843E38 /* RepositoryEventViewController.swift */; };
 		BAFF237E2502438F00843E38 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF237D2502438F00843E38 /* Event.swift */; };
 		BAFF2380250243F400843E38 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF237F250243F400843E38 /* Comment.swift */; };
 		BAFF238525024D4A00843E38 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF238325024D4A00843E38 /* EventCell.swift */; };
@@ -104,6 +105,7 @@
 		BAB7870D24F91619002779B2 /* NoResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultCell.swift; sourceTree = "<group>"; };
 		BAB7870E24F91619002779B2 /* NoResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultCell.xib; sourceTree = "<group>"; };
 		BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
+		BAB854302505DF5300ABDD49 /* UserEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventViewController.swift; sourceTree = "<group>"; };
 		BABE486F2500A2CF00A5AB12 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		BABE48722500C77A00A5AB12 /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
 		BABE48742500D87800A5AB12 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -142,7 +144,7 @@
 		BAFF23712502380300843E38 /* ContributorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorCell.swift; sourceTree = "<group>"; };
 		BAFF23722502380300843E38 /* ContributorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContributorCell.xib; sourceTree = "<group>"; };
 		BAFF23752502381A00843E38 /* ContributorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorViewController.swift; sourceTree = "<group>"; };
-		BAFF23782502408900843E38 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		BAFF23782502408900843E38 /* RepositoryEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryEventViewController.swift; sourceTree = "<group>"; };
 		BAFF237D2502438F00843E38 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		BAFF237F250243F400843E38 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BAFF238325024D4A00843E38 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -480,7 +482,8 @@
 		BAFF23772502401D00843E38 /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				BAFF23782502408900843E38 /* EventViewController.swift */,
+				BAFF23782502408900843E38 /* RepositoryEventViewController.swift */,
+				BAB854302505DF5300ABDD49 /* UserEventViewController.swift */,
 				BAFF238325024D4A00843E38 /* EventCell.swift */,
 				BAFF238425024D4A00843E38 /* EventCell.xib */,
 			);
@@ -629,7 +632,7 @@
 				BAB8542F2505D27100ABDD49 /* WatchingViewController.swift in Sources */,
 				BAFF23582501F48E00843E38 /* Commit.swift in Sources */,
 				BAFF23602501F65F00843E38 /* CommitCell.swift in Sources */,
-				BAFF23792502408900843E38 /* EventViewController.swift in Sources */,
+				BAFF23792502408900843E38 /* RepositoryEventViewController.swift in Sources */,
 				BAB7870024F8AB11002779B2 /* LanguageCell.swift in Sources */,
 				BAFF236925022F5700843E38 /* ReleaseViewController.swift in Sources */,
 				BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */,
@@ -639,6 +642,7 @@
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* SecondViewController.swift in Sources */,
 				BAFF236F250231B200843E38 /* Release.swift in Sources */,
+				BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */,
 				BAB51E6924FE3DF2005A4F7D /* ImageName.swift in Sources */,
 				BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */,
 				BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */,

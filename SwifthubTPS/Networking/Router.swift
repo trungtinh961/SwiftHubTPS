@@ -19,9 +19,11 @@ enum GetType: Int {
     case getBranches
     case getReleases
     case getContributors
-    case getEvents
+    case getRepositoryEvents
     case getUser
     case getStarred
+    case getWatching
+    case getUserEvents
 }
 
 enum Router {
@@ -41,6 +43,8 @@ enum Router {
     case getEvents(fullname: String)
     case getUser(username: String)
     case getStarred(username: String)
+    case getWatching(username: String)
+    case getUserEvents(username: String, type: EventType)
     
     var scheme: String {
         switch self {
@@ -73,7 +77,8 @@ enum Router {
         case .getEvents(let fullname): return "/repos/\(fullname)/events"
         case .getUser(let username): return "/users/\(username)"
         case .getStarred(let username): return "/users/\(username)/starred"
-            
+        case .getWatching(let username): return "/users/\(username)/subscriptions"
+        case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         }
     }
     
@@ -105,7 +110,7 @@ enum Router {
         case .getIssues(_, let state), .getPullRequests(_, let state):
             params["state"] = state.rawValue
             params["per_page"] = "50"
-        case .getCommits, .getBranches, .getReleases, .getContributors, .getEvents, .getStarred:
+        case .getCommits, .getBranches, .getReleases, .getContributors, .getEvents, .getStarred, .getWatching, .getUserEvents:
             params["per_page"] = "50"
         default: break
         }

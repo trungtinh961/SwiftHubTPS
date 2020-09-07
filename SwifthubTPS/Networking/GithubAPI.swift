@@ -19,7 +19,7 @@ class GitHubAPI<Element: Mappable> {
     typealias JSONDictionary = [String: Any]
     typealias QueryResults = ([Element]?, String) -> Void
     
-    func createURL(type: GetType, state: State, query: String, language: String, fullname: String, username: String) -> URL? {
+    func createURL(type: GetType, eventType: EventType, state: State, query: String, language: String, fullname: String, username: String) -> URL? {
         var components = URLComponents()
         
         if type == .repository {
@@ -66,7 +66,7 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getContributors(fullname: fullname).host
             components.path = Router.getContributors(fullname: fullname).path
             components.setQueryItems(with: Router.getContributors(fullname: fullname).parameters!)
-        } else if type == .getEvents {
+        } else if type == .getRepositoryEvents {
             components.scheme = Router.getEvents(fullname: fullname).scheme
             components.host = Router.getEvents(fullname: fullname).host
             components.path = Router.getEvents(fullname: fullname).path
@@ -80,6 +80,16 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getStarred(username: username).host
             components.path = Router.getStarred(username: username).path
             components.setQueryItems(with: Router.getStarred(username: username).parameters!)
+        } else if type == .getWatching {
+            components.scheme = Router.getWatching(username: username).scheme
+            components.host = Router.getWatching(username: username).host
+            components.path = Router.getWatching(username: username).path
+            components.setQueryItems(with: Router.getWatching(username: username).parameters!)
+        } else if type == .getUserEvents {
+            components.scheme = Router.getUserEvents(username: username, type: eventType).scheme
+            components.host = Router.getUserEvents(username: username, type: eventType).host
+            components.path = Router.getUserEvents(username: username, type: eventType).path
+            components.setQueryItems(with: Router.getUserEvents(username: username, type: eventType).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -87,9 +97,9 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getResults(type: GetType, state: State = .open, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
+    func getResults(type: GetType, eventType: EventType = .received, state: State = .open, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
         dataTask?.cancel()
-        guard let url = createURL(type: type, state: state, query: query, language: language, fullname: fullname, username: username) else {
+        guard let url = createURL(type: type, eventType: eventType, state: state, query: query, language: language, fullname: fullname, username: username) else {
           return
         }
         var request = URLRequest(url: url)
@@ -128,7 +138,8 @@ class GitHubAPI<Element: Mappable> {
                 errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
                 return
             }
-        case .getIssues, .getPullRequests, .getCommits, .getBranches, .getReleases, .getContributors, .getEvents, .getStarred: /// Json return array
+        
+        default: /// Json return array
             do {
                 jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
             } catch {
@@ -140,7 +151,6 @@ class GitHubAPI<Element: Mappable> {
                 elements.append(Element(JSON: item)!)
               }
             }
-        default: break
         }
         
     }

@@ -25,6 +25,16 @@ enum EventType: String {
     case release = "ReleaseEvent"
     case star = "WatchEvent"
     case unknown = ""
+    case received = "received_events"
+    case performed = "events"
+    
+    func getDescription() -> String {
+        switch self {
+        case .fork: return "forked"
+        case .star: return "starred"
+        default: return ""
+        }        
+    }
 }
 
 /// Each event has a similar JSON schema, but a unique payload object that is determined by its event type.
@@ -70,8 +80,118 @@ extension Event: Equatable {
     }
 }
 
-class Payload: StaticMappable {
+extension Event {
+    var title: String {
+        var actionText: String = ""
+        switch self.type {
+        case .fork:
+            actionText = "forked"
+        case .create:
+            let payload = self.payload as? CreatePayload
+            actionText = ["created", (payload?.refType.rawValue ?? ""), (payload?.ref ?? ""), "in"].joined(separator: " ")
+        case .delete:
+            let payload = self.payload as? DeletePayload
+            actionText = ["deleted", (payload?.refType.rawValue ?? ""), (payload?.ref ?? ""), "in"].joined(separator: " ")
+        case .issueComment:
+            let payload = self.payload as? IssueCommentPayload
+            actionText = ["commented on issue", "#\(payload?.issue?.number ?? 0)", "at"].joined(separator: " ")
+        case .issues:
+            let payload = self.payload as? IssuesPayload
+            actionText = [(payload?.action ?? ""), "issue", "in"].joined(separator: " ")
+        case .member:
+            let payload = self.payload as? MemberPayload
+            actionText = [(payload?.action ?? ""), "\(payload?.member?.login ?? "")", "as a collaborator to"].joined(separator: " ")
+        case .pullRequest:
+            let payload = self.payload as? PullRequestPayload
+            actionText = [(payload?.action ?? ""), "pull request", "#\(payload?.number ?? 0)", "in"].joined(separator: " ")
+        case .pullRequestReviewComment:
+            let payload = self.payload as? PullRequestReviewCommentPayload
+            actionText = ["commented on pull request", "#\(payload?.pullRequest?.number ?? 0)", "in"].joined(separator: " ")
+        case .push:
+            let payload = self.payload as? PushPayload
+            actionText = ["pushed to", payload?.ref ?? "", "at"].joined(separator: " ")
+        case .release:
+            let payload = self.payload as? ReleasePayload
+            actionText = [payload?.action ?? "", "release", payload?.release?.name ?? "", "in"].joined(separator: " ")
+        case .star:
+            actionText = "starred"
+        default: break
+        }
+        return [self.actor?.login ?? "", actionText, self.repository?.fullname ?? ""].joined(separator: " ")
+    }
+    var body: String {
+        switch self.type {
+        case .issueComment:
+            let payload = self.payload as? IssueCommentPayload
+            return payload?.comment?.body ?? ""
+        case .issues:
+            let payload = self.payload as? IssuesPayload
+            return payload?.issue?.title ?? ""
+        case .pullRequest:
+            let payload = self.payload as? PullRequestPayload
+            return payload?.pullRequest?.title ?? ""
+        case .pullRequestReviewComment:
+            let payload = self.payload as? PullRequestReviewCommentPayload
+            return payload?.comment?.body ?? ""
+        case .release:
+            let payload = self.payload as? ReleasePayload
+            return payload?.release?.body ?? ""
+        default: return ""
+        }
+    }
+    var badgeImage: String {
+        switch self.type {
+        case .fork:
+            return ImageName.icon_cell_badge_fork.rawValue
+        case .create:
+            let payload = self.payload as? CreatePayload
+            switch payload?.refType {
+            case .repository:
+                return ImageName.icon_cell_badge_repository.rawValue
+            case .branch:
+                return ImageName.icon_cell_badge_branch.rawValue
+            case .tag:
+                return ImageName.icon_cell_badge_tag.rawValue
+            case .none:
+                return ImageName.icon_cell_badge_repository.rawValue
+            }
+        case .delete:
+            let payload = self.payload as? DeletePayload
+            switch payload?.refType {
+            case .repository:
+                return ImageName.icon_cell_badge_repository.rawValue
+            case .branch:
+                return ImageName.icon_cell_badge_branch.rawValue
+            case .tag:
+                return ImageName.icon_cell_badge_tag.rawValue
+            default:
+                return ImageName.icon_cell_badge_repository.rawValue
+            }
+        case .issueComment:
+            return ImageName.icon_cell_badge_comment.rawValue
+        case .issues:
+            return ImageName.icon_cell_badge_issue.rawValue
+        case .member:
+            return ImageName.icon_cell_badge_collaborator.rawValue
+        case .pullRequest:
+            return ImageName.icon_cell_badge_pull_request.rawValue
+        case .pullRequestReviewComment:
+            return ImageName.icon_cell_badge_comment.rawValue
+        case .push:
+            return ImageName.icon_cell_badge_push.rawValue
+        case .release:
+            return ImageName.icon_cell_badge_tag.rawValue
+        case .star:
+            return ImageName.icon_cell_badge_star.rawValue
+        default:
+            return ImageName.icon_cell_badge_repository.rawValue
+        }
+    }
+}
 
+
+class Payload: StaticMappable {
+    
     required init?(map: Map) {}
     init() {}
 

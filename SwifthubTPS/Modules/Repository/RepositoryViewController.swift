@@ -180,7 +180,7 @@ extension RepositoryViewController: UITableViewDelegate {
             contributorViewController.repoItem = repositoryItem
             self.present(contributorViewController, animated:true, completion:nil)
         case "events":
-            let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.eventVC.rawValue) as! EventViewController
+            let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repoEventVC.rawValue) as! RepositoryEventViewController
             eventViewController.modalPresentationStyle = .automatic
             eventViewController.repoItem = repositoryItem
             self.present(eventViewController, animated:true, completion:nil)

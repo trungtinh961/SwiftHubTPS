@@ -101,9 +101,7 @@ extension StarViewController: UITableViewDataSource {
             cell.viewLanguageColor.isHidden = true
             
             return cell
-        }
-        
-        
+        }        
     }
 }
 

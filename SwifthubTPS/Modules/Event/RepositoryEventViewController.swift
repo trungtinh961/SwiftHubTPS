@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EventViewController: UIViewController {
+class RepositoryEventViewController: UIViewController {
 
     // MARK: - Properties
     
@@ -55,7 +55,7 @@ class EventViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        eventGithubAPI.getResults(type: .getEvents, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        eventGithubAPI.getResults(type: .getRepositoryEvents, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 self?.eventItems = results
                 self?.isLoading = false
@@ -73,7 +73,7 @@ class EventViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension EventViewController: UITableViewDataSource {
+extension RepositoryEventViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading {
             return 1
@@ -95,8 +95,12 @@ extension EventViewController: UITableViewDataSource {
             if let smallURL = URL(string: itemCell?.actor?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
-            cell.lbTitle.text = "\(itemCell?.actor?.login ?? "") starred \(itemCell?.repository?.name ?? "")"
             cell.lbTime.text = itemCell?.createdAt?.timeAgo()
+            cell.lbTitle.text = itemCell?.title
+            if let img = itemCell?.badgeImage {
+                cell.imgState.image = UIImage(named: img)
+            }
+            cell.lbDetail.text = itemCell?.body
             return cell
         }
 
@@ -107,7 +111,7 @@ extension EventViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension EventViewController: UITableViewDelegate {
+extension RepositoryEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         

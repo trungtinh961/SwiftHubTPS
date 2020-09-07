@@ -26,6 +26,21 @@ enum ImageName: String {
     case icon_cell_star = "icon_cell_star"
     case icon_cell_theme = "icon_cell_theme"
     case icon_cell_profile_summary = "icon_cell_profile_summary"
+    case icon_cell_badge_branch = "icon_cell_badge_branch"
+    case icon_cell_badge_collaborator = "icon_cell_badge_collaborator"
+    case icon_cell_badge_comment = "icon_cell_badge_comment"
+    case icon_cell_badge_commit = "icon_cell_badge_commit"
     case icon_cell_badge_tag = "icon_cell_badge_tag"
+    case icon_cell_badge_fork = "icon_cell_badge_fork"
+    case icon_cell_badge_issue = "icon_cell_badge_issue"
+    case icon_cell_badge_pull_request = "icon_cell_badge_pull_request"
+    case icon_cell_badge_push = "icon_cell_badge_push"
+    case icon_cell_badge_repository = "icon_cell_badge_repository"
+    case icon_cell_badge_search = "icon_cell_badge_search"
+    case icon_cell_badge_star = "icon_cell_badge_star"    
+    case icon_cell_badge_trending = "icon_cell_badge_trending"
+    
+    
+    
 }
 

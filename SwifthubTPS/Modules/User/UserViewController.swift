@@ -116,8 +116,7 @@ extension UserViewController: UITableViewDataSource {
             if let img = itemCell?.imgName {
                 cell.imgCell.image = UIImage(named: img)
             }
-            cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
-            
+            cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)            
             return cell
         }
     }
@@ -139,7 +138,20 @@ extension UserViewController: UITableViewDelegate {
             starsViewController.modalPresentationStyle = .automatic
             starsViewController.userItem = userItem
             self.present(starsViewController, animated:true, completion:nil)
-        
+        case "subscriptions":
+            let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
+            watchingViewController.modalPresentationStyle = .automatic
+            watchingViewController.userItem = userItem
+            self.present(watchingViewController, animated:true, completion:nil)
+        case "events":
+            let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
+            eventViewController.modalPresentationStyle = .automatic
+            eventViewController.userItem = userItem
+            self.present(eventViewController, animated:true, completion:nil)
+        case "blog":
+            if let url = URL(string: userItem?.blog ?? "") {
+                UIApplication.shared.open(url)
+            }
         default:
             break
         }

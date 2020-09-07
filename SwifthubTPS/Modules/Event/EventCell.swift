@@ -17,22 +17,25 @@ class EventCell: UITableViewCell {
     @IBOutlet weak var imgState: UIImageView!
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbTime: UILabel!
+    @IBOutlet weak var lbDetail: UILabel!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         mainView.layer.cornerRadius = 5
-        imgDisclosure.isHidden = true
+//        imgDisclosure.isHidden = true
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
         imgState.layer.masksToBounds = true
-        imgState.layer.cornerRadius = imgAuthor.frame.width / 2
+        imgState.layer.cornerRadius = imgState.frame.width / 2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+       
     }
+    
+    
     
 }

@@ -78,8 +78,7 @@ class SearchViewController: UIViewController {
         }
         updateTableView(language: language)
     }
-    
-    // MARK: - Public
+        
     
     // MARK: - Private
     

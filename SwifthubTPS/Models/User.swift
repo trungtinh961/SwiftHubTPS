@@ -163,11 +163,11 @@ extension User {
         detailCellProperties.append(DetailCellProperty(id: "events", imgName: ImageName.icon_cell_events.rawValue, titleCell: "Events", hideDisclosure: false))
 
         if let company = self.company {
-            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_company.rawValue, titleCell: "Company", detail: company, hideDisclosure: false))
+            detailCellProperties.append(DetailCellProperty(id: "company", imgName: ImageName.icon_cell_company.rawValue, titleCell: "Company", detail: company, hideDisclosure: false))
         }
         
         if let blog = self.blog {
-            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_link.rawValue, titleCell: "Blog", detail: blog, hideDisclosure: false))
+            detailCellProperties.append(DetailCellProperty(id: "blog", imgName: ImageName.icon_cell_link.rawValue, titleCell: "Blog", detail: blog, hideDisclosure: false))
         }
         
         return detailCellProperties

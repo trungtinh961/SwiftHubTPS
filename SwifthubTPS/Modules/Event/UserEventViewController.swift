@@ -1,5 +1,5 @@
 //
-//  WatchingViewController.swift
+//  UserEventViewController.swift
 //  SwifthubTPS
 //
 //  Created by TPS on 9/7/20.
@@ -8,56 +8,67 @@
 
 import UIKit
 
-class WatchingViewController: UIViewController {
 
-    // MARK: - Properties
+class UserEventViewController: UIViewController {
     
+    // MARK: - Properties
+
+    private var eventType = EventType.received
     var userItem: User?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
-    private var watchingGithubAPI = GitHubAPI<Repository>()
-    private var watchingItems: [Repository]?
+    private var eventGithubAPI = GitHubAPI<Event>()
+    private var eventItems: [Event]?
     
     @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
     
-    // MARK: - Life Cycles
+    // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateTableView()
+        updateTableView(eventType: eventType)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.eventCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
+        
     }
     
-    
-    
-    // MARK:- IBActions
+    // MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func segmentControl(_ sender: Any) {
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
+            eventType = .received
+        case 1:
+            eventType = .performed
+        default: break
+        }
+        updateTableView(eventType: eventType)
+    }
     
-    
-    // MARK:- Private Methods
-
-    private func updateTableView(){
+    // MARK: - Private Method
+   
+    private func updateTableView(eventType: EventType){
         isLoading = true
         resultTableView.reloadData()
-        watchingGithubAPI.getResults(type: .getWatching, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+        eventGithubAPI.getResults(type: .getUserEvents, eventType: eventType, username: userItem?.login ?? "") { [weak self] results, errorMessage in
             if let results = results {
-                self?.watchingItems = results
+                self?.eventItems = results
                 self?.isLoading = false
                 if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
                     self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
@@ -69,18 +80,17 @@ class WatchingViewController: UIViewController {
             }
         }
     }
-    
+
 }
 
 
 // MARK: - UITableViewDataSource
-extension WatchingViewController: UITableViewDataSource {
-    
+extension UserEventViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading {
             return 1
         } else {
-            return watchingItems?.count ?? 0
+            return eventItems?.count ?? 0
         }
     }
     
@@ -91,35 +101,30 @@ extension WatchingViewController: UITableViewDataSource {
             spinner.startAnimating()
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
-            let itemCell = watchingItems![indexPath.row]
-            cell.lbFullname.text = itemCell.fullname
-            cell.lbDescription.text = itemCell.description
-            cell.lbStars.text = itemCell.stargazersCount?.kFormatted()
-            cell.lbCurrentPeriodStars.text = itemCell.language
-            if let smallURL = URL(string: itemCell.owner?.avatarUrl ?? "") {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.eventCell.rawValue, for: indexPath) as! EventCell
+            let itemCell = eventItems?[indexPath.row]
+            if let smallURL = URL(string: itemCell?.actor?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
-            cell.imgCurrentPeriodStars.isHidden = true
-            cell.lbLanguage.isHidden = true
-            cell.viewLanguageColor.isHidden = true
-            
+            cell.lbTime.text = itemCell?.createdAt?.timeAgo()
+            cell.lbTitle.text = itemCell?.title
+            if let img = itemCell?.badgeImage {
+                cell.imgState.image = UIImage(named: img)
+            }
+            cell.lbDetail.text = itemCell?.body
             return cell
         }
     }
-    
 }
 
-
-
 // MARK: - UITableViewDelegate
-extension WatchingViewController: UITableViewDelegate {
+
+extension UserEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-        repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
+        repositoryViewController.repoFullname = eventItems?[indexPath.row].repository?.fullname ?? ""
         repositoryViewController.modalPresentationStyle = .automatic
         self.present(repositoryViewController, animated:true, completion:nil)
     }
