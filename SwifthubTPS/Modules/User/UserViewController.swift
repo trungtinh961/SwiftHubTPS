@@ -152,6 +152,14 @@ extension UserViewController: UITableViewDelegate {
             if let url = URL(string: userItem?.blog ?? "") {
                 UIApplication.shared.open(url)
             }
+        case "company":
+            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+            let username = userDetails![indexPath.row].detail
+            let aIndex = username.firstIndex(of: "@")!
+            let companyname = username[username.index(after: aIndex)...]
+            userViewController.username = String(companyname)
+            userViewController.modalPresentationStyle = .automatic
+            self.present(userViewController, animated:true, completion:nil)
         default:
             break
         }

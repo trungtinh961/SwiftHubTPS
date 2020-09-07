@@ -209,6 +209,7 @@
 		BA3D105F24F750FC0079C5A1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BAB854322506237400ABDD49 /* UIView */,
 				BABE48712500C73E00A5AB12 /* UINavigationItem */,
 				BAB7870A24F9134D002779B2 /* UIViewController */,
 				BA3D106624F763BE0079C5A1 /* UIImageView */,
@@ -286,6 +287,13 @@
 				BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */,
 			);
 			path = Watching;
+			sourceTree = "<group>";
+		};
+		BAB854322506237400ABDD49 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIView;
 			sourceTree = "<group>";
 		};
 		BABE486E2500A29800A5AB12 /* User */ = {

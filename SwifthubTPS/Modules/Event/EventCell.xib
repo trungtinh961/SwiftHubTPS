@@ -23,29 +23,35 @@
                                 <rect key="frame" x="6" y="2" width="298" height="114"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="Smn-6h-0ZH">
-                                        <rect key="frame" x="0.0" y="27" width="60" height="60"/>
+                                        <rect key="frame" x="0.0" y="29.5" width="55" height="55"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="0H4-Ng-fnT"/>
-                                            <constraint firstAttribute="height" constant="60" id="aWf-Ze-gro"/>
+                                            <constraint firstAttribute="width" constant="55" id="0H4-Ng-fnT"/>
+                                            <constraint firstAttribute="height" constant="55" id="aWf-Ze-gro"/>
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="d6W-iQ-S52">
-                                        <rect key="frame" x="68" y="2" width="208" height="110"/>
+                                        <rect key="frame" x="63" y="2" width="213" height="110"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nrf-Pv-Jqu">
-                                                <rect key="frame" x="0.0" y="0.0" width="208" height="74.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nrf-Pv-Jqu">
+                                                <rect key="frame" x="0.0" y="0.0" width="213" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="wdz-rq-Hn1"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Db-ob-qvV">
-                                                <rect key="frame" x="0.0" y="76.5" width="208" height="14.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Db-ob-qvV">
+                                                <rect key="frame" x="0.0" y="37" width="213" height="14.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="14.5" id="t7O-Xp-mmJ"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Body" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IA2-6f-u22">
-                                                <rect key="frame" x="0.0" y="93" width="208" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Body" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IA2-6f-u22">
+                                                <rect key="frame" x="0.0" y="53.5" width="213" height="56.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -74,7 +80,7 @@
                                 </constraints>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_star" translatesAutoresizingMaskIntoConstraints="NO" id="xq1-WP-mf6">
-                                <rect key="frame" x="6" y="69" width="20" height="20"/>
+                                <rect key="frame" x="6" y="66.5" width="20" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.18135777119999999" green="0.61846274140000002" blue="0.33028650279999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>

@@ -17,20 +17,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhs-8N-igS">
-                        <rect key="frame" x="0.0" y="2" width="400" height="73"/>
+                        <rect key="frame" x="0.0" y="2" width="400" height="55.5"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="roM-Gv-gfD">
-                                <rect key="frame" x="6" y="0.0" width="388" height="73"/>
+                                <rect key="frame" x="6" y="0.0" width="388" height="55.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="egu-ZY-meo">
-                                        <rect key="frame" x="0.0" y="6.5" width="60" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.5" width="55" height="55"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="WBU-Hz-Snr"/>
-                                            <constraint firstAttribute="height" constant="60" id="chD-EO-LtI"/>
+                                            <constraint firstAttribute="width" constant="55" id="WBU-Hz-Snr"/>
+                                            <constraint firstAttribute="height" constant="55" id="chD-EO-LtI"/>
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="BTw-cz-c5Z">
-                                        <rect key="frame" x="68" y="9" width="298" height="55.5"/>
+                                        <rect key="frame" x="63" y="0.0" width="303" height="55.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="full name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMY-e0-Qh6">
                                                 <rect key="frame" x="0.0" y="0.0" width="59" height="17"/>
@@ -48,17 +48,17 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zY9-bA-p2s">
-                                                <rect key="frame" x="0.0" y="35.5" width="298" height="20"/>
+                                                <rect key="frame" x="0.0" y="35.5" width="303" height="20"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_star" translatesAutoresizingMaskIntoConstraints="NO" id="qiF-3l-tWv">
-                                                        <rect key="frame" x="0.0" y="4" width="12" height="12"/>
+                                                        <rect key="frame" x="0.0" y="4" width="15" height="12"/>
                                                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="12" id="4jy-4E-pB9"/>
+                                                            <constraint firstAttribute="width" constant="15" id="4jy-4E-pB9"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="star" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSY-ke-09K">
-                                                        <rect key="frame" x="18" y="4" width="40" height="12"/>
+                                                        <rect key="frame" x="21" y="4" width="40" height="12"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="w2Q-3C-DQR"/>
                                                         </constraints>
@@ -67,14 +67,14 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_star" translatesAutoresizingMaskIntoConstraints="NO" id="ApM-uC-W22">
-                                                        <rect key="frame" x="58" y="4" width="12" height="12"/>
+                                                        <rect key="frame" x="61" y="4" width="15" height="12"/>
                                                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="12" id="cUy-P7-NeI"/>
+                                                            <constraint firstAttribute="width" constant="15" id="cUy-P7-NeI"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="star" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8n-F2-aip">
-                                                        <rect key="frame" x="76" y="4" width="65" height="12"/>
+                                                        <rect key="frame" x="82" y="4" width="65" height="12"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="65" id="xhP-T1-c1p"/>
                                                         </constraints>
@@ -83,7 +83,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWw-Fe-A9p">
-                                                        <rect key="frame" x="169" y="4" width="100" height="12"/>
+                                                        <rect key="frame" x="180" y="4" width="100" height="12"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="Osn-RW-sFG"/>
                                                         </constraints>
@@ -92,11 +92,11 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kbi-Uj-7uW">
-                                                        <rect key="frame" x="151" y="5" width="10" height="10"/>
+                                                        <rect key="frame" x="157" y="2.5" width="15" height="15"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="10" id="dR0-0F-TrL"/>
-                                                            <constraint firstAttribute="height" constant="10" id="moA-Je-FuT"/>
+                                                            <constraint firstAttribute="width" constant="15" id="dR0-0F-TrL"/>
+                                                            <constraint firstAttribute="height" constant="15" id="moA-Je-FuT"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -128,7 +128,7 @@
                                         </constraints>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_disclosure" translatesAutoresizingMaskIntoConstraints="NO" id="nN4-vF-AjW">
-                                        <rect key="frame" x="374" y="29.5" width="14" height="14"/>
+                                        <rect key="frame" x="374" y="21" width="14" height="14"/>
                                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="14" id="ISD-sa-z6s"/>
@@ -152,7 +152,7 @@
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cell_badge_repository" translatesAutoresizingMaskIntoConstraints="NO" id="ixs-7g-Tcq">
-                        <rect key="frame" x="6" y="48.5" width="20" height="20"/>
+                        <rect key="frame" x="6" y="37.5" width="20" height="20"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.08454962819814682" green="0.29079863429069519" blue="0.067289978265762329" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
