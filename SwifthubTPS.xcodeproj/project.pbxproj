@@ -30,6 +30,7 @@
 		BAB7870C24F91367002779B2 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB7870B24F91367002779B2 /* UIViewController.swift */; };
 		BAB7870F24F91619002779B2 /* NoResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB7870D24F91619002779B2 /* NoResultCell.swift */; };
 		BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB7870E24F91619002779B2 /* NoResultCell.xib */; };
+		BAB8542F2505D27100ABDD49 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */; };
 		BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE486F2500A2CF00A5AB12 /* UserViewController.swift */; };
 		BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48722500C77A00A5AB12 /* UINavigationItem.swift */; };
 		BABE48752500D87800A5AB12 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48742500D87800A5AB12 /* Issue.swift */; };
@@ -102,6 +103,7 @@
 		BAB7870B24F91367002779B2 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		BAB7870D24F91619002779B2 /* NoResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultCell.swift; sourceTree = "<group>"; };
 		BAB7870E24F91619002779B2 /* NoResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultCell.xib; sourceTree = "<group>"; };
+		BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		BABE486F2500A2CF00A5AB12 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		BABE48722500C77A00A5AB12 /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
 		BABE48742500D87800A5AB12 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -276,6 +278,14 @@
 			path = UIViewController;
 			sourceTree = "<group>";
 		};
+		BAB8542D2505D23F00ABDD49 /* Watching */ = {
+			isa = PBXGroup;
+			children = (
+				BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */,
+			);
+			path = Watching;
+			sourceTree = "<group>";
+		};
 		BABE486E2500A29800A5AB12 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +394,7 @@
 				BA3D105B24F61FFE0079C5A1 /* Setting */,
 				BAFF2387250255F800843E38 /* Star */,
 				BABE486E2500A29800A5AB12 /* User */,
+				BAB8542D2505D23F00ABDD49 /* Watching */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -615,6 +626,7 @@
 				BABE487C2500DBFF00A5AB12 /* IssueViewController.swift in Sources */,
 				BA3D106224F751500079C5A1 /* Foundation.swift in Sources */,
 				BAFF235A2501F4C600843E38 /* Committer.swift in Sources */,
+				BAB8542F2505D27100ABDD49 /* WatchingViewController.swift in Sources */,
 				BAFF23582501F48E00843E38 /* Commit.swift in Sources */,
 				BAFF23602501F65F00843E38 /* CommitCell.swift in Sources */,
 				BAFF23792502408900843E38 /* EventViewController.swift in Sources */,

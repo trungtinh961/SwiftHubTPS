@@ -87,7 +87,18 @@ extension StarViewController: UITableViewDataSource {
             spinner.startAnimating()
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
+            let itemCell = starredItems![indexPath.row]
+            cell.lbFullname.text = itemCell.fullname
+            cell.lbDescription.text = itemCell.description
+            cell.lbStars.text = itemCell.stargazersCount?.kFormatted()
+            cell.lbCurrentPeriodStars.text = itemCell.language
+            if let smallURL = URL(string: itemCell.owner?.avatarUrl ?? "") {
+                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            }
+            cell.imgCurrentPeriodStars.isHidden = true
+            cell.lbLanguage.isHidden = true
+            cell.viewLanguageColor.isHidden = true
             
             return cell
         }
@@ -98,5 +109,13 @@ extension StarViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension StarViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
+        let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+        repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
+        repositoryViewController.modalPresentationStyle = .automatic
+        self.present(repositoryViewController, animated:true, completion:nil)
+    }
 }
