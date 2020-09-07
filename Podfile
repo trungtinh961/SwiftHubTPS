@@ -8,4 +8,5 @@ target 'SwifthubTPS' do
     pod 'HMSegmentedControl'
     pod 'ObjectMapper'
     pod 'UIColor_Hex_Swift'
+    pod 'MessageKit'
 end

@@ -1,24 +1,34 @@
 PODS:
   - HMSegmentedControl (1.5.6)
+  - InputBarAccessoryView (5.1.0):
+    - InputBarAccessoryView/Core (= 5.1.0)
+  - InputBarAccessoryView/Core (5.1.0)
+  - MessageKit (3.3.0):
+    - InputBarAccessoryView (~> 5.1.0)
   - ObjectMapper (4.2.0)
   - UIColor_Hex_Swift (5.1.0)
 
 DEPENDENCIES:
   - HMSegmentedControl
+  - MessageKit
   - ObjectMapper
   - UIColor_Hex_Swift
 
 SPEC REPOS:
   trunk:
     - HMSegmentedControl
+    - InputBarAccessoryView
+    - MessageKit
     - ObjectMapper
     - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
   HMSegmentedControl: 34c1f54d822d8308e7b24f5d901ec674dfa31352
+  InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
+  MessageKit: 1f07618183be6d92b648ba7a384aafa097362a00
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   UIColor_Hex_Swift: 8be7432edacb7fa91c78aa05ef3c30b66e4f9415
 
-PODFILE CHECKSUM: 9477e42f34f52b25ce454ce069c3120183bf1ca2
+PODFILE CHECKSUM: ed35903052b7b9365630b868638965c8655f1416
 
 COCOAPODS: 1.9.3
