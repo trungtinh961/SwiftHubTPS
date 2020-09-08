@@ -23,5 +23,6 @@ enum StoryboardIdentifier: String {
     case watchingVC = "WatchingViewController"
     case userEventVC = "UserEventViewController"
     case webviewVC = "WebviewViewController"
+    case tabbar = "MainTabBarController"
 }
 

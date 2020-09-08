@@ -18,6 +18,7 @@
 		BA9C844325072E5D00B65818 /* WebviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C844225072E5D00B65818 /* WebviewViewController.swift */; };
 		BA9C844525072FB600B65818 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9C844425072FB600B65818 /* WebKit.framework */; };
 		BA9C84472507308400B65818 /* GitHubAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C84462507308400B65818 /* GitHubAuthentication.swift */; };
+		BA9C844A250788BA00B65818 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8449250788BA00B65818 /* MainTabBarController.swift */; };
 		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
 		BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */; };
 		BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */; };
@@ -95,6 +96,7 @@
 		BA9C844225072E5D00B65818 /* WebviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewViewController.swift; sourceTree = "<group>"; };
 		BA9C844425072FB600B65818 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		BA9C84462507308400B65818 /* GitHubAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAuthentication.swift; sourceTree = "<group>"; };
+		BA9C8449250788BA00B65818 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifier.swift; sourceTree = "<group>"; };
@@ -244,6 +246,14 @@
 			path = UIImageView;
 			sourceTree = "<group>";
 		};
+		BA9C84482507884E00B65818 /* Tab Bar Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BA9C8449250788BA00B65818 /* MainTabBarController.swift */,
+			);
+			path = "Tab Bar Controller";
+			sourceTree = "<group>";
+		};
 		BAB51E5F24FDFC26005A4F7D /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +275,7 @@
 		BAB7870424F8F419002779B2 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				BA9C84482507884E00B65818 /* Tab Bar Controller */,
 				BAB7870524F8F423002779B2 /* Table Cell */,
 			);
 			path = Commons;
@@ -664,6 +675,7 @@
 				BAB51E6924FE3DF2005A4F7D /* ImageName.swift in Sources */,
 				BA9C844325072E5D00B65818 /* WebviewViewController.swift in Sources */,
 				BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */,
+				BA9C844A250788BA00B65818 /* MainTabBarController.swift in Sources */,
 				BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */,
 				BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */,
 				BAB51E6624FE26D1005A4F7D /* DetailCell.swift in Sources */,

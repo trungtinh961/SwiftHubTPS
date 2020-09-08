@@ -13,8 +13,9 @@ import WebKit
 class WebviewViewController: UIViewController {
 
     // MARK: - Properties
-    let defaultSession = URLSession(configuration: .default)
-    var dataTask: URLSessionDataTask?
+    private var tabBar = MainTabBarController()
+    private let defaultSession = URLSession(configuration: .default)
+    private var dataTask: URLSessionDataTask?
     
     @IBOutlet weak var webview: WKWebView!
     
@@ -23,7 +24,7 @@ class WebviewViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let authURL = String(format: "%@?client_id=%@&scope=%@", arguments: [GITHUB.GITHUB_AUTHURL.rawValue,GITHUB.GITHUB_CLIENT_ID.rawValue,GITHUB.GITHUB_SCOPE.rawValue])
+        let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
 
         let urlRequest = URLRequest(url: URL(string: authURL)!)
         print(urlRequest)
@@ -52,7 +53,7 @@ extension WebviewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         print(webView.url ?? "no url")
         let requestURLString = (webView.url?.absoluteString)! as String
-        if requestURLString.hasPrefix(GITHUB.GITHUB_REDIRECT_URI.rawValue) {
+        if requestURLString.hasPrefix(GITHUB.GITHUB_REDIRECT_URI) {
             if let range: Range<String.Index> = requestURLString.range(of: "?code=") {
                 handleGithubCode(code: String(requestURLString[range.upperBound...]))
             }
@@ -61,7 +62,7 @@ extension WebviewViewController: WKNavigationDelegate {
     
     func checkRequestForCallbackURL(request: URLRequest) -> Void {
         let requestURLString = (request.url?.absoluteString)! as String
-        if requestURLString.hasPrefix(GITHUB.GITHUB_REDIRECT_URI.rawValue) {
+        if requestURLString.hasPrefix(GITHUB.GITHUB_REDIRECT_URI) {
             if let range: Range<String.Index> = requestURLString.range(of: "?code=") {
                 handleGithubCode(code: String(requestURLString[range.upperBound...]))
             }
@@ -70,8 +71,8 @@ extension WebviewViewController: WKNavigationDelegate {
     
     func handleGithubCode(code: String) {
         let params = [
-            "client_id" : GITHUB.GITHUB_CLIENT_ID.rawValue,
-            "client_secret" : GITHUB.GITHUB_CLIENT_SECRET.rawValue,
+            "client_id" : GITHUB.GITHUB_CLIENT_ID,
+            "client_secret" : GITHUB.GITHUB_CLIENT_SECRET,
             "code" : code
         ]
         var components = URLComponents(string: "https://github.com/login/oauth/access_token")
@@ -95,7 +96,13 @@ extension WebviewViewController: WKNavigationDelegate {
             }
             DispatchQueue.main.async {
                 if status == "access_token" {
-                    self.dismiss(animated: true, completion: nil)
+
+                    
+                    let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
+                    mainTabBarController?.gitHubToken.isAuthenticated = true
+                    self.view.window?.rootViewController = mainTabBarController
+                    self.view.window?.makeKeyAndVisible()
+
                 } else {
                     self.dismiss(animated: true, completion: nil)
                 }

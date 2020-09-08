@@ -9,6 +9,7 @@
 import Foundation
 
 enum ImageName: String {
+    case icon_tabbar_news = "icon_tabbar_news"
     case icon_cell_created = "icon_cell_created"
     case icon_cell_issues = "icon_cell_issues"
     case icon_cell_git_pull_request = "icon_cell_git_pull_request"
