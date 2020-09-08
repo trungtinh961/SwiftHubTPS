@@ -15,6 +15,9 @@
 		BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */; };
 		BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5824F7B91400971F23 /* UserCell.swift */; };
 		BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6C5A5924F7B91400971F23 /* UserCell.xib */; };
+		BA9C844325072E5D00B65818 /* WebviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C844225072E5D00B65818 /* WebviewViewController.swift */; };
+		BA9C844525072FB600B65818 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9C844425072FB600B65818 /* WebKit.framework */; };
+		BA9C84472507308400B65818 /* GitHubAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C84462507308400B65818 /* GitHubAuthentication.swift */; };
 		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
 		BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */; };
 		BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */; };
@@ -89,6 +92,9 @@
 		BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingGithubAPI.swift; sourceTree = "<group>"; };
 		BA6C5A5824F7B91400971F23 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		BA6C5A5924F7B91400971F23 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		BA9C844225072E5D00B65818 /* WebviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewViewController.swift; sourceTree = "<group>"; };
+		BA9C844425072FB600B65818 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		BA9C84462507308400B65818 /* GitHubAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAuthentication.swift; sourceTree = "<group>"; };
 		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifier.swift; sourceTree = "<group>"; };
@@ -157,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA9C844525072FB600B65818 /* WebKit.framework in Frameworks */,
 				D2C57271620F948D548D8370 /* Pods_SwifthubTPS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +183,7 @@
 		B0EAF795F3E1B244252E4A62 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA9C844425072FB600B65818 /* WebKit.framework */,
 				63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */,
 			);
 			name = Frameworks;
@@ -185,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				BAC5D29324F3C13800A731F0 /* LoginViewController.swift */,
+				BA9C844225072E5D00B65818 /* WebviewViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -199,6 +208,7 @@
 		BA3D105C24F620530079C5A1 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				BA9C84462507308400B65818 /* GitHubAuthentication.swift */,
 				BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */,
 				BA3D106924F76D2D0079C5A1 /* Router.swift */,
 				BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */,
@@ -652,6 +662,7 @@
 				BAFF236F250231B200843E38 /* Release.swift in Sources */,
 				BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */,
 				BAB51E6924FE3DF2005A4F7D /* ImageName.swift in Sources */,
+				BA9C844325072E5D00B65818 /* WebviewViewController.swift in Sources */,
 				BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */,
 				BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */,
 				BAB786FB24F8A6FF002779B2 /* LanguageViewController.swift in Sources */,
@@ -667,6 +678,7 @@
 				BAFF238525024D4A00843E38 /* EventCell.swift in Sources */,
 				BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */,
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,
+				BA9C84472507308400B65818 /* GitHubAuthentication.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
 				BABE48842501EA3F00A5AB12 /* PullRequestCell.swift in Sources */,
 				BABE48772500DB4E00A5AB12 /* State.swift in Sources */,

@@ -44,6 +44,23 @@ class LoginViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func btnOauth(_ sender: Any) {
+        showAlertWithDistructiveButton()
+    }
+    
+    private func showAlertWithDistructiveButton() {
+        let alert = UIAlertController(title: "\"SwiftHub\" wants to use \"github.com\" to sign in.", message: "This allows the app and website to share information about you.", preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { _ in
+            //Cancel Action
+        }))
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
+                let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+                let webviewViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.webviewVC.rawValue) as! WebviewViewController
+                webviewViewController.modalPresentationStyle = .automatic
+                webviewViewController.modalTransitionStyle = .flipHorizontal
+                self.present(webviewViewController, animated:true, completion:nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func btnPersonal(_ sender: Any) {
@@ -80,5 +97,9 @@ class LoginViewController: UIViewController {
             basicView.isHidden = false
         }
     }
+}
+
+extension LoginViewController: UIWebViewDelegate {
+    
 }
 
