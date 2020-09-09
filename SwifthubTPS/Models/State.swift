@@ -8,8 +8,14 @@
 
 import Foundation
 
-enum State: String {
+enum IssueState: String {
     case open
     case closed
+    case all
+}
+
+enum NotificationState {
+    case unread
+    case participate
     case all
 }

@@ -19,7 +19,7 @@ class GitHubAPI<Element: Mappable> {
     typealias JSONDictionary = [String: Any]
     typealias QueryResults = ([Element]?, String) -> Void
     
-    func createURL(type: GetType, eventType: EventType, state: State, query: String, language: String, fullname: String, username: String) -> URL? {
+    func createURL(type: GetType, eventType: EventType, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String) -> URL? {
         var components = URLComponents()
         
         if type == .repository {
@@ -37,15 +37,15 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getRepository(fullname: fullname).host
             components.path = Router.getRepository(fullname: fullname).path
         } else if type == .getIssues {
-            components.scheme = Router.getIssues(fullname: fullname, state: state).scheme
-            components.host = Router.getIssues(fullname: fullname, state: state).host
-            components.path = Router.getIssues(fullname: fullname, state: state).path
-            components.setQueryItems(with: Router.getIssues(fullname: fullname, state: state).parameters!)
+            components.scheme = Router.getIssues(fullname: fullname, issueState: state).scheme
+            components.host = Router.getIssues(fullname: fullname, issueState: state).host
+            components.path = Router.getIssues(fullname: fullname, issueState: state).path
+            components.setQueryItems(with: Router.getIssues(fullname: fullname, issueState: state).parameters!)
         } else if type == .getPullRequests {
-            components.scheme = Router.getPullRequests(fullname: fullname, state: state).scheme
-            components.host = Router.getPullRequests(fullname: fullname, state: state).host
-            components.path = Router.getPullRequests(fullname: fullname, state: state).path
-            components.setQueryItems(with: Router.getPullRequests(fullname: fullname, state: state).parameters!)
+            components.scheme = Router.getPullRequests(fullname: fullname, pullState: state).scheme
+            components.host = Router.getPullRequests(fullname: fullname, pullState: state).host
+            components.path = Router.getPullRequests(fullname: fullname, pullState: state).path
+            components.setQueryItems(with: Router.getPullRequests(fullname: fullname, pullState: state).parameters!)
         } else if type == .getCommits {
             components.scheme = Router.getCommits(fullname: fullname).scheme
             components.host = Router.getCommits(fullname: fullname).host
@@ -94,6 +94,11 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getAuthenUser.scheme
             components.host = Router.getAuthenUser.host
             components.path = Router.getAuthenUser.path
+        } else if type == .getNotifications {
+            components.scheme = Router.getNotifications(notificationState: notificationState).scheme
+            components.host = Router.getNotifications(notificationState: notificationState).host
+            components.path = Router.getNotifications(notificationState: notificationState).path
+            components.setQueryItems(with: Router.getUserEvents(username: username, type: eventType).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -101,9 +106,9 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: State = .open, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
+    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
         dataTask?.cancel()
-        guard let url = createURL(type: type, eventType: eventType, state: state, query: query, language: language, fullname: fullname, username: username) else {
+        guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username) else {
           return
         }
         var request = URLRequest(url: url)

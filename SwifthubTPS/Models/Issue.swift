@@ -30,7 +30,7 @@ struct Issue: Mappable {
     var number: Int?
     var pullRequest: PullRequest?
     var repositoryUrl: String?
-    var state: State = .open
+    var state: IssueState = .open
     var title: String?
     var updatedAt: Date?
     var url: String?

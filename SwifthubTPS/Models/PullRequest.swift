@@ -46,7 +46,7 @@ struct PullRequest: Mappable {
     var reviewCommentUrl: String?
     var reviewComments: Int?
     var reviewCommentsUrl: String?
-    var state: State = .open
+    var state: IssueState = .open
     var statusesUrl: String?
     var title: String?
     var updatedAt: Date?

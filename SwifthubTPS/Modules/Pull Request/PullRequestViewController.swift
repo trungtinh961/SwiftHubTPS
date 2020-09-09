@@ -13,7 +13,7 @@ class PullRequestViewController: UIViewController {
     // MARK: - Properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
-    private var state: State = .open
+    private var state: IssueState = .open
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
     private var pullGithubAPI = GitHubAPI<PullRequest>()

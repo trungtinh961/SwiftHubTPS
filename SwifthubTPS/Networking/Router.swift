@@ -25,6 +25,7 @@ enum GetType: Int {
     case getWatching
     case getUserEvents
     case getAuthenUser
+    case getNotifications
 }
 
 enum Router {
@@ -35,8 +36,8 @@ enum Router {
     case searchRepositories(query: String, language: String)
     case searchUsers(query: String, language: String)
     case getRepository(fullname: String)
-    case getIssues(fullname: String, state: State)
-    case getPullRequests(fullname: String, state: State)
+    case getIssues(fullname: String, issueState: IssueState)
+    case getPullRequests(fullname: String, pullState: IssueState)
     case getCommits(fullname: String)
     case getBranches(fullname: String)
     case getReleases(fullname: String)
@@ -47,6 +48,7 @@ enum Router {
     case getWatching(username: String)
     case getUserEvents(username: String, type: EventType)
     case getAuthenUser
+    case getNotifications(notificationState: NotificationState)
     
     var scheme: String {
         switch self {
@@ -82,6 +84,7 @@ enum Router {
         case .getWatching(let username): return "/users/\(username)/subscriptions"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         case .getAuthenUser: return "/user"
+        case .getNotifications: return "/notifications"
         }
     }
     
@@ -110,10 +113,25 @@ enum Router {
                 params["q"] = query
             }
             params["per_page"] = "50"
-        case .getIssues(_, let state), .getPullRequests(_, let state):
+        case .getIssues(_, let state),
+             .getPullRequests(_, let state):
             params["state"] = state.rawValue
             params["per_page"] = "50"
-        case .getCommits, .getBranches, .getReleases, .getContributors, .getEvents, .getStarred, .getWatching, .getUserEvents:
+        case .getCommits,
+             .getBranches,
+             .getReleases,
+             .getContributors,
+             .getEvents,
+             .getStarred,
+             .getWatching,
+             .getUserEvents:
+            params["per_page"] = "50"
+        case .getNotifications(let notificationState):
+            switch notificationState {
+            case .unread: break
+            case .participate: params["participating"] = "true"
+            case .all: params["all"] = "false"
+            }
             params["per_page"] = "50"
         default: break
         }

@@ -1539,7 +1539,7 @@
                     <view key="view" contentMode="scaleToFill" id="bdo-tr-eYw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="bZb-7x-qbk"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Setting" image="icon_tabbar_settings" id="n30-Ud-54v"/>
@@ -1548,21 +1548,63 @@
             </objects>
             <point key="canvasLocation" x="749" y="1722"/>
         </scene>
-        <!--Activities-->
-        <scene sceneID="D8Y-yj-S4b">
+        <!--Notification View Controller-->
+        <scene sceneID="wBP-UC-3yr">
             <objects>
-                <viewController storyboardIdentifier="NotificationViewController" id="2f9-f8-SYt" customClass="NotificationViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Aoy-mr-9qE" customClass="Act">
+                <viewController storyboardIdentifier="NotificationViewController" id="6Pc-NL-1Au" customClass="NotificationViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="G58-aK-cb0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="exs-m5-nNp"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8H-Hu-UVh">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <navigationItem id="TBJ-3y-mF1">
+                                        <nil key="title"/>
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="jos-bI-Sze">
+                                            <rect key="frame" x="60.5" y="5.5" width="293" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Unread"/>
+                                                <segment title="Participating"/>
+                                                <segment title="All"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="notificationSegmentControl:" destination="6Pc-NL-1Au" eventType="valueChanged" id="9d2-ih-nMh"/>
+                                            </connections>
+                                        </segmentedControl>
+                                        <barButtonItem key="rightBarButtonItem" image="icon_cell_check" id="ZL5-63-zM7">
+                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i9h-FZ-Weq">
+                                <rect key="frame" x="8" y="96" width="406" height="774"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="k8H-Hu-UVh" firstAttribute="top" secondItem="7ba-PE-c1M" secondAttribute="top" id="24V-9X-PJq"/>
+                            <constraint firstAttribute="trailing" secondItem="k8H-Hu-UVh" secondAttribute="trailing" id="3B7-D3-BHD"/>
+                            <constraint firstItem="k8H-Hu-UVh" firstAttribute="leading" secondItem="7ba-PE-c1M" secondAttribute="leading" id="IzE-lH-flp"/>
+                            <constraint firstItem="i9h-FZ-Weq" firstAttribute="trailing" secondItem="7ba-PE-c1M" secondAttribute="trailing" id="JcE-fL-lle"/>
+                            <constraint firstItem="i9h-FZ-Weq" firstAttribute="leading" secondItem="7ba-PE-c1M" secondAttribute="leading" constant="8" id="SBe-rV-8ap"/>
+                            <constraint firstItem="i9h-FZ-Weq" firstAttribute="top" secondItem="k8H-Hu-UVh" secondAttribute="bottom" constant="8" id="chC-3O-50u"/>
+                            <constraint firstItem="i9h-FZ-Weq" firstAttribute="bottom" secondItem="7ba-PE-c1M" secondAttribute="bottom" constant="8" id="uiX-9Q-jcM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7ba-PE-c1M"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Activities" image="icon_tabbar_activity" id="lNJ-av-j4O"/>
+                    <connections>
+                        <outlet property="notificationSegmentControl" destination="jos-bI-Sze" id="lPf-fS-774"/>
+                        <outlet property="resultTableView" destination="i9h-FZ-Weq" id="rJS-F1-s4a"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yCm-os-1a3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gva-bR-4Wc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="748" y="2462"/>
+            <point key="canvasLocation" x="748" y="2423"/>
         </scene>
         <!--Main Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -1606,11 +1648,11 @@
     </scenes>
     <resources>
         <image name="icon_button_github" width="30" height="30"/>
+        <image name="icon_cell_check" width="20" height="14"/>
         <image name="icon_navigation_back" width="27" height="27"/>
         <image name="icon_navigation_close" width="27" height="27"/>
         <image name="icon_navigation_github" width="25" height="25"/>
         <image name="icon_navigation_language" width="27" height="17"/>
-        <image name="icon_tabbar_activity" width="28" height="28"/>
         <image name="icon_tabbar_login" width="28" height="28"/>
         <image name="icon_tabbar_search" width="28" height="28"/>
         <image name="icon_tabbar_settings" width="28" height="28"/>
