@@ -10,6 +10,11 @@ import Foundation
 
 enum ImageName: String {
     case icon_tabbar_news = "icon_tabbar_news"
+    case icon_tabbar_activity = "icon_tabbar_activity"
+    case icon_tabbar_login = "icon_tabbar_login"
+    case icon_tabbar_profile = "icon_tabbar_profile"
+    case icon_tabbar_search = "icon_tabbar_search"
+    case icon_tabbar_settings = "icon_tabbar_settings"
     case icon_cell_created = "icon_cell_created"
     case icon_cell_issues = "icon_cell_issues"
     case icon_cell_git_pull_request = "icon_cell_git_pull_request"

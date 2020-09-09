@@ -19,6 +19,8 @@
 		BA9C844525072FB600B65818 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9C844425072FB600B65818 /* WebKit.framework */; };
 		BA9C84472507308400B65818 /* GitHubAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C84462507308400B65818 /* GitHubAuthentication.swift */; };
 		BA9C844A250788BA00B65818 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8449250788BA00B65818 /* MainTabBarController.swift */; };
+		BAB3169825087FAF000CF50C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3169725087FAF000CF50C /* SettingViewController.swift */; };
+		BAB3169B25088068000CF50C /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3169A25088068000CF50C /* ActivityViewController.swift */; };
 		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
 		BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */; };
 		BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */; };
@@ -97,6 +99,8 @@
 		BA9C844425072FB600B65818 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		BA9C84462507308400B65818 /* GitHubAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAuthentication.swift; sourceTree = "<group>"; };
 		BA9C8449250788BA00B65818 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		BAB3169725087FAF000CF50C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		BAB3169A25088068000CF50C /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifier.swift; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 		BA3D105B24F61FFE0079C5A1 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				BAB3169725087FAF000CF50C /* SettingViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -252,6 +257,14 @@
 				BA9C8449250788BA00B65818 /* MainTabBarController.swift */,
 			);
 			path = "Tab Bar Controller";
+			sourceTree = "<group>";
+		};
+		BAB3169925088043000CF50C /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				BAB3169A25088068000CF50C /* ActivityViewController.swift */,
+			);
+			path = Activity;
 			sourceTree = "<group>";
 		};
 		BAB51E5F24FDFC26005A4F7D /* Repository */ = {
@@ -410,8 +423,9 @@
 		BAC5D2A524F3C21900A731F0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				BAFF2370250237DF00843E38 /* Contributor */,
+				BAB3169925088043000CF50C /* Activity */,
 				BAFF23622502219D00843E38 /* Branches */,
+				BAFF2370250237DF00843E38 /* Contributor */,
 				BAFF235B2501F62900843E38 /* Commit */,
 				BAFF23772502401D00843E38 /* Event */,
 				BABE487A2500DBE400A5AB12 /* Issue */,
@@ -666,6 +680,7 @@
 				BAFF236925022F5700843E38 /* ReleaseViewController.swift in Sources */,
 				BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */,
 				BAB7870C24F91367002779B2 /* UIViewController.swift in Sources */,
+				BAB3169B25088068000CF50C /* ActivityViewController.swift in Sources */,
 				BABE487F2500DC3700A5AB12 /* IssueCell.swift in Sources */,
 				BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */,
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
@@ -700,6 +715,7 @@
 				BAFF2364250221C600843E38 /* BranchViewController.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BAFF23762502381A00843E38 /* ContributorViewController.swift in Sources */,
+				BAB3169825087FAF000CF50C /* SettingViewController.swift in Sources */,
 				BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */,
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,
 				BA3D105924F616550079C5A1 /* User.swift in Sources */,

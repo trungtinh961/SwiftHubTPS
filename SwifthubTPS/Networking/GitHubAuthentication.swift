@@ -17,5 +17,5 @@ struct GITHUB {
     static var GITHUB_SCOPE = "user+repo+notifications+read:org"
     
     var accessToken: String?
-    var isAuthenticated: Bool = false
+    var didAuthenticated: Bool = false
 }

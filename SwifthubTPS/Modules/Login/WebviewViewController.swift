@@ -13,6 +13,7 @@ import WebKit
 class WebviewViewController: UIViewController {
 
     // MARK: - Properties
+    private var accessToken = ""
     private var tabBar = MainTabBarController()
     private let defaultSession = URLSession(configuration: .default)
     private var dataTask: URLSessionDataTask?
@@ -89,8 +90,8 @@ extension WebviewViewController: WKNavigationDelegate {
             let seperator = content[0].firstIndex(of: "=")!
             let status = String(content[0][...content[0].index(before: seperator)])
             if status == "access_token" {
-                let accessToken = String(content[0][content[0].index(after: seperator)...])
-                print("Access token: \(accessToken)")
+                self.accessToken = String(content[0][content[0].index(after: seperator)...])
+                print("Access token: \(self.accessToken)")
             } else {
                 print("Login failed!")
             }
@@ -99,7 +100,8 @@ extension WebviewViewController: WKNavigationDelegate {
 
                     
                     let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
-                    mainTabBarController?.gitHubToken.isAuthenticated = true
+                    mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = true
+                    mainTabBarController?.gitHubAuthenticationManager.accessToken = self.accessToken
                     self.view.window?.rootViewController = mainTabBarController
                     self.view.window?.makeKeyAndVisible()
 
