@@ -22,7 +22,7 @@
 		BA9D5BA32508CBAE00DAF998 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D5BA22508CBAE00DAF998 /* Notification.swift */; };
 		BA9D5BA82508D7D800DAF998 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D5BA62508D7D800DAF998 /* NotificationCell.swift */; };
 		BA9D5BA92508D7D800DAF998 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9D5BA72508D7D800DAF998 /* NotificationCell.xib */; };
-		BAB3169825087FAF000CF50C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3169725087FAF000CF50C /* SettingViewController.swift */; };
+		BAB3169825087FAF000CF50C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3169725087FAF000CF50C /* ProfileViewController.swift */; };
 		BAB3169B25088068000CF50C /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3169A25088068000CF50C /* NotificationViewController.swift */; };
 		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
 		BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */; };
@@ -105,7 +105,7 @@
 		BA9D5BA22508CBAE00DAF998 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		BA9D5BA62508D7D800DAF998 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		BA9D5BA72508D7D800DAF998 /* NotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
-		BAB3169725087FAF000CF50C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		BAB3169725087FAF000CF50C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BAB3169A25088068000CF50C /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
@@ -210,12 +210,12 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		BA3D105B24F61FFE0079C5A1 /* Setting */ = {
+		BA3D105B24F61FFE0079C5A1 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				BAB3169725087FAF000CF50C /* SettingViewController.swift */,
+				BAB3169725087FAF000CF50C /* ProfileViewController.swift */,
 			);
-			path = Setting;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		BA3D105C24F620530079C5A1 /* Networking */ = {
@@ -440,11 +440,11 @@
 				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
 				BAB3169925088043000CF50C /* Notification */,
+				BA3D105B24F61FFE0079C5A1 /* Profile */,
 				BABE48812501EA0200A5AB12 /* Pull Request */,
 				BAFF236725022F3200843E38 /* Release */,
 				BAB51E5F24FDFC26005A4F7D /* Repository */,
 				BAD3886624F608BD0045C10E /* Search */,
-				BA3D105B24F61FFE0079C5A1 /* Setting */,
 				BAFF2387250255F800843E38 /* Star */,
 				BABE486E2500A29800A5AB12 /* User */,
 				BAB8542D2505D23F00ABDD49 /* Watching */,
@@ -725,7 +725,7 @@
 				BAFF2364250221C600843E38 /* BranchViewController.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BAFF23762502381A00843E38 /* ContributorViewController.swift in Sources */,
-				BAB3169825087FAF000CF50C /* SettingViewController.swift in Sources */,
+				BAB3169825087FAF000CF50C /* ProfileViewController.swift in Sources */,
 				BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */,
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,
 				BA3D105924F616550079C5A1 /* User.swift in Sources */,

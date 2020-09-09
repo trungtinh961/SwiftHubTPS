@@ -49,7 +49,7 @@ class NotificationViewController: UIViewController {
         case 2: notificationState = .all
         default: break
         }
-        resultTableView.reloadData()
+        updateTableView()
     }
     
     

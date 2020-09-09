@@ -61,12 +61,7 @@ class MainTabBarController: UITabBarController {
         searchNavgitaionController.title = "Search"
         searchNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_search.rawValue)
         
-        ///Setting VC
-        let settingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.settingVC.rawValue) as! SettingViewController
-        let settingNavgitaionController = UINavigationController(rootViewController: settingViewController)
-        settingNavgitaionController.isNavigationBarHidden = true
-        settingNavgitaionController.title = "Setting"
-        settingNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_settings.rawValue)
+        
         
         if didAuthenticated {
             
@@ -79,14 +74,24 @@ class MainTabBarController: UITabBarController {
             eventNavgitaionController.title = "Event"
             eventNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_news.rawValue)
             
-            ///Activity VC
+            ///Notification VC
             let activityViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.notificationVC.rawValue) as! NotificationViewController
+            activityViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             let activityNavgitaionController = UINavigationController(rootViewController: activityViewController)
             activityNavgitaionController.isNavigationBarHidden = true
             activityNavgitaionController.title = "Notifications"
             activityNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_activity.rawValue)
             
-            array = [eventNavgitaionController, searchNavgitaionController, activityNavgitaionController, settingNavgitaionController]
+            ///Profile VC
+            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            userViewController.username = userItem?.login
+            let userNavgitaionController = UINavigationController(rootViewController: userViewController)
+            userNavgitaionController.isNavigationBarHidden = true
+            userNavgitaionController.title = "Profile"
+            userNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_profile.rawValue)
+            
+            array = [eventNavgitaionController, searchNavgitaionController, activityNavgitaionController, userNavgitaionController]
             
         } else {
             
@@ -97,7 +102,7 @@ class MainTabBarController: UITabBarController {
             loginNavgitaionController.title = "Login"
             loginNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_login.rawValue)
             
-            array = [searchNavgitaionController, loginNavgitaionController, settingNavgitaionController]
+            array = [searchNavgitaionController, loginNavgitaionController]
         }
         
         return array

@@ -98,7 +98,7 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getNotifications(notificationState: notificationState).scheme
             components.host = Router.getNotifications(notificationState: notificationState).host
             components.path = Router.getNotifications(notificationState: notificationState).path
-            components.setQueryItems(with: Router.getUserEvents(username: username, type: eventType).parameters!)
+            components.setQueryItems(with: Router.getNotifications(notificationState: notificationState).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
