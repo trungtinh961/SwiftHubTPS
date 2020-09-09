@@ -11,7 +11,7 @@ import UIKit
 class CommitViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
@@ -52,7 +52,7 @@ class CommitViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         
-        commitGithubAPI.getResults(type: .getCommits, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        commitGithubAPI.getResults(type: .getCommits, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 self?.commitItems = results
                 self?.isLoading = false

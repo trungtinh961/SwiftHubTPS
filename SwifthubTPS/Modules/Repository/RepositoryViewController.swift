@@ -13,6 +13,7 @@ class RepositoryViewController: UIViewController {
     // MARK: - Properties
     
     private var downloadTask: URLSessionDownloadTask?
+    var gitHubAuthenticationManager = GITHUB()
     var repoFullname: String?
     private var repositoryGithubAPI = GitHubAPI<Repository>()
     private var repositoryItem: Repository?
@@ -69,7 +70,7 @@ class RepositoryViewController: UIViewController {
     
     private func getData() {
         isLoading = true
-        repositoryGithubAPI.getResults(type: .getRepository, fullname: repoFullname!) { [weak self] results, errorMessage in
+        repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoFullname!) { [weak self] results, errorMessage in
             if let result = results?[0] {
                 self?.repositoryItem = result
                 self?.isLoading = false
@@ -151,38 +152,45 @@ extension RepositoryViewController: UITableViewDelegate {
         case "issues":            
             let issuesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.issueVC.rawValue) as! IssueViewController
             issuesViewController.modalPresentationStyle = .automatic
+            issuesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             issuesViewController.repoItem = repositoryItem
             self.present(issuesViewController, animated:true, completion:nil)
         case "pulls":
             let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.pullVC.rawValue) as! PullRequestViewController
             pullsViewController.modalPresentationStyle = .automatic
             pullsViewController.repoItem = repositoryItem
+            pullsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(pullsViewController, animated:true, completion:nil)
         case "commits":
             let commitsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
             commitsViewController.modalPresentationStyle = .automatic
             commitsViewController.repoItem = repositoryItem
+            commitsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(commitsViewController, animated:true, completion:nil)
         case "branches":
             let branchesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.branchVC.rawValue) as! BranchViewController
             branchesViewController.modalPresentationStyle = .automatic
             branchesViewController.repoItem = repositoryItem
+            branchesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             branchesViewController.delegate = self
             self.present(branchesViewController, animated:true, completion:nil)
         case "releases":
             let releaseViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.releaseVC.rawValue) as! ReleaseViewController
             releaseViewController.modalPresentationStyle = .automatic
-            releaseViewController.repoItem = repositoryItem            
+            releaseViewController.repoItem = repositoryItem
+            releaseViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(releaseViewController, animated:true, completion:nil)
         case "contributors":
             let contributorViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contributorVC.rawValue) as! ContributorViewController
             contributorViewController.modalPresentationStyle = .automatic
             contributorViewController.repoItem = repositoryItem
+            contributorViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(contributorViewController, animated:true, completion:nil)
         case "events":
             let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repoEventVC.rawValue) as! RepositoryEventViewController
             eventViewController.modalPresentationStyle = .automatic
             eventViewController.repoItem = repositoryItem
+            eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(eventViewController, animated:true, completion:nil)
             
         default:

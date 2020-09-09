@@ -20,6 +20,9 @@ class LoginViewController: UIViewController {
     
     private var loginType: LoginType = .oauth
     
+    @IBOutlet weak var btnOauth: UIButton!
+    @IBOutlet weak var btnPersonal: UIButton!
+    @IBOutlet weak var btnBasic: UIButton!
     @IBOutlet weak var oauthView: UIView!
     @IBOutlet weak var personalView: UIView!
     @IBOutlet weak var basicView: UIView!
@@ -38,6 +41,10 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        btnOauth.layer.cornerRadius = 5
+        btnPersonal.layer.cornerRadius = 5
+        btnBasic.layer.cornerRadius = 5
         
     }
     

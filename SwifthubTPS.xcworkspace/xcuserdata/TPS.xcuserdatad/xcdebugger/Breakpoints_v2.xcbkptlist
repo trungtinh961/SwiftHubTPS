@@ -3,4 +3,86 @@
    uuid = "0B9D0AB6-2629-4F67-81B7-AB398E417C7C"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DC883E76-D1B3-4AC1-B4A4-929D5737824E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwifthubTPS/Commons/Tab Bar Controller/MainTabBarController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "refreshAllTab(didAuthenticated:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4A900DDE-9353-448A-94FB-E482780BBF07"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwifthubTPS/Modules/Event/UserEventViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "updateTableView(eventType:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4A900DDE-9353-448A-94FB-E482780BBF07 - 494f52fcde759b23"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwifthubTPS.UserEventViewController.(updateTableView in _33A95315F9DE2AF79A8043DFC4BCDD33)(eventType: SwifthubTPS.EventType) -&gt; ()"
+                  moduleName = "SwifthubTPS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/TPS/Desktop/SwifthubTPS/SwifthubTPS/Modules/Event/UserEventViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "363">
+               </Location>
+               <Location
+                  uuid = "4A900DDE-9353-448A-94FB-E482780BBF07 - c4eb7d7a96ec4ba1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;SwifthubTPS.Event&gt;&gt;, Swift.String) -&gt; () in SwifthubTPS.UserEventViewController.(updateTableView in _33A95315F9DE2AF79A8043DFC4BCDD33)(eventType: SwifthubTPS.EventType) -&gt; ()"
+                  moduleName = "SwifthubTPS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/TPS/Desktop/SwifthubTPS/SwifthubTPS/Modules/Event/UserEventViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "326">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "14D975F2-6704-4D5D-8310-B88A5F27EC8F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwifthubTPS/Modules/Event/UserEventViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "updateTableView(eventType:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

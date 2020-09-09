@@ -13,8 +13,7 @@ import WebKit
 class WebviewViewController: UIViewController {
 
     // MARK: - Properties
-    private var accessToken = ""
-    private var tabBar = MainTabBarController()
+    private var accessToken = ""   
     private let defaultSession = URLSession(configuration: .default)
     private var dataTask: URLSessionDataTask?
     
@@ -85,8 +84,8 @@ extension WebviewViewController: WKNavigationDelegate {
         guard let urlRequest = request.url else { return }
         let queue = DispatchQueue.global()
         queue.async {
-            let data = try? Data(contentsOf: urlRequest)
-            let content = String(decoding: data!, as: UTF8.self).removingPercentEncoding!.split(separator: "&")
+            guard let data = try? Data(contentsOf: urlRequest) else { return }
+            let content = String(decoding: data, as: UTF8.self).removingPercentEncoding!.split(separator: "&")
             let seperator = content[0].firstIndex(of: "=")!
             let status = String(content[0][...content[0].index(before: seperator)])
             if status == "access_token" {
@@ -97,7 +96,6 @@ extension WebviewViewController: WKNavigationDelegate {
             }
             DispatchQueue.main.async {
                 if status == "access_token" {
-
                     
                     let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
                     mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = true

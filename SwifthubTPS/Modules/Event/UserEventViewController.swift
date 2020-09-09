@@ -13,8 +13,10 @@ class UserEventViewController: UIViewController {
     
     // MARK: - Properties
 
-    private var eventType = EventType.received
+    var gitHubAuthenticationManager = GITHUB()
     var userItem: User?
+    private var eventType = EventType.received    
+    var didAuthenticated: Bool = false
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
     private var eventGithubAPI = GitHubAPI<Event>()
@@ -22,6 +24,8 @@ class UserEventViewController: UIViewController {
     
     @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet var navItem: UINavigationItem!
+    @IBOutlet var btnBack: UIBarButtonItem!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     // MARK: - Life Cycle
@@ -29,6 +33,14 @@ class UserEventViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView(eventType: eventType)
+        
+        if gitHubAuthenticationManager.didAuthenticated {
+            navItem.leftBarButtonItem?.tintColor = .clear
+        } else {
+            navItem.leftBarButtonItem?.tintColor = .systemTeal
+        }
+        
+        
     }
     
     override func viewDidLoad() {
@@ -47,7 +59,9 @@ class UserEventViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        if !gitHubAuthenticationManager.didAuthenticated {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func segmentControl(_ sender: Any) {
@@ -61,24 +75,28 @@ class UserEventViewController: UIViewController {
         updateTableView(eventType: eventType)
     }
     
+    
+    
     // MARK: - Private Method
-   
+
+    
     private func updateTableView(eventType: EventType){
         isLoading = true
         resultTableView.reloadData()
-        eventGithubAPI.getResults(type: .getUserEvents, eventType: eventType, username: userItem?.login ?? "") { [weak self] results, errorMessage in
-            if let results = results {
-                self?.eventItems = results
-                self?.isLoading = false
-                if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
-                    self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+
+        eventGithubAPI.getResults(type: .getUserEvents, eventType: eventType, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.eventItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
+                    self?.resultTableView.reloadData()
                 }
-                self?.resultTableView.reloadData()
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
-            if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
-            }
-        }
     }
 
 }
@@ -124,7 +142,9 @@ extension UserEventViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.repoFullname = eventItems?[indexPath.row].repository?.fullname ?? ""
+        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.modalPresentationStyle = .automatic
         self.present(repositoryViewController, animated:true, completion:nil)
     }

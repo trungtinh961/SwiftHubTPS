@@ -11,7 +11,7 @@ import UIKit
 class ReleaseViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
@@ -51,7 +51,7 @@ class ReleaseViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         
-        releaseGithubAPI.getResults(type: .getReleases, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        releaseGithubAPI.getResults(type: .getReleases, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 self?.releaseItems = results
                 self?.isLoading = false

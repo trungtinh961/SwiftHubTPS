@@ -11,7 +11,7 @@ import UIKit
 class StarViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var userItem: User?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
@@ -53,7 +53,7 @@ class StarViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        starredGithubAPI.getResults(type: .getStarred, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+        starredGithubAPI.getResults(type: .getStarred, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 self?.starredItems = results
                 self?.isLoading = false
@@ -113,6 +113,7 @@ extension StarViewController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
         repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
+        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.modalPresentationStyle = .automatic
         self.present(repositoryViewController, animated:true, completion:nil)
     }

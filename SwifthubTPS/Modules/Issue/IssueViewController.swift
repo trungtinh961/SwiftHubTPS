@@ -11,7 +11,7 @@ import UIKit
 class IssueViewController: UIViewController {
     
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var state: State = .open
     private var isLoading = false
@@ -67,7 +67,7 @@ class IssueViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         if state == .open {
-            issueGithubAPI.getResults(type: .getIssues, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
                     self?.issueItems = results
                     self?.isLoading = false
@@ -81,7 +81,7 @@ class IssueViewController: UIViewController {
                 }
             }
         } else if state == .closed {
-            issueGithubAPI.getResults(type: .getIssues, state: .closed, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, state: .closed, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
                     self?.issueItems = results
                     self?.isLoading = false
@@ -154,5 +154,7 @@ extension IssueViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension IssueViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

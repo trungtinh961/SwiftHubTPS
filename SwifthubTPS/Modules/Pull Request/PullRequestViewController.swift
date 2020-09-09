@@ -11,7 +11,7 @@ import UIKit
 class PullRequestViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var state: State = .open
     private var isLoading = false
@@ -67,7 +67,7 @@ class PullRequestViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         if state == .open {
-            pullGithubAPI.getResults(type: .getPullRequests, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+            pullGithubAPI.getResults(type: .getPullRequests, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
                     self?.pullItems = results
                     self?.isLoading = false
@@ -81,7 +81,7 @@ class PullRequestViewController: UIViewController {
                 }
             }
         } else if state == .closed {
-            pullGithubAPI.getResults(type: .getIssues, state: .closed, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+            pullGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, state: .closed, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
                     self?.pullItems = results
                     self?.isLoading = false

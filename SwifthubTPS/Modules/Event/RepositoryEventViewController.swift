@@ -11,7 +11,7 @@ import UIKit
 class RepositoryEventViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
@@ -55,7 +55,7 @@ class RepositoryEventViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        eventGithubAPI.getResults(type: .getRepositoryEvents, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        eventGithubAPI.getResults(type: .getRepositoryEvents, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 self?.eventItems = results
                 self?.isLoading = false

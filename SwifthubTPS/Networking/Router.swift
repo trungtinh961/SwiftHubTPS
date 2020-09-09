@@ -24,6 +24,7 @@ enum GetType: Int {
     case getStarred
     case getWatching
     case getUserEvents
+    case getAuthenUser
 }
 
 enum Router {
@@ -45,6 +46,7 @@ enum Router {
     case getStarred(username: String)
     case getWatching(username: String)
     case getUserEvents(username: String, type: EventType)
+    case getAuthenUser
     
     var scheme: String {
         switch self {
@@ -79,6 +81,7 @@ enum Router {
         case .getStarred(let username): return "/users/\(username)/starred"
         case .getWatching(let username): return "/users/\(username)/subscriptions"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
+        case .getAuthenUser: return "/user"
         }
     }
     

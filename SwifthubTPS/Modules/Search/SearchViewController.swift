@@ -12,6 +12,7 @@ import UIColor_Hex_Swift
 
 class SearchViewController: UIViewController {
     // MARK: - Properties
+    var gitHubAuthenticationManager = GITHUB()
     private var trendingRepositoryGithubAPI = TrendingGithubAPI<TrendingRepository>()
     private var trendingUserGithubAPI = TrendingGithubAPI<TrendingUser>()
     private var searchRepositoryGithubAPI = GitHubAPI<RepositorySearch>()
@@ -88,7 +89,7 @@ class SearchViewController: UIViewController {
         
         if getType == .repository {
             if isSearching {
-                searchRepositoryGithubAPI.getResults(type: .repository, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                searchRepositoryGithubAPI.getResults(type: .repository, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage in
                     if let result = results?[0] {
                         if result.totalCount == 0 {
                             self?.noResult = true
@@ -123,7 +124,7 @@ class SearchViewController: UIViewController {
             }
         } else if getType == .user {
             if isSearching {
-                searchUserGithubAPI.getResults(type: .user, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                searchUserGithubAPI.getResults(type: .user, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage in
                   
                     if let result = results?[0] {
                         if result.totalCount == 0 {
@@ -276,6 +277,7 @@ extension SearchViewController: UITableViewDelegate {
         if getType == .repository, !isLoading {
             let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
             repositoryViewController.modalPresentationStyle = .automatic
             self.present(repositoryViewController, animated:true, completion:nil)
@@ -283,6 +285,7 @@ extension SearchViewController: UITableViewDelegate {
         } else if getType == .user, !isLoading {
             let cell = tableView.cellForRow(at: indexPath) as! UserCell
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.username = cell.lbFullname.text ?? ""
             userViewController.modalPresentationStyle = .automatic
             self.present(userViewController, animated:true, completion:nil)

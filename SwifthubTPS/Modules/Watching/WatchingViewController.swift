@@ -11,7 +11,7 @@ import UIKit
 class WatchingViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var userItem: User?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
@@ -55,7 +55,7 @@ class WatchingViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        watchingGithubAPI.getResults(type: .getWatching, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+        watchingGithubAPI.getResults(type: .getWatching, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 self?.watchingItems = results
                 self?.isLoading = false
@@ -120,6 +120,7 @@ extension WatchingViewController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
         repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
+        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.modalPresentationStyle = .automatic
         self.present(repositoryViewController, animated:true, completion:nil)
     }

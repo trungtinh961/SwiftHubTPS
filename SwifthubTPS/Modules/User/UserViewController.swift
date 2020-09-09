@@ -11,7 +11,7 @@ import UIKit
 class UserViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     private var downloadTask: URLSessionDownloadTask?
     var username: String?
     private var userGithubAPI = GitHubAPI<User>()
@@ -67,7 +67,7 @@ class UserViewController: UIViewController {
     
     private func getData() {
         isLoading = true
-        userGithubAPI.getResults(type: .getUser, username: username!) { [weak self] results, errorMessage in
+        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: username!) { [weak self] results, errorMessage in
             if let result = results?[0] {
                 self?.userItem = result
                 self?.isLoading = false
@@ -137,29 +137,33 @@ extension UserViewController: UITableViewDelegate {
             let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
             starsViewController.modalPresentationStyle = .automatic
             starsViewController.userItem = userItem
+            starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(starsViewController, animated:true, completion:nil)
         case "subscriptions":
             let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
             watchingViewController.modalPresentationStyle = .automatic
             watchingViewController.userItem = userItem
+            watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(watchingViewController, animated:true, completion:nil)
         case "events":
             let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
             eventViewController.modalPresentationStyle = .automatic
             eventViewController.userItem = userItem
+            eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(eventViewController, animated:true, completion:nil)
         case "blog":
             if let url = URL(string: userItem?.blog ?? "") {
                 UIApplication.shared.open(url)
             }
-        case "company":
-            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-            let username = userDetails![indexPath.row].detail
-            let aIndex = username.firstIndex(of: "@")!
-            let companyname = username[username.index(after: aIndex)...]
-            userViewController.username = String(companyname)
-            userViewController.modalPresentationStyle = .automatic
-            self.present(userViewController, animated:true, completion:nil)
+//        case "company":
+//            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+//            let username = userDetails![indexPath.row].detail
+//            let aIndex = username.firstIndex(of: "@")!
+//            let companyname = username[username.index(after: aIndex)...]
+//            userViewController.username = String(companyname)
+//            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+//            userViewController.modalPresentationStyle = .automatic
+//            self.present(userViewController, animated:true, completion:nil)
         default:
             break
         }

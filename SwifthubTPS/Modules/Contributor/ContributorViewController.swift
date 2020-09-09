@@ -11,7 +11,7 @@ import UIKit
 class ContributorViewController: UIViewController {
 
     // MARK: - Properties
-    
+    var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
@@ -53,7 +53,7 @@ class ContributorViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        contributorGithubAPI.getResults(type: .getContributors, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        contributorGithubAPI.getResults(type: .getContributors, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
            if let results = results {
                self?.contributorItems = results
                self?.isLoading = false
@@ -110,6 +110,7 @@ extension ContributorViewController: UITableViewDelegate {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
         userViewController.username = cell.lbName.text ?? ""
+        userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         userViewController.modalPresentationStyle = .automatic
         self.present(userViewController, animated:true, completion:nil)
     }

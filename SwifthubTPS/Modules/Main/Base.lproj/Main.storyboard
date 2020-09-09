@@ -864,7 +864,9 @@
                         <viewLayoutGuide key="safeArea" id="hVV-Rb-yvS"/>
                     </view>
                     <connections>
+                        <outlet property="btnBack" destination="a00-DM-VAA" id="ei3-nO-T6S"/>
                         <outlet property="imgAuthor" destination="KOQ-kK-mJX" id="qEd-KE-BlV"/>
+                        <outlet property="navItem" destination="Uky-k0-lGm" id="x8d-rT-16m"/>
                         <outlet property="resultTableView" destination="K6s-Pa-bfX" id="ASa-Kc-9bn"/>
                         <outlet property="segmentControl" destination="ENm-cT-KTo" id="nZ2-6e-UlK"/>
                     </connections>
@@ -1449,6 +1451,9 @@
                     <tabBarItem key="tabBarItem" title="Login" image="icon_tabbar_login" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="basicView" destination="c6t-HJ-wXr" id="mt1-Xs-pB8"/>
+                        <outlet property="btnBasic" destination="yEq-7m-bQ9" id="jWG-5k-hQo"/>
+                        <outlet property="btnOauth" destination="uh0-rY-h8S" id="bpx-xc-hlX"/>
+                        <outlet property="btnPersonal" destination="2pe-UP-bgl" id="9Rw-8B-EPP"/>
                         <outlet property="loginSegmentControl" destination="ImH-Kr-JAl" id="bes-65-Sq8"/>
                         <outlet property="oauthView" destination="UVY-Kt-9QM" id="VSX-rn-fg8"/>
                         <outlet property="personalView" destination="J1S-lQ-WmE" id="czW-4w-EtV"/>
@@ -1476,7 +1481,7 @@
                                     <constraint firstAttribute="height" constant="44" id="oKJ-0O-KRD"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Webview" id="g0S-wb-VYW">
+                                    <navigationItem title="OAuth Login" id="g0S-wb-VYW">
                                         <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="c3c-GZ-1ca">
                                             <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
@@ -1491,7 +1496,7 @@
                                 <subviews>
                                     <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icN-kh-PmL">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="685"/>
-                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <wkWebViewConfiguration key="configuration">
                                             <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                             <wkPreferences key="preferences"/>
@@ -1546,7 +1551,7 @@
         <!--Activities-->
         <scene sceneID="D8Y-yj-S4b">
             <objects>
-                <viewController storyboardIdentifier="ActivityViewController" id="2f9-f8-SYt" customClass="ActivityViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotificationViewController" id="2f9-f8-SYt" customClass="NotificationViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Aoy-mr-9qE" customClass="Act">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1573,7 +1578,6 @@
                         <segue destination="4zy-fB-ZPj" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="jWH-Ah-bI8" kind="relationship" relationship="viewControllers" id="1Rv-CJ-yZQ"/>
-                        <segue destination="2f9-f8-SYt" kind="relationship" relationship="viewControllers" id="ROj-pF-o6G"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

@@ -90,6 +90,10 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getUserEvents(username: username, type: eventType).host
             components.path = Router.getUserEvents(username: username, type: eventType).path
             components.setQueryItems(with: Router.getUserEvents(username: username, type: eventType).parameters!)
+        } else if type == .getAuthenUser {
+            components.scheme = Router.getAuthenUser.scheme
+            components.host = Router.getAuthenUser.host
+            components.path = Router.getAuthenUser.path
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -97,14 +101,20 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getResults(type: GetType, eventType: EventType = .received, state: State = .open, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
+    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: State = .open, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
         dataTask?.cancel()
         guard let url = createURL(type: type, eventType: eventType, state: state, query: query, language: language, fullname: fullname, username: username) else {
           return
         }
         var request = URLRequest(url: url)
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
+        if gitHubAuthenticationManager.didAuthenticated {
+            request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        }
+        
+        print(request.allHTTPHeaderFields!)
         print(request)
+        
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
             defer {
                 self?.dataTask = nil
@@ -129,7 +139,7 @@ class GitHubAPI<Element: Mappable> {
         elements.removeAll()
         var jsonArray: Array<Any>!
         switch type {
-        case .getRepository, .getUser, .repository, .user: /// Json return 1 element
+        case .getRepository, .getUser, .repository, .user, .getAuthenUser: /// Json return 1 element
             do {
                 if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
                     elements.append(Element(JSON: item)!)

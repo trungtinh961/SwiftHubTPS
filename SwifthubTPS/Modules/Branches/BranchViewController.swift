@@ -17,6 +17,7 @@ class BranchViewController: UIViewController {
     // MARK: - Properties
     weak var delegate: BranchViewControllerDelegate?
     var repoItem: Repository?
+    var gitHubAuthenticationManager = GITHUB()
     private var isLoading = false
     private var branchGithubAPI = GitHubAPI<Branch>()
     private var branchItems: [Branch]?
@@ -56,7 +57,7 @@ class BranchViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         
-        branchGithubAPI.getResults(type: .getBranches, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        branchGithubAPI.getResults(type: .getBranches, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 self?.branchItems = results
                 self?.isLoading = false
