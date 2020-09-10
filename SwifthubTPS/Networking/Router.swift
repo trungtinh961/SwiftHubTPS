@@ -22,8 +22,9 @@ enum GetType: Int {
     case getRepositoryEvents
     case getUser
     case getStarred
+    case getStargazers
     case getWatching
-    case getWatcher
+    case getWatchers
     case getUserEvents
     case getAuthenUser
     case getNotifications
@@ -46,8 +47,9 @@ enum Router {
     case getEvents(fullname: String)
     case getUser(username: String)
     case getStarred(username: String)
+    case getStargazers(fullname: String)
     case getWatching(username: String)
-    case getWatcher(fullname: String)
+    case getWatchers(fullname: String)
     case getUserEvents(username: String, type: EventType)
     case getAuthenUser
     case getNotifications(notificationState: NotificationState)
@@ -83,8 +85,9 @@ enum Router {
         case .getEvents(let fullname): return "/repos/\(fullname)/events"
         case .getUser(let username): return "/users/\(username)"
         case .getStarred(let username): return "/users/\(username)/starred"
+        case .getStargazers(let fullname): return "/repos/\(fullname)/stargazers"
         case .getWatching(let username): return "/users/\(username)/subscriptions"
-        case .getWatcher(let fullname): return "/repos/\(fullname)/subscribers"
+        case .getWatchers(let fullname): return "/repos/\(fullname)/subscribers"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         case .getAuthenUser: return "/user"
         case .getNotifications: return "/notifications"
@@ -126,8 +129,9 @@ enum Router {
              .getContributors,
              .getEvents,
              .getStarred,
+             .getStargazers,
              .getWatching,
-             .getWatcher,
+             .getWatchers,
              .getUserEvents:
             params["per_page"] = "50"
         case .getNotifications(let notificationState):

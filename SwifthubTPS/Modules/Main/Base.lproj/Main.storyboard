@@ -761,6 +761,7 @@
                     </view>
                     <connections>
                         <outlet property="imgAuthor" destination="ZA8-DK-iwt" id="xCh-Cv-tle"/>
+                        <outlet property="navItem" destination="mz0-c3-9LL" id="HSB-W2-eeb"/>
                         <outlet property="resultTableView" destination="0hi-OH-C7g" id="2mX-rL-YZ9"/>
                     </connections>
                 </viewController>
@@ -825,6 +826,7 @@
                     </view>
                     <connections>
                         <outlet property="imgAuthor" destination="jRP-gz-dqM" id="swD-dU-DqG"/>
+                        <outlet property="navItem" destination="d3F-BJ-hpZ" id="clE-jF-w3O"/>
                         <outlet property="resultTableView" destination="vnF-5e-3kf" id="Zlv-CH-Ba8"/>
                     </connections>
                 </viewController>

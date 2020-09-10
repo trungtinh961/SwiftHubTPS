@@ -147,6 +147,7 @@ extension UserViewController: UITableViewDelegate {
             let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
             starsViewController.modalPresentationStyle = .automatic
             starsViewController.userItem = userItem
+            starsViewController.getType = .getStarred
             starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(starsViewController, animated:true, completion:nil)
         case "subscriptions":

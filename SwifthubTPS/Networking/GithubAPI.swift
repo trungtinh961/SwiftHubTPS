@@ -80,16 +80,21 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getStarred(username: username).host
             components.path = Router.getStarred(username: username).path
             components.setQueryItems(with: Router.getStarred(username: username).parameters!)
+        } else if type == .getStargazers {
+            components.scheme = Router.getStargazers(fullname: fullname).scheme
+            components.host = Router.getStargazers(fullname: fullname).host
+            components.path = Router.getStargazers(fullname: fullname).path
+            components.setQueryItems(with: Router.getStargazers(fullname: fullname).parameters!)
         } else if type == .getWatching {
             components.scheme = Router.getWatching(username: username).scheme
             components.host = Router.getWatching(username: username).host
             components.path = Router.getWatching(username: username).path
             components.setQueryItems(with: Router.getWatching(username: username).parameters!)
-        } else if type == .getWatcher {
-            components.scheme = Router.getWatcher(fullname: fullname).scheme
-            components.host = Router.getWatcher(fullname: fullname).host
-            components.path = Router.getWatcher(fullname: fullname).path
-            components.setQueryItems(with: Router.getWatcher(fullname: fullname).parameters!)
+        } else if type == .getWatchers {
+            components.scheme = Router.getWatchers(fullname: fullname).scheme
+            components.host = Router.getWatchers(fullname: fullname).host
+            components.path = Router.getWatchers(fullname: fullname).path
+            components.setQueryItems(with: Router.getWatchers(fullname: fullname).parameters!)
         } else if type == .getUserEvents {
             components.scheme = Router.getUserEvents(username: username, type: eventType).scheme
             components.host = Router.getUserEvents(username: username, type: eventType).host

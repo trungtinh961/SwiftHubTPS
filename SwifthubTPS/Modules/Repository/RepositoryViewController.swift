@@ -75,13 +75,19 @@ class RepositoryViewController: UIViewController {
     @IBAction func btnWatches(_ sender: Any) {
         let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
         watchingViewController.modalPresentationStyle = .automatic
-        watchingViewController.getType = .getWatcher
+        watchingViewController.getType = .getWatchers
         watchingViewController.repoItem = repositoryItem
         watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         self.present(watchingViewController, animated:true, completion:nil)
     }
     
     @IBAction func btnStars(_ sender: Any) {
+        let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
+        starsViewController.modalPresentationStyle = .automatic
+        starsViewController.repoItem = repositoryItem
+        starsViewController.getType = .getStargazers
+        starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        self.present(starsViewController, animated:true, completion:nil)
     }
     
     @IBAction func btnForks(_ sender: Any) {

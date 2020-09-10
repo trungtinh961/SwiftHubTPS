@@ -25,11 +25,17 @@ class WatchingViewController: UIViewController {
     
     @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet weak var navItem: UINavigationItem!
     
     // MARK: - Life Cycles
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if getType == .getWatching {
+            navItem.title = "Watching"
+        } else {
+            navItem.title = "Watchers"
+        }
         updateTableView()
     }
     
@@ -75,8 +81,8 @@ class WatchingViewController: UIViewController {
                     print("Search error: " + errorMessage)
                 }
             }
-        } else if getType == .getWatcher {
-            watcherGithubAPI.getResults(type: .getWatcher, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        } else if getType == .getWatchers {
+            watcherGithubAPI.getResults(type: .getWatchers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
                     self?.watcherItems = results
                     self?.isLoading = false
@@ -104,10 +110,8 @@ extension WatchingViewController: UITableViewDataSource {
         } else {
             if getType == .getWatching {
                 return watchingItems?.count ?? 0
-            } else if getType == .getWatcher {
-                return watcherItems?.count ?? 0
             } else {
-                return 0
+                return watcherItems?.count ?? 0
             }
         }
     }

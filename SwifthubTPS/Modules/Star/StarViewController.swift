@@ -12,19 +12,29 @@ class StarViewController: UIViewController {
 
     // MARK: - Properties
     var gitHubAuthenticationManager = GITHUB()
+    var getType: GetType?
     var userItem: User?
+    var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
     private var starredGithubAPI = GitHubAPI<Repository>()
     private var starredItems: [Repository]?
+    private var stargazersGithubAPI = GitHubAPI<User>()
+    private var stargazersItems: [User]?
     
     @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet weak var navItem: UINavigationItem!
     
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if getType == .getStarred {
+            navItem.title = "Starred"
+        } else {
+            navItem.title = "Stargazers"
+        }
         updateTableView()
     }
     
@@ -33,6 +43,7 @@ class StarViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
         ///Config layout
@@ -53,19 +64,36 @@ class StarViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        starredGithubAPI.getResults(type: .getStarred, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
-            if let results = results {
-                self?.starredItems = results
-                self?.isLoading = false
-                if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
-                    self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+        if getType == .getStarred {
+            starredGithubAPI.getResults(type: .getStarred, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.starredItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
+                    self?.resultTableView.reloadData()
                 }
-                self?.resultTableView.reloadData()
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
-            if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+        } else {
+            stargazersGithubAPI.getResults(type: .getStargazers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.stargazersItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
+                    self?.resultTableView.reloadData()
+                }
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
         }
+        
     }
 }
 
@@ -76,7 +104,12 @@ extension StarViewController: UITableViewDataSource {
         if isLoading {
             return 1
         } else {
-            return starredItems?.count ?? 0
+            if getType == .getStarred {
+                return starredItems?.count ?? 0
+            } else {
+                return stargazersItems?.count ?? 0
+            }
+            
         }
     }
     
@@ -86,7 +119,7 @@ extension StarViewController: UITableViewDataSource {
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
-        } else {
+        } else if getType == .getStarred {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
             let itemCell = starredItems![indexPath.row]
             cell.lbFullname.text = itemCell.fullname
@@ -99,9 +132,16 @@ extension StarViewController: UITableViewDataSource {
             cell.imgCurrentPeriodStars.isHidden = true
             cell.lbLanguage.isHidden = true
             cell.viewLanguageColor.isHidden = true
-            
             return cell
-        }        
+        }  else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
+            let itemCell = stargazersItems![indexPath.row]
+            cell.lbFullname.text = itemCell.login
+            if let smallURL = URL(string: itemCell.avatarUrl ?? "") {
+                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            }
+            return cell
+        }
     }
 }
 
@@ -110,11 +150,19 @@ extension StarViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
-        let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-        repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
-        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.modalPresentationStyle = .automatic
-        self.present(repositoryViewController, animated:true, completion:nil)
+        if getType == .getStarred {            
+            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+            repositoryViewController.repositoryItem = starredItems![indexPath.row]
+            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            repositoryViewController.modalPresentationStyle = .automatic
+            self.present(repositoryViewController, animated:true, completion:nil)
+        } else {
+            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            userViewController.userItem = stargazersItems![indexPath.row]
+            userViewController.modalPresentationStyle = .automatic
+            self.present(userViewController, animated:true, completion:nil)
+        }
+        
     }
 }
