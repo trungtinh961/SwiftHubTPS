@@ -18,4 +18,5 @@ struct GITHUB {
     
     var accessToken: String?
     var didAuthenticated: Bool = false
+    var userAuthenticated: User?
 }

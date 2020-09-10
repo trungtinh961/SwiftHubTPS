@@ -47,16 +47,20 @@ class LoginViewController: UIViewController {
             //Cancel Action
         }))
         alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
-                let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-                let webviewViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.webviewVC.rawValue) as! WebviewViewController
-                webviewViewController.modalPresentationStyle = .automatic
-                webviewViewController.modalTransitionStyle = .flipHorizontal
-                self.present(webviewViewController, animated:true, completion:nil)
+            self.login()
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Private Methods
+    // MARK: - Public Methods
+    
+    func login() {
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        let webviewViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.webviewVC.rawValue) as! WebviewViewController
+        webviewViewController.modalPresentationStyle = .automatic
+        webviewViewController.modalTransitionStyle = .flipHorizontal
+        present(webviewViewController, animated:true, completion:nil)
+    }
    
 }
 

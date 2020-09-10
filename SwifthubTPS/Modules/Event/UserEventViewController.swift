@@ -34,7 +34,7 @@ class UserEventViewController: UIViewController {
         super.viewWillAppear(animated)
         updateTableView(eventType: eventType)
         
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
             navItem.leftBarButtonItem?.tintColor = .clear
         } else {
             navItem.leftBarButtonItem?.tintColor = .systemTeal

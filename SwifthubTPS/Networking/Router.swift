@@ -23,6 +23,7 @@ enum GetType: Int {
     case getUser
     case getStarred
     case getWatching
+    case getWatcher
     case getUserEvents
     case getAuthenUser
     case getNotifications
@@ -46,6 +47,7 @@ enum Router {
     case getUser(username: String)
     case getStarred(username: String)
     case getWatching(username: String)
+    case getWatcher(fullname: String)
     case getUserEvents(username: String, type: EventType)
     case getAuthenUser
     case getNotifications(notificationState: NotificationState)
@@ -82,6 +84,7 @@ enum Router {
         case .getUser(let username): return "/users/\(username)"
         case .getStarred(let username): return "/users/\(username)/starred"
         case .getWatching(let username): return "/users/\(username)/subscriptions"
+        case .getWatcher(let fullname): return "/repos/\(fullname)/subscribers"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         case .getAuthenUser: return "/user"
         case .getNotifications: return "/notifications"
@@ -124,6 +127,7 @@ enum Router {
              .getEvents,
              .getStarred,
              .getWatching,
+             .getWatcher,
              .getUserEvents:
             params["per_page"] = "50"
         case .getNotifications(let notificationState):

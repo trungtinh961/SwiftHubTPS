@@ -17,29 +17,28 @@ enum UserType: String {
 /// User model
 struct User: Mappable {
 
-    var avatarUrl: String?  // A URL pointing to the user's public avatar.
-    var blog: String?  // A URL pointing to the user's public website/blog.
-    var company: String?  // The user's public profile company.
+    var avatarUrl: String?
+    var blog: String?
+    var company: String?
     var contributions: Int?
-    var createdAt: Date?  // Identifies the date and time when the object was created.
-    var email: String?  // The user's publicly visible profile email.
-    var followers: Int?  // Identifies the total count of followers.
-    var following: Int? // Identifies the total count of following.
-    var htmlUrl: String?  // The HTTP URL for this user
-    var location: String?  // The user's public profile location.
-    var login: String?  // The username used to login.
-    var name: String?  // The user's public profile name.
+    var createdAt: Date?
+    var email: String?
+    var followers: Int?
+    var following: Int?
+    var htmlUrl: String?
+    var login: String?
+    var name: String?
     var type: UserType = .user
-    var updatedAt: Date?  // Identifies the date and time when the object was last updated.
-    var starredRepositoriesCount: Int?  // Identifies the total count of repositories the user has starred.
-    var repositoriesCount: Int?  // Identifies the total count of repositories that the user owns.
-    var issuesCount: Int?  // Identifies the total count of issues associated with this user
-    var watchingCount: Int?  // Identifies the total count of repositories the given user is watching
-    var viewerCanFollow: Bool?  // Whether or not the viewer is able to follow the user.
-    var viewerIsFollowing: Bool?  // Whether or not this user is followed by the viewer.
-    var isViewer: Bool?  // Whether or not this user is the viewing user.
-    var pinnedRepositories: [Repository]?  // A list of repositories this user has pinned to their profile
-    var organizations: [User]?  // A list of organizations the user belongs to.
+    var updatedAt: Date?
+    var starredRepositoriesCount: Int?
+    var repositoriesCount: Int?
+    var privateRepoCount: Int?
+    var issuesCount: Int?
+    var watchingCount: Int?
+    var viewerCanFollow: Bool?
+    var viewerIsFollowing: Bool?
+    var isViewer: Bool?
+    var organizations: [User]?
     
     // Only for Organization type
     var descriptionField: String?
@@ -65,8 +64,8 @@ struct User: Mappable {
         case .user: self.type = .user
         case .organization: self.type = .organization
         }
-    }
-
+    }    
+    
     mutating func mapping(map: Map) {
         avatarUrl <- map["avatar_url"]
         blog <- map["blog"]
@@ -78,15 +77,19 @@ struct User: Mappable {
         followers <- map["followers"]
         following <- map["following"]
         htmlUrl <- map["html_url"]
-        location <- map["location"]
         login <- map["login"]
         name <- map["name"]
         repositoriesCount <- map["public_repos"]
+        privateRepoCount <- map["total_private_repos"]
         type <- map["type"]
         updatedAt <- (map["updated_at"], ISO8601DateTransform())
         bio <- map["bio"]
+        
     }
+    
 }
+
+    
 
 extension User: Equatable {
     static func == (lhs: User, rhs: User) -> Bool {
@@ -166,7 +169,7 @@ extension User {
             detailCellProperties.append(DetailCellProperty(id: "company", imgName: ImageName.icon_cell_company.rawValue, titleCell: "Company", detail: company, hideDisclosure: false))
         }
         
-        if let blog = self.blog {
+        if let blog = self.blog, blog != "" {
             detailCellProperties.append(DetailCellProperty(id: "blog", imgName: ImageName.icon_cell_link.rawValue, titleCell: "Blog", detail: blog, hideDisclosure: false))
         }
         

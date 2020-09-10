@@ -14,12 +14,14 @@ class RepositoryViewController: UIViewController {
     
     private var downloadTask: URLSessionDownloadTask?
     var gitHubAuthenticationManager = GITHUB()
+    
     var repoFullname: String?
     private var repositoryGithubAPI = GitHubAPI<Repository>()
-    private var repositoryItem: Repository?
+    var repositoryItem: Repository?
     private var isLoading = false
     private var repositoryDetails: [DetailCellProperty]?
     private var branch: String?
+    private let storyBoard = UIStoryboard(name: "Main", bundle:nil)
     
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var imgAvatar: UIImageView!
@@ -31,6 +33,9 @@ class RepositoryViewController: UIViewController {
     @IBOutlet weak var starsView: UIView!
     @IBOutlet weak var forksView: UIView!
     @IBOutlet weak var navItem: UINavigationItem!
+    @IBOutlet weak var btnWatches: UIButton!
+    @IBOutlet weak var btnStars: UIButton!
+    @IBOutlet weak var btnForks: UIButton!
     
     
     // MARK: - Life Cycle
@@ -56,6 +61,9 @@ class RepositoryViewController: UIViewController {
         watchesView.layer.cornerRadius = 5
         starsView.layer.cornerRadius = 5
         forksView.layer.cornerRadius = 5
+        btnWatches.isEnabled = false
+        btnStars.isEnabled = false
+        btnForks.isEnabled = false
     }
     
     // MARK: - IBActions
@@ -64,13 +72,28 @@ class RepositoryViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func btnWatches(_ sender: Any) {
+        let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
+        watchingViewController.modalPresentationStyle = .automatic
+        watchingViewController.getType = .getWatcher
+        watchingViewController.repoItem = repositoryItem
+        watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        self.present(watchingViewController, animated:true, completion:nil)
+    }
+    
+    @IBAction func btnStars(_ sender: Any) {
+    }
+    
+    @IBAction func btnForks(_ sender: Any) {
+    }
+    
     
     
     // MARK: - Private Method
     
     private func getData() {
         isLoading = true
-        repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoFullname!) { [weak self] results, errorMessage in
+        repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { [weak self] results, errorMessage in
             if let result = results?[0] {
                 self?.repositoryItem = result
                 self?.isLoading = false
@@ -81,6 +104,9 @@ class RepositoryViewController: UIViewController {
                 self?.lbWatches.text = "\(self?.repositoryItem?.subscribersCount ?? 0)"
                 self?.lbStars.text = "\(self?.repositoryItem?.stargazersCount ?? 0)"
                 self?.lbForks.text = "\(self?.repositoryItem?.forks ?? 0)"
+                self?.btnWatches.isEnabled = true
+                self?.btnStars.isEnabled = true
+                self?.btnForks.isEnabled = true
                 self?.branch = self?.repositoryItem?.defaultBranch
                 self?.repositoryDetails = self?.repositoryItem?.getDetailCell()
                 self?.resultTableView.reloadData()

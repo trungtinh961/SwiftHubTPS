@@ -278,15 +278,28 @@ extension SearchViewController: UITableViewDelegate {
             let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            var indexCell: Repository
+            if isSearching {
+                indexCell = searchRepostories![indexPath.row]
+            } else {
+                indexCell = Repository(repo: trendingRepositories![indexPath.row])
+            }
+            repositoryViewController.repositoryItem = indexCell
             repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
             repositoryViewController.modalPresentationStyle = .automatic
             self.present(repositoryViewController, animated:true, completion:nil)
             
         } else if getType == .user, !isLoading {
-            let cell = tableView.cellForRow(at: indexPath) as! UserCell
+            var indexCell: User
+            if isSearching {
+                indexCell = searchUsers![indexPath.row]
+            } else {
+                indexCell = User(user: trendingUsers![indexPath.row])
+            }
+            
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            userViewController.username = cell.lbFullname.text ?? ""
+            userViewController.userItem = indexCell
             userViewController.modalPresentationStyle = .automatic
             self.present(userViewController, animated:true, completion:nil)
             

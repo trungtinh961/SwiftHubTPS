@@ -15,15 +15,15 @@ extension UINavigationItem {
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textColor = UIColor.black
         titleLabel.font = UIFont.boldSystemFont(ofSize: 13)
-            titleLabel.text = title
-            titleLabel.sizeToFit()
+        titleLabel.text = title
+        titleLabel.sizeToFit()
 
         let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
         subtitleLabel.backgroundColor = UIColor.clear
         subtitleLabel.textColor = UIColor.gray
         subtitleLabel.font = UIFont.systemFont(ofSize: 17)
-            subtitleLabel.text = subtitle
-            subtitleLabel.sizeToFit()
+        subtitleLabel.text = subtitle
+        subtitleLabel.sizeToFit()
 
         let stackView = UIView(frame: CGRect(x: 0, y: 0, width: max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), height: 30))
             stackView.addSubview(titleLabel)

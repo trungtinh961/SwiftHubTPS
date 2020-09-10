@@ -22,17 +22,14 @@ class MainTabBarController: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.getAuthenUser()
-        
+        if gitHubAuthenticationManager.didAuthenticated {
+            self.getAuthenUser()
+        }        
         self.selectedIndex = 0
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     
@@ -41,11 +38,12 @@ class MainTabBarController: UITabBarController {
     private func getAuthenUser() {
         userGithubAPI.getResults(type: .getAuthenUser, gitHubAuthenticationManager: gitHubAuthenticationManager) { [weak self] results, errorMessage in
             if let result = results?[0] {
-                self?.userItem = result                
+                self?.userItem = result
+                self?.gitHubAuthenticationManager.userAuthenticated = result
                 self?.viewControllers = self?.refreshAllTab(didAuthenticated: (self?.gitHubAuthenticationManager.didAuthenticated)!)
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                print("Get data error: " + errorMessage)
             }
         }
     }
@@ -85,7 +83,7 @@ class MainTabBarController: UITabBarController {
             ///Profile VC
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            userViewController.username = userItem?.login
+            userViewController.userItem = userItem
             let userNavgitaionController = UINavigationController(rootViewController: userViewController)
             userNavgitaionController.isNavigationBarHidden = true
             userNavgitaionController.title = "Profile"

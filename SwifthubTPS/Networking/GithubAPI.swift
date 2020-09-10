@@ -85,6 +85,11 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getWatching(username: username).host
             components.path = Router.getWatching(username: username).path
             components.setQueryItems(with: Router.getWatching(username: username).parameters!)
+        } else if type == .getWatcher {
+            components.scheme = Router.getWatcher(fullname: fullname).scheme
+            components.host = Router.getWatcher(fullname: fullname).host
+            components.path = Router.getWatcher(fullname: fullname).path
+            components.setQueryItems(with: Router.getWatcher(fullname: fullname).parameters!)
         } else if type == .getUserEvents {
             components.scheme = Router.getUserEvents(username: username, type: eventType).scheme
             components.host = Router.getUserEvents(username: username, type: eventType).host

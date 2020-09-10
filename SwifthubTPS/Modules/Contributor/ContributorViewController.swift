@@ -98,18 +98,15 @@ extension ContributorViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate
 extension ContributorViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let cell = tableView.cellForRow(at: indexPath) as! ContributorCell
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-        userViewController.username = cell.lbName.text ?? ""
+        userViewController.userItem = contributorItems?[indexPath.row]
         userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         userViewController.modalPresentationStyle = .automatic
         self.present(userViewController, animated:true, completion:nil)

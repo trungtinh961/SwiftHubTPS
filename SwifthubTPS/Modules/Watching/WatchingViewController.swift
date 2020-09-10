@@ -8,15 +8,20 @@
 
 import UIKit
 
+
 class WatchingViewController: UIViewController {
 
     // MARK: - Properties
     var gitHubAuthenticationManager = GITHUB()
+    var getType: GetType?
     var userItem: User?
+    var repoItem: Repository?
     private var isLoading = false
     private var downloadTask: URLSessionDownloadTask?
     private var watchingGithubAPI = GitHubAPI<Repository>()
     private var watchingItems: [Repository]?
+    private var watcherGithubAPI = GitHubAPI<User>()
+    private var watcherItems: [User]?
     
     @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
@@ -33,6 +38,7 @@ class WatchingViewController: UIViewController {
 
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
         ///Config layout
@@ -55,17 +61,33 @@ class WatchingViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
-        watchingGithubAPI.getResults(type: .getWatching, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
-            if let results = results {
-                self?.watchingItems = results
-                self?.isLoading = false
-                if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
-                    self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+        if getType == .getWatching {
+            watchingGithubAPI.getResults(type: .getWatching, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.watchingItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
+                    self?.resultTableView.reloadData()
                 }
-                self?.resultTableView.reloadData()
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
-            if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+        } else if getType == .getWatcher {
+            watcherGithubAPI.getResults(type: .getWatcher, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+                if let results = results {
+                    self?.watcherItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
+                    self?.resultTableView.reloadData()
+                }
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                }
             }
         }
     }
@@ -80,7 +102,13 @@ extension WatchingViewController: UITableViewDataSource {
         if isLoading {
             return 1
         } else {
-            return watchingItems?.count ?? 0
+            if getType == .getWatching {
+                return watchingItems?.count ?? 0
+            } else if getType == .getWatcher {
+                return watcherItems?.count ?? 0
+            } else {
+                return 0
+            }
         }
     }
     
@@ -90,7 +118,7 @@ extension WatchingViewController: UITableViewDataSource {
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
-        } else {
+        } else if getType == .getWatching {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
             let itemCell = watchingItems![indexPath.row]
             cell.lbFullname.text = itemCell.fullname
@@ -105,6 +133,14 @@ extension WatchingViewController: UITableViewDataSource {
             cell.viewLanguageColor.isHidden = true
             
             return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
+            let itemCell = watcherItems![indexPath.row]
+            cell.lbFullname.text = itemCell.login
+            if let smallURL = URL(string: itemCell.avatarUrl ?? "") {
+                downloadTask = cell.imgAuthor.loadImage(url: smallURL)
+            }
+            return cell
         }
     }
     
@@ -117,11 +153,19 @@ extension WatchingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
-        let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-        repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
-        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.modalPresentationStyle = .automatic
-        self.present(repositoryViewController, animated:true, completion:nil)
+        if getType == .getWatching {
+            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+            repositoryViewController.repositoryItem = watchingItems![indexPath.row]
+            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            repositoryViewController.modalPresentationStyle = .automatic
+            self.present(repositoryViewController, animated:true, completion:nil)
+        } else {
+            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            userViewController.userItem = watcherItems![indexPath.row]
+            userViewController.modalPresentationStyle = .automatic
+            self.present(userViewController, animated:true, completion:nil)
+        }
+        
     }
 }

@@ -13,11 +13,11 @@ class UserViewController: UIViewController {
     // MARK: - Properties
     var gitHubAuthenticationManager = GITHUB()
     private var downloadTask: URLSessionDownloadTask?
-    var username: String?
     private var userGithubAPI = GitHubAPI<User>()
-    private var userItem: User?
+    var userItem: User?
     private var isLoading = false
     private var userDetails: [DetailCellProperty]?
+    private var totalRepos = 0
     
     
     @IBOutlet weak var resultTableView: UITableView!
@@ -36,6 +36,13 @@ class UserViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
+            navItem.leftBarButtonItem?.tintColor = .clear
+            navItem.rightBarButtonItem?.tintColor = .clear
+        } else {
+            navItem.leftBarButtonItem?.tintColor = .systemTeal
+            navItem.rightBarButtonItem?.tintColor = .systemTeal
+        }
         getData()
     }
     
@@ -46,13 +53,15 @@ class UserViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
-        
         /// Config layout
         imgAvatar.layer.cornerRadius = imgAvatar.frame.height / 2
         imgAvatar.layer.masksToBounds = true
         repositoriesView.layer.cornerRadius = 5
         followersView.layer.cornerRadius = 5
         followingView.layer.cornerRadius = 5
+        if let smallURL = URL(string: userItem?.avatarUrl ?? "") {
+            downloadTask = imgAvatar.loadImage(url: smallURL)
+        }
         
     }
     
@@ -67,18 +76,19 @@ class UserViewController: UIViewController {
     
     private func getData() {
         isLoading = true
-        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: username!) { [weak self] results, errorMessage in
+        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { [weak self] results, errorMessage in
             if let result = results?[0] {
                 self?.userItem = result
+                self?.totalRepos = (self?.userItem?.repositoriesCount ?? 0) + (self?.userItem?.privateRepoCount ?? 0)
                 self?.isLoading = false
                 if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
                     self?.downloadTask = self?.imgAvatar.loadImage(url: smallURL)
                 }
                 self?.lbDescription.text = self?.userItem?.bio
-                self?.lbRepositories.text = "\(self?.userItem?.repositoriesCount ?? 0)"
+                self?.lbRepositories.text = "\(self?.totalRepos ?? 0)"
                 self?.lbFollowers.text = "\(self?.userItem?.followers ?? 0)"
                 self?.lbFollowing.text = "\(self?.userItem?.following ?? 0)"
-                self?.navItem.setTitle(title: self?.userItem?.login ?? self!.username!, subtitle: self?.userItem?.name ?? "")
+                self?.navItem.setTitle(title: self?.userItem?.login ?? "", subtitle: self?.userItem?.name ?? "")
                 self?.userDetails = self?.userItem?.getDetailCell()
                 self?.resultTableView.reloadData()
             }
@@ -142,6 +152,7 @@ extension UserViewController: UITableViewDelegate {
         case "subscriptions":
             let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
             watchingViewController.modalPresentationStyle = .automatic
+            watchingViewController.getType = .getWatching
             watchingViewController.userItem = userItem
             watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.present(watchingViewController, animated:true, completion:nil)
@@ -155,15 +166,7 @@ extension UserViewController: UITableViewDelegate {
             if let url = URL(string: userItem?.blog ?? "") {
                 UIApplication.shared.open(url)
             }
-//        case "company":
-//            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-//            let username = userDetails![indexPath.row].detail
-//            let aIndex = username.firstIndex(of: "@")!
-//            let companyname = username[username.index(after: aIndex)...]
-//            userViewController.username = String(companyname)
-//            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-//            userViewController.modalPresentationStyle = .automatic
-//            self.present(userViewController, animated:true, completion:nil)
+
         default:
             break
         }
