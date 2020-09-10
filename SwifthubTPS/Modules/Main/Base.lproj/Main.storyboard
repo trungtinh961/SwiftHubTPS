@@ -148,25 +148,44 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GGI-20-WSD">
                                         <rect key="frame" x="0.0" y="0.0" width="398" height="80"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="8CS-RM-a56">
-                                                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BqN-j8-GH8">
+                                                <rect key="frame" x="0.0" y="0.0" width="194" height="80"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="8CS-RM-a56">
+                                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="80" id="DzC-km-zgG"/>
+                                                            <constraint firstAttribute="height" constant="80" id="nAW-KD-HHQ"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zVa-L1-oe8">
+                                                        <rect key="frame" x="55" y="55" width="25" height="25"/>
+                                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="25" id="5eK-FJ-chA"/>
+                                                            <constraint firstAttribute="width" constant="25" id="qXT-2S-6o0"/>
+                                                        </constraints>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <state key="normal" image="icon_button_star"/>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="80" id="DzC-km-zgG"/>
-                                                    <constraint firstAttribute="height" constant="80" id="nAW-KD-HHQ"/>
+                                                    <constraint firstItem="8CS-RM-a56" firstAttribute="leading" secondItem="BqN-j8-GH8" secondAttribute="leading" id="5jT-Y6-HyK"/>
+                                                    <constraint firstItem="8CS-RM-a56" firstAttribute="top" secondItem="BqN-j8-GH8" secondAttribute="top" id="Qe6-ZF-umH"/>
+                                                    <constraint firstItem="zVa-L1-oe8" firstAttribute="bottom" secondItem="8CS-RM-a56" secondAttribute="bottom" id="VlC-ik-Zjg"/>
+                                                    <constraint firstItem="zVa-L1-oe8" firstAttribute="trailing" secondItem="8CS-RM-a56" secondAttribute="trailing" id="hpd-Zd-9bp"/>
+                                                    <constraint firstAttribute="bottom" secondItem="8CS-RM-a56" secondAttribute="bottom" id="igw-M2-TV5"/>
                                                 </constraints>
-                                            </imageView>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YJH-iU-bnv">
-                                                <rect key="frame" x="90" y="0.0" width="308" height="80"/>
+                                                <rect key="frame" x="204" y="0.0" width="194" height="80"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="8CS-RM-a56" firstAttribute="leading" secondItem="GGI-20-WSD" secondAttribute="leading" id="6DF-9z-GS2"/>
-                                            <constraint firstItem="8CS-RM-a56" firstAttribute="top" secondItem="GGI-20-WSD" secondAttribute="top" id="MZl-Xn-xLR"/>
-                                            <constraint firstAttribute="bottom" secondItem="8CS-RM-a56" secondAttribute="bottom" id="hbx-Mu-91c"/>
-                                        </constraints>
+                                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cLQ-Vy-EMC">
                                         <rect key="frame" x="0.0" y="88" width="398" height="40"/>
@@ -1691,6 +1710,7 @@
     </scenes>
     <resources>
         <image name="icon_button_github" width="30" height="30"/>
+        <image name="icon_button_star" width="20" height="20"/>
         <image name="icon_cell_check" width="20" height="14"/>
         <image name="icon_navigation_back" width="27" height="27"/>
         <image name="icon_navigation_close" width="27" height="27"/>

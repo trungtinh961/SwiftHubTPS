@@ -45,7 +45,10 @@ enum ImageName: String {
     case icon_cell_badge_search = "icon_cell_badge_search"
     case icon_cell_badge_star = "icon_cell_badge_star"    
     case icon_cell_badge_trending = "icon_cell_badge_trending"
-    
+    case icon_button_star = "icon_button_star"
+    case icon_button_unstar = "icon_button_unstar"
+    case icon_button_user_plus = "icon_button_user_plus"
+    case icon_button_user_x = "icon_button_user_x"
     
     
 }

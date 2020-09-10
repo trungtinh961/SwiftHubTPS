@@ -10,8 +10,7 @@
 #endif
 #endif
 
-#import "HMSegmentedControl.h"
 
-FOUNDATION_EXPORT double HMSegmentedControlVersionNumber;
-FOUNDATION_EXPORT const unsigned char HMSegmentedControlVersionString[];
+FOUNDATION_EXPORT double NVActivityIndicatorViewVersionNumber;
+FOUNDATION_EXPORT const unsigned char NVActivityIndicatorViewVersionString[];
 
