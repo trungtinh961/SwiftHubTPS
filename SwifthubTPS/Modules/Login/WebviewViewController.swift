@@ -19,25 +19,23 @@ class WebviewViewController: UIViewController {
     
     @IBOutlet weak var webview: WKWebView!
     
-    
     // MARK: - Life Cycles
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
-        let authURL = String(format: "%@?client_id=%@&scope=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE])
-
+        let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
+       
         let urlRequest = URLRequest(url: URL(string: authURL)!)
         print(urlRequest)
-        webview.load(urlRequest)
         webview.navigationDelegate = self
+        webview.load(urlRequest)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    
+        
     //MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
@@ -51,7 +49,6 @@ class WebviewViewController: UIViewController {
 
 extension WebviewViewController: WKNavigationDelegate {
     
-
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         print(webView.url ?? "no url")
@@ -102,8 +99,6 @@ extension WebviewViewController: WKNavigationDelegate {
                 }
             }
         }
-
     }
-
    
 }
