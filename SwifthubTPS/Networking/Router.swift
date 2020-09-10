@@ -13,6 +13,7 @@ enum GetType: Int {
     case user
     case language
     case getRepository
+    case getForks
     case getIssues
     case getPullRequests
     case getCommits
@@ -28,6 +29,9 @@ enum GetType: Int {
     case getUserEvents
     case getAuthenUser
     case getNotifications
+    case getUserRepositories
+    case getFollowers
+    case getFollowing
 }
 
 enum Router {
@@ -38,6 +42,7 @@ enum Router {
     case searchRepositories(query: String, language: String)
     case searchUsers(query: String, language: String)
     case getRepository(fullname: String)
+    case getForks(fullname: String)
     case getIssues(fullname: String, issueState: IssueState)
     case getPullRequests(fullname: String, pullState: IssueState)
     case getCommits(fullname: String)
@@ -53,6 +58,9 @@ enum Router {
     case getUserEvents(username: String, type: EventType)
     case getAuthenUser
     case getNotifications(notificationState: NotificationState)
+    case getUserRepositories(username: String)
+    case getFollowers(username: String)
+    case getFollowing(username: String)
     
     var scheme: String {
         switch self {
@@ -76,6 +84,7 @@ enum Router {
         case .searchRepositories: return "/search/repositories"
         case .searchUsers: return "/search/users"
         case .getRepository(let fullname): return "/repos/\(fullname)"
+        case .getForks(let fullname): return "/repos/\(fullname)/forks"
         case .getIssues(let fullname, _): return "/repos/\(fullname)/issues"
         case .getPullRequests(let fullname, _): return "/repos/\(fullname)/pulls"
         case .getCommits(let fullname): return "/repos/\(fullname)/commits"
@@ -91,6 +100,9 @@ enum Router {
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         case .getAuthenUser: return "/user"
         case .getNotifications: return "/notifications"
+        case .getUserRepositories(let username): return "/users/\(username)/repos"
+        case .getFollowers(let username): return "/users/\(username)/followers"
+        case .getFollowing(let username): return "/users/\(username)/following"
         }
     }
     
@@ -128,10 +140,12 @@ enum Router {
              .getReleases,
              .getContributors,
              .getEvents,
+             .getForks,
              .getStarred,
              .getStargazers,
              .getWatching,
              .getWatchers,
+             .getUserRepositories,
              .getUserEvents:
             params["per_page"] = "50"
         case .getNotifications(let notificationState):

@@ -14,6 +14,7 @@ class ContributorViewController: UIViewController {
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var isLoading = false
+    private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var contributorGithubAPI = GitHubAPI<User>()
     private var contributorItems: [User]?
@@ -35,7 +36,7 @@ class ContributorViewController: UIViewController {
        ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.contributorCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
        ///Config layout
        imgAuthor.layer.masksToBounds = true
        imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
@@ -53,12 +54,19 @@ class ContributorViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
+        noResult = false
+        
         contributorGithubAPI.getResults(type: .getContributors, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
            if let results = results {
-               self?.contributorItems = results
-               self?.isLoading = false
-               if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
-                   self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+               if results.count == 0 {
+                   self?.noResult = true
+                   self?.isLoading = false
+               } else {
+                   self?.contributorItems = results
+                   self?.isLoading = false
+                   if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                       self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                   }
                }
                self?.resultTableView.reloadData()
            }
@@ -73,7 +81,7 @@ class ContributorViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension ContributorViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else {
             return contributorItems?.count ?? 0
@@ -87,6 +95,9 @@ extension ContributorViewController: UITableViewDataSource {
                   let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
                   spinner.startAnimating()
                   return cell
+        } else if noResult {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.contributorCell.rawValue, for: indexPath) as! ContributorCell
             let itemCell = contributorItems?[indexPath.row]

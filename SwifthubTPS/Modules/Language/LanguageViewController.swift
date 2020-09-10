@@ -24,6 +24,7 @@ class LanguageViewController: UIViewController {
     private var languages: [Language]?
     private var cellChecked = IndexPath(row: -1, section: 0)
     private var isLoading = false
+    private var noResult = false
     private var isFirstLaunch = true
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -46,7 +47,7 @@ class LanguageViewController: UIViewController {
         
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.languageCell.rawValue)
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-
+        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
         /// Config layouts
         btnAllLanguage.layer.cornerRadius = 5
         btnSave.isEnabled = false
@@ -75,11 +76,18 @@ class LanguageViewController: UIViewController {
     
     private func updateTableView(language: String? = "") {
         isLoading = true
+        languageTableView.reloadData()
+        noResult = false
         
         trendingLanguageGithubAPI.getResults(type: .language) { [weak self] results, errorMessage in
             if let results = results {
-                self?.languages = results
-                self?.isLoading = false
+                if results.count == 0 {
+                    self?.noResult = true
+                    self?.isLoading = false
+                } else {
+                    self?.languages = results
+                    self?.isLoading = false
+                }
                 self?.languageTableView.reloadData()
                 self?.selectCell()
             }
@@ -111,7 +119,7 @@ class LanguageViewController: UIViewController {
 extension LanguageViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else {
             return languages!.count
@@ -124,6 +132,9 @@ extension LanguageViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
+            return cell
+        } else if noResult {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.languageCell.rawValue, for: indexPath) as! LanguageCell

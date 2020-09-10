@@ -15,6 +15,7 @@ class IssueViewController: UIViewController {
     var repoItem: Repository?
     private var state: IssueState = .open
     private var isLoading = false
+    private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var issueGithubAPI = GitHubAPI<Issue>()
     private var issueItems: [Issue]?
@@ -38,7 +39,7 @@ class IssueViewController: UIViewController {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.issueCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
@@ -66,13 +67,20 @@ class IssueViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
+        noResult = false
+        
         if state == .open {
             issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
-                    self?.issueItems = results
-                    self?.isLoading = false
-                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
-                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    if results.count == 0 {
+                        self?.noResult = true
+                        self?.isLoading = false
+                    } else {
+                        self?.issueItems = results
+                        self?.isLoading = false
+                        if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                            self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                        }
                     }
                     self?.resultTableView.reloadData()
                 }
@@ -83,10 +91,15 @@ class IssueViewController: UIViewController {
         } else if state == .closed {
             issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, state: .closed, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
                 if let results = results {
-                    self?.issueItems = results
-                    self?.isLoading = false
-                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
-                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    if results.count == 0 {
+                        self?.noResult = true
+                        self?.isLoading = false
+                    } else {
+                        self?.issueItems = results
+                        self?.isLoading = false
+                        if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                            self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                        }
                     }
                     self?.resultTableView.reloadData()
                 }
@@ -103,7 +116,7 @@ class IssueViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension IssueViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else {
             return issueItems?.count ?? 0
@@ -116,6 +129,9 @@ extension IssueViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
+            return cell
+        } else if noResult {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.issueCell.rawValue, for: indexPath) as! IssueCell

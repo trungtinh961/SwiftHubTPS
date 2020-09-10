@@ -22,8 +22,9 @@
 		BA9D5BA32508CBAE00DAF998 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D5BA22508CBAE00DAF998 /* Notification.swift */; };
 		BA9D5BA82508D7D800DAF998 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D5BA62508D7D800DAF998 /* NotificationCell.swift */; };
 		BA9D5BA92508D7D800DAF998 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9D5BA72508D7D800DAF998 /* NotificationCell.xib */; };
-		BAB3169825087FAF000CF50C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3169725087FAF000CF50C /* ProfileViewController.swift */; };
 		BAB3169B25088068000CF50C /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB3169A25088068000CF50C /* NotificationViewController.swift */; };
+		BAB42A252509E6AC00A3A1FF /* ForkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB42A242509E6AC00A3A1FF /* ForkViewController.swift */; };
+		BAB42A27250A0AEA00A3A1FF /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB42A26250A0AEA00A3A1FF /* RepositoryDetailViewController.swift */; };
 		BAB51E5C24FC9895005A4F7D /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */; };
 		BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */; };
 		BAB51E6324FDFDDD005A4F7D /* StoryboardIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */; };
@@ -105,8 +106,9 @@
 		BA9D5BA22508CBAE00DAF998 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		BA9D5BA62508D7D800DAF998 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		BA9D5BA72508D7D800DAF998 /* NotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
-		BAB3169725087FAF000CF50C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BAB3169A25088068000CF50C /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		BAB42A242509E6AC00A3A1FF /* ForkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForkViewController.swift; sourceTree = "<group>"; };
+		BAB42A26250A0AEA00A3A1FF /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifier.swift; sourceTree = "<group>"; };
@@ -210,14 +212,6 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		BA3D105B24F61FFE0079C5A1 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				BAB3169725087FAF000CF50C /* ProfileViewController.swift */,
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
 		BA3D105C24F620530079C5A1 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,10 +269,19 @@
 			path = Notification;
 			sourceTree = "<group>";
 		};
+		BAB42A232509E62500A3A1FF /* Fork */ = {
+			isa = PBXGroup;
+			children = (
+				BAB42A242509E6AC00A3A1FF /* ForkViewController.swift */,
+			);
+			path = Fork;
+			sourceTree = "<group>";
+		};
 		BAB51E5F24FDFC26005A4F7D /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				BAB51E6024FDFD04005A4F7D /* RepositoryViewController.swift */,
+				BAB42A26250A0AEA00A3A1FF /* RepositoryDetailViewController.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -435,12 +438,12 @@
 				BAFF2370250237DF00843E38 /* Contributor */,
 				BAFF235B2501F62900843E38 /* Commit */,
 				BAFF23772502401D00843E38 /* Event */,
+				BAB42A232509E62500A3A1FF /* Fork */,
 				BABE487A2500DBE400A5AB12 /* Issue */,
 				BAB786F924F8A6CE002779B2 /* Language */,
 				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
 				BAB3169925088043000CF50C /* Notification */,
-				BA3D105B24F61FFE0079C5A1 /* Profile */,
 				BABE48812501EA0200A5AB12 /* Pull Request */,
 				BAFF236725022F3200843E38 /* Release */,
 				BAB51E5F24FDFC26005A4F7D /* Repository */,
@@ -717,6 +720,7 @@
 				BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */,
 				BA9C84472507308400B65818 /* GitHubAuthentication.swift in Sources */,
 				BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */,
+				BAB42A252509E6AC00A3A1FF /* ForkViewController.swift in Sources */,
 				BABE48842501EA3F00A5AB12 /* PullRequestCell.swift in Sources */,
 				BABE48772500DB4E00A5AB12 /* State.swift in Sources */,
 				BAB7870824F8F43F002779B2 /* LoadingCell.swift in Sources */,
@@ -725,8 +729,8 @@
 				BAFF2364250221C600843E38 /* BranchViewController.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BAFF23762502381A00843E38 /* ContributorViewController.swift in Sources */,
-				BAB3169825087FAF000CF50C /* ProfileViewController.swift in Sources */,
 				BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */,
+				BAB42A27250A0AEA00A3A1FF /* RepositoryDetailViewController.swift in Sources */,
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,
 				BA3D105924F616550079C5A1 /* User.swift in Sources */,
 				BA9D5BA82508D7D800DAF998 /* NotificationCell.swift in Sources */,

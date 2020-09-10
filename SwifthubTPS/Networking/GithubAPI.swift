@@ -41,6 +41,11 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getIssues(fullname: fullname, issueState: state).host
             components.path = Router.getIssues(fullname: fullname, issueState: state).path
             components.setQueryItems(with: Router.getIssues(fullname: fullname, issueState: state).parameters!)
+        } else if type == .getForks {
+            components.scheme = Router.getForks(fullname: fullname).scheme
+            components.host = Router.getForks(fullname: fullname).host
+            components.path = Router.getForks(fullname: fullname).path
+            components.setQueryItems(with: Router.getForks(fullname: fullname).parameters!)
         } else if type == .getPullRequests {
             components.scheme = Router.getPullRequests(fullname: fullname, pullState: state).scheme
             components.host = Router.getPullRequests(fullname: fullname, pullState: state).host
@@ -109,6 +114,21 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getNotifications(notificationState: notificationState).host
             components.path = Router.getNotifications(notificationState: notificationState).path
             components.setQueryItems(with: Router.getNotifications(notificationState: notificationState).parameters!)
+        } else if type == .getUserRepositories {
+            components.scheme = Router.getUserRepositories(username: username).scheme
+            components.host = Router.getUserRepositories(username: username).host
+            components.path = Router.getUserRepositories(username: username).path
+            components.setQueryItems(with: Router.getUserRepositories(username: username).parameters!)
+        } else if type == .getFollowers {
+            components.scheme = Router.getFollowers(username: username).scheme
+            components.host = Router.getFollowers(username: username).host
+            components.path = Router.getFollowers(username: username).path
+            components.setQueryItems(with: Router.getFollowers(username: username).parameters!)
+        } else if type == .getFollowing {
+            components.scheme = Router.getFollowing(username: username).scheme
+            components.host = Router.getFollowing(username: username).host
+            components.path = Router.getFollowing(username: username).path
+            components.setQueryItems(with: Router.getFollowing(username: username).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding

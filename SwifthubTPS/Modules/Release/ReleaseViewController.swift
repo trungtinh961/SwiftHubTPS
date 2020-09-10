@@ -14,6 +14,7 @@ class ReleaseViewController: UIViewController {
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var isLoading = false
+    private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var releaseGithubAPI = GitHubAPI<Release>()
     private var releaseItems: [Release]?
@@ -38,7 +39,7 @@ class ReleaseViewController: UIViewController {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.releaseCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
     }
     
     @IBAction func btnBack(_ sender: Any) {
@@ -50,11 +51,17 @@ class ReleaseViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
+        noResult = false
         
         releaseGithubAPI.getResults(type: .getReleases, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
-                self?.releaseItems = results
-                self?.isLoading = false
+                if results.count == 0 {
+                    self?.noResult = true
+                    self?.isLoading = false
+                } else {
+                    self?.releaseItems = results
+                    self?.isLoading = false
+                }
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
@@ -70,7 +77,7 @@ class ReleaseViewController: UIViewController {
 
 extension ReleaseViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else {
             return releaseItems?.count ?? 0
@@ -83,6 +90,9 @@ extension ReleaseViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
+            return cell
+        } else if noResult {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.releaseCell.rawValue, for: indexPath) as! ReleaseCell

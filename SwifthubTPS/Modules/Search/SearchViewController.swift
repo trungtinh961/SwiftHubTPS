@@ -275,7 +275,6 @@ extension SearchViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         if getType == .repository, !isLoading {
-            let cell = tableView.cellForRow(at: indexPath) as! RepositoryCell
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             var indexCell: Repository
@@ -285,7 +284,6 @@ extension SearchViewController: UITableViewDelegate {
                 indexCell = Repository(repo: trendingRepositories![indexPath.row])
             }
             repositoryViewController.repositoryItem = indexCell
-            repositoryViewController.repoFullname = cell.lbFullname.text ?? ""
             repositoryViewController.modalPresentationStyle = .automatic
             self.present(repositoryViewController, animated:true, completion:nil)
             

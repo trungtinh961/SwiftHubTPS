@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { _ in
             //Cancel Action
         }))
-        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
             self.login()
         }))
         self.present(alert, animated: true, completion: nil)

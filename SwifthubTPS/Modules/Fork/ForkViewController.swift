@@ -1,29 +1,29 @@
 //
-//  ActivityViewController.swift
+//  ForkViewController.swift
 //  SwifthubTPS
 //
-//  Created by TPS on 9/9/20.
+//  Created by TPS on 9/10/20.
 //  Copyright © 2020 Trung Tinh. All rights reserved.
 //
 
 import UIKit
 
-
-
-class NotificationViewController: UIViewController {
-
-    //MARK: - Properties
+class ForkViewController: UIViewController {
+    
+    // MARK: - Properties
     
     var gitHubAuthenticationManager = GITHUB()
-    private var notificationState = NotificationState.unread
+    var repoItem: Repository?
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
-    private var notificationGithubAPI = GitHubAPI<Notification>()
-    private var notificationItems: [Notification]?
+    private var forkGithubAPI = GitHubAPI<Repository>()
+    private var forkItems: [Repository]?
     
-    @IBOutlet weak var notificationSegmentControl: UISegmentedControl!
+    @IBOutlet weak var imgAuthor: UIImageView!
     @IBOutlet weak var resultTableView: UITableView!
+    
+    
     
     // MARK: - Life Cycles
     
@@ -34,41 +34,43 @@ class NotificationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.notificationCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        ///Config layout
+        imgAuthor.layer.masksToBounds = true
+        imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
+        
     }
     
-    // MARK:- IBActions
+
+    // MARK: - IBActions
     
-    @IBAction func notificationSegmentControl(_ sender: Any) {
-        switch notificationSegmentControl.selectedSegmentIndex {
-        case 0: notificationState = .unread
-        case 1: notificationState = .participate
-        case 2: notificationState = .all
-        default: break
-        }
-        updateTableView()
+    @IBAction func btnBack(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     
-    // MARK:- Private Methods
+    // MARK: - Private Methods
     
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
         noResult = false
         
-        notificationGithubAPI.getResults(type: .getNotifications, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) { [weak self] results, errorMessage in
+        forkGithubAPI.getResults(type: .getForks, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true
                     self?.isLoading = false
                 } else {
-                    self?.notificationItems = results
+                    self?.forkItems = results
                     self?.isLoading = false
+                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
+                    }
                 }
                 self?.resultTableView.reloadData()
             }
@@ -77,16 +79,19 @@ class NotificationViewController: UIViewController {
             }
         }
     }
+    
 }
 
-// MARK: - UITableViewDataSource
-extension NotificationViewController: UITableViewDataSource {
+//MARK: - UITableViewDataSource
+
+extension ForkViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
             return 1
         } else {
-            return notificationItems?.count ?? 0
-        }        
+            return forkItems?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -99,31 +104,34 @@ extension NotificationViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.notificationCell.rawValue, for: indexPath) as! NotificationCell
-            let itemCell = notificationItems![indexPath.row]
-            let actionText = itemCell.subject?.title ?? ""
-            let repoName = itemCell.repository?.fullname ?? ""
-            cell.lbTitle.text = "\(repoName)\n\(actionText)"
-            cell.lbDescription.text = itemCell.updatedAt?.timeAgo()
-            if let smallURL = URL(string: itemCell.repository?.owner?.avatarUrl ?? "") {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
+            let itemCell = forkItems![indexPath.row]
+            cell.lbFullname.text = itemCell.fullname
+            cell.lbDescription.text = itemCell.description
+            cell.lbStars.text = itemCell.stargazersCount?.kFormatted()
+            cell.lbCurrentPeriodStars.text = itemCell.language
+            if let smallURL = URL(string: itemCell.owner?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
+            cell.imgCurrentPeriodStars.isHidden = true
+            cell.lbLanguage.isHidden = true
+            cell.viewLanguageColor.isHidden = true
             return cell
         }
     }
-    
 }
 
-// MARK: - UITableViewDelegate
-extension NotificationViewController: UITableViewDelegate {
+//MARK: - UITableViewDelegate
+
+extension ForkViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let itemCell = notificationItems![indexPath.row]
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+        repositoryViewController.repositoryItem = forkItems![indexPath.row]
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.repositoryItem = itemCell.repository
         repositoryViewController.modalPresentationStyle = .automatic
         self.present(repositoryViewController, animated:true, completion:nil)
+        
     }
 }

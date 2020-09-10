@@ -17,8 +17,7 @@ class UserViewController: UIViewController {
     var userItem: User?
     private var isLoading = false
     private var userDetails: [DetailCellProperty]?
-    private var totalRepos = 0
-    
+    private var totalRepos = 0    
     
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var imgAvatar: UIImageView!
@@ -71,6 +70,28 @@ class UserViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func btnRepositories(_ sender: Any) {
+        showDetails(detailType: .repositories)
+    }
+    
+    @IBAction func btnFollowers(_ sender: Any) {
+        showDetails(detailType: .followers)
+    }
+    
+    
+    @IBAction func btnFollowing(_ sender: Any) {
+        showDetails(detailType: .following)
+    }
+    
+    private func showDetails(detailType: detailType) {
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        let repositoryDetailViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryDeatailVC.rawValue) as! RepositoryDetailViewController
+        repositoryDetailViewController.modalPresentationStyle = .automatic
+        repositoryDetailViewController.detailType = detailType
+        repositoryDetailViewController.userItem = userItem
+        repositoryDetailViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        self.present(repositoryDetailViewController, animated:true, completion:nil)
+    }
     
     // MARK: - Private Method
     

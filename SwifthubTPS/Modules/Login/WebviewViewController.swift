@@ -24,7 +24,8 @@ class WebviewViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
+//        let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
+        let authURL = String(format: "%@?client_id=%@&scope=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE])
 
         let urlRequest = URLRequest(url: URL(string: authURL)!)
         print(urlRequest)
@@ -50,6 +51,8 @@ class WebviewViewController: UIViewController {
 
 extension WebviewViewController: WKNavigationDelegate {
     
+
+    
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         print(webView.url ?? "no url")
         let requestURLString = (webView.url?.absoluteString)! as String
@@ -59,16 +62,7 @@ extension WebviewViewController: WKNavigationDelegate {
             }
         }
     }
-    
-    func checkRequestForCallbackURL(request: URLRequest) -> Void {
-        let requestURLString = (request.url?.absoluteString)! as String
-        if requestURLString.hasPrefix(GITHUB.GITHUB_REDIRECT_URI) {
-            if let range: Range<String.Index> = requestURLString.range(of: "?code=") {
-                handleGithubCode(code: String(requestURLString[range.upperBound...]))
-            }
-        }
-    }
-    
+   
     func handleGithubCode(code: String) {
         let params = [
             "client_id" : GITHUB.GITHUB_CLIENT_ID,
@@ -99,6 +93,8 @@ extension WebviewViewController: WKNavigationDelegate {
                     let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
                     mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = true
                     mainTabBarController?.gitHubAuthenticationManager.accessToken = self.accessToken
+                    mainTabBarController?.modalTransitionStyle = .flipHorizontal
+                    mainTabBarController?.modalTransitionStyle = .flipHorizontal
                     self.view.window?.rootViewController = mainTabBarController
                     self.view.window?.makeKeyAndVisible()
                 } else {

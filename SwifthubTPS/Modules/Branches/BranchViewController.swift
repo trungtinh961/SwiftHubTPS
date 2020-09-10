@@ -19,6 +19,7 @@ class BranchViewController: UIViewController {
     var repoItem: Repository?
     var gitHubAuthenticationManager = GITHUB()
     private var isLoading = false
+    private var noResult = false
     private var branchGithubAPI = GitHubAPI<Branch>()
     private var branchItems: [Branch]?
     
@@ -42,7 +43,7 @@ class BranchViewController: UIViewController {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
     }
     
     // MARK: - IBActions
@@ -56,11 +57,17 @@ class BranchViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
+        noResult = false
         
         branchGithubAPI.getResults(type: .getBranches, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
-                self?.branchItems = results
-                self?.isLoading = false
+                if results.count == 0 {
+                    self?.noResult = true
+                    self?.isLoading = false
+                } else {
+                    self?.branchItems = results
+                    self?.isLoading = false
+                }
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
@@ -75,7 +82,7 @@ class BranchViewController: UIViewController {
 
 extension BranchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else {
             return branchItems?.count ?? 0
@@ -89,6 +96,9 @@ extension BranchViewController: UITableViewDataSource {
                   let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
                   spinner.startAnimating()
                   return cell
+        } else if noResult {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
                 

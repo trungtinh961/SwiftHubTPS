@@ -14,6 +14,7 @@ class CommitViewController: UIViewController {
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
     private var isLoading = false
+    private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var commitGithubAPI = GitHubAPI<Commit>()
     private var commitItems: [Commit]?
@@ -37,7 +38,7 @@ class CommitViewController: UIViewController {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.commitCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
     }
     
     // MARK: - IBActions
@@ -51,11 +52,17 @@ class CommitViewController: UIViewController {
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
+        noResult = false
         
         commitGithubAPI.getResults(type: .getCommits, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
             if let results = results {
-                self?.commitItems = results
-                self?.isLoading = false
+                if results.count == 0 {
+                    self?.noResult = true
+                    self?.isLoading = false
+                } else {
+                    self?.commitItems = results
+                    self?.isLoading = false
+                }
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
@@ -69,7 +76,7 @@ class CommitViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension CommitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else {
             return commitItems?.count ?? 0
@@ -79,10 +86,13 @@ extension CommitViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-                  let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
-                  let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-                  spinner.startAnimating()
-                  return cell
+          let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+          let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+          spinner.startAnimating()
+          return cell
+        } else if noResult {
+           let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+           return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.commitCell.rawValue, for: indexPath) as! CommitCell
             let itemCell = commitItems?[indexPath.row]

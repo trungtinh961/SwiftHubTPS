@@ -14,8 +14,6 @@ class RepositoryViewController: UIViewController {
     
     private var downloadTask: URLSessionDownloadTask?
     var gitHubAuthenticationManager = GITHUB()
-    
-    var repoFullname: String?
     private var repositoryGithubAPI = GitHubAPI<Repository>()
     var repositoryItem: Repository?
     private var isLoading = false
@@ -48,7 +46,7 @@ class RepositoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navItem.title = repoFullname
+        navItem.title = repositoryItem?.fullname
         getData()
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
@@ -91,6 +89,11 @@ class RepositoryViewController: UIViewController {
     }
     
     @IBAction func btnForks(_ sender: Any) {
+        let forksViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.forkVC.rawValue) as! ForkViewController
+        forksViewController.modalPresentationStyle = .automatic
+        forksViewController.repoItem = repositoryItem
+        forksViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        self.present(forksViewController, animated:true, completion:nil)
     }
     
     
@@ -99,6 +102,7 @@ class RepositoryViewController: UIViewController {
     
     private func getData() {
         isLoading = true
+        
         repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { [weak self] results, errorMessage in
             if let result = results?[0] {
                 self?.repositoryItem = result
