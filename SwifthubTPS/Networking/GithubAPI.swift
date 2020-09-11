@@ -111,11 +111,13 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getAuthenUser.scheme
             components.host = Router.getAuthenUser.host
             components.path = Router.getAuthenUser.path
-        case .getNotifications:
+        case .getNotifications, .makeNotificationAllRead:
             components.scheme = Router.getNotifications(notificationState: notificationState).scheme
             components.host = Router.getNotifications(notificationState: notificationState).host
             components.path = Router.getNotifications(notificationState: notificationState).path
-            components.setQueryItems(with: Router.getNotifications(notificationState: notificationState).parameters!)
+            if type == .getNotifications {
+                components.setQueryItems(with: Router.getNotifications(notificationState: notificationState).parameters!)
+            }            
         case .getUserRepositories:
             components.scheme = Router.getUserRepositories(username: username).scheme
             components.host = Router.getUserRepositories(username: username).host
@@ -155,7 +157,7 @@ class GitHubAPI<Element: Mappable> {
         
         request.httpMethod = { () -> String in
             switch type {
-            case .followUser, .starRepository: return "PUT"
+            case .followUser, .starRepository, .makeNotificationAllRead: return "PUT"
             case .unFollowUser, .unStarRepository: return "DELETE"
             default:
                 return "GET"
@@ -184,14 +186,13 @@ class GitHubAPI<Element: Mappable> {
                     DispatchQueue.main.async {
                         completion(self?.elements, self?.errorMessage ?? "", response.statusCode)
                     }
-            }
-            else if
-                type == .checkFollowedUser, type == .checkStarredRepository,
+            } else if
                 let response = response as? HTTPURLResponse {
                 DispatchQueue.main.async {
                     completion([], self?.errorMessage ?? "", response.statusCode)
                 }
             }
+            
             
         }
         dataTask?.resume()

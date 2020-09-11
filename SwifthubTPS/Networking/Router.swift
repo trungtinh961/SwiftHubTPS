@@ -29,6 +29,7 @@ enum GetType: Int {
     case getUserEvents
     case getAuthenUser
     case getNotifications
+    case makeNotificationAllRead
     case getUserRepositories
     case getFollowers
     case getFollowing
@@ -64,6 +65,7 @@ enum Router {
     case getUserEvents(username: String, type: EventType)
     case getAuthenUser
     case getNotifications(notificationState: NotificationState)
+    case makeNotificationAllRead
     case getUserRepositories(username: String)
     case getFollowers(username: String)
     case getFollowing(username: String)
@@ -111,7 +113,7 @@ enum Router {
         case .getWatchers(let fullname): return "/repos/\(fullname)/subscribers"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         case .getAuthenUser: return "/user"
-        case .getNotifications: return "/notifications"
+        case .getNotifications, .makeNotificationAllRead: return "/notifications"
         case .getUserRepositories(let username): return "/users/\(username)/repos"
         case .getFollowers(let username): return "/users/\(username)/followers"
         case .getFollowing(let username): return "/users/\(username)/following"
@@ -168,7 +170,7 @@ enum Router {
             switch notificationState {
             case .unread: break
             case .participate: params["participating"] = "true"
-            case .all: params["all"] = "false"
+            case .all: params["all"] = "true"
             }
             params["per_page"] = "50"
         default: break
@@ -178,7 +180,7 @@ enum Router {
     
     var method: String {
         switch self {
-        case .followUser, .starRepository: return "PUT"
+        case .followUser, .starRepository, .makeNotificationAllRead: return "PUT"
         case .unFollowUser, .unStarRepository: return "DELETE"
         default:
             return "GET"

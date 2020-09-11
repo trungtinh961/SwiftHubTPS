@@ -1341,7 +1341,7 @@
                                     <constraint firstItem="72O-tF-gw6" firstAttribute="top" secondItem="4sT-nV-VIU" secondAttribute="top" id="z6U-m3-evB"/>
                                 </constraints>
                             </stackView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FRX-Hm-HFY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="1" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FRX-Hm-HFY">
                                 <rect key="frame" x="8" y="242" width="406" height="612"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1663,6 +1663,9 @@
                                         </segmentedControl>
                                         <barButtonItem key="rightBarButtonItem" image="icon_cell_check" id="ZL5-63-zM7">
                                             <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="btnMakeAllRead:" destination="6Pc-NL-1Au" id="bJ7-dO-PFU"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>

@@ -53,6 +53,18 @@ class NotificationViewController: UIViewController {
         updateTableView()
     }
     
+    @IBAction func btnMakeAllRead(_ sender: Any) {
+        notificationGithubAPI.getResults(type: .makeNotificationAllRead, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) {results, errorMessage, statusCode in
+            if let statusCode = statusCode {
+                if statusCode == 205 {
+                    print("Make as all read!")
+                }                
+            }
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
+            }
+        }
+    }
     
     // MARK:- Private Methods
     
