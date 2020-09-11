@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Toast_Swift
 
 
 class NotificationViewController: UIViewController {
@@ -57,6 +57,7 @@ class NotificationViewController: UIViewController {
         notificationGithubAPI.getResults(type: .makeNotificationAllRead, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) {results, errorMessage, statusCode in
             if let statusCode = statusCode {
                 if statusCode == 205 {
+                    self.view.makeToast("Make as all read!")
                     print("Make as all read!")
                 }                
             }

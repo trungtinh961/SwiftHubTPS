@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class RepositoryViewController: UIViewController {
 
@@ -42,8 +43,6 @@ class RepositoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
         
         if gitHubAuthenticationManager.didAuthenticated {
             btnStar.isHidden = false
@@ -86,10 +85,12 @@ class RepositoryViewController: UIViewController {
         if isStarred {
             _ = checkStarRepository(type: .unStarRepository)
             btnStar.setImage(UIImage(named: ImageName.icon_button_unstar.rawValue), for: .normal)
+            self.view.makeToast("You unstarred \(repositoryItem?.fullname ?? "")")
             print("Did unstarred \(repositoryItem?.fullname ?? "")")
         } else {
             _ = checkStarRepository(type: .starRepository)
             btnStar.setImage(UIImage(named: ImageName.icon_button_star.rawValue), for: .normal)
+            self.view.makeToast("You starred \(repositoryItem?.fullname ?? "")")
             print("Did starred \(repositoryItem?.fullname ?? "")")
         }
         isStarred = !isStarred

@@ -1579,7 +1579,7 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2k-u5-Rq6">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="oKJ-0O-KRD"/>
                                 </constraints>
@@ -1615,7 +1615,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="A2k-u5-Rq6" firstAttribute="top" secondItem="cdV-oy-bxO" secondAttribute="top" id="2Gw-fj-wOL"/>
                             <constraint firstItem="zeE-gl-RYQ" firstAttribute="leading" secondItem="A2k-u5-Rq6" secondAttribute="leading" id="3gg-LQ-sxx"/>

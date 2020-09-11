@@ -82,10 +82,12 @@ class UserViewController: UIViewController {
         if isFollowed {
             _ = checkFollowUser(type: .unFollowUser)
             btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_plus.rawValue), for: .normal)
+            self.view.makeToast("You unfollowed \(userItem?.login ?? "")")
             print("Did unfollowed \(userItem?.login ?? "")")
         } else {
             _ = checkFollowUser(type: .followUser)
             btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_x.rawValue), for: .normal)
+            self.view.makeToast("You followed \(userItem?.login ?? "")")
             print("Did followed \(userItem?.login ?? "")")
         }
         isFollowed = !isFollowed

@@ -8,7 +8,7 @@
 
 import UIKit
 import WebKit
-
+import Toast_Swift
 
 class WebviewViewController: UIViewController {
 
@@ -49,6 +49,13 @@ class WebviewViewController: UIViewController {
 
 extension WebviewViewController: WKNavigationDelegate {
     
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        self.view.makeToastActivity(.center)
+    }
+    
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {        
+        self.view.hideAllToasts(includeActivity: true, clearQueue: true)
+    }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         print(webView.url ?? "no url")
