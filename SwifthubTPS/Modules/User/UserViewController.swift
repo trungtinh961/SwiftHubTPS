@@ -16,6 +16,7 @@ class UserViewController: UIViewController {
     private var userGithubAPI = GitHubAPI<User>()
     var userItem: User?
     private var isLoading = false
+    private var isFollowed = false
     private var userDetails: [DetailCellProperty]?
     private var totalRepos = 0    
     
@@ -55,8 +56,8 @@ class UserViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
+        super.viewDidLoad()        
+        
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
@@ -78,7 +79,16 @@ class UserViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnAddUser(_ sender: Any) {
-        print("add")
+        if isFollowed {
+            _ = checkFollowUser(type: .unFollowUser)
+            btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_plus.rawValue), for: .normal)
+            print("Did unfollowed \(userItem?.login ?? "")")
+        } else {
+            _ = checkFollowUser(type: .followUser)
+            btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_x.rawValue), for: .normal)
+            print("Did followed \(userItem?.login ?? "")")
+        }
+        isFollowed = !isFollowed
     }
     
     
@@ -111,6 +121,20 @@ class UserViewController: UIViewController {
     
     // MARK: - Private Method
     
+    private func checkFollowUser(type: GetType) -> Bool {
+        var isSuccess = false
+        userGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { results, errorMessage, statusCode in
+            if let statusCode = statusCode {
+                if statusCode == 204 { isSuccess = true }
+            }
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
+            }
+        }
+        return isSuccess
+    }
+    
+    
     private func getData() {
         isLoading = true
         userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { [weak self] results, errorMessage, statusCode in
@@ -128,9 +152,21 @@ class UserViewController: UIViewController {
                 self?.navItem.setTitle(title: self?.userItem?.login ?? "", subtitle: self?.userItem?.name ?? "")
                 self?.userDetails = self?.userItem?.getDetailCell()
                 self?.resultTableView.reloadData()
+                self?.updateStatus()
             }
             if !errorMessage.isEmpty {
                 print("Search error: " + errorMessage)
+            }
+        }
+    }
+    
+    private func updateStatus() {
+        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated != userItem {
+            isFollowed = checkFollowUser(type: .checkFollowedUser)
+            if  isFollowed {
+                btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_x.rawValue), for: .normal)
+            } else {
+                btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_plus.rawValue), for: .normal)
             }
         }
     }
