@@ -12,13 +12,14 @@ class UserViewController: UIViewController {
 
     // MARK: - Properties
     var gitHubAuthenticationManager = GITHUB()
+    var userItem: User?
+    var isTabbarCall = false
     private var downloadTask: URLSessionDownloadTask?
     private var userGithubAPI = GitHubAPI<User>()
-    var userItem: User?
     private var isLoading = false
     private var isFollowed = false
     private var userDetails: [DetailCellProperty]?
-    private var totalRepos = 0    
+    private var totalRepos = 0
     
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var imgAvatar: UIImageView!
@@ -45,12 +46,17 @@ class UserViewController: UIViewController {
             btnAddUser.isEnabled = false
         }
         
-        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
+        
+        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem, isTabbarCall {
             navItem.leftBarButtonItem?.tintColor = .clear
-            navItem.rightBarButtonItem?.tintColor = .clear
+            navItem.leftBarButtonItem?.isEnabled = false
+            navItem.rightBarButtonItem?.tintColor = .systemTeal
+            navItem.rightBarButtonItem?.isEnabled = true
         } else {
             navItem.leftBarButtonItem?.tintColor = .systemTeal
-            navItem.rightBarButtonItem?.tintColor = .systemTeal
+            navItem.leftBarButtonItem?.isEnabled = true
+            navItem.rightBarButtonItem?.tintColor = .clear
+            navItem.rightBarButtonItem?.isEnabled = false
         }
         getData()
     }
@@ -97,6 +103,16 @@ class UserViewController: UIViewController {
     @IBAction func btnClose(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    @IBAction func btnLogout(_ sender: Any) {
+        let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
+        mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = false
+        mainTabBarController?.gitHubAuthenticationManager.accessToken = ""
+        self.view.window?.rootViewController = mainTabBarController
+        self.view.window?.makeKeyAndVisible()
+    }
+    
     
     @IBAction func btnRepositories(_ sender: Any) {
         showDetails(detailType: .repositories)

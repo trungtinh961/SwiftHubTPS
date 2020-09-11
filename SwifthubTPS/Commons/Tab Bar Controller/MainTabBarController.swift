@@ -85,6 +85,7 @@ class MainTabBarController: UITabBarController {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = userItem
+            userViewController.isTabbarCall = true
             let userNavgitaionController = UINavigationController(rootViewController: userViewController)
             userNavgitaionController.isNavigationBarHidden = true
             userNavgitaionController.title = "Profile"

@@ -298,6 +298,7 @@ extension SearchViewController: UITableViewDelegate {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = indexCell
+            userViewController.isTabbarCall = false
             userViewController.modalPresentationStyle = .automatic
             self.present(userViewController, animated:true, completion:nil)
             

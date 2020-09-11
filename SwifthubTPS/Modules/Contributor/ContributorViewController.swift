@@ -118,6 +118,7 @@ extension ContributorViewController: UITableViewDelegate {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
         userViewController.userItem = contributorItems?[indexPath.row]
+        userViewController.isTabbarCall = false
         userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         userViewController.modalPresentationStyle = .automatic
         self.present(userViewController, animated:true, completion:nil)
