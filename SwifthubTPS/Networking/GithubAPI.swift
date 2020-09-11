@@ -17,118 +17,128 @@ class GitHubAPI<Element: Mappable> {
     var elements: [Element] = []
     
     typealias JSONDictionary = [String: Any]
-    typealias QueryResults = ([Element]?, String) -> Void
+    typealias QueryResults = ([Element]?, String, Int?) -> Void
     
     func createURL(type: GetType, eventType: EventType, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String) -> URL? {
         var components = URLComponents()
-        
-        if type == .repository {
+        switch type {
+        case .repository:
             components.scheme = Router.searchRepositories(query: query, language: language).scheme
             components.host = Router.searchRepositories(query: query, language: language).host
             components.path = Router.searchRepositories(query: query, language: language).path
             components.setQueryItems(with: Router.searchRepositories(query: query, language: language).parameters!)
-        } else if type == .user {
+        case .user:
             components.scheme = Router.searchUsers(query: query, language: language).scheme
             components.host = Router.searchUsers(query: query, language: language).host
             components.path = Router.searchUsers(query: query, language: language).path
             components.setQueryItems(with: Router.searchUsers(query: query, language: language).parameters!)
-        } else if type == .getRepository {
+        case .language:
+            break
+        case .getRepository:
             components.scheme = Router.getRepository(fullname: fullname).scheme
             components.host = Router.getRepository(fullname: fullname).host
             components.path = Router.getRepository(fullname: fullname).path
-        } else if type == .getIssues {
-            components.scheme = Router.getIssues(fullname: fullname, issueState: state).scheme
-            components.host = Router.getIssues(fullname: fullname, issueState: state).host
-            components.path = Router.getIssues(fullname: fullname, issueState: state).path
-            components.setQueryItems(with: Router.getIssues(fullname: fullname, issueState: state).parameters!)
-        } else if type == .getForks {
+        case .getForks:
             components.scheme = Router.getForks(fullname: fullname).scheme
             components.host = Router.getForks(fullname: fullname).host
             components.path = Router.getForks(fullname: fullname).path
             components.setQueryItems(with: Router.getForks(fullname: fullname).parameters!)
-        } else if type == .getPullRequests {
+        case .getIssues:
+            components.scheme = Router.getIssues(fullname: fullname, issueState: state).scheme
+            components.host = Router.getIssues(fullname: fullname, issueState: state).host
+            components.path = Router.getIssues(fullname: fullname, issueState: state).path
+            components.setQueryItems(with: Router.getIssues(fullname: fullname, issueState: state).parameters!)
+        case .getPullRequests:
             components.scheme = Router.getPullRequests(fullname: fullname, pullState: state).scheme
             components.host = Router.getPullRequests(fullname: fullname, pullState: state).host
             components.path = Router.getPullRequests(fullname: fullname, pullState: state).path
             components.setQueryItems(with: Router.getPullRequests(fullname: fullname, pullState: state).parameters!)
-        } else if type == .getCommits {
+        case .getCommits:
             components.scheme = Router.getCommits(fullname: fullname).scheme
             components.host = Router.getCommits(fullname: fullname).host
             components.path = Router.getCommits(fullname: fullname).path
             components.setQueryItems(with: Router.getCommits(fullname: fullname).parameters!)
-        } else if type == .getBranches {
+        case .getBranches:
             components.scheme = Router.getBranches(fullname: fullname).scheme
             components.host = Router.getBranches(fullname: fullname).host
             components.path = Router.getBranches(fullname: fullname).path
             components.setQueryItems(with: Router.getBranches(fullname: fullname).parameters!)
-        } else if type == .getReleases {
+        case .getReleases:
             components.scheme = Router.getReleases(fullname: fullname).scheme
             components.host = Router.getReleases(fullname: fullname).host
             components.path = Router.getReleases(fullname: fullname).path
             components.setQueryItems(with: Router.getReleases(fullname: fullname).parameters!)
-        } else if type == .getContributors {
+        case .getContributors:
             components.scheme = Router.getContributors(fullname: fullname).scheme
             components.host = Router.getContributors(fullname: fullname).host
             components.path = Router.getContributors(fullname: fullname).path
             components.setQueryItems(with: Router.getContributors(fullname: fullname).parameters!)
-        } else if type == .getRepositoryEvents {
+        case .getRepositoryEvents:
             components.scheme = Router.getEvents(fullname: fullname).scheme
             components.host = Router.getEvents(fullname: fullname).host
             components.path = Router.getEvents(fullname: fullname).path
             components.setQueryItems(with: Router.getEvents(fullname: fullname).parameters!)
-        } else if type == .getUser {
+        case .getUser:
             components.scheme = Router.getUser(username: username).scheme
             components.host = Router.getUser(username: username).host
             components.path = Router.getUser(username: username).path
-        } else if type == .getStarred {
+        case .getStarred:
             components.scheme = Router.getStarred(username: username).scheme
             components.host = Router.getStarred(username: username).host
             components.path = Router.getStarred(username: username).path
             components.setQueryItems(with: Router.getStarred(username: username).parameters!)
-        } else if type == .getStargazers {
+        case .getStargazers:
             components.scheme = Router.getStargazers(fullname: fullname).scheme
             components.host = Router.getStargazers(fullname: fullname).host
             components.path = Router.getStargazers(fullname: fullname).path
             components.setQueryItems(with: Router.getStargazers(fullname: fullname).parameters!)
-        } else if type == .getWatching {
+        case .getWatching:
             components.scheme = Router.getWatching(username: username).scheme
             components.host = Router.getWatching(username: username).host
             components.path = Router.getWatching(username: username).path
             components.setQueryItems(with: Router.getWatching(username: username).parameters!)
-        } else if type == .getWatchers {
+        case .getWatchers:
             components.scheme = Router.getWatchers(fullname: fullname).scheme
             components.host = Router.getWatchers(fullname: fullname).host
             components.path = Router.getWatchers(fullname: fullname).path
             components.setQueryItems(with: Router.getWatchers(fullname: fullname).parameters!)
-        } else if type == .getUserEvents {
+        case .getUserEvents:
             components.scheme = Router.getUserEvents(username: username, type: eventType).scheme
             components.host = Router.getUserEvents(username: username, type: eventType).host
             components.path = Router.getUserEvents(username: username, type: eventType).path
             components.setQueryItems(with: Router.getUserEvents(username: username, type: eventType).parameters!)
-        } else if type == .getAuthenUser {
+        case .getAuthenUser:
             components.scheme = Router.getAuthenUser.scheme
             components.host = Router.getAuthenUser.host
             components.path = Router.getAuthenUser.path
-        } else if type == .getNotifications {
+        case .getNotifications:
             components.scheme = Router.getNotifications(notificationState: notificationState).scheme
             components.host = Router.getNotifications(notificationState: notificationState).host
             components.path = Router.getNotifications(notificationState: notificationState).path
             components.setQueryItems(with: Router.getNotifications(notificationState: notificationState).parameters!)
-        } else if type == .getUserRepositories {
+        case .getUserRepositories:
             components.scheme = Router.getUserRepositories(username: username).scheme
             components.host = Router.getUserRepositories(username: username).host
             components.path = Router.getUserRepositories(username: username).path
             components.setQueryItems(with: Router.getUserRepositories(username: username).parameters!)
-        } else if type == .getFollowers {
+        case .getFollowers:
             components.scheme = Router.getFollowers(username: username).scheme
             components.host = Router.getFollowers(username: username).host
             components.path = Router.getFollowers(username: username).path
             components.setQueryItems(with: Router.getFollowers(username: username).parameters!)
-        } else if type == .getFollowing {
+        case .getFollowing:
             components.scheme = Router.getFollowing(username: username).scheme
             components.host = Router.getFollowing(username: username).host
             components.path = Router.getFollowing(username: username).path
             components.setQueryItems(with: Router.getFollowing(username: username).parameters!)
+        case .followUser, .unFollowUser, .checkFollowedUser:
+            components.scheme = Router.followUser(username: username).scheme
+            components.host = Router.followUser(username: username).host
+            components.path = Router.followUser(username: username).path
+        case .starRepository, .unStarRepository, .checkStarredRepository:
+            components.scheme = Router.starRepository(fullname: fullname).scheme
+            components.host = Router.starRepository(fullname: fullname).host
+            components.path = Router.starRepository(fullname: fullname).path
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -142,12 +152,22 @@ class GitHubAPI<Element: Mappable> {
           return
         }
         var request = URLRequest(url: url)
+        
+        request.httpMethod = { () -> String in
+            switch type {
+            case .followUser, .starRepository: return "PUT"
+            case .unFollowUser, .unStarRepository: return "DELETE"
+            default:
+                return "GET"
+            }
+        }()
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         if gitHubAuthenticationManager.didAuthenticated {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
         }
         
-        print(request.allHTTPHeaderFields!)
+        print(request.allHTTPHeaderFields?["Authorization"] ?? "No authen")
+        print(request.httpMethod!)
         print(request)
         
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
@@ -160,11 +180,19 @@ class GitHubAPI<Element: Mappable> {
                 let data = data,
                 let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
-                self?.updateSearchResults(type: type, data)
+                    self?.updateSearchResults(type: type, data)
                     DispatchQueue.main.async {
-                        completion(self?.elements, self?.errorMessage ?? "")
+                        completion(self?.elements, self?.errorMessage ?? "", response.statusCode)
                     }
+            }
+            else if
+                type == .checkFollowedUser, type == .checkStarredRepository,
+                let response = response as? HTTPURLResponse {
+                DispatchQueue.main.async {
+                    completion([], self?.errorMessage ?? "", response.statusCode)
                 }
+            }
+            
         }
         dataTask?.resume()
     }

@@ -59,7 +59,7 @@ class BranchViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        branchGithubAPI.getResults(type: .getBranches, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        branchGithubAPI.getResults(type: .getBranches, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true

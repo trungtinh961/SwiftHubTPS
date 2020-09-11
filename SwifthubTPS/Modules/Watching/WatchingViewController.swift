@@ -71,7 +71,7 @@ class WatchingViewController: UIViewController {
         noResult = false
         
         if getType == .getWatching {
-            watchingGithubAPI.getResults(type: .getWatching, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+            watchingGithubAPI.getResults(type: .getWatching, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -90,7 +90,7 @@ class WatchingViewController: UIViewController {
                 }
             }
         } else if getType == .getWatchers {
-            watcherGithubAPI.getResults(type: .getWatchers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+            watcherGithubAPI.getResults(type: .getWatchers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true

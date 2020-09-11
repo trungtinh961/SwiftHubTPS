@@ -60,7 +60,7 @@ class ForkViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        forkGithubAPI.getResults(type: .getForks, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        forkGithubAPI.getResults(type: .getForks, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true

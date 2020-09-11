@@ -56,7 +56,7 @@ class ContributorViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        contributorGithubAPI.getResults(type: .getContributors, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        contributorGithubAPI.getResults(type: .getContributors, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
            if let results = results {
                if results.count == 0 {
                    self?.noResult = true

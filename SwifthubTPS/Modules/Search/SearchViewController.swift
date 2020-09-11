@@ -89,7 +89,7 @@ class SearchViewController: UIViewController {
         
         if getType == .repository {
             if isSearching {
-                searchRepositoryGithubAPI.getResults(type: .repository, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                searchRepositoryGithubAPI.getResults(type: .repository, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage, statusCode in
                     if let result = results?[0] {
                         if result.totalCount == 0 {
                             self?.noResult = true
@@ -124,7 +124,7 @@ class SearchViewController: UIViewController {
             }
         } else if getType == .user {
             if isSearching {
-                searchUserGithubAPI.getResults(type: .user, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage in
+                searchUserGithubAPI.getResults(type: .user, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage, statusCode in
                   
                     if let result = results?[0] {
                         if result.totalCount == 0 {

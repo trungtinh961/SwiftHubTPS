@@ -53,7 +53,7 @@ class ReleaseViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        releaseGithubAPI.getResults(type: .getReleases, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        releaseGithubAPI.getResults(type: .getReleases, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true

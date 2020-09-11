@@ -29,11 +29,20 @@ class UserViewController: UIViewController {
     @IBOutlet weak var followersView: UIView!
     @IBOutlet weak var followingView: UIView!
     @IBOutlet weak var navItem: UINavigationItem!
+    @IBOutlet weak var btnAddUser: UIButton!
     
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated != userItem {
+            btnAddUser.isHidden = false
+            btnAddUser.isEnabled = true
+        } else {
+            btnAddUser.isHidden = true
+            btnAddUser.isEnabled = false
+        }
         
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
             navItem.leftBarButtonItem?.tintColor = .clear
@@ -55,16 +64,23 @@ class UserViewController: UIViewController {
         /// Config layout
         imgAvatar.layer.cornerRadius = imgAvatar.frame.height / 2
         imgAvatar.layer.masksToBounds = true
+        btnAddUser.layer.cornerRadius = btnAddUser.frame.height / 2
+        btnAddUser.layer.masksToBounds = true
         repositoriesView.layer.cornerRadius = 5
         followersView.layer.cornerRadius = 5
         followingView.layer.cornerRadius = 5
         if let smallURL = URL(string: userItem?.avatarUrl ?? "") {
             downloadTask = imgAvatar.loadImage(url: smallURL)
         }
-        
+        navItem.setTitle(title: userItem?.login ?? "", subtitle: userItem?.name ?? "")
     }
     
     // MARK: - IBActions
+    
+    @IBAction func btnAddUser(_ sender: Any) {
+        print("add")
+    }
+    
     
     @IBAction func btnClose(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -97,7 +113,7 @@ class UserViewController: UIViewController {
     
     private func getData() {
         isLoading = true
-        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { [weak self] results, errorMessage in
+        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { [weak self] results, errorMessage, statusCode in
             if let result = results?[0] {
                 self?.userItem = result
                 self?.totalRepos = (self?.userItem?.repositoriesCount ?? 0) + (self?.userItem?.privateRepoCount ?? 0)

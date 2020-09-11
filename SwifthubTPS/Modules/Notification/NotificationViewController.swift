@@ -61,7 +61,7 @@ class NotificationViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        notificationGithubAPI.getResults(type: .getNotifications, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) { [weak self] results, errorMessage in
+        notificationGithubAPI.getResults(type: .getNotifications, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true

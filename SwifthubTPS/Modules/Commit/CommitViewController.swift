@@ -54,7 +54,7 @@ class CommitViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        commitGithubAPI.getResults(type: .getCommits, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+        commitGithubAPI.getResults(type: .getCommits, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true

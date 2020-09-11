@@ -86,7 +86,7 @@ class UserEventViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
 
-        eventGithubAPI.getResults(type: .getUserEvents, eventType: eventType, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+        eventGithubAPI.getResults(type: .getUserEvents, eventType: eventType, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true

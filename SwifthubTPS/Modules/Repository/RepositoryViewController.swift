@@ -17,6 +17,7 @@ class RepositoryViewController: UIViewController {
     private var repositoryGithubAPI = GitHubAPI<Repository>()
     var repositoryItem: Repository?
     private var isLoading = false
+    private var isStarred = false
     private var repositoryDetails: [DetailCellProperty]?
     private var branch: String?
     private let storyBoard = UIStoryboard(name: "Main", bundle:nil)
@@ -32,8 +33,9 @@ class RepositoryViewController: UIViewController {
     @IBOutlet weak var forksView: UIView!
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var btnWatches: UIButton!
-    @IBOutlet weak var btnStars: UIButton!
+    @IBOutlet weak var btnStarsCount: UIButton!
     @IBOutlet weak var btnForks: UIButton!
+    @IBOutlet weak var btnStar: UIButton!
     
     
     // MARK: - Life Cycle
@@ -41,6 +43,20 @@ class RepositoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if gitHubAuthenticationManager.didAuthenticated {
+            btnStar.isHidden = false
+            btnStar.isEnabled = true
+            isStarred = checkStarRepository(type: .checkStarredRepository)
+            if  isStarred {
+                btnStar.setImage(UIImage(named: ImageName.icon_button_star.rawValue), for: .normal)
+            } else {
+                btnStar.setImage(UIImage(named: ImageName.icon_button_unstar.rawValue), for: .normal)
+            }
+            
+        } else {
+            btnStar.isHidden = true
+            btnStar.isEnabled = false            
+        }
     }
     
     override func viewDidLoad() {
@@ -54,17 +70,35 @@ class RepositoryViewController: UIViewController {
         
         
         /// Config layout
+        btnStar.layer.cornerRadius = btnStar.frame.height / 2
+        btnStar.layer.masksToBounds = true
         imgAvatar.layer.cornerRadius = imgAvatar.frame.height / 2
         imgAvatar.layer.masksToBounds = true
         watchesView.layer.cornerRadius = 5
         starsView.layer.cornerRadius = 5
         forksView.layer.cornerRadius = 5
         btnWatches.isEnabled = false
-        btnStars.isEnabled = false
+        btnStarsCount.isEnabled = false
         btnForks.isEnabled = false
+        if let smallURL = URL(string: repositoryItem?.owner?.avatarUrl ?? "") {
+            downloadTask = imgAvatar.loadImage(url: smallURL)
+        }
     }
     
     // MARK: - IBActions
+    
+    @IBAction func btnStar(_ sender: Any) {
+        if isStarred {
+            _ = checkStarRepository(type: .unStarRepository)
+            btnStar.setImage(UIImage(named: ImageName.icon_button_unstar.rawValue), for: .normal)
+            print("Did unstarred \(repositoryItem?.fullname ?? "")")
+        } else {
+            _ = checkStarRepository(type: .starRepository)
+            btnStar.setImage(UIImage(named: ImageName.icon_button_star.rawValue), for: .normal)
+            print("Did starred \(repositoryItem?.fullname ?? "")")
+        }
+        isStarred = !isStarred
+    }
     
     @IBAction func btnClose(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -79,7 +113,7 @@ class RepositoryViewController: UIViewController {
         self.present(watchingViewController, animated:true, completion:nil)
     }
     
-    @IBAction func btnStars(_ sender: Any) {
+    @IBAction func btnStarsCount(_ sender: Any) {
         let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
         starsViewController.modalPresentationStyle = .automatic
         starsViewController.repoItem = repositoryItem
@@ -103,7 +137,7 @@ class RepositoryViewController: UIViewController {
     private func getData() {
         isLoading = true
         
-        repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { [weak self] results, errorMessage in
+        repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { [weak self] results, errorMessage, statusCode in
             if let result = results?[0] {
                 self?.repositoryItem = result
                 self?.isLoading = false
@@ -115,7 +149,7 @@ class RepositoryViewController: UIViewController {
                 self?.lbStars.text = "\(self?.repositoryItem?.stargazersCount ?? 0)"
                 self?.lbForks.text = "\(self?.repositoryItem?.forks ?? 0)"
                 self?.btnWatches.isEnabled = true
-                self?.btnStars.isEnabled = true
+                self?.btnStarsCount.isEnabled = true
                 self?.btnForks.isEnabled = true
                 self?.branch = self?.repositoryItem?.defaultBranch
                 self?.repositoryDetails = self?.repositoryItem?.getDetailCell()
@@ -126,6 +160,20 @@ class RepositoryViewController: UIViewController {
             }
         }
     }
+    
+    private func checkStarRepository(type: GetType) -> Bool {
+        var isSuccess = false
+        repositoryGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { results, errorMessage, statusCode in
+            if let statusCode = statusCode {
+                if statusCode == 204 { isSuccess = true }
+            }
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
+            }
+        }
+        return isSuccess
+    }
+    
     
 }
 

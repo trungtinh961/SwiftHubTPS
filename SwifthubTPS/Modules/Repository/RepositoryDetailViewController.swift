@@ -80,7 +80,7 @@ class RepositoryDetailViewController: UIViewController {
         noResult = false
         
         if detailType == .repositories {
-            repositoryGithubAPI.getResults(type: .getUserRepositories, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+            repositoryGithubAPI.getResults(type: .getUserRepositories, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -99,7 +99,7 @@ class RepositoryDetailViewController: UIViewController {
                 }
             }
         } else if detailType == .followers {
-            userGithubAPI.getResults(type: .getFollowers, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+            userGithubAPI.getResults(type: .getFollowers, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -118,7 +118,7 @@ class RepositoryDetailViewController: UIViewController {
                 }
             }
         } else {
-            userGithubAPI.getResults(type: .getFollowing, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+            userGithubAPI.getResults(type: .getFollowing, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true

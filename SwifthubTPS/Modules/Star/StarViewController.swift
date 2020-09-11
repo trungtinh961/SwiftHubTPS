@@ -68,7 +68,7 @@ class StarViewController: UIViewController {
         noResult = false
         
         if getType == .getStarred {
-            starredGithubAPI.getResults(type: .getStarred, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage in
+            starredGithubAPI.getResults(type: .getStarred, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -87,7 +87,7 @@ class StarViewController: UIViewController {
                 }
             }
         } else {
-            stargazersGithubAPI.getResults(type: .getStargazers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage in
+            stargazersGithubAPI.getResults(type: .getStargazers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true

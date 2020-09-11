@@ -36,7 +36,7 @@ class MainTabBarController: UITabBarController {
     // MARK: - Private Methods
     
     private func getAuthenUser() {
-        userGithubAPI.getResults(type: .getAuthenUser, gitHubAuthenticationManager: gitHubAuthenticationManager) { [weak self] results, errorMessage in
+        userGithubAPI.getResults(type: .getAuthenUser, gitHubAuthenticationManager: gitHubAuthenticationManager) { [weak self] results, errorMessage, statusCode in
             if let result = results?[0] {
                 self?.userItem = result
                 self?.gitHubAuthenticationManager.userAuthenticated = result
@@ -55,6 +55,7 @@ class MainTabBarController: UITabBarController {
         
         ///Search VC
         let searchViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.searchVC.rawValue) as! SearchViewController
+        searchViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         let searchNavgitaionController = UINavigationController(rootViewController: searchViewController)
         searchNavgitaionController.title = "Search"
         searchNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_search.rawValue)
