@@ -11,4 +11,5 @@ target 'SwifthubTPS' do
     pod 'MessageKit' # https://github.com/MessageKit/MessageKit
     pod 'InputBarAccessoryView' # https://github.com/nathantannar4/InputBarAccessoryView
     pod 'Toast-Swift' # https://github.com/scalessec/Toast-Swift
+    pod 'SwiftDate', '~> 6.0'  # https://github.com/malcommac/SwiftDate
 end
