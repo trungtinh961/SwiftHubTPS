@@ -49,7 +49,7 @@ enum ImageName: String {
     case icon_button_unstar = "icon_button_unstar"
     case icon_button_user_plus = "icon_button_user_plus"
     case icon_button_user_x = "icon_button_user_x"
-    
+    case launch_image = "launch_image"
     
 }
 

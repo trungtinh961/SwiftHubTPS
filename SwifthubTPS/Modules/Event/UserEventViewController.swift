@@ -36,9 +36,9 @@ class UserEventViewController: UIViewController {
         updateTableView(eventType: eventType)
         
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
-            navItem.leftBarButtonItem?.tintColor = .clear
+            self.navigationItem.leftBarButtonItem?.tintColor = .clear
         } else {
-            navItem.leftBarButtonItem?.tintColor = .systemTeal
+            self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
         }
         
         
@@ -61,7 +61,7 @@ class UserEventViewController: UIViewController {
     
     @IBAction func btnBack(_ sender: Any) {
         if !gitHubAuthenticationManager.didAuthenticated {
-            dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -156,6 +156,6 @@ extension UserEventViewController: UITableViewDelegate {
         repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.modalPresentationStyle = .automatic
-        self.present(repositoryViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(repositoryViewController, animated: true)
     }
 }

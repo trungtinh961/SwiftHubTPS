@@ -38,11 +38,11 @@ class RepositoryDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if detailType == .repositories {
-            navItem.title = "Repositories"
+            self.navigationItem.title = "Repositories"
         } else if detailType == .followers {
-            navItem.title = "Followers"
+            self.navigationItem.title = "Followers"
         } else {
-            navItem.title = "Following"
+            self.navigationItem.title = "Following"
         }
         updateTableView()
     }
@@ -67,7 +67,7 @@ class RepositoryDetailViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -201,14 +201,14 @@ extension RepositoryDetailViewController: UITableViewDelegate {
             repositoryViewController.repositoryItem = repoItems![indexPath.row]
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             repositoryViewController.modalPresentationStyle = .automatic
-            self.present(repositoryViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(repositoryViewController, animated: true)
         } else {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = userItems![indexPath.row]
             userViewController.isTabbarCall = false
             userViewController.modalPresentationStyle = .automatic
-            self.present(userViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(userViewController, animated: true)
         }
     }
 }

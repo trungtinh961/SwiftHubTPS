@@ -49,7 +49,7 @@ class ForkViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -131,7 +131,7 @@ extension ForkViewController: UITableViewDelegate {
         repositoryViewController.repositoryItem = forkItems![indexPath.row]
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.modalPresentationStyle = .automatic
-        self.present(repositoryViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(repositoryViewController, animated: true)
         
     }
 }

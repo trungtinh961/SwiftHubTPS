@@ -29,6 +29,7 @@ class UserCell: UITableViewCell {
         imgUser.layer.cornerRadius = imgUser.frame.height / 2
         imgAuthor.layer.masksToBounds = true
         imgUser.layer.masksToBounds = true
+        imgAuthor.image = UIImage(named: ImageName.launch_image.rawValue)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

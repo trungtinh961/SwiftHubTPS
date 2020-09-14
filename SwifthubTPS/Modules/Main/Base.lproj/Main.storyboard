@@ -702,32 +702,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i1K-gi-SYN">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="N6t-a3-guN"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Starred" id="mz0-c3-9LL">
-                                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="aqy-wY-DNZ">
-                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="btnBack:" destination="N9S-as-kwQ" id="G36-Pc-9Zq"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="ZA8-DK-iwt">
-                                <rect key="frame" x="167" y="108" width="80" height="80"/>
+                                <rect key="frame" x="167" y="60" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="78f-Nv-0kf"/>
                                     <constraint firstAttribute="height" constant="80" id="vsq-zA-ACB"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0hi-OH-C7g">
-                                <rect key="frame" x="0.0" y="196" width="406" height="658"/>
+                                <rect key="frame" x="0.0" y="148" width="406" height="706"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="N9S-as-kwQ" id="ieV-Ml-lAG"/>
@@ -737,21 +720,25 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="i1K-gi-SYN" firstAttribute="leading" secondItem="pI2-ve-GNQ" secondAttribute="leading" id="1aG-vq-PNa"/>
                             <constraint firstItem="8Do-Xt-atA" firstAttribute="bottom" secondItem="0hi-OH-C7g" secondAttribute="bottom" constant="8" id="2aG-9g-k7I"/>
                             <constraint firstItem="0hi-OH-C7g" firstAttribute="leading" secondItem="8Do-Xt-atA" secondAttribute="leading" id="Hfu-g5-hmz"/>
-                            <constraint firstItem="8Do-Xt-atA" firstAttribute="trailing" secondItem="i1K-gi-SYN" secondAttribute="trailing" id="ZxF-QW-bIL"/>
                             <constraint firstItem="ZA8-DK-iwt" firstAttribute="centerX" secondItem="pI2-ve-GNQ" secondAttribute="centerX" id="d31-8G-Q3E"/>
-                            <constraint firstItem="i1K-gi-SYN" firstAttribute="top" secondItem="8Do-Xt-atA" secondAttribute="top" id="fE4-6d-cir"/>
                             <constraint firstItem="8Do-Xt-atA" firstAttribute="trailing" secondItem="0hi-OH-C7g" secondAttribute="trailing" constant="8" id="hMD-Cu-DlL"/>
-                            <constraint firstItem="ZA8-DK-iwt" firstAttribute="top" secondItem="i1K-gi-SYN" secondAttribute="bottom" constant="20" id="mO5-fv-bRH"/>
+                            <constraint firstItem="ZA8-DK-iwt" firstAttribute="top" secondItem="8Do-Xt-atA" secondAttribute="top" constant="16" id="kjf-na-tzl"/>
                             <constraint firstItem="0hi-OH-C7g" firstAttribute="top" secondItem="ZA8-DK-iwt" secondAttribute="bottom" constant="8" id="yWM-pM-YW7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8Do-Xt-atA"/>
                     </view>
+                    <navigationItem key="navigationItem" id="6Fz-jj-UXt">
+                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="aqy-wY-DNZ">
+                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="btnBack:" destination="N9S-as-kwQ" id="G36-Pc-9Zq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imgAuthor" destination="ZA8-DK-iwt" id="xCh-Cv-tle"/>
-                        <outlet property="navItem" destination="mz0-c3-9LL" id="HSB-W2-eeb"/>
                         <outlet property="resultTableView" destination="0hi-OH-C7g" id="2mX-rL-YZ9"/>
                     </connections>
                 </viewController>
@@ -767,32 +754,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61W-VF-cs0">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="2Wk-oW-ncn"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Watching" id="d3F-BJ-hpZ">
-                                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="1aV-ky-nEO">
-                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="btnBack:" destination="GlM-MA-8jY" id="LaD-u0-x4w"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="jRP-gz-dqM">
-                                <rect key="frame" x="167" y="108" width="80" height="80"/>
+                                <rect key="frame" x="167" y="60" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="YBA-TN-QZ6"/>
                                     <constraint firstAttribute="height" constant="80" id="ha4-g2-Jv0"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vnF-5e-3kf">
-                                <rect key="frame" x="8" y="196" width="406" height="658"/>
+                                <rect key="frame" x="8" y="148" width="406" height="706"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="GlM-MA-8jY" id="cfk-L7-LCQ"/>
@@ -805,18 +775,22 @@
                             <constraint firstItem="aea-dA-3LY" firstAttribute="trailing" secondItem="vnF-5e-3kf" secondAttribute="trailing" id="6aA-yB-qCT"/>
                             <constraint firstItem="vnF-5e-3kf" firstAttribute="leading" secondItem="aea-dA-3LY" secondAttribute="leading" constant="8" id="7Ad-tW-Rkz"/>
                             <constraint firstItem="aea-dA-3LY" firstAttribute="bottom" secondItem="vnF-5e-3kf" secondAttribute="bottom" constant="8" id="EEe-T0-kEb"/>
-                            <constraint firstItem="61W-VF-cs0" firstAttribute="top" secondItem="aea-dA-3LY" secondAttribute="top" id="KVI-Bi-52c"/>
                             <constraint firstItem="jRP-gz-dqM" firstAttribute="centerX" secondItem="zIQ-4e-bDr" secondAttribute="centerX" id="Ka6-el-zem"/>
-                            <constraint firstItem="61W-VF-cs0" firstAttribute="leading" secondItem="aea-dA-3LY" secondAttribute="leading" id="M9h-DZ-X5W"/>
-                            <constraint firstAttribute="trailing" secondItem="61W-VF-cs0" secondAttribute="trailing" id="N0w-De-NFr"/>
-                            <constraint firstItem="jRP-gz-dqM" firstAttribute="top" secondItem="61W-VF-cs0" secondAttribute="bottom" constant="20" id="fud-Rq-tNG"/>
                             <constraint firstItem="vnF-5e-3kf" firstAttribute="top" secondItem="jRP-gz-dqM" secondAttribute="bottom" constant="8" id="nyO-nS-bCu"/>
+                            <constraint firstItem="jRP-gz-dqM" firstAttribute="top" secondItem="aea-dA-3LY" secondAttribute="top" constant="16" id="zAK-qJ-Nea"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aea-dA-3LY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="c0C-mg-oeg">
+                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="1aV-ky-nEO">
+                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="btnBack:" destination="GlM-MA-8jY" id="LaD-u0-x4w"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imgAuthor" destination="jRP-gz-dqM" id="swD-dU-DqG"/>
-                        <outlet property="navItem" destination="d3F-BJ-hpZ" id="clE-jF-w3O"/>
                         <outlet property="resultTableView" destination="vnF-5e-3kf" id="Zlv-CH-Ba8"/>
                     </connections>
                 </viewController>
@@ -832,44 +806,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQ1-BW-TkZ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Ead-gJ-k3U"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem id="Uky-k0-lGm">
-                                        <nil key="title"/>
-                                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="a00-DM-VAA">
-                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="btnBack:" destination="Vpc-tc-Gp8" id="Q27-bV-keG"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ENm-cT-KTo">
-                                            <rect key="frame" x="122.5" y="5.5" width="169" height="33"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segments>
-                                                <segment title="Received"/>
-                                                <segment title="Performed"/>
-                                            </segments>
-                                            <connections>
-                                                <action selector="segmentControl:" destination="Vpc-tc-Gp8" eventType="valueChanged" id="QUf-Tl-s6q"/>
-                                            </connections>
-                                        </segmentedControl>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="KOQ-kK-mJX">
-                                <rect key="frame" x="167" y="108" width="80" height="80"/>
+                                <rect key="frame" x="167" y="60" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Nhd-Kq-Aah"/>
                                     <constraint firstAttribute="width" constant="80" id="nEn-fX-M65"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="K6s-Pa-bfX">
-                                <rect key="frame" x="8" y="196" width="406" height="658"/>
+                                <rect key="frame" x="8" y="148" width="406" height="706"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Vpc-tc-Gp8" id="pYU-iZ-Ftl"/>
@@ -879,22 +824,38 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="QQ1-BW-TkZ" firstAttribute="top" secondItem="hVV-Rb-yvS" secondAttribute="top" id="8vX-Vm-eZc"/>
                             <constraint firstItem="K6s-Pa-bfX" firstAttribute="top" secondItem="KOQ-kK-mJX" secondAttribute="bottom" constant="8" id="CYn-eC-fmL"/>
-                            <constraint firstItem="QQ1-BW-TkZ" firstAttribute="leading" secondItem="7Ue-5Z-FxB" secondAttribute="leading" id="K1b-Ov-Tv1"/>
                             <constraint firstItem="KOQ-kK-mJX" firstAttribute="centerX" secondItem="7Ue-5Z-FxB" secondAttribute="centerX" id="MA1-QT-tJO"/>
-                            <constraint firstItem="hVV-Rb-yvS" firstAttribute="trailing" secondItem="QQ1-BW-TkZ" secondAttribute="trailing" id="Xyy-RY-Kjc"/>
+                            <constraint firstItem="KOQ-kK-mJX" firstAttribute="top" secondItem="hVV-Rb-yvS" secondAttribute="top" constant="16" id="Wxu-V2-4La"/>
                             <constraint firstItem="K6s-Pa-bfX" firstAttribute="leading" secondItem="hVV-Rb-yvS" secondAttribute="leading" constant="8" id="alW-XH-eUh"/>
                             <constraint firstAttribute="trailing" secondItem="K6s-Pa-bfX" secondAttribute="trailing" id="cFf-6g-Z6S"/>
                             <constraint firstItem="hVV-Rb-yvS" firstAttribute="bottom" secondItem="K6s-Pa-bfX" secondAttribute="bottom" constant="8" id="s1l-kw-ns0"/>
-                            <constraint firstItem="KOQ-kK-mJX" firstAttribute="top" secondItem="QQ1-BW-TkZ" secondAttribute="bottom" constant="20" id="uO7-BH-74N"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hVV-Rb-yvS"/>
                     </view>
+                    <navigationItem key="navigationItem" id="YD7-Xn-opw">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="a00-DM-VAA">
+                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="btnBack:" destination="Vpc-tc-Gp8" id="Q27-bV-keG"/>
+                            </connections>
+                        </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ENm-cT-KTo">
+                            <rect key="frame" x="122.5" y="6" width="169" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Received"/>
+                                <segment title="Performed"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentControl:" destination="Vpc-tc-Gp8" eventType="valueChanged" id="QUf-Tl-s6q"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
                         <outlet property="btnBack" destination="a00-DM-VAA" id="ei3-nO-T6S"/>
                         <outlet property="imgAuthor" destination="KOQ-kK-mJX" id="qEd-KE-BlV"/>
-                        <outlet property="navItem" destination="Uky-k0-lGm" id="x8d-rT-16m"/>
                         <outlet property="resultTableView" destination="K6s-Pa-bfX" id="ASa-Kc-9bn"/>
                         <outlet property="segmentControl" destination="ENm-cT-KTo" id="nZ2-6e-UlK"/>
                     </connections>
@@ -911,32 +872,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AER-WG-qCB">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ixP-iI-fUc"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem id="vcO-Fl-blo">
-                                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="MBD-Jr-DAh">
-                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="btnBack:" destination="E66-zg-Sl0" id="1At-v1-eIZ"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="wwr-H5-WIm">
-                                <rect key="frame" x="167" y="108" width="80" height="80"/>
+                                <rect key="frame" x="167" y="60" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="IXh-Dc-gJ7"/>
                                     <constraint firstAttribute="height" constant="80" id="WkV-8Z-aFL"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4bX-gG-Lzv">
-                                <rect key="frame" x="8" y="196" width="406" height="692"/>
+                                <rect key="frame" x="8" y="148" width="406" height="740"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="E66-zg-Sl0" id="fpj-uC-5ZG"/>
@@ -946,21 +890,25 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="AER-WG-qCB" secondAttribute="trailing" id="4YT-mB-Q4W"/>
                             <constraint firstItem="4bX-gG-Lzv" firstAttribute="top" secondItem="wwr-H5-WIm" secondAttribute="bottom" constant="8" id="4uc-B6-Itk"/>
-                            <constraint firstItem="AER-WG-qCB" firstAttribute="leading" secondItem="CHm-xf-Qvp" secondAttribute="leading" id="8og-2j-Yhd"/>
-                            <constraint firstItem="AER-WG-qCB" firstAttribute="top" secondItem="CHm-xf-Qvp" secondAttribute="top" id="GEe-SV-ZAN"/>
                             <constraint firstItem="CHm-xf-Qvp" firstAttribute="trailing" secondItem="4bX-gG-Lzv" secondAttribute="trailing" id="HtL-WF-vOQ"/>
                             <constraint firstItem="wwr-H5-WIm" firstAttribute="centerX" secondItem="4Jg-wi-uJP" secondAttribute="centerX" id="LYf-DT-K0m"/>
                             <constraint firstItem="4bX-gG-Lzv" firstAttribute="leading" secondItem="4Jg-wi-uJP" secondAttribute="leading" constant="8" id="VOi-4p-LEb"/>
-                            <constraint firstItem="wwr-H5-WIm" firstAttribute="top" secondItem="AER-WG-qCB" secondAttribute="bottom" constant="20" id="pMk-yM-wMw"/>
+                            <constraint firstItem="wwr-H5-WIm" firstAttribute="top" secondItem="CHm-xf-Qvp" secondAttribute="top" constant="16" id="f89-6b-06P"/>
                             <constraint firstAttribute="bottom" secondItem="4bX-gG-Lzv" secondAttribute="bottom" constant="8" id="uCN-ES-1sw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CHm-xf-Qvp"/>
                     </view>
+                    <navigationItem key="navigationItem" id="EDC-0Y-FxQ">
+                        <barButtonItem key="leftBarButtonItem" image="icon_navigation_back" id="MBD-Jr-DAh">
+                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="btnBack:" destination="E66-zg-Sl0" id="1At-v1-eIZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imgAuthor" destination="wwr-H5-WIm" id="AtV-rH-0f5"/>
-                        <outlet property="navItem" destination="vcO-Fl-blo" id="muB-gw-pcM"/>
                         <outlet property="resultTableView" destination="4bX-gG-Lzv" id="abr-RK-fVe"/>
                     </connections>
                 </viewController>
@@ -1041,17 +989,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ldW-wQ-oqX">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="GPf-hA-cKZ"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="User" id="FNT-nr-tFD"/>
-                                </items>
-                            </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4sT-nV-VIU">
-                                <rect key="frame" x="8" y="148" width="398" height="128"/>
+                                <rect key="frame" x="8" y="104" width="398" height="128"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="72O-tF-gw6">
                                         <rect key="frame" x="0.0" y="0.0" width="398" height="80"/>
@@ -1223,7 +1162,7 @@
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="1" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FRX-Hm-HFY">
-                                <rect key="frame" x="8" y="286" width="406" height="568"/>
+                                <rect key="frame" x="8" y="242" width="406" height="612"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="jC5-74-vly" id="iqT-Xz-UBa"/>
@@ -1233,16 +1172,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="ldW-wQ-oqX" firstAttribute="trailing" secondItem="oON-QK-J0K" secondAttribute="trailing" id="6Qc-36-2ge"/>
                             <constraint firstItem="FRX-Hm-HFY" firstAttribute="leading" secondItem="oON-QK-J0K" secondAttribute="leading" constant="8" id="6iK-ll-EHc"/>
                             <constraint firstItem="FRX-Hm-HFY" firstAttribute="top" secondItem="4sT-nV-VIU" secondAttribute="bottom" constant="10" id="8zc-2H-7MH"/>
+                            <constraint firstItem="4sT-nV-VIU" firstAttribute="top" secondItem="oON-QK-J0K" secondAttribute="top" constant="16" id="OoW-Es-qhe"/>
                             <constraint firstAttribute="trailing" secondItem="FRX-Hm-HFY" secondAttribute="trailing" id="SFT-gZ-RxH"/>
-                            <constraint firstItem="4sT-nV-VIU" firstAttribute="top" secondItem="ldW-wQ-oqX" secondAttribute="bottom" constant="16" id="Sci-oV-ugg"/>
-                            <constraint firstItem="ldW-wQ-oqX" firstAttribute="leading" secondItem="oON-QK-J0K" secondAttribute="leading" id="VwL-b1-yhB"/>
                             <constraint firstItem="4sT-nV-VIU" firstAttribute="leading" secondItem="oON-QK-J0K" secondAttribute="leading" constant="8" id="fZw-i9-WGY"/>
                             <constraint firstItem="oON-QK-J0K" firstAttribute="trailing" secondItem="4sT-nV-VIU" secondAttribute="trailing" constant="8" id="gHf-0t-vSW"/>
                             <constraint firstItem="oON-QK-J0K" firstAttribute="bottom" secondItem="FRX-Hm-HFY" secondAttribute="bottom" constant="8" id="rgN-MC-9bD"/>
-                            <constraint firstItem="ldW-wQ-oqX" firstAttribute="top" secondItem="oON-QK-J0K" secondAttribute="top" id="y9z-V0-Z25"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oON-QK-J0K"/>
                     </view>
@@ -1269,7 +1205,6 @@
                         <outlet property="lbFollowers" destination="6E5-dq-TrP" id="7S9-8l-azE"/>
                         <outlet property="lbFollowing" destination="Ked-6W-1YZ" id="JsN-a8-TZ4"/>
                         <outlet property="lbRepositories" destination="5S5-H9-W40" id="wj2-zA-8Or"/>
-                        <outlet property="navItem" destination="FNT-nr-tFD" id="3P7-bv-FKp"/>
                         <outlet property="repositoriesView" destination="6gU-TZ-8bb" id="Sa9-8V-GNZ"/>
                         <outlet property="resultTableView" destination="FRX-Hm-HFY" id="01d-Tq-5lA"/>
                     </connections>

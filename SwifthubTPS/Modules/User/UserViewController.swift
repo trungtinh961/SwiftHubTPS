@@ -101,7 +101,11 @@ class UserViewController: UIViewController {
     
     
     @IBAction func btnClose(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        if self.navigationController?.viewControllers.count == 1 {
+            dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     
@@ -134,7 +138,7 @@ class UserViewController: UIViewController {
         repositoryDetailViewController.detailType = detailType
         repositoryDetailViewController.userItem = userItem
         repositoryDetailViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        self.present(repositoryDetailViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(repositoryDetailViewController, animated: true)
     }
     
     // MARK: - Private Method
@@ -240,20 +244,20 @@ extension UserViewController: UITableViewDelegate {
             starsViewController.userItem = userItem
             starsViewController.getType = .getStarred
             starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.present(starsViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(starsViewController, animated: true)
         case "subscriptions":
             let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
             watchingViewController.modalPresentationStyle = .automatic
             watchingViewController.getType = .getWatching
             watchingViewController.userItem = userItem
             watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.present(watchingViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(watchingViewController, animated: true)
         case "events":
             let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
             eventViewController.modalPresentationStyle = .automatic
             eventViewController.userItem = userItem
             eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.present(eventViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(eventViewController, animated: true)
         case "blog":
             if let url = URL(string: userItem?.blog ?? "") {
                 UIApplication.shared.open(url)

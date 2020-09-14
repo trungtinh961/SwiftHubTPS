@@ -33,9 +33,9 @@ class WatchingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if getType == .getWatching {
-            navItem.title = "Watching"
+            self.navigationItem.title = "Watching"
         } else {
-            navItem.title = "Watchers"
+            self.navigationItem.title = "Watchers"
         }
         updateTableView()
     }
@@ -58,7 +58,7 @@ class WatchingViewController: UIViewController {
     // MARK:- IBActions
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -178,14 +178,14 @@ extension WatchingViewController: UITableViewDelegate {
             repositoryViewController.repositoryItem = watchingItems![indexPath.row]
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             repositoryViewController.modalPresentationStyle = .automatic
-            self.present(repositoryViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(repositoryViewController, animated: true)
         } else {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = watcherItems![indexPath.row]
             userViewController.isTabbarCall = false
             userViewController.modalPresentationStyle = .automatic
-            self.present(userViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(userViewController, animated: true)
         }
         
     }

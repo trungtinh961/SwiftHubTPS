@@ -301,7 +301,8 @@ extension SearchViewController: UITableViewDelegate {
             userViewController.userItem = indexCell
             userViewController.isTabbarCall = false
             userViewController.modalPresentationStyle = .automatic
-            self.present(userViewController, animated:true, completion:nil)
+            let navController = UINavigationController(rootViewController: userViewController)
+            self.present(navController, animated:true, completion: nil)
             
         }        
     }    

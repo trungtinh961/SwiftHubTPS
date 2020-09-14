@@ -32,9 +32,9 @@ class StarViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if getType == .getStarred {
-            navItem.title = "Starred"
+            self.navigationItem.title = "Starred"
         } else {
-            navItem.title = "Stargazers"
+            self.navigationItem.title = "Stargazers"
         }
         updateTableView()
     }
@@ -56,7 +56,7 @@ class StarViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -171,14 +171,14 @@ extension StarViewController: UITableViewDelegate {
             repositoryViewController.repositoryItem = starredItems![indexPath.row]
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             repositoryViewController.modalPresentationStyle = .automatic
-            self.present(repositoryViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(repositoryViewController, animated: true)
         } else {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = stargazersItems![indexPath.row]
             userViewController.isTabbarCall = false
             userViewController.modalPresentationStyle = .automatic
-            self.present(userViewController, animated:true, completion:nil)
+            self.navigationController?.pushViewController(userViewController, animated: true)
         }
         
     }

@@ -97,7 +97,11 @@ class RepositoryViewController: UIViewController {
     }
     
     @IBAction func btnClose(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        if self.navigationController?.viewControllers.count == 1 {
+            dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func btnWatches(_ sender: Any) {
@@ -106,7 +110,7 @@ class RepositoryViewController: UIViewController {
         watchingViewController.getType = .getWatchers
         watchingViewController.repoItem = repositoryItem
         watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        self.present(watchingViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(watchingViewController, animated: true)
     }
     
     @IBAction func btnStarsCount(_ sender: Any) {
@@ -115,7 +119,7 @@ class RepositoryViewController: UIViewController {
         starsViewController.repoItem = repositoryItem
         starsViewController.getType = .getStargazers
         starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        self.present(starsViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(starsViewController, animated: true)
     }
     
     @IBAction func btnForks(_ sender: Any) {
@@ -123,7 +127,7 @@ class RepositoryViewController: UIViewController {
         forksViewController.modalPresentationStyle = .automatic
         forksViewController.repoItem = repositoryItem
         forksViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        self.present(forksViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(forksViewController, animated: true)
     }
     
     
@@ -300,7 +304,7 @@ extension RepositoryViewController: BranchViewControllerDelegate {
     func branchViewController(_ controller: BranchViewController, didFinishEditing branchSelected: String) {
         self.branch = branchSelected
         resultTableView.reloadData()
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

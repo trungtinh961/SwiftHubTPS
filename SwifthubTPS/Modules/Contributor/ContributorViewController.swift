@@ -121,6 +121,6 @@ extension ContributorViewController: UITableViewDelegate {
         userViewController.isTabbarCall = false
         userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         userViewController.modalPresentationStyle = .automatic
-        self.present(userViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(userViewController, animated: true)
     }
 }
