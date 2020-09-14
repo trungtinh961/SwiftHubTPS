@@ -27,11 +27,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-## MessageKit
+## Kingfisher
 
-MIT License
+The MIT License (MIT)
 
-Copyright (c) 2017-2020 MessageKit
+Copyright (c) 2019 Wei Wang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,11 +52,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-## NVActivityIndicatorView
 
-The MIT License (MIT)
+## MessageKit
 
-Copyright (c) 2016 Vinh Nguyen
+MIT License
+
+Copyright (c) 2017-2020 MessageKit
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

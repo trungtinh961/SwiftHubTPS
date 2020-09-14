@@ -12,24 +12,12 @@ import InputBarAccessoryView
 import SwiftDate
 import Kingfisher
 
-struct Sender: SenderType {
-    public let senderId: String
-    public let displayName: String
-}
- 
-struct Message: MessageType {
-    public var sender: SenderType
-    public var messageId: String
-    public var sentDate: Date
-    public var kind: MessageKind
-}
 
 class ChatViewController: MessagesViewController {
     
     // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var currentUser: User?
-    let otherUser = Sender(senderId: "other" , displayName: "John")
     var messages: [MessageType] = [] {
         didSet {
             self.messagesCollectionView.reloadData()
@@ -111,7 +99,6 @@ extension ChatViewController: MessagesDataSource {
         let dateString = message.sentDate.toRelative()
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
-    
 }
 
 
@@ -123,7 +110,6 @@ extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
             if let smallURL = URL(string: user.avatarUrl ?? "") {
                 downloadTask = avatarView.loadImage(url: smallURL)
             }
-            
         }
     }
 }
