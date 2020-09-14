@@ -1264,20 +1264,14 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="17q-ZA-cvk">
-                                <rect key="frame" x="0.0" y="64" width="414" height="56"/>
-                                <color key="barTintColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <offsetWrapper key="searchTextPositionAdjustment" horizontal="10" vertical="0.0"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWz-eJ-uRs">
-                                <rect key="frame" x="8" y="136" width="19" height="21"/>
+                                <rect key="frame" x="8" y="72" width="19" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rq3-j7-TLV">
-                                <rect key="frame" x="8" y="173" width="404" height="583"/>
+                                <rect key="frame" x="8" y="109" width="404" height="647"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="csF-i5-M5W" id="a2Y-S4-bn7"/>
@@ -1300,17 +1294,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="17q-ZA-cvk" firstAttribute="leading" secondItem="EOt-rY-ARE" secondAttribute="leading" id="6VG-YR-5eV"/>
                             <constraint firstItem="PVi-07-6q7" firstAttribute="top" secondItem="EOt-rY-ARE" secondAttribute="top" id="6fq-qN-e8c"/>
                             <constraint firstItem="PVi-07-6q7" firstAttribute="leading" secondItem="EOt-rY-ARE" secondAttribute="leading" id="ABf-Ey-VSc"/>
-                            <constraint firstItem="xWz-eJ-uRs" firstAttribute="top" secondItem="17q-ZA-cvk" secondAttribute="bottom" constant="16" id="BRK-J1-Mdi"/>
+                            <constraint firstItem="xWz-eJ-uRs" firstAttribute="top" secondItem="PVi-07-6q7" secondAttribute="bottom" constant="16" id="Exz-cv-aJB"/>
                             <constraint firstItem="EOt-rY-ARE" firstAttribute="trailing" secondItem="Rq3-j7-TLV" secondAttribute="trailing" constant="2" id="Feq-dH-93W"/>
                             <constraint firstItem="Rq3-j7-TLV" firstAttribute="leading" secondItem="EOt-rY-ARE" secondAttribute="leading" constant="8" id="JFy-VD-6qJ"/>
                             <constraint firstItem="xWz-eJ-uRs" firstAttribute="leading" secondItem="EOt-rY-ARE" secondAttribute="leading" constant="8" id="U6k-u6-Zu6"/>
                             <constraint firstItem="EOt-rY-ARE" firstAttribute="trailing" secondItem="xWz-eJ-uRs" secondAttribute="trailing" constant="387" id="hrM-ew-YyQ"/>
                             <constraint firstItem="Rq3-j7-TLV" firstAttribute="top" secondItem="xWz-eJ-uRs" secondAttribute="bottom" constant="16" id="jme-pU-DH5"/>
-                            <constraint firstItem="17q-ZA-cvk" firstAttribute="trailing" secondItem="EOt-rY-ARE" secondAttribute="trailing" id="mz9-5t-3DH"/>
-                            <constraint firstItem="17q-ZA-cvk" firstAttribute="top" secondItem="PVi-07-6q7" secondAttribute="bottom" constant="8" id="ncN-P2-jlW"/>
                             <constraint firstItem="EOt-rY-ARE" firstAttribute="trailing" secondItem="9wh-5a-hof" secondAttribute="trailing" constant="16" id="o38-6L-bjd"/>
                             <constraint firstItem="9wh-5a-hof" firstAttribute="top" secondItem="Rq3-j7-TLV" secondAttribute="bottom" constant="8" id="p6I-Bg-Gtp"/>
                             <constraint firstItem="9wh-5a-hof" firstAttribute="bottom" secondItem="EOt-rY-ARE" secondAttribute="bottom" id="qV9-4F-7Hd"/>
@@ -1323,7 +1314,6 @@
                         <outlet property="btnAllLanguage" destination="9wh-5a-hof" id="USE-GT-9OL"/>
                         <outlet property="btnSave" destination="2Ux-lK-UUV" id="TLY-oO-vgh"/>
                         <outlet property="languageTableView" destination="Rq3-j7-TLV" id="T1P-bI-mfc"/>
-                        <outlet property="searchBar" destination="17q-ZA-cvk" id="HdB-tk-6xE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTu-TX-EmJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -125,6 +125,12 @@ extension RepositoryEventViewController: UITableViewDataSource {
 extension RepositoryEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
+        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        repositoryViewController.modalPresentationStyle = .automatic
+        self.navigationController?.pushViewController(repositoryViewController, animated: true)
     }
 }

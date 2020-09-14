@@ -40,6 +40,7 @@ enum GetType: Int {
     case unStarRepository
     case checkStarredRepository
     case getIssueComments
+    case createIssueComment
 }
 
 enum Router {
