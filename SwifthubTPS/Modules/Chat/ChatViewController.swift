@@ -18,6 +18,8 @@ class ChatViewController: MessagesViewController {
     // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var currentUser: User?
+    var issueItem: Issue?
+    var repoItem: Repository?
     var messages: [MessageType] = [] {
         didSet {
             self.messagesCollectionView.reloadData()
@@ -26,15 +28,21 @@ class ChatViewController: MessagesViewController {
     
     // MARK: - Private properties
     private var downloadTask: URLSessionDownloadTask?
-    
-    
+    private var issueCommentGithubAPI = GitHubAPI<Comment>()
+    private var issueCommentItems: [Comment]?
     
     // MARK: - Lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTableView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = gitHubAuthenticationManager.userAuthenticated
         
+       
         configureMessageCollectionView()
         configureMessageInputBar()
     }
@@ -59,6 +67,20 @@ class ChatViewController: MessagesViewController {
             for: .highlighted
         )
     }
+    
+    // MARK: - Private Methods
+    
+    private func updateTableView(){
+        issueCommentGithubAPI.getResults(type: .getIssueComments, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: issueItem?.number ?? 0) { [weak self] results, errorMessage, statusCode in
+            if let results = results {
+                self?.messages = results
+            }
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
+            }
+        }
+    }
+    
     
     // MARK: - Helpers
 

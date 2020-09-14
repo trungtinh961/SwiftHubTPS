@@ -172,5 +172,12 @@ extension IssueViewController: UITableViewDataSource {
 extension IssueViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        let chatViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.chatVC.rawValue) as! ChatViewController
+        chatViewController.modalPresentationStyle = .automatic
+        chatViewController.repoItem = repoItem
+        chatViewController.issueItem = issueItems?[indexPath.row]
+        chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        self.present(chatViewController, animated:true, completion:nil)
     }
 }

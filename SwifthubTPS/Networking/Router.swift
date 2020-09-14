@@ -39,6 +39,7 @@ enum GetType: Int {
     case starRepository
     case unStarRepository
     case checkStarredRepository
+    case getIssueComments
 }
 
 enum Router {
@@ -75,6 +76,7 @@ enum Router {
     case starRepository(fullname: String)
     case unStarRepository(fullname: String)
     case checkStarredRepository(fullname: String)
+    case getIssueComment(fullname: String, number: String)
     
     var scheme: String {
         switch self {
@@ -113,12 +115,21 @@ enum Router {
         case .getWatchers(let fullname): return "/repos/\(fullname)/subscribers"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         case .getAuthenUser: return "/user"
-        case .getNotifications, .makeNotificationAllRead: return "/notifications"
+        case .getNotifications,
+             .makeNotificationAllRead:
+            return "/notifications"
         case .getUserRepositories(let username): return "/users/\(username)/repos"
         case .getFollowers(let username): return "/users/\(username)/followers"
         case .getFollowing(let username): return "/users/\(username)/following"
-        case .followUser(let username), .unFollowUser(let username), .checkFollowedUser(let username): return "/user/following/\(username)"
-        case .starRepository(let fullname), .unStarRepository(let fullname), .checkStarredRepository(let fullname): return "/user/starred/\(fullname)"
+        case .followUser(let username),
+             .unFollowUser(let username),
+             .checkFollowedUser(let username):
+            return "/user/following/\(username)"
+        case .starRepository(let fullname),
+             .unStarRepository(let fullname),
+             .checkStarredRepository(let fullname):
+            return "/user/starred/\(fullname)"
+        case .getIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         }
     }
     
@@ -164,7 +175,8 @@ enum Router {
              .getUserRepositories,
              .getFollowers,
              .getFollowing,
-             .getUserEvents:
+             .getUserEvents,
+             .getIssueComment:
             params["per_page"] = "50"
         case .getNotifications(let notificationState):
             switch notificationState {

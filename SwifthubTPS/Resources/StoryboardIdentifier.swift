@@ -29,5 +29,6 @@ enum StoryboardIdentifier: String {
     case loginVC = "LoginViewController"
     case forkVC = "ForkViewController"
     case repositoryDeatailVC = "RepositoryDetailViewController"
+    case chatVC = "ChatViewController"
 }
 

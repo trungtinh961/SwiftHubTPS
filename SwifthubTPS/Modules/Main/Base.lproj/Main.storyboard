@@ -1389,7 +1389,7 @@
         <!--Chat-->
         <scene sceneID="hrW-gA-dM9">
             <objects>
-                <viewController id="zYd-zq-oJf" customClass="ChatViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatViewController" id="zYd-zq-oJf" customClass="ChatViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pbF-95-zVJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1734,7 +1734,6 @@
                     <connections>
                         <segue destination="4zy-fB-ZPj" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
-                        <segue destination="zYd-zq-oJf" kind="relationship" relationship="viewControllers" id="eLX-vp-ASe"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

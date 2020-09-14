@@ -19,7 +19,7 @@ class GitHubAPI<Element: Mappable> {
     typealias JSONDictionary = [String: Any]
     typealias QueryResults = ([Element]?, String, Int?) -> Void
     
-    func createURL(type: GetType, eventType: EventType, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String) -> URL? {
+    func createURL(type: GetType, eventType: EventType, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String, number: Int) -> URL? {
         var components = URLComponents()
         switch type {
         case .repository:
@@ -141,6 +141,11 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.starRepository(fullname: fullname).scheme
             components.host = Router.starRepository(fullname: fullname).host
             components.path = Router.starRepository(fullname: fullname).path
+        case .getIssueComments:
+            components.scheme = Router.getIssueComment(fullname: fullname, number: String(number)).scheme
+            components.host = Router.getIssueComment(fullname: fullname, number: String(number)).host
+            components.path = Router.getIssueComment(fullname: fullname, number: String(number)).path
+            components.setQueryItems(with: Router.getIssueComment(fullname: fullname, number: String(number)).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -148,9 +153,9 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", completion: @escaping QueryResults) {
+    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, completion: @escaping QueryResults) {
         dataTask?.cancel()
-        guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username) else {
+        guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number) else {
           return
         }
         var request = URLRequest(url: url)
