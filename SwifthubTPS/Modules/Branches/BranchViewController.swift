@@ -15,6 +15,7 @@ protocol BranchViewControllerDelegate: class {
 class BranchViewController: UIViewController {
 
     // MARK: - Properties
+    
     weak var delegate: BranchViewControllerDelegate?
     var repoItem: Repository?
     var gitHubAuthenticationManager = GITHUB()

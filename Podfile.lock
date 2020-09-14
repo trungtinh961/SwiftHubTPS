@@ -12,6 +12,7 @@ PODS:
   - UIColor_Hex_Swift (5.1.0)
 
 DEPENDENCIES:
+  - InputBarAccessoryView
   - MessageKit
   - NVActivityIndicatorView
   - ObjectMapper
@@ -35,6 +36,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   UIColor_Hex_Swift: 8be7432edacb7fa91c78aa05ef3c30b66e4f9415
 
-PODFILE CHECKSUM: f61c5f85c24d39030b9c93c3c85396c50dbee8ae
+PODFILE CHECKSUM: 58bce64c2c683f9b815e6441db6dc68a7fb4aab8
 
 COCOAPODS: 1.9.3

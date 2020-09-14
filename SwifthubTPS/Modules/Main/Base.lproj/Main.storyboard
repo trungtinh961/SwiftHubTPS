@@ -1386,6 +1386,22 @@
             </objects>
             <point key="canvasLocation" x="2540.579710144928" y="359.59821428571428"/>
         </scene>
+        <!--Chat-->
+        <scene sceneID="hrW-gA-dM9">
+            <objects>
+                <viewController id="zYd-zq-oJf" customClass="ChatViewController" customModule="SwifthubTPS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pbF-95-zVJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Yec-Fb-YWx"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Chat" id="F1p-Vo-gY1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="soh-fY-G8g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="786" y="-814"/>
+        </scene>
         <!--Language View Controller-->
         <scene sceneID="Mu0-Ch-eZL">
             <objects>
@@ -1718,6 +1734,7 @@
                     <connections>
                         <segue destination="4zy-fB-ZPj" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
+                        <segue destination="zYd-zq-oJf" kind="relationship" relationship="viewControllers" id="eLX-vp-ASe"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

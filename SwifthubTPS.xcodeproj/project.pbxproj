@@ -15,6 +15,8 @@
 		BA6C5A5724F79EDD00971F23 /* TrendingGithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */; };
 		BA6C5A5A24F7B91400971F23 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C5A5824F7B91400971F23 /* UserCell.swift */; };
 		BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6C5A5924F7B91400971F23 /* UserCell.xib */; };
+		BA925128250B86CB004AF086 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA925127250B86CB004AF086 /* ChatViewController.swift */; };
+		BA9B5BA5250F0FBB00EAF1BF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9B5BA4250F0FBB00EAF1BF /* UIColor.swift */; };
 		BA9C844325072E5D00B65818 /* WebviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C844225072E5D00B65818 /* WebviewViewController.swift */; };
 		BA9C844525072FB600B65818 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9C844425072FB600B65818 /* WebKit.framework */; };
 		BA9C84472507308400B65818 /* GitHubAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C84462507308400B65818 /* GitHubAuthentication.swift */; };
@@ -99,6 +101,8 @@
 		BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingGithubAPI.swift; sourceTree = "<group>"; };
 		BA6C5A5824F7B91400971F23 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		BA6C5A5924F7B91400971F23 /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		BA925127250B86CB004AF086 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		BA9B5BA4250F0FBB00EAF1BF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BA9C844225072E5D00B65818 /* WebviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewViewController.swift; sourceTree = "<group>"; };
 		BA9C844425072FB600B65818 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		BA9C84462507308400B65818 /* GitHubAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAuthentication.swift; sourceTree = "<group>"; };
@@ -226,7 +230,7 @@
 		BA3D105F24F750FC0079C5A1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BAB854322506237400ABDD49 /* UIView */,
+				BAB854322506237400ABDD49 /* UIColor */,
 				BABE48712500C73E00A5AB12 /* UINavigationItem */,
 				BAB7870A24F9134D002779B2 /* UIViewController */,
 				BA3D106624F763BE0079C5A1 /* UIImageView */,
@@ -249,6 +253,14 @@
 				BA3D106724F763D50079C5A1 /* UIImageView+DownloadImage.swift */,
 			);
 			path = UIImageView;
+			sourceTree = "<group>";
+		};
+		BA925126250B86AD004AF086 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				BA925127250B86CB004AF086 /* ChatViewController.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		BA9C84482507884E00B65818 /* Tab Bar Controller */ = {
@@ -334,11 +346,12 @@
 			path = Watching;
 			sourceTree = "<group>";
 		};
-		BAB854322506237400ABDD49 /* UIView */ = {
+		BAB854322506237400ABDD49 /* UIColor */ = {
 			isa = PBXGroup;
 			children = (
+				BA9B5BA4250F0FBB00EAF1BF /* UIColor.swift */,
 			);
-			path = UIView;
+			path = UIColor;
 			sourceTree = "<group>";
 		};
 		BABE486E2500A29800A5AB12 /* User */ = {
@@ -435,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				BAFF23622502219D00843E38 /* Branches */,
+				BA925126250B86AD004AF086 /* Chat */,
 				BAFF2370250237DF00843E38 /* Contributor */,
 				BAFF235B2501F62900843E38 /* Commit */,
 				BAFF23772502401D00843E38 /* Event */,
@@ -683,6 +697,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BABE487C2500DBFF00A5AB12 /* IssueViewController.swift in Sources */,
+				BA9B5BA5250F0FBB00EAF1BF /* UIColor.swift in Sources */,
 				BA3D106224F751500079C5A1 /* Foundation.swift in Sources */,
 				BAFF235A2501F4C600843E38 /* Committer.swift in Sources */,
 				BAB8542F2505D27100ABDD49 /* WatchingViewController.swift in Sources */,
@@ -740,6 +755,7 @@
 				BA3D106824F763D50079C5A1 /* UIImageView+DownloadImage.swift in Sources */,
 				BAFF23732502380400843E38 /* ContributorCell.swift in Sources */,
 				BAFF23892502562200843E38 /* StarViewController.swift in Sources */,
+				BA925128250B86CB004AF086 /* ChatViewController.swift in Sources */,
 				BABE48752500D87800A5AB12 /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
