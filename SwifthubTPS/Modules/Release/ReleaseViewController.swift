@@ -101,7 +101,7 @@ extension ReleaseViewController: UITableViewDataSource {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
             cell.lbName.text = "\(itemCell.tagName ?? "") - \(itemCell.name  ?? "")"
-            cell.lbTime.text = itemCell.createdAt?.timeAgo()
+            cell.lbTime.text = itemCell.createdAt?.toRelative()
             cell.lbBody.text = itemCell.body
             return cell
         }

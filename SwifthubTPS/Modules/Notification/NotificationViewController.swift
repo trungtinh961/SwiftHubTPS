@@ -117,7 +117,7 @@ extension NotificationViewController: UITableViewDataSource {
             let actionText = itemCell.subject?.title ?? ""
             let repoName = itemCell.repository?.fullname ?? ""
             cell.lbTitle.text = "\(repoName)\n\(actionText)"
-            cell.lbDescription.text = itemCell.updatedAt?.timeAgo()
+            cell.lbDescription.text = itemCell.updatedAt?.toRelative()
             if let smallURL = URL(string: itemCell.repository?.owner?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }

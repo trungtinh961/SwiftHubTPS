@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+import MessageKit
 
 enum UserType: String {
     case user = "User"
@@ -15,7 +16,7 @@ enum UserType: String {
 }
 
 /// User model
-struct User: Mappable {
+struct User: Mappable, SenderType {
 
     var avatarUrl: String?
     var blog: String?
@@ -46,6 +47,11 @@ struct User: Mappable {
     // Only for User type
     var bio: String?  // The user's public profile bio.
    
+    // SenderType
+    var senderId: String { return login ?? "" }
+    var displayName: String { return login ?? "" }
+    
+    
     init?(map: Map) {}
     init() {}
 
@@ -153,10 +159,10 @@ extension User {
         var detailCellProperties: [DetailCellProperty] = []
 
         if let created = self.createdAt {
-            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_created.rawValue, titleCell: "Created", detail: created.timeAgo(), hideDisclosure: true))
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_created.rawValue, titleCell: "Created", detail: created.toRelative(), hideDisclosure: true))
         }
         if let updated = self.updatedAt {
-            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.timeAgo(), hideDisclosure: true))
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.toRelative(), hideDisclosure: true))
         }
 
         detailCellProperties.append(DetailCellProperty(id: "starred", imgName: ImageName.icon_cell_star.rawValue, titleCell: "Stars", hideDisclosure: false))

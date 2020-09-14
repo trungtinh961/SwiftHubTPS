@@ -141,10 +141,10 @@ extension IssueViewController: UITableViewDataSource {
             }
             cell.lbTitle.text = itemCell?.title
             if state == .open {
-                cell.lbDescription.text = "#\(itemCell!.number!) opened \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
+                cell.lbDescription.text = "#\(itemCell!.number!) opened \(itemCell!.createdAt!.toRelative()) by \(itemCell!.user!.login!)"
                 cell.imgState.tintColor = UIColor("#00934E")
             } else if state == .closed {
-                cell.lbDescription.text = "#\(itemCell!.number!) closed \(itemCell!.createdAt!.timeAgo()) by \(itemCell!.user!.login!)"
+                cell.lbDescription.text = "#\(itemCell!.number!) closed \(itemCell!.createdAt!.toRelative()) by \(itemCell!.user!.login!)"
                 cell.imgState.tintColor = .red
             }
             

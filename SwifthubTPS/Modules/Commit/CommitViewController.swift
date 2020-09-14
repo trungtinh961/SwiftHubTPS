@@ -100,7 +100,7 @@ extension CommitViewController: UITableViewDataSource {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
             cell.lbMessage.text = itemCell?.commit?.message
-            cell.lbDescription.text = itemCell?.commit?.author?.date?.timeAgo()
+            cell.lbDescription.text = itemCell?.commit?.author?.date?.toRelative()
             let index = itemCell?.sha?.index((itemCell?.sha!.startIndex)!, offsetBy: 7)
             let subSHA = itemCell?.sha?.prefix(upTo: index!)
             cell.lbTag.text = String(subSHA!)

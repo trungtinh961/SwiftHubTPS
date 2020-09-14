@@ -134,7 +134,7 @@ extension UserEventViewController: UITableViewDataSource {
             if let smallURL = URL(string: itemCell?.actor?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
             }
-            cell.lbTime.text = itemCell?.createdAt?.timeAgo()
+            cell.lbTime.text = itemCell?.createdAt?.toRelative()
             cell.lbTitle.text = itemCell?.title
             if let img = itemCell?.badgeImage {
                 cell.imgState.image = UIImage(named: img)

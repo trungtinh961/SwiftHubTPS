@@ -10,6 +10,7 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import SwiftDate
+import Kingfisher
 
 struct Sender: SenderType {
     public let senderId: String
@@ -26,44 +27,46 @@ struct Message: MessageType {
 class ChatViewController: MessagesViewController {
     
     // MARK: - Public properties
-    
-    let currentUser = Sender(senderId: "self", displayName: "Steven")
+    var gitHubAuthenticationManager = GITHUB()
+    var currentUser: User?
     let otherUser = Sender(senderId: "other" , displayName: "John")
-    var messages = [MessageType]()
+    var messages: [MessageType] = [] {
+        didSet {
+            self.messagesCollectionView.reloadData()
+        }
+    }
     
     // MARK: - Private properties
-
-    private let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-    }()
+    
+    
+    
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        currentUser = gitHubAuthenticationManager.userAuthenticated
         
-        messages.append(Message(sender: currentUser,
-                                messageId: "1",
-                                sentDate: Date().addingTimeInterval(-86400),
-                                kind: .text("Hello")))
-        messages.append(Message(sender: otherUser,
-                                messageId: "2",
-                                sentDate: Date().addingTimeInterval(-80000),
-                                kind: .text("how are you")))
-        messages.append(Message(sender: currentUser,
-                                messageId: "3",
-                                sentDate: Date().addingTimeInterval(-75000),
-                                kind: .text("this is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good idea")))
-        messages.append(Message(sender: otherUser,
-                                messageId: "4",
-                                sentDate: Date().addingTimeInterval(-60000),
-                                kind: .text("make app easy")))
-        messages.append(Message(sender: currentUser,
-                                messageId: "5",
-                                sentDate: Date().addingTimeInterval(-20000),
-                                kind: .text("nguyennnnnnnnnnnnnnn trung tinhhhhhhhhhhhh")))
+//        messages.append(Message(sender: currentUser,
+//                                messageId: "1",
+//                                sentDate: Date().addingTimeInterval(-86400),
+//                                kind: .text("Hello")))
+//        messages.append(Message(sender: otherUser,
+//                                messageId: "2",
+//                                sentDate: Date().addingTimeInterval(-80000),
+//                                kind: .text("how are you")))
+//        messages.append(Message(sender: currentUser,
+//                                messageId: "3",
+//                                sentDate: Date().addingTimeInterval(-75000),
+//                                kind: .text("this is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good ideathis is a good idea")))
+//        messages.append(Message(sender: otherUser,
+//                                messageId: "4",
+//                                sentDate: Date().addingTimeInterval(-60000),
+//                                kind: .text("make app easy")))
+//        messages.append(Message(sender: currentUser,
+//                                messageId: "5",
+//                                sentDate: Date().addingTimeInterval(-20000),
+//                                kind: .text("nguyennnnnnnnnnnnnnn trung tinhhhhhhhhhhhh")))
         
         configureMessageCollectionView()
         configureMessageInputBar()
@@ -77,9 +80,7 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         scrollsToBottomOnKeyboardBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
-
         showMessageTimestampOnSwipeLeft = true // default false
-        
     }
     
     func configureMessageInputBar() {
@@ -91,6 +92,19 @@ class ChatViewController: MessagesViewController {
             for: .highlighted
         )
     }
+    
+    // MARK: - Helpers
+
+    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section - 1 >= 0 else { return false }
+        return (messages[indexPath.section].sender as? User) == (messages[indexPath.section - 1].sender as? User)
+    }
+
+    func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section + 1 < messages.count else { return false }
+        return (messages[indexPath.section].sender as? User) == (messages[indexPath.section + 1].sender as? User)
+    }
+    
 }
 
 // MARK: - MessagesDataSource
@@ -98,7 +112,7 @@ class ChatViewController: MessagesViewController {
 extension ChatViewController: MessagesDataSource {
 
     func currentSender() -> SenderType {
-        return currentUser
+        return currentUser ?? User()
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -119,13 +133,17 @@ extension ChatViewController: MessagesDataSource {
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
     
-    
 }
 
 
 // MARK: - MessageCellDelegate
 extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
-   
+   func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+       if let user = message.sender as? User {
+           avatarView.isHidden = isNextMessageSameSender(at: indexPath)
+           avatarView.kf.setImage(with: user.avatarUrl)
+       }
+   }
 }
 
 // MARK: - MessagesLayoutDelegate

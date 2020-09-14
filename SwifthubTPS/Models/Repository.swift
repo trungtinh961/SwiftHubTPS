@@ -199,10 +199,10 @@ extension Repository {
             detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_size.rawValue, titleCell: "Size", detail: size.sizeFromKB(), hideDisclosure: true))
         }
         if let created = self.createdAt {
-            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_created.rawValue, titleCell: "Created", detail: created.timeAgo(), hideDisclosure: true))
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_created.rawValue, titleCell: "Created", detail: created.toRelative(), hideDisclosure: true))
         }
         if let updated = self.updatedAt {
-            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.timeAgo(), hideDisclosure: true))
+            detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.toRelative(), hideDisclosure: true))
         }
         if let homepage = self.homepage, homepage != "" {
             detailCellProperties.append(DetailCellProperty(id: "homepage", imgName: ImageName.icon_cell_link.rawValue, titleCell: "Homepage", detail: homepage, hideDisclosure: false))

@@ -7,10 +7,10 @@
 //
 
 import Foundation
-
 import ObjectMapper
+import MessageKit
 
-struct Comment: Mappable {
+struct Comment: Mappable, MessageType {
 
     var authorAssociation: String?
     var body: String?
@@ -22,6 +22,12 @@ struct Comment: Mappable {
     var updatedAt: Date?
     var url: String?
     var user: User?
+    
+    // MessageType
+    var sender: SenderType { return user ?? User() }
+    var messageId: String { return String(describing: id) }
+    var sentDate: Date { return createdAt ?? Date() }
+    var kind: MessageKind { return .text(body ?? "") }
    
     init?(map: Map) {}
     init() {}

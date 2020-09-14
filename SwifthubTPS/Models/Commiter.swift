@@ -1,8 +1,8 @@
 //
-//  Committer.swift
+//  Commiter.swift
 //  SwifthubTPS
 //
-//  Created by TPS on 9/4/20.
+//  Created by TPS on 9/14/20.
 //  Copyright © 2020 Trung Tinh. All rights reserved.
 //
 
