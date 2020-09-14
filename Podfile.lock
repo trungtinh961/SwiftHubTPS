@@ -7,9 +7,6 @@ PODS:
   - Kingfisher/Core (5.15.0)
   - MessageKit (3.3.0):
     - InputBarAccessoryView (~> 5.1.0)
-  - NVActivityIndicatorView (5.0.1):
-    - NVActivityIndicatorView/Base (= 5.0.1)
-  - NVActivityIndicatorView/Base (5.0.1)
   - ObjectMapper (4.2.0)
   - SwiftDate (6.1.0)
   - Toast-Swift (5.0.1)
@@ -19,7 +16,6 @@ DEPENDENCIES:
   - InputBarAccessoryView
   - Kingfisher
   - MessageKit
-  - NVActivityIndicatorView
   - ObjectMapper
   - SwiftDate
   - Toast-Swift
@@ -30,7 +26,6 @@ SPEC REPOS:
     - InputBarAccessoryView
     - Kingfisher
     - MessageKit
-    - NVActivityIndicatorView
     - ObjectMapper
     - SwiftDate
     - Toast-Swift
@@ -40,12 +35,11 @@ SPEC CHECKSUMS:
   InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
   Kingfisher: 1acb67597a520c2d0310677e66d6e0af455ef757
   MessageKit: 1f07618183be6d92b648ba7a384aafa097362a00
-  NVActivityIndicatorView: 738e843cb8924e9e4fc3e559d0728031624bf860
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   SwiftDate: fa2bb3962056bb44047b4b85a30044e5eae30b03
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   UIColor_Hex_Swift: 8be7432edacb7fa91c78aa05ef3c30b66e4f9415
 
-PODFILE CHECKSUM: 9a04b10127a0907a07bca42eef55a5ffdfcb1980
+PODFILE CHECKSUM: 24aa87f4921804e218c23c6d5edd4ce52b8f4483
 
 COCOAPODS: 1.9.3

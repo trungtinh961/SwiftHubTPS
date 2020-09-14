@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C8C39DD486923E3933801D232041B590"
-               BuildableName = "InputBarAccessoryView"
+               BuildableName = "InputBarAccessoryView.framework"
                BlueprintName = "InputBarAccessoryView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
