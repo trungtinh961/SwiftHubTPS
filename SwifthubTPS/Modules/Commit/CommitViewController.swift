@@ -27,7 +27,7 @@ class CommitViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navItem.title = repoItem?.fullname!
+        self.title = repoItem?.fullname!
         updateTableView()
         
     }
@@ -44,7 +44,7 @@ class CommitViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method

@@ -59,7 +59,7 @@ class PullRequestViewController: UIViewController {
     }
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method
@@ -163,14 +163,18 @@ extension PullRequestViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate
 extension PullRequestViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+        let chatViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.chatVC.rawValue) as! ChatViewController
+        chatViewController.modalPresentationStyle = .automatic
+        chatViewController.repoItem = repoItem
+        chatViewController.pullItem = pullItems?[indexPath.row]
+        chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        self.navigationController?.pushViewController(chatViewController, animated: true)
     }
 }

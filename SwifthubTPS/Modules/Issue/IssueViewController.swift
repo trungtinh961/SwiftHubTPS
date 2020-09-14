@@ -58,7 +58,7 @@ class IssueViewController: UIViewController {
     }
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -177,7 +177,8 @@ extension IssueViewController: UITableViewDelegate {
         chatViewController.modalPresentationStyle = .automatic
         chatViewController.repoItem = repoItem
         chatViewController.issueItem = issueItems?[indexPath.row]
-        chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        self.present(chatViewController, animated:true, completion:nil)
+        chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager        
+        self.navigationController?.pushViewController(chatViewController, animated: true)
+        
     }
 }

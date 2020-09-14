@@ -48,15 +48,15 @@ class UserViewController: UIViewController {
         
         
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem, isTabbarCall {
-            navItem.leftBarButtonItem?.tintColor = .clear
-            navItem.leftBarButtonItem?.isEnabled = false
-            navItem.rightBarButtonItem?.tintColor = .systemTeal
-            navItem.rightBarButtonItem?.isEnabled = true
+            self.navigationItem.leftBarButtonItem?.tintColor = .clear
+            self.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.tintColor = .systemTeal
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
         } else {
-            navItem.leftBarButtonItem?.tintColor = .systemTeal
-            navItem.leftBarButtonItem?.isEnabled = true
-            navItem.rightBarButtonItem?.tintColor = .clear
-            navItem.rightBarButtonItem?.isEnabled = false
+            self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
+            self.navigationItem.leftBarButtonItem?.isEnabled = true
+            self.navigationItem.rightBarButtonItem?.tintColor = .clear
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         getData()
     }
@@ -79,7 +79,7 @@ class UserViewController: UIViewController {
         if let smallURL = URL(string: userItem?.avatarUrl ?? "") {
             downloadTask = imgAvatar.loadImage(url: smallURL)
         }
-        navItem.setTitle(title: userItem?.login ?? "", subtitle: userItem?.name ?? "")
+        self.navigationItem.setTitle(title: userItem?.login ?? "", subtitle: userItem?.name ?? "")
     }
     
     // MARK: - IBActions
@@ -167,7 +167,7 @@ class UserViewController: UIViewController {
                 self?.lbRepositories.text = "\(self?.totalRepos ?? 0)"
                 self?.lbFollowers.text = "\(self?.userItem?.followers ?? 0)"
                 self?.lbFollowing.text = "\(self?.userItem?.following ?? 0)"
-                self?.navItem.setTitle(title: self?.userItem?.login ?? "", subtitle: self?.userItem?.name ?? "")
+                self?.navigationItem.setTitle(title: self?.userItem?.login ?? "", subtitle: self?.userItem?.name ?? "")
                 self?.userDetails = self?.userItem?.getDetailCell()
                 self?.resultTableView.reloadData()
                 self?.updateStatus()

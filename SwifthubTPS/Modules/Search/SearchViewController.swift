@@ -285,7 +285,8 @@ extension SearchViewController: UITableViewDelegate {
             }
             repositoryViewController.repositoryItem = indexCell
             repositoryViewController.modalPresentationStyle = .automatic
-            self.present(repositoryViewController, animated:true, completion:nil)
+            let navController = UINavigationController(rootViewController: repositoryViewController)
+            self.present(navController, animated:true, completion: nil)
             
         } else if getType == .user, !isLoading {
             var indexCell: User

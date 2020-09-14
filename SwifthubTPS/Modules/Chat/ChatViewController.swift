@@ -19,6 +19,8 @@ class ChatViewController: MessagesViewController {
     var gitHubAuthenticationManager = GITHUB()
     var currentUser: User?
     var issueItem: Issue?
+    var pullItem: PullRequest?
+    var number: Int?
     var repoItem: Repository?
     var messages: [MessageType] = [] {
         didSet {
@@ -35,6 +37,8 @@ class ChatViewController: MessagesViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.title = repoItem?.fullname
+        number = issueItem?.number ?? pullItem?.number ?? 0
         updateTableView()
     }
     
@@ -69,9 +73,12 @@ class ChatViewController: MessagesViewController {
     }
     
     // MARK: - Private Methods
+    @IBAction func btnBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }    
     
     private func updateTableView(){
-        issueCommentGithubAPI.getResults(type: .getIssueComments, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: issueItem?.number ?? 0) { [weak self] results, errorMessage, statusCode in
+        issueCommentGithubAPI.getResults(type: .getIssueComments, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: number ?? 0) { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 self?.messages = results
             }

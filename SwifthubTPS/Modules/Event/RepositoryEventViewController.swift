@@ -48,7 +48,7 @@ class RepositoryEventViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method

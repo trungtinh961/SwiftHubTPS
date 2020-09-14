@@ -33,7 +33,7 @@ class BranchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navItem.title = repoItem?.fullname!
+        self.title = repoItem?.fullname!
         updateTableView()
         
     }
@@ -50,7 +50,7 @@ class BranchViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method
@@ -102,7 +102,7 @@ extension BranchViewController: UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
-                
+            
             cell.imgCell?.image = UIImage(named: ImageName.icon_cell_git_branch.rawValue)
             cell.lbTitleCell.text = branchItems![indexPath.row].name
             cell.lbDetails.isHidden = true
