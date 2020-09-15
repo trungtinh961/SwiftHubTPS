@@ -153,18 +153,18 @@ enum Router {
             }            
             params["sort"] = "stars"
             params["order"] = "desc"
-            params["per_page"] = "50"
+            params["per_page"] = "100"
         case .searchUsers(let query, let language):
             if language != "" {
                 params["q"] = "\(query)+language:\(language)"
             } else {
                 params["q"] = query
             }
-            params["per_page"] = "50"
+            params["per_page"] = "100"
         case .getIssues(_, let state),
              .getPullRequests(_, let state):
             params["state"] = state.rawValue
-            params["per_page"] = "50"
+            params["per_page"] = "100"
         case .getCommits,
              .getBranches,
              .getReleases,
@@ -180,14 +180,14 @@ enum Router {
              .getFollowing,
              .getUserEvents,
              .getIssueComment:
-            params["per_page"] = "50"
+            params["per_page"] = "100"
         case .getNotifications(let notificationState):
             switch notificationState {
             case .unread: break
             case .participate: params["participating"] = "true"
             case .all: params["all"] = "true"
             }
-            params["per_page"] = "50"
+            params["per_page"] = "100"
         default: break
         }
         return params

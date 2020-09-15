@@ -305,7 +305,19 @@ extension SearchViewController: UITableViewDelegate {
             self.present(navController, animated:true, completion: nil)
             
         }        
-    }    
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            print("reach bottom")
+        }
+
+        if (scrollView.contentOffset.y < 0){
+            print("reach top")
+        }
+
+    }
 }
 
 // MARK:- UISearchBarDelegate

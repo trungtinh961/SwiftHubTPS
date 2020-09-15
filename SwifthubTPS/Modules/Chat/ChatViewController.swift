@@ -24,6 +24,7 @@ class ChatViewController: MessagesViewController {
     var messages: [MessageType] = [] {
         didSet {
             self.messagesCollectionView.reloadData()
+            self.messagesCollectionView.scrollToBottom(animated: true)
         }
     }
     
@@ -77,14 +78,16 @@ class ChatViewController: MessagesViewController {
     private func updateTableView(type: GetType, body: String = ""){
         issueCommentGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: number ?? 0, body: body) { [weak self] results, errorMessage, statusCode in
             if let results = results {
-                self?.messages = results
+                if type == .getIssueComments {
+                    self?.messages = results
+                } else {
+                    self?.messages.append(contentsOf: results)
+                }
             }
             if let statusCode = statusCode {
                 if statusCode == 201 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        self?.updateTableView(type: .getIssueComments)
-                    }
-                    
+//                    self?.updateTableView(type: .getIssueComments)
+                    print("Create successfully comment to issue #\(self?.number ?? 0)")
                 }
             }
             if !errorMessage.isEmpty {

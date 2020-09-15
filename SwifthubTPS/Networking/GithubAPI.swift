@@ -196,7 +196,7 @@ class GitHubAPI<Element: Mappable> {
             } else if
                 let data = data,
                 let response = response as? HTTPURLResponse,
-                response.statusCode == 200 {
+                response.statusCode == 200 || response.statusCode == 201 {
                     self?.updateSearchResults(type: type, data)
                     DispatchQueue.main.async {
                         completion(self?.elements, self?.errorMessage ?? "", response.statusCode)
@@ -216,7 +216,7 @@ class GitHubAPI<Element: Mappable> {
         elements.removeAll()
         var jsonArray: Array<Any>!
         switch type {
-        case .getRepository, .getUser, .repository, .user, .getAuthenUser: /// Json return 1 element
+        case .getRepository, .getUser, .repository, .user, .getAuthenUser, .createIssueComment: /// Json return 1 element
             do {
                 if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
                     elements.append(Element(JSON: item)!)
