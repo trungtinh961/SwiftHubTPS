@@ -86,7 +86,6 @@ class ChatViewController: MessagesViewController {
             }
             if let statusCode = statusCode {
                 if statusCode == 201 {
-//                    self?.updateTableView(type: .getIssueComments)
                     print("Create successfully comment to issue #\(self?.number ?? 0)")
                 }
             }
@@ -206,8 +205,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             inputBar.inputTextView.text = ""
             updateTableView(type: .createIssueComment, body: text)
         } else {
-            print("You must login to send!")
+            print("You must be logged in to post!")
         }
-        
     }
 }
