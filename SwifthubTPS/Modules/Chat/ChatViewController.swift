@@ -81,7 +81,10 @@ class ChatViewController: MessagesViewController {
             }
             if let statusCode = statusCode {
                 if statusCode == 201 {
-                    self?.updateTableView(type: .getIssueComments)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        self?.updateTableView(type: .getIssueComments)
+                    }
+                    
                 }
             }
             if !errorMessage.isEmpty {
@@ -159,6 +162,17 @@ extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
     }
+    
+    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .primaryColor : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+    }
+    
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        
+        let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(tail, .curved)
+    }
+    
 }
 
 // MARK: - MessagesLayoutDelegate

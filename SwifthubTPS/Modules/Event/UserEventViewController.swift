@@ -156,6 +156,13 @@ extension UserEventViewController: UITableViewDelegate {
         repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.modalPresentationStyle = .automatic
-        self.navigationController?.pushViewController(repositoryViewController, animated: true)
+        
+        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
+            let navController = UINavigationController(rootViewController: repositoryViewController)
+            self.present(navController, animated:true, completion: nil)
+        } else {
+            self.navigationController?.pushViewController(repositoryViewController, animated: true)
+        }
+        
     }
 }

@@ -185,7 +185,6 @@ class GitHubAPI<Element: Mappable> {
         
         print(request.allHTTPHeaderFields?["Authorization"] ?? "No authen")
         print(request.httpMethod!)
-        print(request.httpBody ?? "no body")
         print(request)
         
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
