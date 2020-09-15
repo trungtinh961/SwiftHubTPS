@@ -203,7 +203,7 @@ class GitHubAPI<Element: Mappable> {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
         }
         
-        debugPrint(request.allHTTPHeaderFields?["Authorization"] ?? "No authen")
+        debugPrint(request.allHTTPHeaderFields?["Authorization"] ?? "No Authorization")
         debugPrint(request.httpMethod!)
         debugPrint(request)
         
