@@ -42,6 +42,7 @@ class SearchViewController: UIViewController {
     // MARK: - LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateTableView()
     }
     
@@ -64,7 +65,7 @@ class SearchViewController: UIViewController {
             getType = .repository
         case 1:
             getType = .user
-        default: print("default")
+        default: debugPrint("default")
         }
         updateTableView(language: language, query: searchTextCurrent)
     }
@@ -307,17 +308,17 @@ extension SearchViewController: UITableViewDelegate {
         }        
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print("reach bottom")
-        }
-
-        if (scrollView.contentOffset.y < 0){
-            print("reach top")
-        }
-
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print("reach bottom")
+//        }
+//
+//        if (scrollView.contentOffset.y < 0){
+//            print("reach top")
+//        }
+//
+//    }
 }
 
 // MARK:- UISearchBarDelegate

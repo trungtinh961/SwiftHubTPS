@@ -148,6 +148,11 @@ class GitHubAPI<Element: Mappable> {
             if type == .getIssueComments {
                 components.setQueryItems(with: Router.getIssueComment(fullname: fullname, number: String(number)).parameters!)
             }
+        case .getOrganizations:
+            components.scheme = Router.getOrganizations(username: username).scheme
+            components.host = Router.getOrganizations(username: username).host
+            components.path = Router.getOrganizations(username: username).path
+            components.setQueryItems(with: Router.getOrganizations(username: username).parameters!)
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -156,7 +161,9 @@ class GitHubAPI<Element: Mappable> {
     
     
     func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, body: String = "", completion: @escaping QueryResults) {
+        
         dataTask?.cancel()
+        
         guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number) else {
           return
         }

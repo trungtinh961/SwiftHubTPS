@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -45,6 +45,8 @@
 		BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAB7870E24F91619002779B2 /* NoResultCell.xib */; };
 		BAB8542F2505D27100ABDD49 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */; };
 		BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB854302505DF5300ABDD49 /* UserEventViewController.swift */; };
+		BABB6C582510BDAF002596FF /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB6C572510BDAF002596FF /* Content.swift */; };
+		BABB6C5A2510C0A3002596FF /* LanguageColor.json in Resources */ = {isa = PBXBuildFile; fileRef = BABB6C592510C0A3002596FF /* LanguageColor.json */; };
 		BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE486F2500A2CF00A5AB12 /* UserViewController.swift */; };
 		BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48722500C77A00A5AB12 /* UINavigationItem.swift */; };
 		BABE48752500D87800A5AB12 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48742500D87800A5AB12 /* Issue.swift */; };
@@ -131,6 +133,8 @@
 		BAB7870E24F91619002779B2 /* NoResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultCell.xib; sourceTree = "<group>"; };
 		BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		BAB854302505DF5300ABDD49 /* UserEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventViewController.swift; sourceTree = "<group>"; };
+		BABB6C572510BDAF002596FF /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		BABB6C592510C0A3002596FF /* LanguageColor.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LanguageColor.json; sourceTree = "<group>"; };
 		BABE486F2500A2CF00A5AB12 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		BABE48722500C77A00A5AB12 /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
 		BABE48742500D87800A5AB12 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -440,6 +444,7 @@
 				BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */,
 				BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */,
 				BAB51E6824FE3DF2005A4F7D /* ImageName.swift */,
+				BABB6C592510C0A3002596FF /* LanguageColor.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -497,6 +502,7 @@
 				BAFF237F250243F400843E38 /* Comment.swift */,
 				BAFF23572501F48E00843E38 /* Commit.swift */,
 				BA93E745250F4B99007A526A /* Commiter.swift */,
+				BABB6C572510BDAF002596FF /* Content.swift */,
 				BAFF237D2502438F00843E38 /* Event.swift */,
 				BABE48742500D87800A5AB12 /* Issue.swift */,
 				BAB7870224F8B453002779B2 /* Language.swift */,
@@ -634,6 +640,7 @@
 				BAFF23612501F65F00843E38 /* CommitCell.xib in Resources */,
 				BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */,
 				BAFF236D25022F7C00843E38 /* ReleaseCell.xib in Resources */,
+				BABB6C5A2510C0A3002596FF /* LanguageColor.json in Resources */,
 				BAFF23742502380400843E38 /* ContributorCell.xib in Resources */,
 				BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */,
 				BAB51E6724FE26D1005A4F7D /* DetailCell.xib in Resources */,
@@ -713,6 +720,7 @@
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* LoginViewController.swift in Sources */,
 				BAFF236F250231B200843E38 /* Release.swift in Sources */,
+				BABB6C582510BDAF002596FF /* Content.swift in Sources */,
 				BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */,
 				BA93E746250F4B99007A526A /* Commiter.swift in Sources */,
 				BAB51E6924FE3DF2005A4F7D /* ImageName.swift in Sources */,
