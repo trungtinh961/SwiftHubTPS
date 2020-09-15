@@ -43,7 +43,7 @@ class MainTabBarController: UITabBarController {
                 self?.viewControllers = self?.refreshAllTab(didAuthenticated: (self?.gitHubAuthenticationManager.didAuthenticated)!)
             }
             if !errorMessage.isEmpty {
-                print("Get data error: " + errorMessage)
+                debugPrint("Get data error: " + errorMessage)
             }
         }
     }

@@ -86,12 +86,12 @@ class RepositoryViewController: UIViewController {
             _ = checkStarRepository(type: .unStarRepository)
             btnStar.setImage(UIImage(named: ImageName.icon_button_unstar.rawValue), for: .normal)
             self.view.makeToast("You unstarred \(repositoryItem?.fullname ?? "")")
-            print("Did unstarred \(repositoryItem?.fullname ?? "")")
+            debugPrint("Did unstarred \(repositoryItem?.fullname ?? "")")
         } else {
             _ = checkStarRepository(type: .starRepository)
             btnStar.setImage(UIImage(named: ImageName.icon_button_star.rawValue), for: .normal)
             self.view.makeToast("You starred \(repositoryItem?.fullname ?? "")")
-            print("Did starred \(repositoryItem?.fullname ?? "")")
+            debugPrint("Did starred \(repositoryItem?.fullname ?? "")")
         }
         isStarred = !isStarred
     }
@@ -157,7 +157,7 @@ class RepositoryViewController: UIViewController {
                 self?.updateStatus()
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
         }
     }
@@ -169,7 +169,7 @@ class RepositoryViewController: UIViewController {
                 if statusCode == 204 { isSuccess = true }
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
             
         }
@@ -238,7 +238,7 @@ extension RepositoryViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)        
         let itemCell = repositoryDetails?[indexPath.row]
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        print(repositoryDetails?[indexPath.row].id ?? "")
+        debugPrint(repositoryDetails?[indexPath.row].id ?? "")
         
         switch itemCell!.id {
         case "homepage":

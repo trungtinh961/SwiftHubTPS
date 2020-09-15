@@ -85,7 +85,7 @@ class PullRequestViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    debugPrint("Search error: " + errorMessage)
                 }
             }
         } else if state == .closed {
@@ -104,7 +104,7 @@ class PullRequestViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    debugPrint("Search error: " + errorMessage)
                 }
             }
         }        

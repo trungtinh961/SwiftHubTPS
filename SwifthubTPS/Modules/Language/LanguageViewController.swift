@@ -93,7 +93,7 @@ class LanguageViewController: UIViewController {
             }
 
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
         }
     }

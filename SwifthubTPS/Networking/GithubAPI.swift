@@ -19,7 +19,7 @@ class GitHubAPI<Element: Mappable> {
     typealias JSONDictionary = [String: Any]
     typealias QueryResults = ([Element]?, String, Int?) -> Void
     
-    func createURL(type: GetType, eventType: EventType, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String, number: Int) -> URL? {
+    func createURL(type: GetType, eventType: EventType, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String, number: Int, path: String) -> URL? {
         var components = URLComponents()
         switch type {
         case .repository:
@@ -153,6 +153,12 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getOrganizations(username: username).host
             components.path = Router.getOrganizations(username: username).path
             components.setQueryItems(with: Router.getOrganizations(username: username).parameters!)
+        case .getContents:
+            components.scheme = Router.getContents(fullname: fullname, path: path).scheme
+            components.host = Router.getContents(fullname: fullname, path: path).host
+            components.path = Router.getContents(fullname: fullname, path: path).path
+        
+        
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -160,13 +166,15 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, body: String = "", completion: @escaping QueryResults) {
+    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, body: String = "", path: String = "", completion: @escaping QueryResults) {
         
         dataTask?.cancel()
         
-        guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number) else {
-          return
-        }
+        guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number, path: path)
+            else {
+                return
+            }
+        
         var request = URLRequest(url: url)
         
         request.httpMethod = { () -> String in
@@ -185,14 +193,19 @@ class GitHubAPI<Element: Mappable> {
             request.httpBody = jsonData
         }
         
-        request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
+        if type == .getContents {
+            request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
+        } else {
+            request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
+        }
+        
         if gitHubAuthenticationManager.didAuthenticated {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
         }
         
-        print(request.allHTTPHeaderFields?["Authorization"] ?? "No authen")
-        print(request.httpMethod!)
-        print(request)
+        debugPrint(request.allHTTPHeaderFields?["Authorization"] ?? "No authen")
+        debugPrint(request.httpMethod!)
+        debugPrint(request)
         
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
             defer {

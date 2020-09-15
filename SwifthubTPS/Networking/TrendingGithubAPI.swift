@@ -55,7 +55,7 @@ class TrendingGithubAPI<Element: Mappable> {
         guard let url = createURL(type: type, language: language, since: since) else {
           return
         }
-        print(url)
+        debugPrint(url)
         dataTask = defaultSession.dataTask(with: url) { [weak self] data, response, error in
             defer {
                 self?.dataTask = nil

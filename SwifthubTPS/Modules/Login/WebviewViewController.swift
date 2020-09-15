@@ -26,7 +26,7 @@ class WebviewViewController: UIViewController {
         let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
        
         let urlRequest = URLRequest(url: URL(string: authURL)!)
-        print(urlRequest)
+        debugPrint(urlRequest)
         webview.navigationDelegate = self
         webview.load(urlRequest)
         
@@ -58,7 +58,7 @@ extension WebviewViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        print(webView.url ?? "no url")
+        debugPrint(webView.url ?? "no url")
         let requestURLString = (webView.url?.absoluteString)! as String
         if requestURLString.hasPrefix(GITHUB.GITHUB_REDIRECT_URI) {
             if let range: Range<String.Index> = requestURLString.range(of: "?code=") {
@@ -88,9 +88,9 @@ extension WebviewViewController: WKNavigationDelegate {
             let status = String(content[0][...content[0].index(before: seperator)])
             if status == "access_token" {
                 self.accessToken = String(content[0][content[0].index(after: seperator)...])
-                print("Access token: \(self.accessToken)")
+                debugPrint("Access token: \(self.accessToken)")
             } else {
-                print("Login failed!")
+                debugPrint("Login failed!")
             }
             DispatchQueue.main.async {
                 if status == "access_token" {

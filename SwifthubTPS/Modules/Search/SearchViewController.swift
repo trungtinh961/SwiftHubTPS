@@ -104,7 +104,7 @@ class SearchViewController: UIViewController {
                     }
                   
                     if !errorMessage.isEmpty {
-                        print("Search error: " + errorMessage)
+                        debugPrint("Search error: " + errorMessage)
                     }
                 }
             } else {
@@ -119,7 +119,7 @@ class SearchViewController: UIViewController {
                     }
 
                     if !errorMessage.isEmpty {
-                        print("Search error: " + errorMessage)
+                        debugPrint("Search error: " + errorMessage)
                     }
                 }
             }
@@ -140,7 +140,7 @@ class SearchViewController: UIViewController {
                     }
                   
                     if !errorMessage.isEmpty {
-                        print("Search error: " + errorMessage)
+                        debugPrint("Search error: " + errorMessage)
                     }
                 }
             } else {
@@ -155,7 +155,7 @@ class SearchViewController: UIViewController {
                     }
 
                     if !errorMessage.isEmpty {
-                        print("Search error: " + errorMessage)
+                        debugPrint("Search error: " + errorMessage)
                     }
                 }
             }
@@ -311,11 +311,11 @@ extension SearchViewController: UITableViewDelegate {
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        
 //        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-//            print("reach bottom")
+//            debugPrint("reach bottom")
 //        }
 //
 //        if (scrollView.contentOffset.y < 0){
-//            print("reach top")
+//            debugPrint("reach top")
 //        }
 //
 //    }

@@ -58,11 +58,11 @@ class NotificationViewController: UIViewController {
             if let statusCode = statusCode {
                 if statusCode == 205 {
                     self.view.makeToast("Make as all read!")
-                    print("Make as all read!")
+                    debugPrint("Make as all read!")
                 }                
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
         }
     }
@@ -86,7 +86,7 @@ class NotificationViewController: UIViewController {
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
         }
     }

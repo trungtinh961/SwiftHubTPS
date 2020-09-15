@@ -95,7 +95,7 @@ class RepositoryDetailViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    debugPrint("Search error: " + errorMessage)
                 }
             }
         } else if detailType == .followers {
@@ -114,7 +114,7 @@ class RepositoryDetailViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    debugPrint("Search error: " + errorMessage)
                 }
             }
         } else {
@@ -133,7 +133,7 @@ class RepositoryDetailViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    debugPrint("Search error: " + errorMessage)
                 }
             }
         }

@@ -91,12 +91,12 @@ class UserViewController: UIViewController {
             _ = checkFollowUser(type: .unFollowUser)
             btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_plus.rawValue), for: .normal)
             self.view.makeToast("You unfollowed \(userItem?.login ?? "")")
-            print("Did unfollowed \(userItem?.login ?? "")")
+            debugPrint("Did unfollowed \(userItem?.login ?? "")")
         } else {
             _ = checkFollowUser(type: .followUser)
             btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_x.rawValue), for: .normal)
             self.view.makeToast("You followed \(userItem?.login ?? "")")
-            print("Did followed \(userItem?.login ?? "")")
+            debugPrint("Did followed \(userItem?.login ?? "")")
         }
         isFollowed = !isFollowed
     }
@@ -152,7 +152,7 @@ class UserViewController: UIViewController {
                 if statusCode == 204 { isSuccess = true }
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
         }
         return isSuccess
@@ -182,7 +182,7 @@ class UserViewController: UIViewController {
                 self?.updateStatus()
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
         }
         
@@ -195,7 +195,7 @@ class UserViewController: UIViewController {
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                debugPrint("Search error: " + errorMessage)
             }
         }
     }
@@ -292,7 +292,7 @@ extension UserViewController: UITableViewDelegate {
         let section = indexPath.section
         if section == 0 {
             let itemCell = userDetails?[indexPath.row]
-            print(userDetails?[indexPath.row].id ?? "")
+            debugPrint(userDetails?[indexPath.row].id ?? "")
             switch itemCell!.id {
             case "starred":
                 let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
