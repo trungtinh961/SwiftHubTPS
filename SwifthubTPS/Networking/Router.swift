@@ -78,6 +78,7 @@ enum Router {
     case unStarRepository(fullname: String)
     case checkStarredRepository(fullname: String)
     case getIssueComment(fullname: String, number: String)
+    case createIssueComment(fullname: String, number: String)
     
     var scheme: String {
         switch self {
@@ -131,6 +132,7 @@ enum Router {
              .checkStarredRepository(let fullname):
             return "/user/starred/\(fullname)"
         case .getIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
+        case .createIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         }
     }
     
@@ -193,6 +195,7 @@ enum Router {
     
     var method: String {
         switch self {
+        case .createIssueComment: return "POST"
         case .followUser, .starRepository, .makeNotificationAllRead: return "PUT"
         case .unFollowUser, .unStarRepository: return "DELETE"
         default:

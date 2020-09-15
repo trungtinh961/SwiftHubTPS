@@ -141,11 +141,13 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.starRepository(fullname: fullname).scheme
             components.host = Router.starRepository(fullname: fullname).host
             components.path = Router.starRepository(fullname: fullname).path
-        case .getIssueComments:
+        case .getIssueComments, .createIssueComment:
             components.scheme = Router.getIssueComment(fullname: fullname, number: String(number)).scheme
             components.host = Router.getIssueComment(fullname: fullname, number: String(number)).host
             components.path = Router.getIssueComment(fullname: fullname, number: String(number)).path
-            components.setQueryItems(with: Router.getIssueComment(fullname: fullname, number: String(number)).parameters!)
+            if type == .getIssueComments {
+                components.setQueryItems(with: Router.getIssueComment(fullname: fullname, number: String(number)).parameters!)
+            }
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -153,7 +155,7 @@ class GitHubAPI<Element: Mappable> {
     }
     
     
-    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, completion: @escaping QueryResults) {
+    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, body: String = "", completion: @escaping QueryResults) {
         dataTask?.cancel()
         guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number) else {
           return
@@ -162,12 +164,20 @@ class GitHubAPI<Element: Mappable> {
         
         request.httpMethod = { () -> String in
             switch type {
+            case .createIssueComment: return "POST"
             case .followUser, .starRepository, .makeNotificationAllRead: return "PUT"
             case .unFollowUser, .unStarRepository: return "DELETE"
             default:
                 return "GET"
             }
         }()
+        
+        if type == .createIssueComment {
+            let json: [String: Any] = ["body": body]
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            request.httpBody = jsonData
+        }
+        
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         if gitHubAuthenticationManager.didAuthenticated {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
@@ -175,6 +185,7 @@ class GitHubAPI<Element: Mappable> {
         
         print(request.allHTTPHeaderFields?["Authorization"] ?? "No authen")
         print(request.httpMethod!)
+        print(request.httpBody ?? "no body")
         print(request)
         
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
@@ -197,8 +208,6 @@ class GitHubAPI<Element: Mappable> {
                     completion([], self?.errorMessage ?? "", response.statusCode)
                 }
             }
-            
-            
         }
         dataTask?.resume()
     }

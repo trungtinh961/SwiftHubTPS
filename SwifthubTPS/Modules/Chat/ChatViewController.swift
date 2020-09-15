@@ -10,8 +10,7 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import SwiftDate
-import Kingfisher
-
+import Toast_Swift
 
 class ChatViewController: MessagesViewController {
     
@@ -33,20 +32,18 @@ class ChatViewController: MessagesViewController {
     private var issueCommentGithubAPI = GitHubAPI<Comment>()
     private var issueCommentItems: [Comment]?
     
-    // MARK: - Lifecycle
     
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = repoItem?.fullname
         number = issueItem?.number ?? pullItem?.number ?? 0
-        updateTableView()
+        updateTableView(type: .getIssueComments)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = gitHubAuthenticationManager.userAuthenticated
-        
-       
         configureMessageCollectionView()
         configureMessageInputBar()
     }
@@ -77,10 +74,15 @@ class ChatViewController: MessagesViewController {
         self.navigationController?.popViewController(animated: true)
     }    
     
-    private func updateTableView(){
-        issueCommentGithubAPI.getResults(type: .getIssueComments, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: number ?? 0) { [weak self] results, errorMessage, statusCode in
+    private func updateTableView(type: GetType, body: String = ""){
+        issueCommentGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: number ?? 0, body: body) { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 self?.messages = results
+            }
+            if let statusCode = statusCode {
+                if statusCode == 201 {
+                    self?.updateTableView(type: .getIssueComments)
+                }
             }
             if !errorMessage.isEmpty {
                 print("Search error: " + errorMessage)
@@ -133,6 +135,7 @@ extension ChatViewController: MessagesDataSource {
 
 // MARK: - MessageCellDelegate
 extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
+   
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         if let user = message.sender as? User {
             avatarView.isHidden = isNextMessageSameSender(at: indexPath)
@@ -140,6 +143,21 @@ extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
                 downloadTask = avatarView.loadImage(url: smallURL)
             }
         }
+    }
+    
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .darkText
+    }
+    
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
+        switch detector {
+        case .hashtag, .mention: return [.foregroundColor: UIColor.blue]
+        default: return MessageLabel.defaultAttributes
+        }
+    }
+    
+    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+        return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
     }
 }
 
@@ -164,4 +182,15 @@ extension ChatViewController: MessagesLayoutDelegate {
 }
 
 // MARK: - InputBarAccessoryViewDelegate
-extension ChatViewController: InputBarAccessoryViewDelegate {}
+extension ChatViewController: InputBarAccessoryViewDelegate {
+    @objc
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        if gitHubAuthenticationManager.didAuthenticated {
+            inputBar.inputTextView.text = ""
+            updateTableView(type: .createIssueComment, body: text)
+        } else {
+            print("You must login to send!")
+        }
+        
+    }
+}
