@@ -263,7 +263,6 @@ extension RepositoryViewController: UITableViewDelegate {
             commitsViewController.repoItem = repositoryItem
             commitsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(commitsViewController, animated: true)
-            
         case "branches":
             let branchesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.branchVC.rawValue) as! BranchViewController
             branchesViewController.modalPresentationStyle = .automatic
@@ -289,6 +288,12 @@ extension RepositoryViewController: UITableViewDelegate {
             eventViewController.repoItem = repositoryItem
             eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(eventViewController, animated: true)
+        case "contents":
+            let contentViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contentVC.rawValue) as! ContentViewController
+            contentViewController.modalPresentationStyle = .automatic
+            contentViewController.repoItem = repositoryItem
+            contentViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            self.navigationController?.pushViewController(contentViewController, animated: true)
             
         default:
             break

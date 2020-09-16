@@ -42,7 +42,8 @@ enum GetType: Int {
     case getIssueComments
     case createIssueComment
     case getOrganizations
-    case getContents
+    case getContents    // ContentType == .dir return array
+    case getContent     // ContentType == ...  return 1 element
 }
 
 enum Router {
@@ -83,6 +84,7 @@ enum Router {
     case createIssueComment(fullname: String, number: String)
     case getOrganizations(username: String)
     case getContents(fullname: String, path: String)
+    case getContent(fullname: String, path: String)
     
     var scheme: String {
         switch self {
@@ -138,7 +140,9 @@ enum Router {
         case .getIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         case .createIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         case .getOrganizations(let username): return "/users/\(username)/orgs"
-        case .getContents(let fullname, let path): return "/repos/\(fullname)/contents/\(path)"
+        case .getContents(let fullname, let path),
+             .getContent(let fullname, let path):
+            return "/repos/\(fullname)/contents/\(path)"
             
             
         }

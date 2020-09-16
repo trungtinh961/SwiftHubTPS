@@ -47,6 +47,10 @@
 		BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB854302505DF5300ABDD49 /* UserEventViewController.swift */; };
 		BABB6C582510BDAF002596FF /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB6C572510BDAF002596FF /* Content.swift */; };
 		BABB6C5A2510C0A3002596FF /* LanguageColor.json in Resources */ = {isa = PBXBuildFile; fileRef = BABB6C592510C0A3002596FF /* LanguageColor.json */; };
+		BABBA0D22511B00000CA1E8E /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0D12511B00000CA1E8E /* ContentViewController.swift */; };
+		BABBA0D42511B41500CA1E8E /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0D32511B41500CA1E8E /* FileViewController.swift */; };
+		BABBA0DB2511BDF200CA1E8E /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0D92511BDF200CA1E8E /* ContentCell.swift */; };
+		BABBA0DC2511BDF200CA1E8E /* ContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABBA0DA2511BDF200CA1E8E /* ContentCell.xib */; };
 		BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE486F2500A2CF00A5AB12 /* UserViewController.swift */; };
 		BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48722500C77A00A5AB12 /* UINavigationItem.swift */; };
 		BABE48752500D87800A5AB12 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48742500D87800A5AB12 /* Issue.swift */; };
@@ -135,6 +139,10 @@
 		BAB854302505DF5300ABDD49 /* UserEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventViewController.swift; sourceTree = "<group>"; };
 		BABB6C572510BDAF002596FF /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		BABB6C592510C0A3002596FF /* LanguageColor.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LanguageColor.json; sourceTree = "<group>"; };
+		BABBA0D12511B00000CA1E8E /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		BABBA0D32511B41500CA1E8E /* FileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
+		BABBA0D92511BDF200CA1E8E /* ContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
+		BABBA0DA2511BDF200CA1E8E /* ContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentCell.xib; sourceTree = "<group>"; };
 		BABE486F2500A2CF00A5AB12 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		BABE48722500C77A00A5AB12 /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
 		BABE48742500D87800A5AB12 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -358,6 +366,17 @@
 			path = UIColor;
 			sourceTree = "<group>";
 		};
+		BABBA0D02511AFCE00CA1E8E /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				BABBA0D12511B00000CA1E8E /* ContentViewController.swift */,
+				BABBA0D32511B41500CA1E8E /* FileViewController.swift */,
+				BABBA0D92511BDF200CA1E8E /* ContentCell.swift */,
+				BABBA0DA2511BDF200CA1E8E /* ContentCell.xib */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		BABE486E2500A29800A5AB12 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +475,7 @@
 				BA925126250B86AD004AF086 /* Chat */,
 				BAFF2370250237DF00843E38 /* Contributor */,
 				BAFF235B2501F62900843E38 /* Commit */,
+				BABBA0D02511AFCE00CA1E8E /* Content */,
 				BAFF23772502401D00843E38 /* Event */,
 				BAB42A232509E62500A3A1FF /* Fork */,
 				BABE487A2500DBE400A5AB12 /* Issue */,
@@ -637,6 +657,7 @@
 				BABE48802500DC3700A5AB12 /* IssueCell.xib in Resources */,
 				BAC5D29C24F3C13B00A731F0 /* LaunchScreen.storyboard in Resources */,
 				BAC5D29924F3C13B00A731F0 /* Assets.xcassets in Resources */,
+				BABBA0DC2511BDF200CA1E8E /* ContentCell.xib in Resources */,
 				BAFF23612501F65F00843E38 /* CommitCell.xib in Resources */,
 				BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */,
 				BAFF236D25022F7C00843E38 /* ReleaseCell.xib in Resources */,
@@ -716,6 +737,7 @@
 				BAB7870C24F91367002779B2 /* UIViewController.swift in Sources */,
 				BAB3169B25088068000CF50C /* NotificationViewController.swift in Sources */,
 				BABE487F2500DC3700A5AB12 /* IssueCell.swift in Sources */,
+				BABBA0D22511B00000CA1E8E /* ContentViewController.swift in Sources */,
 				BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */,
 				BAD3886C24F60A790045C10E /* RepositoryCell.swift in Sources */,
 				BAC5D29424F3C13800A731F0 /* LoginViewController.swift in Sources */,
@@ -734,6 +756,7 @@
 				BAB7870324F8B453002779B2 /* Language.swift in Sources */,
 				BAFF2366250226F600843E38 /* Branch.swift in Sources */,
 				BABE48792500DB8A00A5AB12 /* PullRequest.swift in Sources */,
+				BABBA0DB2511BDF200CA1E8E /* ContentCell.swift in Sources */,
 				BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */,
 				BAFF237E2502438F00843E38 /* Event.swift in Sources */,
 				BAFF236C25022F7C00843E38 /* ReleaseCell.swift in Sources */,
@@ -752,6 +775,7 @@
 				BAFF2364250221C600843E38 /* BranchViewController.swift in Sources */,
 				BAD3887024F60B830045C10E /* Repository.swift in Sources */,
 				BAFF23762502381A00843E38 /* ContributorViewController.swift in Sources */,
+				BABBA0D42511B41500CA1E8E /* FileViewController.swift in Sources */,
 				BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */,
 				BAB42A27250A0AEA00A3A1FF /* RepositoryDetailViewController.swift in Sources */,
 				BA3D105E24F647820079C5A1 /* RegisterTableViewCell.swift in Sources */,

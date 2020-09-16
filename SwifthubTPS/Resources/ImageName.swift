@@ -24,6 +24,7 @@ enum ImageName: String {
     case icon_cell_company = "icon_cell_company"
     case icon_cell_events = "icon_cell_events"
     case icon_cell_dir = "icon_cell_dir"
+    case icon_cell_file = "icon_cell_file"
     case icon_cell_stars_history = "icon_cell_stars_history"
     case icon_cell_updated = "icon_cell_updated"
     case icon_cell_git_language = "icon_cell_git_language"
@@ -50,6 +51,6 @@ enum ImageName: String {
     case icon_button_user_plus = "icon_button_user_plus"
     case icon_button_user_x = "icon_button_user_x"
     case launch_image = "launch_image"
-    
+    case icon_cell_submodule = "icon_cell_submodule"
 }
 

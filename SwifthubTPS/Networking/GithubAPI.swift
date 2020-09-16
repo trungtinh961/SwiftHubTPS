@@ -153,7 +153,7 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getOrganizations(username: username).host
             components.path = Router.getOrganizations(username: username).path
             components.setQueryItems(with: Router.getOrganizations(username: username).parameters!)
-        case .getContents:
+        case .getContents, .getContent:
             components.scheme = Router.getContents(fullname: fullname, path: path).scheme
             components.host = Router.getContents(fullname: fullname, path: path).host
             components.path = Router.getContents(fullname: fullname, path: path).path
@@ -236,7 +236,7 @@ class GitHubAPI<Element: Mappable> {
         elements.removeAll()
         var jsonArray: Array<Any>!
         switch type {
-        case .getRepository, .getUser, .repository, .user, .getAuthenUser, .createIssueComment: /// Json return 1 element
+        case .getRepository, .getUser, .repository, .user, .getAuthenUser, .createIssueComment, .getContent: /// Json return 1 element
             do {
                 if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
                     elements.append(Element(JSON: item)!)
@@ -245,7 +245,7 @@ class GitHubAPI<Element: Mappable> {
                 errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
                 return
             }
-        
+            
         default: /// Json return array
             do {
                 jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array

@@ -222,6 +222,8 @@ extension Repository {
         
         detailCellProperties.append(DetailCellProperty(id: "events", imgName: ImageName.icon_cell_releases.rawValue, titleCell: "Events", hideDisclosure: false))
         
+        detailCellProperties.append(DetailCellProperty(id: "contents", imgName: ImageName.icon_cell_dir.rawValue, titleCell: "Source code", hideDisclosure: false))
+        
         return detailCellProperties
     }
 }
