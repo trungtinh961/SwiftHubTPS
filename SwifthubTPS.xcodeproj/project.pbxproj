@@ -46,11 +46,12 @@
 		BAB8542F2505D27100ABDD49 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */; };
 		BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB854302505DF5300ABDD49 /* UserEventViewController.swift */; };
 		BABB6C582510BDAF002596FF /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB6C572510BDAF002596FF /* Content.swift */; };
-		BABB6C5A2510C0A3002596FF /* LanguageColor.json in Resources */ = {isa = PBXBuildFile; fileRef = BABB6C592510C0A3002596FF /* LanguageColor.json */; };
 		BABBA0D22511B00000CA1E8E /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0D12511B00000CA1E8E /* ContentViewController.swift */; };
 		BABBA0D42511B41500CA1E8E /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0D32511B41500CA1E8E /* FileViewController.swift */; };
 		BABBA0DB2511BDF200CA1E8E /* ContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0D92511BDF200CA1E8E /* ContentCell.swift */; };
 		BABBA0DC2511BDF200CA1E8E /* ContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABBA0DA2511BDF200CA1E8E /* ContentCell.xib */; };
+		BABBA0E02512048A00CA1E8E /* LanguageChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0DE2512048A00CA1E8E /* LanguageChartCell.swift */; };
+		BABBA0E12512048A00CA1E8E /* LanguageChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABBA0DF2512048A00CA1E8E /* LanguageChartCell.xib */; };
 		BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE486F2500A2CF00A5AB12 /* UserViewController.swift */; };
 		BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48722500C77A00A5AB12 /* UINavigationItem.swift */; };
 		BABE48752500D87800A5AB12 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48742500D87800A5AB12 /* Issue.swift */; };
@@ -138,11 +139,12 @@
 		BAB8542E2505D27100ABDD49 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		BAB854302505DF5300ABDD49 /* UserEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventViewController.swift; sourceTree = "<group>"; };
 		BABB6C572510BDAF002596FF /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
-		BABB6C592510C0A3002596FF /* LanguageColor.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LanguageColor.json; sourceTree = "<group>"; };
 		BABBA0D12511B00000CA1E8E /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		BABBA0D32511B41500CA1E8E /* FileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
 		BABBA0D92511BDF200CA1E8E /* ContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCell.swift; sourceTree = "<group>"; };
 		BABBA0DA2511BDF200CA1E8E /* ContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentCell.xib; sourceTree = "<group>"; };
+		BABBA0DE2512048A00CA1E8E /* LanguageChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageChartCell.swift; sourceTree = "<group>"; };
+		BABBA0DF2512048A00CA1E8E /* LanguageChartCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageChartCell.xib; sourceTree = "<group>"; };
 		BABE486F2500A2CF00A5AB12 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		BABE48722500C77A00A5AB12 /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
 		BABE48742500D87800A5AB12 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -242,11 +244,11 @@
 		BA3D105F24F750FC0079C5A1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BA3D106024F751290079C5A1 /* Foundation */,
 				BAB854322506237400ABDD49 /* UIColor */,
+				BA3D106624F763BE0079C5A1 /* UIImageView */,
 				BABE48712500C73E00A5AB12 /* UINavigationItem */,
 				BAB7870A24F9134D002779B2 /* UIViewController */,
-				BA3D106624F763BE0079C5A1 /* UIImageView */,
-				BA3D106024F751290079C5A1 /* Foundation */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -377,6 +379,15 @@
 			path = Content;
 			sourceTree = "<group>";
 		};
+		BABBA0DD251203FE00CA1E8E /* Language Chart */ = {
+			isa = PBXGroup;
+			children = (
+				BABBA0DE2512048A00CA1E8E /* LanguageChartCell.swift */,
+				BABBA0DF2512048A00CA1E8E /* LanguageChartCell.xib */,
+			);
+			path = "Language Chart";
+			sourceTree = "<group>";
+		};
 		BABE486E2500A29800A5AB12 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -463,7 +474,6 @@
 				BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */,
 				BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */,
 				BAB51E6824FE3DF2005A4F7D /* ImageName.swift */,
-				BABB6C592510C0A3002596FF /* LanguageColor.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -480,6 +490,7 @@
 				BAB42A232509E62500A3A1FF /* Fork */,
 				BABE487A2500DBE400A5AB12 /* Issue */,
 				BAB786F924F8A6CE002779B2 /* Language */,
+				BABBA0DD251203FE00CA1E8E /* Language Chart */,
 				BA3D105A24F61FF10079C5A1 /* Login */,
 				BAC5D2AA24F5204400A731F0 /* Main */,
 				BAB3169925088043000CF50C /* Notification */,
@@ -658,10 +669,10 @@
 				BAC5D29C24F3C13B00A731F0 /* LaunchScreen.storyboard in Resources */,
 				BAC5D29924F3C13B00A731F0 /* Assets.xcassets in Resources */,
 				BABBA0DC2511BDF200CA1E8E /* ContentCell.xib in Resources */,
+				BABBA0E12512048A00CA1E8E /* LanguageChartCell.xib in Resources */,
 				BAFF23612501F65F00843E38 /* CommitCell.xib in Resources */,
 				BA6C5A5B24F7B91400971F23 /* UserCell.xib in Resources */,
 				BAFF236D25022F7C00843E38 /* ReleaseCell.xib in Resources */,
-				BABB6C5A2510C0A3002596FF /* LanguageColor.json in Resources */,
 				BAFF23742502380400843E38 /* ContributorCell.xib in Resources */,
 				BAB7871024F91619002779B2 /* NoResultCell.xib in Resources */,
 				BAB51E6724FE26D1005A4F7D /* DetailCell.xib in Resources */,
@@ -744,6 +755,7 @@
 				BAFF236F250231B200843E38 /* Release.swift in Sources */,
 				BABB6C582510BDAF002596FF /* Content.swift in Sources */,
 				BAB854312505DF5300ABDD49 /* UserEventViewController.swift in Sources */,
+				BABBA0E02512048A00CA1E8E /* LanguageChartCell.swift in Sources */,
 				BA93E746250F4B99007A526A /* Commiter.swift in Sources */,
 				BAB51E6924FE3DF2005A4F7D /* ImageName.swift in Sources */,
 				BA9C844325072E5D00B65818 /* WebviewViewController.swift in Sources */,

@@ -15,7 +15,7 @@ class ContentViewController: UIViewController {
     
     // MARK: - Public properties
     var contentItem: Content?
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     var gitHubAuthenticationManager = GITHUB()
     
     // MARK: - Private properties
@@ -26,7 +26,7 @@ class ContentViewController: UIViewController {
     // MARK:- Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let title = repoItem?.fullname {
+        if let title = repositoryItem?.fullname {
             self.title = title
         }
         updateTableView()
@@ -52,7 +52,7 @@ class ContentViewController: UIViewController {
         isLoading = true
         tableView.reloadData()
         
-        contentGithubAPI.getResults(type: .getContents, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", path: contentItem?.path ?? "") { [weak self] results, errorMessage, statusCode in
+        contentGithubAPI.getResults(type: .getContents, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "", path: contentItem?.path ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 self?.contentItems = results
                 self?.contentItems?.sort(by: { $0.type > $1.type } )
@@ -108,13 +108,13 @@ extension ContentViewController: UITableViewDelegate {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         if itemCell?.type == .dir {            
             let contentViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contentVC.rawValue) as! ContentViewController
-            contentViewController.repoItem = repoItem
+            contentViewController.repositoryItem = repositoryItem
             contentViewController.contentItem = itemCell
             contentViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(contentViewController, animated: true)
         } else if itemCell?.type == .file {
             let fileViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.fileVC.rawValue) as! FileViewController
-            fileViewController.repoItem = repoItem
+            fileViewController.repositoryItem = repositoryItem
             fileViewController.contentItem = itemCell
             fileViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(fileViewController, animated: true)

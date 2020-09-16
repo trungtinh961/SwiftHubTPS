@@ -24,6 +24,7 @@ enum TableViewCellIdentifiers: String {
     case eventCell = "EventCell"
     case notificationCell = "NotificationCell"
     case contentCell = "ContentCell"
+    case languageChartCell = "LanguageChartCell"
 }
 
 struct RegisterTableViewCell {

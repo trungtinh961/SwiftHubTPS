@@ -16,7 +16,7 @@ class ForkViewController: UIViewController {
     
     // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     
     // MARK: - Private properties
     private var isLoading = false
@@ -55,7 +55,7 @@ class ForkViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        forkGithubAPI.getResults(type: .getForks, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+        forkGithubAPI.getResults(type: .getForks, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true
@@ -63,7 +63,7 @@ class ForkViewController: UIViewController {
                 } else {
                     self?.forkItems = results
                     self?.isLoading = false
-                    if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                    if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
                         self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
                     }
                 }

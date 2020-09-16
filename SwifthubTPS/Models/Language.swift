@@ -22,13 +22,21 @@ struct Language: Mappable {
         urlParam <- map["urlParam"]
         name <- map["name"]        
     }
-    
 }
 
 extension Language: Equatable {
-    
     static func == (lhs: Language, rhs: Language) -> Bool {
         return lhs.urlParam == rhs.urlParam
     }
-    
+}
+
+struct ChartLanguage {
+    let name: String
+    let color: String?
+    let quantity: Int
+}
+
+struct ColorLanguage: Decodable {
+    let color: String?
+    let url: String?
 }

@@ -31,7 +31,7 @@ class RepositoryDetailViewController: UIViewController {
     private var noResult = false
     private var repositoryGithubAPI = GitHubAPI<Repository>()
     private var userGithubAPI = GitHubAPI<User>()
-    private var repoItems: [Repository]?
+    private var repositoryItems: [Repository]?
     private var userItems: [User]?
     
     // MARK: - Lifecycle
@@ -81,7 +81,7 @@ class RepositoryDetailViewController: UIViewController {
                         self?.noResult = true
                         self?.isLoading = false
                     } else {
-                        self?.repoItems = results
+                        self?.repositoryItems = results
                         self?.isLoading = false
                         if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
                             self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
@@ -141,7 +141,7 @@ extension RepositoryDetailViewController: UITableViewDataSource {
         if isLoading || noResult {
             return 1
         } else if detailType == .repositories {
-            return repoItems?.count ?? 0
+            return repositoryItems?.count ?? 0
         } else {
             return userItems?.count ?? 0
         }
@@ -158,7 +158,7 @@ extension RepositoryDetailViewController: UITableViewDataSource {
             return cell
         } else if detailType == .repositories {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
-            let itemCell = repoItems![indexPath.row]
+            let itemCell = repositoryItems![indexPath.row]
             cell.lbFullname.text = itemCell.fullname
             cell.lbDescription.text = itemCell.description
             cell.lbStars.text = itemCell.stargazersCount?.kFormatted()
@@ -189,7 +189,7 @@ extension RepositoryDetailViewController: UITableViewDelegate {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         if detailType == .repositories {
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-            repositoryViewController.repositoryItem = repoItems![indexPath.row]
+            repositoryViewController.repositoryItem = repositoryItems![indexPath.row]
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(repositoryViewController, animated: true)
         } else {

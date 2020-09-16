@@ -20,7 +20,7 @@ class BranchViewController: UIViewController {
     
     // MARK: - Public properties
     weak var delegate: BranchViewControllerDelegate?
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     var gitHubAuthenticationManager = GITHUB()    
     
     // MARK: - Private properties
@@ -32,7 +32,7 @@ class BranchViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = repoItem?.fullname!
+        self.title = repositoryItem?.fullname!
         updateTableView()
         
     }
@@ -57,7 +57,7 @@ class BranchViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        branchGithubAPI.getResults(type: .getBranches, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+        branchGithubAPI.getResults(type: .getBranches, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true

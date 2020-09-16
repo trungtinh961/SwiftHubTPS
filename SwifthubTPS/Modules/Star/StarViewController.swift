@@ -18,7 +18,7 @@ class StarViewController: UIViewController {
     var gitHubAuthenticationManager = GITHUB()
     var getType: GetType?
     var userItem: User?
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     
     // MARK: - Private properties
     private var isLoading = false
@@ -85,7 +85,7 @@ class StarViewController: UIViewController {
                 }
             }
         } else {
-            stargazersGithubAPI.getResults(type: .getStargazers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+            stargazersGithubAPI.getResults(type: .getStargazers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -93,7 +93,7 @@ class StarViewController: UIViewController {
                     } else {
                         self?.stargazersItems = results
                         self?.isLoading = false
-                        if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
                             self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
                         }
                     }

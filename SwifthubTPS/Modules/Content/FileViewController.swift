@@ -15,7 +15,7 @@ class FileViewController: UIViewController {
     
     // MARK: - Public properties
     var contentItem: Content?
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     var gitHubAuthenticationManager = GITHUB()
     
     // MARK: - Private properties

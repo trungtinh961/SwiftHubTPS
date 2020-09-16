@@ -20,7 +20,7 @@ class ChatViewController: MessagesViewController {
     var issueItem: Issue?
     var pullItem: PullRequest?
     var number: Int?
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     var messages: [MessageType] = [] {
         didSet {
             self.messagesCollectionView.reloadData()
@@ -36,7 +36,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = repoItem?.fullname
+        self.title = repositoryItem?.fullname
         number = issueItem?.number ?? pullItem?.number ?? 0
         updateTableView(type: .getIssueComments)
     }
@@ -75,7 +75,7 @@ class ChatViewController: MessagesViewController {
     
     // MARK: - Private Methods
     private func updateTableView(type: GetType, body: String = ""){
-        issueCommentGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: number ?? 0, body: body) { [weak self] results, errorMessage, statusCode in
+        issueCommentGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "", number: number ?? 0, body: body) { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if type == .getIssueComments {
                     self?.messages = results

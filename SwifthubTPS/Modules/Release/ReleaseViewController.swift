@@ -15,7 +15,7 @@ class ReleaseViewController: UIViewController {
     
     // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     
     // MARK: - Private properties
     private var isLoading = false
@@ -28,7 +28,7 @@ class ReleaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.title = repoItem?.fullname!
+        self.title = repositoryItem?.fullname!
         updateTableView()
     }
     
@@ -52,7 +52,7 @@ class ReleaseViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        releaseGithubAPI.getResults(type: .getReleases, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+        releaseGithubAPI.getResults(type: .getReleases, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true

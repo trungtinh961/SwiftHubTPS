@@ -59,6 +59,7 @@ class RepositoryViewController: UIViewController {
         getData()
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.languageChartCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
         /// Config layout
@@ -104,14 +105,14 @@ class RepositoryViewController: UIViewController {
     @IBAction func btnWatches(_ sender: Any) {
         let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
         watchingViewController.getType = .getWatchers
-        watchingViewController.repoItem = repositoryItem
+        watchingViewController.repositoryItem = repositoryItem
         watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         self.navigationController?.pushViewController(watchingViewController, animated: true)
     }
     
     @IBAction func btnStarsCount(_ sender: Any) {
         let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
-        starsViewController.repoItem = repositoryItem
+        starsViewController.repositoryItem = repositoryItem
         starsViewController.getType = .getStargazers
         starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         self.navigationController?.pushViewController(starsViewController, animated: true)
@@ -119,7 +120,7 @@ class RepositoryViewController: UIViewController {
     
     @IBAction func btnForks(_ sender: Any) {
         let forksViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.forkVC.rawValue) as! ForkViewController
-        forksViewController.repoItem = repositoryItem
+        forksViewController.repositoryItem = repositoryItem
         forksViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         self.navigationController?.pushViewController(forksViewController, animated: true)
     }
@@ -229,42 +230,42 @@ extension RepositoryViewController: UITableViewDelegate {
         case "issues":            
             let issuesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.issueVC.rawValue) as! IssueViewController
             issuesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            issuesViewController.repoItem = repositoryItem
+            issuesViewController.repositoryItem = repositoryItem
             self.navigationController?.pushViewController(issuesViewController, animated: true)
         case "pulls":
             let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.pullVC.rawValue) as! PullRequestViewController
-            pullsViewController.repoItem = repositoryItem
+            pullsViewController.repositoryItem = repositoryItem
             pullsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(pullsViewController, animated: true)
         case "commits":
             let commitsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
-            commitsViewController.repoItem = repositoryItem
+            commitsViewController.repositoryItem = repositoryItem
             commitsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(commitsViewController, animated: true)
         case "branches":
             let branchesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.branchVC.rawValue) as! BranchViewController
-            branchesViewController.repoItem = repositoryItem
+            branchesViewController.repositoryItem = repositoryItem
             branchesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             branchesViewController.delegate = self
             self.navigationController?.pushViewController(branchesViewController, animated: true)
         case "releases":
             let releaseViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.releaseVC.rawValue) as! ReleaseViewController
-            releaseViewController.repoItem = repositoryItem
+            releaseViewController.repositoryItem = repositoryItem
             releaseViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(releaseViewController, animated: true)
         case "contributors":
             let contributorViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contributorVC.rawValue) as! ContributorViewController
-            contributorViewController.repoItem = repositoryItem
+            contributorViewController.repositoryItem = repositoryItem
             contributorViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(contributorViewController, animated: true)
         case "events":
             let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repoEventVC.rawValue) as! RepositoryEventViewController
-            eventViewController.repoItem = repositoryItem
+            eventViewController.repositoryItem = repositoryItem
             eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(eventViewController, animated: true)
         case "contents":
             let contentViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contentVC.rawValue) as! ContentViewController
-            contentViewController.repoItem = repositoryItem
+            contentViewController.repositoryItem = repositoryItem
             contentViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(contentViewController, animated: true)
         default:

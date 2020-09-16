@@ -19,7 +19,7 @@ class WatchingViewController: UIViewController {
     var gitHubAuthenticationManager = GITHUB()
     var getType: GetType?
     var userItem: User?
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     
     // MARK: - Private properties
     private var isLoading = false
@@ -85,7 +85,7 @@ class WatchingViewController: UIViewController {
                 }
             }
         } else if getType == .getWatchers {
-            watcherGithubAPI.getResults(type: .getWatchers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+            watcherGithubAPI.getResults(type: .getWatchers, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -93,7 +93,7 @@ class WatchingViewController: UIViewController {
                     } else {
                         self?.watcherItems = results
                         self?.isLoading = false
-                        if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
                             self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
                         }
                     }

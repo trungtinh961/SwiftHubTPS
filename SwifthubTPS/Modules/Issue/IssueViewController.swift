@@ -17,7 +17,7 @@ class IssueViewController: UIViewController {
     
     // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
-    var repoItem: Repository?
+    var repositoryItem: Repository?
     
     // MARK: - Private properties
     private var state: IssueState = .open
@@ -66,7 +66,7 @@ class IssueViewController: UIViewController {
         noResult = false
         
         if state == .open {
-            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -74,7 +74,7 @@ class IssueViewController: UIViewController {
                     } else {
                         self?.issueItems = results
                         self?.isLoading = false
-                        if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
                             self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
                         }
                     }
@@ -85,7 +85,7 @@ class IssueViewController: UIViewController {
                 }
             }
         } else if state == .closed {
-            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, state: .closed, fullname: repoItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, state: .closed, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -93,7 +93,7 @@ class IssueViewController: UIViewController {
                     } else {
                         self?.issueItems = results
                         self?.isLoading = false
-                        if let smallURL = URL(string: self?.repoItem?.owner?.avatarUrl ?? "") {
+                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
                             self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
                         }
                     }
@@ -165,7 +165,7 @@ extension IssueViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let chatViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.chatVC.rawValue) as! ChatViewController
-        chatViewController.repoItem = repoItem
+        chatViewController.repositoryItem = repositoryItem
         chatViewController.issueItem = issueItems?[indexPath.row]
         chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager        
         self.navigationController?.pushViewController(chatViewController, animated: true)        
