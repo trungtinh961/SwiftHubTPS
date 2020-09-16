@@ -29,7 +29,7 @@
                                 <rect key="frame" x="83" y="1" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="LTc-3V-l4S" firstAttribute="top" secondItem="9ya-Tn-NIy" secondAttribute="top" constant="1" id="0hv-2Y-y61"/>
                             <constraint firstAttribute="trailing" secondItem="LTc-3V-l4S" secondAttribute="trailing" id="DJc-Zc-NTd"/>

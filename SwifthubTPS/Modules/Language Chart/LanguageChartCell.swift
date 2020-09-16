@@ -47,9 +47,6 @@ class LanguageChartCell: UITableViewCell {
                         self.results.append(ChartLanguage(name: key, color: self.colorLanguages[key]?.color, quantity: value))
                     }
                     self.results.sort(by: { $0.quantity > $1.quantity } )
-                    for item in self.results {
-                        print(item.string())
-                    }
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                     }

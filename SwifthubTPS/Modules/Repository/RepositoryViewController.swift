@@ -189,7 +189,11 @@ extension RepositoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            if isLoading {
+                return 0
+            } else {
+                return 1
+            }
         } else {
             if isLoading {
                 return 1
