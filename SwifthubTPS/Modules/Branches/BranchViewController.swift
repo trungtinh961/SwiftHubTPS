@@ -14,25 +14,24 @@ protocol BranchViewControllerDelegate: class {
 
 class BranchViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var resultTableView: UITableView!
     
+    
+    // MARK: - Public properties
     weak var delegate: BranchViewControllerDelegate?
     var repoItem: Repository?
-    var gitHubAuthenticationManager = GITHUB()
+    var gitHubAuthenticationManager = GITHUB()    
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var branchGithubAPI = GitHubAPI<Branch>()
     private var branchItems: [Branch]?
     
-    @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    
-    // MARK: - Life Cycle
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.title = repoItem?.fullname!
         updateTableView()
         
@@ -48,13 +47,11 @@ class BranchViewController: UIViewController {
     }
     
     // MARK: - IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method
-   
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -75,12 +72,10 @@ class BranchViewController: UIViewController {
                 debugPrint("Search error: " + errorMessage)
             }
         }
-    }
-    
+    }    
 }
 
 // MARK: - UITableViewDataSource
-
 extension BranchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
@@ -88,7 +83,6 @@ extension BranchViewController: UITableViewDataSource {
         } else {
             return branchItems?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,20 +103,14 @@ extension BranchViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate
-
 extension BranchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let cell = tableView.cellForRow(at: indexPath) as! DetailCell
         delegate?.branchViewController(self, didFinishEditing: cell.lbTitleCell.text!)
     }
-    
-    
-    
 }
 

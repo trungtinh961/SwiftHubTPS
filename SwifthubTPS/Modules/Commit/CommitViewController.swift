@@ -10,26 +10,25 @@ import UIKit
 
 class CommitViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var commitGithubAPI = GitHubAPI<Commit>()
     private var commitItems: [Commit]?
     
-    @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    // MARK: - Life Cycle
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.title = repoItem?.fullname!
         updateTableView()
-        
     }
     
     override func viewDidLoad() {
@@ -42,13 +41,11 @@ class CommitViewController: UIViewController {
     }
     
     // MARK: - IBActions
-
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method
-    
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -70,7 +67,6 @@ class CommitViewController: UIViewController {
             }
         }
     }
-    
 }
 
 // MARK: - UITableViewDataSource
@@ -81,7 +77,6 @@ extension CommitViewController: UITableViewDataSource {
         } else {
             return commitItems?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -106,8 +101,7 @@ extension CommitViewController: UITableViewDataSource {
             cell.lbTag.text = String(subSHA!)
             return cell
         }
-    }
-    
+    }    
 }
 
 // MARK: - UITableViewDelegate

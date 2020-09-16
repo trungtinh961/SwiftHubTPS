@@ -12,9 +12,14 @@ import Toast_Swift
 
 class NotificationViewController: UIViewController {
 
-    //MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var notificationSegmentControl: UISegmentedControl!
+    @IBOutlet weak var resultTableView: UITableView!
     
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
+    
+    // MARK: - Private properties
     private var notificationState = NotificationState.unread
     private var isLoading = false
     private var noResult = false
@@ -22,11 +27,7 @@ class NotificationViewController: UIViewController {
     private var notificationGithubAPI = GitHubAPI<Notification>()
     private var notificationItems: [Notification]?
     
-    @IBOutlet weak var notificationSegmentControl: UISegmentedControl!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    // MARK: - Life Cycles
-    
+    // MARK: - Lifecycles
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView()
@@ -42,7 +43,6 @@ class NotificationViewController: UIViewController {
     }
     
     // MARK:- IBActions
-    
     @IBAction func notificationSegmentControl(_ sender: Any) {
         switch notificationSegmentControl.selectedSegmentIndex {
         case 0: notificationState = .unread
@@ -68,7 +68,6 @@ class NotificationViewController: UIViewController {
     }
     
     // MARK:- Private Methods
-    
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -123,8 +122,7 @@ extension NotificationViewController: UITableViewDataSource {
             }
             return cell
         }
-    }
-    
+    }    
 }
 
 // MARK: - UITableViewDelegate
@@ -136,7 +134,6 @@ extension NotificationViewController: UITableViewDelegate {
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.repositoryItem = itemCell.repository
-        repositoryViewController.modalPresentationStyle = .automatic
         self.present(repositoryViewController, animated:true, completion:nil)
     }
 }

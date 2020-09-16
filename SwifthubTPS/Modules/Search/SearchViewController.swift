@@ -11,8 +11,19 @@ import UIKit
 import UIColor_Hex_Swift
 
 class SearchViewController: UIViewController {
-    // MARK: - Properties
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
+    @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var lbTitle: UILabel!
+    @IBOutlet weak var titleConstraints: NSLayoutConstraint!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
+    
+    // MARK: - Private properties
     private var trendingRepositoryGithubAPI = TrendingGithubAPI<TrendingRepository>()
     private var trendingUserGithubAPI = TrendingGithubAPI<TrendingUser>()
     private var searchRepositoryGithubAPI = GitHubAPI<RepositorySearch>()
@@ -32,15 +43,7 @@ class SearchViewController: UIViewController {
     private var isSearching = false
     private var noResult = false
     
-    @IBOutlet weak var resultTableView: UITableView!
-    @IBOutlet weak var typeApiSegmentControl: UISegmentedControl!
-    @IBOutlet weak var sinceApiSegmentControl: UISegmentedControl!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var titleConstraints: NSLayoutConstraint!
-    
-    // MARK: - LifeCycle
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView()
@@ -58,7 +61,6 @@ class SearchViewController: UIViewController {
    }
     
     // MARK: - IBActions
-    
     @IBAction func typeApiSegmentControl(_ sender: Any) {
         switch typeApiSegmentControl.selectedSegmentIndex {
         case 0:
@@ -79,10 +81,8 @@ class SearchViewController: UIViewController {
         }
         updateTableView(language: language)
     }
-        
     
-    // MARK: - Private
-    
+    // MARK: - Private Methods
     private func updateTableView(language: String? = "", query: String = "") {
         isLoading = true
         resultTableView.reloadData()
@@ -126,7 +126,6 @@ class SearchViewController: UIViewController {
         } else if getType == .user {
             if isSearching {
                 searchUserGithubAPI.getResults(type: .user, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage, statusCode in
-                  
                     if let result = results?[0] {
                         if result.totalCount == 0 {
                             self?.noResult = true
@@ -138,7 +137,6 @@ class SearchViewController: UIViewController {
                         }
                         self?.resultTableView.reloadData()
                     }
-                  
                     if !errorMessage.isEmpty {
                         debugPrint("Search error: " + errorMessage)
                     }
@@ -153,7 +151,6 @@ class SearchViewController: UIViewController {
                         }
                         self?.resultTableView.reloadData()
                     }
-
                     if !errorMessage.isEmpty {
                         debugPrint("Search error: " + errorMessage)
                     }
@@ -165,7 +162,6 @@ class SearchViewController: UIViewController {
 
 // MARK:- UITableViewDataSource
 extension SearchViewController: UITableViewDataSource {
-      
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
             return 1
@@ -185,7 +181,6 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if isLoading {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
@@ -202,9 +197,7 @@ extension SearchViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else if getType == .repository {
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
-            
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
@@ -269,9 +262,7 @@ extension SearchViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-
 extension SearchViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
@@ -285,7 +276,6 @@ extension SearchViewController: UITableViewDelegate {
                 indexCell = Repository(repo: trendingRepositories![indexPath.row])
             }
             repositoryViewController.repositoryItem = indexCell
-            repositoryViewController.modalPresentationStyle = .automatic
             let navController = UINavigationController(rootViewController: repositoryViewController)
             self.present(navController, animated:true, completion: nil)
             
@@ -296,35 +286,18 @@ extension SearchViewController: UITableViewDelegate {
             } else {
                 indexCell = User(user: trendingUsers![indexPath.row])
             }
-            
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = indexCell
             userViewController.isTabbarCall = false
-            userViewController.modalPresentationStyle = .automatic
             let navController = UINavigationController(rootViewController: userViewController)
             self.present(navController, animated:true, completion: nil)
-            
         }        
     }
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        
-//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-//            debugPrint("reach bottom")
-//        }
-//
-//        if (scrollView.contentOffset.y < 0){
-//            debugPrint("reach top")
-//        }
-//
-//    }
 }
 
 // MARK:- UISearchBarDelegate
-
 extension SearchViewController: UISearchBarDelegate {
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let searchText = searchBar.text, !searchText.isEmpty else {
@@ -351,10 +324,7 @@ extension SearchViewController: UISearchBarDelegate {
     }    
 }
 
-
-
 // MARK:- Navigation
-
 extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             let controller = segue.destination as! LanguageViewController
@@ -375,4 +345,10 @@ extension SearchViewController: LanguageViewControllerDelegate {
         }
         dismiss(animated: true, completion: nil)
     }
+    
+    func allLanguageViewController(_ controller: LanguageViewController) {
+        updateTableView(query: searchTextCurrent)
+        dismiss(animated: true, completion: nil)
+    }
+
 }

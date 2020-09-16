@@ -11,18 +11,7 @@ import Toast_Swift
 
 class RepositoryViewController: UIViewController {
 
-    // MARK: - Properties
-    
-    private var downloadTask: URLSessionDownloadTask?
-    var gitHubAuthenticationManager = GITHUB()
-    private var repositoryGithubAPI = GitHubAPI<Repository>()
-    var repositoryItem: Repository?
-    private var isLoading = false
-    private var isStarred = false
-    private var repositoryDetails: [DetailCellProperty]?
-    private var branch: String?
-    private let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-    
+    // MARK: - IBOutlets
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var lbDescription: UILabel!
@@ -32,15 +21,25 @@ class RepositoryViewController: UIViewController {
     @IBOutlet weak var watchesView: UIView!
     @IBOutlet weak var starsView: UIView!
     @IBOutlet weak var forksView: UIView!
-    @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var btnWatches: UIButton!
     @IBOutlet weak var btnStarsCount: UIButton!
     @IBOutlet weak var btnForks: UIButton!
     @IBOutlet weak var btnStar: UIButton!
     
+    // MARK: - Public properties
+    var gitHubAuthenticationManager = GITHUB()
+    var repositoryItem: Repository?
     
-    // MARK: - Life Cycle
+    // MARK: - Private properties
+    private var downloadTask: URLSessionDownloadTask?
+    private var repositoryGithubAPI = GitHubAPI<Repository>()
+    private var isLoading = false
+    private var isStarred = false
+    private var repositoryDetails: [DetailCellProperty]?
+    private var branch: String?
+    private let storyBoard = UIStoryboard(name: "Main", bundle:nil)
     
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -62,7 +61,6 @@ class RepositoryViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
-        
         /// Config layout
         btnStar.layer.cornerRadius = btnStar.frame.height / 2
         btnStar.layer.masksToBounds = true
@@ -80,7 +78,6 @@ class RepositoryViewController: UIViewController {
     }
     
     // MARK: - IBActions
-    
     @IBAction func btnStar(_ sender: Any) {
         if isStarred {
             _ = checkStarRepository(type: .unStarRepository)
@@ -106,7 +103,6 @@ class RepositoryViewController: UIViewController {
     
     @IBAction func btnWatches(_ sender: Any) {
         let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
-        watchingViewController.modalPresentationStyle = .automatic
         watchingViewController.getType = .getWatchers
         watchingViewController.repoItem = repositoryItem
         watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
@@ -115,7 +111,6 @@ class RepositoryViewController: UIViewController {
     
     @IBAction func btnStarsCount(_ sender: Any) {
         let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
-        starsViewController.modalPresentationStyle = .automatic
         starsViewController.repoItem = repositoryItem
         starsViewController.getType = .getStargazers
         starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
@@ -124,16 +119,12 @@ class RepositoryViewController: UIViewController {
     
     @IBAction func btnForks(_ sender: Any) {
         let forksViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.forkVC.rawValue) as! ForkViewController
-        forksViewController.modalPresentationStyle = .automatic
         forksViewController.repoItem = repositoryItem
         forksViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         self.navigationController?.pushViewController(forksViewController, animated: true)
     }
     
-    
-    
-    // MARK: - Private Method
-    
+    // MARK: - Private Methods
     private func getData() {
         isLoading = true
         
@@ -171,7 +162,6 @@ class RepositoryViewController: UIViewController {
             if !errorMessage.isEmpty {
                 debugPrint("Search error: " + errorMessage)
             }
-            
         }
         return isSuccess
     }
@@ -186,20 +176,17 @@ class RepositoryViewController: UIViewController {
             }
         }
     }
-    
 }
 
 
 // MARK: - UITableViewDataSource
 extension RepositoryViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading {
             return 1
         } else {
             return repositoryDetails?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -222,24 +209,18 @@ extension RepositoryViewController: UITableViewDataSource {
                 cell.imgCell.image = UIImage(named: img)
             }
             cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
-            
             return cell
         }
     }
-    
-    
 }
 
 
 // MARK: - UITableViewDelegate
 extension RepositoryViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)        
         let itemCell = repositoryDetails?[indexPath.row]
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        debugPrint(repositoryDetails?[indexPath.row].id ?? "")
-        
         switch itemCell!.id {
         case "homepage":
             if let url = URL(string: repositoryItem?.homepage ?? "") {
@@ -247,69 +228,56 @@ extension RepositoryViewController: UITableViewDelegate {
             }
         case "issues":            
             let issuesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.issueVC.rawValue) as! IssueViewController
-            issuesViewController.modalPresentationStyle = .automatic
             issuesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             issuesViewController.repoItem = repositoryItem
             self.navigationController?.pushViewController(issuesViewController, animated: true)
         case "pulls":
             let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.pullVC.rawValue) as! PullRequestViewController
-            pullsViewController.modalPresentationStyle = .automatic
             pullsViewController.repoItem = repositoryItem
             pullsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(pullsViewController, animated: true)
         case "commits":
             let commitsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
-            commitsViewController.modalPresentationStyle = .automatic
             commitsViewController.repoItem = repositoryItem
             commitsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(commitsViewController, animated: true)
         case "branches":
             let branchesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.branchVC.rawValue) as! BranchViewController
-            branchesViewController.modalPresentationStyle = .automatic
             branchesViewController.repoItem = repositoryItem
             branchesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             branchesViewController.delegate = self
             self.navigationController?.pushViewController(branchesViewController, animated: true)
         case "releases":
             let releaseViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.releaseVC.rawValue) as! ReleaseViewController
-            releaseViewController.modalPresentationStyle = .automatic
             releaseViewController.repoItem = repositoryItem
             releaseViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(releaseViewController, animated: true)
         case "contributors":
             let contributorViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contributorVC.rawValue) as! ContributorViewController
-            contributorViewController.modalPresentationStyle = .automatic
             contributorViewController.repoItem = repositoryItem
             contributorViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(contributorViewController, animated: true)
         case "events":
             let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repoEventVC.rawValue) as! RepositoryEventViewController
-            eventViewController.modalPresentationStyle = .automatic
             eventViewController.repoItem = repositoryItem
             eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(eventViewController, animated: true)
         case "contents":
             let contentViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contentVC.rawValue) as! ContentViewController
-            contentViewController.modalPresentationStyle = .automatic
             contentViewController.repoItem = repositoryItem
             contentViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             self.navigationController?.pushViewController(contentViewController, animated: true)
-            
         default:
             break
         }
     }
 }
 
-
 // MARK: - Delegate
-
 extension RepositoryViewController: BranchViewControllerDelegate {
-    
     func branchViewController(_ controller: BranchViewController, didFinishEditing branchSelected: String) {
         self.branch = branchSelected
         resultTableView.reloadData()
         self.navigationController?.popViewController(animated: true)
-    }
-    
+    }    
 }

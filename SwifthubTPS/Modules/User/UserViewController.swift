@@ -10,18 +10,7 @@ import UIKit
 
 class UserViewController: UIViewController {
 
-    // MARK: - Properties
-    var gitHubAuthenticationManager = GITHUB()
-    var userItem: User?
-    var isTabbarCall = false
-    private var downloadTask: URLSessionDownloadTask?
-    private var userGithubAPI = GitHubAPI<User>()
-    private var isLoading = false
-    private var isFollowed = false
-    private var userDetails: [DetailCellProperty]?
-    private var totalRepos = 0
-    private var organizations: [User] = []
-    
+    // MARK: - IBOutlets
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var lbDescription: UILabel!
@@ -31,11 +20,23 @@ class UserViewController: UIViewController {
     @IBOutlet weak var repositoriesView: UIView!
     @IBOutlet weak var followersView: UIView!
     @IBOutlet weak var followingView: UIView!
-    @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var btnAddUser: UIButton!
     
-    // MARK: - Life Cycle
+    // MARK: - Public properties
+    var gitHubAuthenticationManager = GITHUB()
+    var userItem: User?
+    var isTabbarCall = false
     
+    // MARK: - Private properties
+    private var downloadTask: URLSessionDownloadTask?
+    private var userGithubAPI = GitHubAPI<User>()
+    private var isLoading = false
+    private var isFollowed = false
+    private var userDetails: [DetailCellProperty]?
+    private var totalRepos = 0
+    private var organizations: [User] = []
+    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -46,8 +47,6 @@ class UserViewController: UIViewController {
             btnAddUser.isHidden = true
             btnAddUser.isEnabled = false
         }
-        
-        
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem, isTabbarCall {
             self.navigationItem.leftBarButtonItem?.tintColor = .clear
             self.navigationItem.leftBarButtonItem?.isEnabled = false
@@ -85,7 +84,6 @@ class UserViewController: UIViewController {
     }
     
     // MARK: - IBActions
-    
     @IBAction func btnAddUser(_ sender: Any) {
         if isFollowed {
             _ = checkFollowUser(type: .unFollowUser)
@@ -101,7 +99,6 @@ class UserViewController: UIViewController {
         isFollowed = !isFollowed
     }
     
-    
     @IBAction func btnClose(_ sender: Any) {
         if self.navigationController?.viewControllers.count == 1 {
             dismiss(animated: true, completion: nil)
@@ -109,7 +106,6 @@ class UserViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
-    
     
     @IBAction func btnLogout(_ sender: Any) {
         let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
@@ -119,7 +115,6 @@ class UserViewController: UIViewController {
         self.view.window?.makeKeyAndVisible()
     }
     
-    
     @IBAction func btnRepositories(_ sender: Any) {
         showDetails(detailType: .repositories)
     }
@@ -128,22 +123,19 @@ class UserViewController: UIViewController {
         showDetails(detailType: .followers)
     }
     
-    
     @IBAction func btnFollowing(_ sender: Any) {
         showDetails(detailType: .following)
     }
     
+    // MARK: - Private Methods
     private func showDetails(detailType: detailType) {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let repositoryDetailViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryDeatailVC.rawValue) as! RepositoryDetailViewController
-        repositoryDetailViewController.modalPresentationStyle = .automatic
         repositoryDetailViewController.detailType = detailType
         repositoryDetailViewController.userItem = userItem
         repositoryDetailViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         self.navigationController?.pushViewController(repositoryDetailViewController, animated: true)
     }
-    
-    // MARK: - Private Method
     
     private func checkFollowUser(type: GetType) -> Bool {
         var isSuccess = false
@@ -157,7 +149,6 @@ class UserViewController: UIViewController {
         }
         return isSuccess
     }
-    
     
     private func getData() {
         isLoading = true
@@ -185,7 +176,6 @@ class UserViewController: UIViewController {
                 debugPrint("Search error: " + errorMessage)
             }
         }
-        
     }
     
     private func getOrganizations() {
@@ -210,12 +200,10 @@ class UserViewController: UIViewController {
             }
         }
     }
-
 }
 
 // MARK: - UITableViewDataSource
 extension UserViewController: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         if organizations.count > 0 {
             return 2
@@ -225,7 +213,6 @@ extension UserViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 45))
         headerView.backgroundColor = UIColor("#F5F5F5")
         let label = UILabel()
@@ -236,7 +223,6 @@ extension UserViewController: UITableViewDataSource {
             label.font = UIFont.systemFont(ofSize: 16.0)
         }
         return headerView
-
     }
 
     
@@ -280,37 +266,31 @@ extension UserViewController: UITableViewDataSource {
             return cell
         }
     }
-    
 }
 
 // MARK: - UITableViewDelegate
 extension UserViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let section = indexPath.section
         if section == 0 {
             let itemCell = userDetails?[indexPath.row]
-            debugPrint(userDetails?[indexPath.row].id ?? "")
             switch itemCell!.id {
             case "starred":
                 let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
-                starsViewController.modalPresentationStyle = .automatic
                 starsViewController.userItem = userItem
                 starsViewController.getType = .getStarred
                 starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
                 self.navigationController?.pushViewController(starsViewController, animated: true)
             case "subscriptions":
                 let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
-                watchingViewController.modalPresentationStyle = .automatic
                 watchingViewController.getType = .getWatching
                 watchingViewController.userItem = userItem
                 watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
                 self.navigationController?.pushViewController(watchingViewController, animated: true)
             case "events":
                 let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
-                eventViewController.modalPresentationStyle = .automatic
                 eventViewController.userItem = userItem
                 eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
                 self.navigationController?.pushViewController(eventViewController, animated: true)
@@ -318,7 +298,6 @@ extension UserViewController: UITableViewDelegate {
                 if let url = URL(string: userItem?.blog ?? "") {
                     UIApplication.shared.open(url)
                 }
-
             default:
                 break
             }
@@ -327,9 +306,7 @@ extension UserViewController: UITableViewDelegate {
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = organizations[indexPath.row]
             userViewController.isTabbarCall = false
-            userViewController.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(userViewController, animated: true)
         }
-    }
-    
+    }    
 }

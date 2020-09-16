@@ -11,25 +11,15 @@ import UIKit
 class RepositoryCell: UITableViewCell {
 
     @IBOutlet weak var mainView: UIView!
-    
-
     @IBOutlet weak var imgAuthor: UIImageView!
-    
     @IBOutlet weak var imgRepo: UIImageView!
-    
     @IBOutlet weak var imgCurrentPeriodStars: UIImageView!
-    
     @IBOutlet weak var lbFullname: UILabel!
-    
     @IBOutlet weak var lbDescription: UILabel!
-    
     @IBOutlet weak var lbStars: UILabel!
-    
     @IBOutlet weak var lbCurrentPeriodStars: UILabel!
-    
     @IBOutlet weak var lbLanguage: UILabel!
-    @IBOutlet weak var viewLanguageColor: UIView!
-    
+    @IBOutlet weak var viewLanguageColor: UIView!    
     
     override func awakeFromNib() {
         super.awakeFromNib()

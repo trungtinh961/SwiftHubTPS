@@ -10,11 +10,17 @@ import UIKit
 
 class StarViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var getType: GetType?
     var userItem: User?
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
@@ -23,12 +29,7 @@ class StarViewController: UIViewController {
     private var stargazersGithubAPI = GitHubAPI<User>()
     private var stargazersItems: [User]?
     
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    @IBOutlet weak var navItem: UINavigationItem!
-    
-    // MARK: - Life Cycle
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if getType == .getStarred {
@@ -54,14 +55,11 @@ class StarViewController: UIViewController {
     
 
     // MARK: - IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
-    // MARK: - Private Method
-    
+    // MARK: - Private Methods
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -106,12 +104,10 @@ class StarViewController: UIViewController {
                 }
             }
         }
-        
     }
 }
 
 // MARK: - UITableViewDataSource
-
 extension StarViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
@@ -122,7 +118,6 @@ extension StarViewController: UITableViewDataSource {
             } else {
                 return stargazersItems?.count ?? 0
             }
-            
         }
     }
     
@@ -170,16 +165,13 @@ extension StarViewController: UITableViewDelegate {
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.repositoryItem = starredItems![indexPath.row]
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            repositoryViewController.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(repositoryViewController, animated: true)
         } else {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = stargazersItems![indexPath.row]
             userViewController.isTabbarCall = false
-            userViewController.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(userViewController, animated: true)
-        }
-        
+        }        
     }
 }

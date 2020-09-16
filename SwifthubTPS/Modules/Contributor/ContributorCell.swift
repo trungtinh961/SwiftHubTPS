@@ -17,8 +17,7 @@ class ContributorCell: UITableViewCell {
     @IBOutlet weak var mainView: UIView!    
     
     override func awakeFromNib() {
-        super.awakeFromNib()
-        
+        super.awakeFromNib()        
         mainView.layer.cornerRadius = 5
         imgState.layer.masksToBounds = true
         imgState.layer.cornerRadius = imgState.frame.width / 2
@@ -28,8 +27,6 @@ class ContributorCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

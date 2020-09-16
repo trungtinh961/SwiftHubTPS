@@ -10,21 +10,22 @@ import UIKit
 
 class ContributorViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var contributorGithubAPI = GitHubAPI<User>()
     private var contributorItems: [User]?
     
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    
-     // MARK: - Life Cycle
-       
+     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
        super.viewWillAppear(animated)
        updateTableView()
@@ -43,14 +44,12 @@ class ContributorViewController: UIViewController {
        
     }
     
-     // MARK: - IBActions
-    
+    // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method
-       
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -86,7 +85,6 @@ extension ContributorViewController: UITableViewDataSource {
         } else {
             return contributorItems?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,7 +118,6 @@ extension ContributorViewController: UITableViewDelegate {
         userViewController.userItem = contributorItems?[indexPath.row]
         userViewController.isTabbarCall = false
         userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        userViewController.modalPresentationStyle = .automatic
         self.navigationController?.pushViewController(userViewController, animated: true)
     }
 }

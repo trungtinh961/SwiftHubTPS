@@ -16,12 +16,17 @@ enum detailType {
 
 class RepositoryDetailViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
     
+    // MARK: - Public properties
     var detailType: detailType?
-    private var downloadTask: URLSessionDownloadTask?
     var gitHubAuthenticationManager = GITHUB()
     var userItem: User?
+    
+    // MARK: - Private properties
+    private var downloadTask: URLSessionDownloadTask?
     private var isLoading = false
     private var noResult = false
     private var repositoryGithubAPI = GitHubAPI<Repository>()
@@ -29,12 +34,7 @@ class RepositoryDetailViewController: UIViewController {
     private var repoItems: [Repository]?
     private var userItems: [User]?
     
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    @IBOutlet weak var navItem: UINavigationItem!
-    
-    // MARK: - Life Cycles
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if detailType == .repositories {
@@ -63,17 +63,12 @@ class RepositoryDetailViewController: UIViewController {
         }
     }
     
-    
     // MARK: - IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
-    
     // MARK: - Private Methods
-    
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -138,12 +133,10 @@ class RepositoryDetailViewController: UIViewController {
             }
         }
     }
-
 }
 
 // MARK: - UITableViewDataSource
 extension RepositoryDetailViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
             return 1
@@ -176,7 +169,6 @@ extension RepositoryDetailViewController: UITableViewDataSource {
             cell.imgCurrentPeriodStars.isHidden = true
             cell.lbLanguage.isHidden = true
             cell.viewLanguageColor.isHidden = true
-            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
@@ -187,8 +179,7 @@ extension RepositoryDetailViewController: UITableViewDataSource {
             }
             return cell
         }
-    }
-    
+    }    
 }
 
 // MARK: - UITableViewDelegate
@@ -200,14 +191,12 @@ extension RepositoryDetailViewController: UITableViewDelegate {
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.repositoryItem = repoItems![indexPath.row]
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            repositoryViewController.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(repositoryViewController, animated: true)
         } else {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = userItems![indexPath.row]
             userViewController.isTabbarCall = false
-            userViewController.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(userViewController, animated: true)
         }
     }

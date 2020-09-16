@@ -10,27 +10,26 @@ import UIKit
 
 class ReleaseViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var releaseGithubAPI = GitHubAPI<Release>()
     private var releaseItems: [Release]?
-    
-    @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    
-    // MARK: - Life Cycle
-    
+        
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.title = repoItem?.fullname!
         updateTableView()
-        
     }
     
     override func viewDidLoad() {
@@ -42,12 +41,12 @@ class ReleaseViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
     }
     
+    // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
         
-    // MARK: - Private Method
-   
+    // MARK: - Private Methods
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -69,12 +68,10 @@ class ReleaseViewController: UIViewController {
             }
         }
     }
-        
 }
 
 
 // MARK: - UITableViewDataSource
-
 extension ReleaseViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
@@ -82,7 +79,6 @@ extension ReleaseViewController: UITableViewDataSource {
         } else {
             return releaseItems?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -106,16 +102,12 @@ extension ReleaseViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate
-
 extension ReleaseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
+        tableView.deselectRow(at: indexPath, animated: true)        
         if let url = URL(string: releaseItems![indexPath.row].htmlUrl ?? "") {
             UIApplication.shared.open(url)
         }

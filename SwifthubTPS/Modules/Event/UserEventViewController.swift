@@ -11,26 +11,26 @@ import UIKit
 
 class UserEventViewController: UIViewController {
     
-    // MARK: - Properties
-
+    // MARK: - IBOutlets
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet var btnBack: UIBarButtonItem!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var userItem: User?
-    private var eventType = EventType.received    
     var didAuthenticated: Bool = false
+    
+    // MARK: - Private properties
+    private var eventType = EventType.received
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var eventGithubAPI = GitHubAPI<Event>()
     private var eventItems: [Event]?
     
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    @IBOutlet var navItem: UINavigationItem!
-    @IBOutlet var btnBack: UIBarButtonItem!
-    @IBOutlet weak var segmentControl: UISegmentedControl!
-    
-    // MARK: - Life Cycle
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView(eventType: eventType)
@@ -40,8 +40,6 @@ class UserEventViewController: UIViewController {
         } else {
             self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
         }
-        
-        
     }
     
     override func viewDidLoad() {
@@ -54,11 +52,9 @@ class UserEventViewController: UIViewController {
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
-        
     }
     
     // MARK: - IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         if !gitHubAuthenticationManager.didAuthenticated {
             self.navigationController?.popViewController(animated: true)
@@ -76,11 +72,7 @@ class UserEventViewController: UIViewController {
         updateTableView(eventType: eventType)
     }
     
-    
-    
     // MARK: - Private Method
-
-    
     private func updateTableView(eventType: EventType){
         isLoading = true
         resultTableView.reloadData()
@@ -105,7 +97,6 @@ class UserEventViewController: UIViewController {
                 }
             }
     }
-
 }
 
 
@@ -146,7 +137,6 @@ extension UserEventViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-
 extension UserEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -155,8 +145,6 @@ extension UserEventViewController: UITableViewDelegate {
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.modalPresentationStyle = .automatic
-        
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
             let navController = UINavigationController(rootViewController: repositoryViewController)
             self.present(navController, animated:true, completion: nil)

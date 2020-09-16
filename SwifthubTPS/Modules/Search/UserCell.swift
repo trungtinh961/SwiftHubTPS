@@ -11,13 +11,9 @@ import UIKit
 class UserCell: UITableViewCell {
 
     @IBOutlet weak var mainView: UIView!
-
     @IBOutlet weak var imgAuthor: UIImageView!
-    
     @IBOutlet weak var imgUser: UIImageView!
-    
     @IBOutlet weak var lbFullname: UILabel!
-    
     @IBOutlet weak var lbDescription: UILabel!
     
     override func awakeFromNib() {

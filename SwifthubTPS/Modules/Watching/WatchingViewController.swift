@@ -11,11 +11,17 @@ import UIKit
 
 class WatchingViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var getType: GetType?
     var userItem: User?
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
@@ -24,12 +30,7 @@ class WatchingViewController: UIViewController {
     private var watcherGithubAPI = GitHubAPI<User>()
     private var watcherItems: [User]?
     
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    @IBOutlet weak var navItem: UINavigationItem!
-    
-    // MARK: - Life Cycles
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if getType == .getWatching {
@@ -53,18 +54,12 @@ class WatchingViewController: UIViewController {
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
     }
     
-    
-    
     // MARK:- IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
-    
     // MARK:- Private Methods
-
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -110,13 +105,11 @@ class WatchingViewController: UIViewController {
             }
         }
     }
-    
 }
 
 
 // MARK: - UITableViewDataSource
 extension WatchingViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
             return 1
@@ -163,7 +156,6 @@ extension WatchingViewController: UITableViewDataSource {
             return cell
         }
     }
-    
 }
 
 
@@ -177,16 +169,13 @@ extension WatchingViewController: UITableViewDelegate {
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.repositoryItem = watchingItems![indexPath.row]
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            repositoryViewController.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(repositoryViewController, animated: true)
         } else {
             let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
             userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             userViewController.userItem = watcherItems![indexPath.row]
             userViewController.isTabbarCall = false
-            userViewController.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(userViewController, animated: true)
         }
-        
     }
 }

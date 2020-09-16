@@ -16,30 +16,25 @@ enum LoginType {
 
 class LoginViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    private var loginType: LoginType = .oauth
-    
+    // MARK: - IBOutlets
     @IBOutlet weak var btnOauth: UIButton!
     @IBOutlet weak var oauthView: UIView!
     
+    // MARK: - Private properties
+    private var loginType: LoginType = .oauth
     
-    // MARK: - Life Cycles
-      
-    
+    // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         btnOauth.layer.cornerRadius = 5
-        
     }
     
     // MARK: - IBActions
-
     @IBAction func btnOauth(_ sender: Any) {
         showAlertWithDistructiveButton()
     }
     
+    // MARK: - Private Methods
     private func showAlertWithDistructiveButton() {
         let alert = UIAlertController(title: "\"SwiftHub\" wants to use \"github.com\" to sign in.", message: "This allows the app and website to share information about you.", preferredStyle: UIAlertController.Style.alert)
 
@@ -53,18 +48,14 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Public Methods
-    
     func login() {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let webviewViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.webviewVC.rawValue) as! WebviewViewController
-        webviewViewController.modalPresentationStyle = .automatic
         webviewViewController.modalTransitionStyle = .flipHorizontal
         present(webviewViewController, animated:true, completion:nil)
     }
-   
 }
 
-extension LoginViewController: UIWebViewDelegate {
-    
+extension LoginViewController: UIWebViewDelegate {    
 }
 

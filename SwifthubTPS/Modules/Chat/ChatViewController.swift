@@ -31,8 +31,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Private properties
     private var downloadTask: URLSessionDownloadTask?
     private var issueCommentGithubAPI = GitHubAPI<Comment>()
-    private var issueCommentItems: [Comment]?
-    
+    private var issueCommentItems: [Comment]?    
     
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +49,6 @@ class ChatViewController: MessagesViewController {
     }
     
     func configureMessageCollectionView() {
-        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -70,11 +68,12 @@ class ChatViewController: MessagesViewController {
         )
     }
     
-    // MARK: - Private Methods
+    // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }    
     
+    // MARK: - Private Methods
     private func updateTableView(type: GetType, body: String = ""){
         issueCommentGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repoItem?.fullname ?? "", number: number ?? 0, body: body) { [weak self] results, errorMessage, statusCode in
             if let results = results {
@@ -97,7 +96,6 @@ class ChatViewController: MessagesViewController {
     
     
     // MARK: - Helpers
-
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section - 1 >= 0 else { return false }
         return (messages[indexPath.section].sender as? User) == (messages[indexPath.section - 1].sender as? User)
@@ -111,9 +109,7 @@ class ChatViewController: MessagesViewController {
 }
 
 // MARK: - MessagesDataSource
-
 extension ChatViewController: MessagesDataSource {
-
     func currentSender() -> SenderType {
         return currentUser ?? User()
     }
@@ -140,7 +136,6 @@ extension ChatViewController: MessagesDataSource {
 
 // MARK: - MessageCellDelegate
 extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
-   
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         if let user = message.sender as? User {
             avatarView.isHidden = isNextMessageSameSender(at: indexPath)
@@ -174,12 +169,10 @@ extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
         let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
         return .bubbleTail(tail, .curved)
     }
-    
 }
 
 // MARK: - MessagesLayoutDelegate
 extension ChatViewController: MessagesLayoutDelegate {
-
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 10
     }

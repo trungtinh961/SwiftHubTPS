@@ -10,28 +10,28 @@ import UIKit
 
 class PullRequestViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var stateSegmentControl: UISegmentedControl!
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var state: IssueState = .open
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var pullGithubAPI = GitHubAPI<PullRequest>()
     private var pullItems: [PullRequest]?
-    
-    @IBOutlet weak var stateSegmentControl: UISegmentedControl!
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    
-    // MARK: - Life Cycle
-    
+        
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView()
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +42,10 @@ class PullRequestViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
         ///Config layout
         imgAuthor.layer.masksToBounds = true
-        imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2        
-        
+        imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
     }
-    
 
     // MARK: - IBActions
-    
     @IBAction func stateSegmentControl(_ sender: Any) {
         switch stateSegmentControl.selectedSegmentIndex {
         case 0: state = .open
@@ -62,8 +59,7 @@ class PullRequestViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - Private Method
-    
+    // MARK: - Private Methods
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -108,10 +104,8 @@ class PullRequestViewController: UIViewController {
                 }
             }
         }        
-    }
-    
+    }    
 }
-
 
 // MARK: - UITableViewDataSource
 extension PullRequestViewController: UITableViewDataSource {
@@ -121,7 +115,6 @@ extension PullRequestViewController: UITableViewDataSource {
         } else {
             return pullItems?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -146,8 +139,7 @@ extension PullRequestViewController: UITableViewDataSource {
             } else if state == .closed {
                 cell.lbDescription.text = "#\(itemCell!.number!) closed \(itemCell!.createdAt!.toRelative()) by \(itemCell!.user!.login!)"
                 cell.imgState.tintColor = .purple
-            }
-            
+            }            
             cell.labelView.subviews.forEach({ $0.removeFromSuperview() })
             let labels = itemCell!.labels!
             var currentX: CGFloat = 0
@@ -171,7 +163,6 @@ extension PullRequestViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let chatViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.chatVC.rawValue) as! ChatViewController
-        chatViewController.modalPresentationStyle = .automatic
         chatViewController.repoItem = repoItem
         chatViewController.pullItem = pullItems?[indexPath.row]
         chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager

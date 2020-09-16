@@ -10,9 +10,16 @@ import UIKit
 
 class IssueViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var stateSegmentControl: UISegmentedControl!
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var state: IssueState = .open
     private var isLoading = false
     private var noResult = false
@@ -20,18 +27,11 @@ class IssueViewController: UIViewController {
     private var issueGithubAPI = GitHubAPI<Issue>()
     private var issueItems: [Issue]?
     
-    @IBOutlet weak var stateSegmentControl: UISegmentedControl!
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    
-    // MARK: - Life Cycle
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView()
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +43,9 @@ class IssueViewController: UIViewController {
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
-        
     }
     
     // MARK: - IBActions
-    
     @IBAction func stateSegmentControl(_ sender: Any) {
         switch stateSegmentControl.selectedSegmentIndex {
         case 0: state = .open
@@ -61,9 +59,7 @@ class IssueViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
     // MARK: - Private Method
-    
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -109,8 +105,6 @@ class IssueViewController: UIViewController {
             }
         }        
     }
-    
-    
 }
 
 // MARK: - UITableViewDataSource
@@ -121,7 +115,6 @@ extension IssueViewController: UITableViewDataSource {
         } else {
             return issueItems?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -164,8 +157,6 @@ extension IssueViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate
@@ -174,11 +165,9 @@ extension IssueViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let chatViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.chatVC.rawValue) as! ChatViewController
-        chatViewController.modalPresentationStyle = .automatic
         chatViewController.repoItem = repoItem
         chatViewController.issueItem = issueItems?[indexPath.row]
         chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager        
-        self.navigationController?.pushViewController(chatViewController, animated: true)
-        
+        self.navigationController?.pushViewController(chatViewController, animated: true)        
     }
 }

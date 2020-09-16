@@ -90,9 +90,7 @@ struct User: Mappable, SenderType {
         type <- map["type"]
         updatedAt <- (map["updated_at"], ISO8601DateTransform())
         bio <- map["bio"]
-        
     }
-    
 }
 
     
@@ -164,6 +162,10 @@ extension User {
         if let updated = self.updatedAt {
             detailCellProperties.append(DetailCellProperty(imgName: ImageName.icon_cell_updated.rawValue, titleCell: "Updated", detail: updated.toRelative(), hideDisclosure: true))
         }
+        
+        if let company = self.company {
+            detailCellProperties.append(DetailCellProperty(id: "company", imgName: ImageName.icon_cell_company.rawValue, titleCell: "Company", detail: company, hideDisclosure: true))
+        }
 
         detailCellProperties.append(DetailCellProperty(id: "starred", imgName: ImageName.icon_cell_star.rawValue, titleCell: "Stars", hideDisclosure: false))
         
@@ -171,9 +173,7 @@ extension User {
 
         detailCellProperties.append(DetailCellProperty(id: "events", imgName: ImageName.icon_cell_events.rawValue, titleCell: "Events", hideDisclosure: false))
 
-        if let company = self.company {
-            detailCellProperties.append(DetailCellProperty(id: "company", imgName: ImageName.icon_cell_company.rawValue, titleCell: "Company", detail: company, hideDisclosure: false))
-        }
+        
         
         if let blog = self.blog, blog != "" {
             detailCellProperties.append(DetailCellProperty(id: "blog", imgName: ImageName.icon_cell_link.rawValue, titleCell: "Blog", detail: blog, hideDisclosure: false))

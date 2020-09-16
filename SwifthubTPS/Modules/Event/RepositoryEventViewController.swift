@@ -10,26 +10,29 @@ import UIKit
 
 class RepositoryEventViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var eventGithubAPI = GitHubAPI<Event>()
     private var eventItems: [Event]?
     
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
     
     
-    // MARK: - Life Cycle
     
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView()
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,18 +44,15 @@ class RepositoryEventViewController: UIViewController {
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
-        
     }
     
 
     // MARK: - IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Private Method
-
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -88,7 +88,6 @@ extension RepositoryEventViewController: UITableViewDataSource {
         } else {
             return eventItems?.count ?? 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,11 +113,7 @@ extension RepositoryEventViewController: UITableViewDataSource {
             cell.lbDetail.text = itemCell?.body
             return cell
         }
-
-       
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate
@@ -130,7 +125,6 @@ extension RepositoryEventViewController: UITableViewDelegate {
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.modalPresentationStyle = .automatic
         self.navigationController?.pushViewController(repositoryViewController, animated: true)
     }
 }

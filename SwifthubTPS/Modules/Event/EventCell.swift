@@ -18,13 +18,11 @@ class EventCell: UITableViewCell {
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbTime: UILabel!
     @IBOutlet weak var lbDetail: UILabel!
-
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         mainView.layer.cornerRadius = 5
-//        imgDisclosure.isHidden = true
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
         imgState.layer.masksToBounds = true
@@ -35,7 +33,4 @@ class EventCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
        
     }
-    
-    
-    
 }

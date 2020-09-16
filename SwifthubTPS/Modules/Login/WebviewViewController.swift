@@ -12,15 +12,15 @@ import Toast_Swift
 
 class WebviewViewController: UIViewController {
 
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var webview: WKWebView!
+    
+    // MARK: - Private properties
     private var accessToken = ""   
     private let defaultSession = URLSession(configuration: .default)
     private var dataTask: URLSessionDataTask?
     
-    @IBOutlet weak var webview: WKWebView!
-    
-    // MARK: - Life Cycles
-    
+    // MARK: - Lifecycles
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
@@ -29,7 +29,6 @@ class WebviewViewController: UIViewController {
         debugPrint(urlRequest)
         webview.navigationDelegate = self
         webview.load(urlRequest)
-        
     }
     
     override func viewDidLoad() {
@@ -37,18 +36,13 @@ class WebviewViewController: UIViewController {
     }
         
     //MARK: - IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
-
 // MARK: - WKNavigationDelegate
-
 extension WebviewViewController: WKNavigationDelegate {
-    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         self.view.makeToastActivity(.center)
     }
@@ -106,6 +100,5 @@ extension WebviewViewController: WKNavigationDelegate {
                 }
             }
         }
-    }
-   
+    }   
 }

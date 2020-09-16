@@ -10,23 +10,25 @@ import UIKit
 
 class FileViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - IBOutlets
     @IBOutlet weak var txtContent: UITextView!
     
+    // MARK: - Public properties
     var contentItem: Content?
     var repoItem: Repository?
     var gitHubAuthenticationManager = GITHUB()
+    
+    // MARK: - Private properties
     private var isLoading = false
     private let defaultSession = URLSession(configuration: .default)
-    var dataTask: URLSessionDataTask?
+    private var dataTask: URLSessionDataTask?
     
-    // MARK: - LifeCycle
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getExtension()
         getContent()
-    }
-    
+    }    
     
     override func viewDidLoad() {
         super.viewDidLoad()

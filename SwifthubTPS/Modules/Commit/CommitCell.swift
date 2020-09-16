@@ -17,8 +17,6 @@ class CommitCell: UITableViewCell {
     @IBOutlet weak var lbDescription: UILabel!
     @IBOutlet weak var lbTag: UILabel!
     
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         

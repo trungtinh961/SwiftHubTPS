@@ -10,17 +10,20 @@ import UIKit
 
 class ContentViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Public properties
     var contentItem: Content?
     var repoItem: Repository?
     var gitHubAuthenticationManager = GITHUB()
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var contentGithubAPI = GitHubAPI<Content>()
     private var contentItems: [Content]?
     
-    // MARK:- LifeCycle
+    // MARK:- Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let title = repoItem?.fullname {
@@ -32,6 +35,7 @@ class ContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        /// Register cell
         RegisterTableViewCell.register(tableView: tableView, identifier: TableViewCellIdentifiers.contentCell.rawValue)
         RegisterTableViewCell.register(tableView: tableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         
@@ -44,7 +48,6 @@ class ContentViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    
     private func updateTableView(){
         isLoading = true
         tableView.reloadData()
@@ -60,8 +63,7 @@ class ContentViewController: UIViewController {
                 debugPrint("Search error: " + errorMessage)
             }
         }
-    }
-    
+    }    
 }
 
 // MARK: - UITableViewDataSource

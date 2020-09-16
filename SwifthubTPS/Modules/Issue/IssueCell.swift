@@ -19,7 +19,6 @@ class IssueCell: UITableViewCell {
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbDescription: UILabel!
     @IBOutlet weak var lbCommentCount: UILabel!
-    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,7 +33,6 @@ class IssueCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         
     }
     

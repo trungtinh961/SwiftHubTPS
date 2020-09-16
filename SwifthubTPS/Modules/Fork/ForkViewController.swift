@@ -10,23 +10,22 @@ import UIKit
 
 class ForkViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - IBOutlets
+    @IBOutlet weak var imgAuthor: UIImageView!
+    @IBOutlet weak var resultTableView: UITableView!
     
+    // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var repoItem: Repository?
+    
+    // MARK: - Private properties
     private var isLoading = false
     private var noResult = false
     private var downloadTask: URLSessionDownloadTask?
     private var forkGithubAPI = GitHubAPI<Repository>()
     private var forkItems: [Repository]?
     
-    @IBOutlet weak var imgAuthor: UIImageView!
-    @IBOutlet weak var resultTableView: UITableView!
-    
-    
-    
-    // MARK: - Life Cycles
-    
+    // MARK: - Lifecycles
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateTableView()
@@ -42,19 +41,15 @@ class ForkViewController: UIViewController {
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
-        
     }
     
 
     // MARK: - IBActions
-    
     @IBAction func btnBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
     // MARK: - Private Methods
-    
     private func updateTableView(){
         isLoading = true
         resultTableView.reloadData()
@@ -83,9 +78,7 @@ class ForkViewController: UIViewController {
 }
 
 //MARK: - UITableViewDataSource
-
 extension ForkViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading || noResult {
             return 1
@@ -122,7 +115,6 @@ extension ForkViewController: UITableViewDataSource {
 }
 
 //MARK: - UITableViewDelegate
-
 extension ForkViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -130,8 +122,6 @@ extension ForkViewController: UITableViewDelegate {
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
         repositoryViewController.repositoryItem = forkItems![indexPath.row]
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.modalPresentationStyle = .automatic
-        self.navigationController?.pushViewController(repositoryViewController, animated: true)
-        
+        self.navigationController?.pushViewController(repositoryViewController, animated: true)        
     }
 }
