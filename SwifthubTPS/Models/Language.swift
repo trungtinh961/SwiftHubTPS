@@ -34,9 +34,14 @@ struct ChartLanguage {
     let name: String
     let color: String?
     let quantity: Int
+    
+    func string() -> String {
+        "name: \(name) - quantity: \(quantity) - color: \(color ?? "")"
+    }
 }
 
 struct ColorLanguage: Decodable {
     let color: String?
     let url: String?
 }
+

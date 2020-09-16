@@ -182,35 +182,50 @@ class RepositoryViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 extension RepositoryViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if section == 0 {
             return 1
         } else {
-            return repositoryDetails?.count ?? 0
+            if isLoading {
+                return 1
+            } else {
+                return repositoryDetails?.count ?? 0
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
-            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-            spinner.startAnimating()
+        let section = indexPath.section
+        if section == 0 {
+            let  cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.languageChartCell.rawValue, for: indexPath) as! LanguageChartCell
+            cell.repositoryItem = repositoryItem
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
-
-            let itemCell = repositoryDetails?[indexPath.row]
-            cell.lbTitleCell.text = itemCell?.titleCell
-            if repositoryDetails?[indexPath.row].id == "branches" {
-                cell.lbDetails.text = branch
+            if isLoading {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+                let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+                spinner.startAnimating()
+                return cell
             } else {
-                cell.lbDetails.text = itemCell?.detail
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+                let itemCell = repositoryDetails?[indexPath.row]
+                cell.lbTitleCell.text = itemCell?.titleCell
+                if repositoryDetails?[indexPath.row].id == "branches" {
+                    cell.lbDetails.text = branch
+                } else {
+                    cell.lbDetails.text = itemCell?.detail
+                }
+                if let img = itemCell?.imgName {
+                    cell.imgCell.image = UIImage(named: img)
+                }
+                cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
+                return cell
             }
-            if let img = itemCell?.imgName {
-                cell.imgCell.image = UIImage(named: img)
-            }
-            cell.imgDisclosure.isHidden = (itemCell?.hideDisclosure ?? false)
-            return cell
         }
     }
 }
@@ -219,57 +234,60 @@ extension RepositoryViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension RepositoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)        
-        let itemCell = repositoryDetails?[indexPath.row]
-        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        switch itemCell!.id {
-        case "homepage":
-            if let url = URL(string: repositoryItem?.homepage ?? "") {
-                UIApplication.shared.open(url)
+        tableView.deselectRow(at: indexPath, animated: true)
+        let section = indexPath.section
+        if section == 1 {
+            let itemCell = repositoryDetails?[indexPath.row]
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            switch itemCell!.id {
+            case "homepage":
+                if let url = URL(string: repositoryItem?.homepage ?? "") {
+                    UIApplication.shared.open(url)
+                }
+            case "issues":
+                let issuesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.issueVC.rawValue) as! IssueViewController
+                issuesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                issuesViewController.repositoryItem = repositoryItem
+                self.navigationController?.pushViewController(issuesViewController, animated: true)
+            case "pulls":
+                let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.pullVC.rawValue) as! PullRequestViewController
+                pullsViewController.repositoryItem = repositoryItem
+                pullsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(pullsViewController, animated: true)
+            case "commits":
+                let commitsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
+                commitsViewController.repositoryItem = repositoryItem
+                commitsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(commitsViewController, animated: true)
+            case "branches":
+                let branchesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.branchVC.rawValue) as! BranchViewController
+                branchesViewController.repositoryItem = repositoryItem
+                branchesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                branchesViewController.delegate = self
+                self.navigationController?.pushViewController(branchesViewController, animated: true)
+            case "releases":
+                let releaseViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.releaseVC.rawValue) as! ReleaseViewController
+                releaseViewController.repositoryItem = repositoryItem
+                releaseViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(releaseViewController, animated: true)
+            case "contributors":
+                let contributorViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contributorVC.rawValue) as! ContributorViewController
+                contributorViewController.repositoryItem = repositoryItem
+                contributorViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(contributorViewController, animated: true)
+            case "events":
+                let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repoEventVC.rawValue) as! RepositoryEventViewController
+                eventViewController.repositoryItem = repositoryItem
+                eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(eventViewController, animated: true)
+            case "contents":
+                let contentViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contentVC.rawValue) as! ContentViewController
+                contentViewController.repositoryItem = repositoryItem
+                contentViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(contentViewController, animated: true)
+            default:
+                break
             }
-        case "issues":            
-            let issuesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.issueVC.rawValue) as! IssueViewController
-            issuesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            issuesViewController.repositoryItem = repositoryItem
-            self.navigationController?.pushViewController(issuesViewController, animated: true)
-        case "pulls":
-            let pullsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.pullVC.rawValue) as! PullRequestViewController
-            pullsViewController.repositoryItem = repositoryItem
-            pullsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(pullsViewController, animated: true)
-        case "commits":
-            let commitsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.commitVC.rawValue) as! CommitViewController
-            commitsViewController.repositoryItem = repositoryItem
-            commitsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(commitsViewController, animated: true)
-        case "branches":
-            let branchesViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.branchVC.rawValue) as! BranchViewController
-            branchesViewController.repositoryItem = repositoryItem
-            branchesViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            branchesViewController.delegate = self
-            self.navigationController?.pushViewController(branchesViewController, animated: true)
-        case "releases":
-            let releaseViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.releaseVC.rawValue) as! ReleaseViewController
-            releaseViewController.repositoryItem = repositoryItem
-            releaseViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(releaseViewController, animated: true)
-        case "contributors":
-            let contributorViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contributorVC.rawValue) as! ContributorViewController
-            contributorViewController.repositoryItem = repositoryItem
-            contributorViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(contributorViewController, animated: true)
-        case "events":
-            let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repoEventVC.rawValue) as! RepositoryEventViewController
-            eventViewController.repositoryItem = repositoryItem
-            eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(eventViewController, animated: true)
-        case "contents":
-            let contentViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.contentVC.rawValue) as! ContentViewController
-            contentViewController.repositoryItem = repositoryItem
-            contentViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(contentViewController, animated: true)
-        default:
-            break
         }
     }
 }

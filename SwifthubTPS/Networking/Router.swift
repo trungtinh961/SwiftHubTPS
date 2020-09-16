@@ -44,7 +44,6 @@ enum GetType: Int {
     case getOrganizations
     case getContents    // ContentType == .dir return array
     case getContent     // ContentType == ...  return 1 element
-    case getRepositoryLanguage
 }
 
 enum Router {

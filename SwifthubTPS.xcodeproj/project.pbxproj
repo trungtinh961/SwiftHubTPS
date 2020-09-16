@@ -52,6 +52,8 @@
 		BABBA0DC2511BDF200CA1E8E /* ContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABBA0DA2511BDF200CA1E8E /* ContentCell.xib */; };
 		BABBA0E02512048A00CA1E8E /* LanguageChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0DE2512048A00CA1E8E /* LanguageChartCell.swift */; };
 		BABBA0E12512048A00CA1E8E /* LanguageChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABBA0DF2512048A00CA1E8E /* LanguageChartCell.xib */; };
+		BABBA0E425121A4E00CA1E8E /* LanguageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBA0E225121A4E00CA1E8E /* LanguageCollectionCell.swift */; };
+		BABBA0E525121A4E00CA1E8E /* LanguageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABBA0E325121A4E00CA1E8E /* LanguageCollectionCell.xib */; };
 		BABE48702500A2CF00A5AB12 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE486F2500A2CF00A5AB12 /* UserViewController.swift */; };
 		BABE48732500C77A00A5AB12 /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48722500C77A00A5AB12 /* UINavigationItem.swift */; };
 		BABE48752500D87800A5AB12 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48742500D87800A5AB12 /* Issue.swift */; };
@@ -145,6 +147,8 @@
 		BABBA0DA2511BDF200CA1E8E /* ContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentCell.xib; sourceTree = "<group>"; };
 		BABBA0DE2512048A00CA1E8E /* LanguageChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageChartCell.swift; sourceTree = "<group>"; };
 		BABBA0DF2512048A00CA1E8E /* LanguageChartCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageChartCell.xib; sourceTree = "<group>"; };
+		BABBA0E225121A4E00CA1E8E /* LanguageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCollectionCell.swift; sourceTree = "<group>"; };
+		BABBA0E325121A4E00CA1E8E /* LanguageCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageCollectionCell.xib; sourceTree = "<group>"; };
 		BABE486F2500A2CF00A5AB12 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		BABE48722500C77A00A5AB12 /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
 		BABE48742500D87800A5AB12 /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -384,6 +388,8 @@
 			children = (
 				BABBA0DE2512048A00CA1E8E /* LanguageChartCell.swift */,
 				BABBA0DF2512048A00CA1E8E /* LanguageChartCell.xib */,
+				BABBA0E225121A4E00CA1E8E /* LanguageCollectionCell.swift */,
+				BABBA0E325121A4E00CA1E8E /* LanguageCollectionCell.xib */,
 			);
 			path = "Language Chart";
 			sourceTree = "<group>";
@@ -683,6 +689,7 @@
 				BAD3886D24F60A790045C10E /* RepositoryCell.xib in Resources */,
 				BAB7870924F8F43F002779B2 /* LoadingCell.xib in Resources */,
 				BAC5D29724F3C13800A731F0 /* Main.storyboard in Resources */,
+				BABBA0E525121A4E00CA1E8E /* LanguageCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,6 +776,7 @@
 				BAFF2366250226F600843E38 /* Branch.swift in Sources */,
 				BABE48792500DB8A00A5AB12 /* PullRequest.swift in Sources */,
 				BABBA0DB2511BDF200CA1E8E /* ContentCell.swift in Sources */,
+				BABBA0E425121A4E00CA1E8E /* LanguageCollectionCell.swift in Sources */,
 				BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */,
 				BAFF237E2502438F00843E38 /* Event.swift in Sources */,
 				BAFF236C25022F7C00843E38 /* ReleaseCell.swift in Sources */,
