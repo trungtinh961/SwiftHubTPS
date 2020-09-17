@@ -82,7 +82,6 @@ class LanguageChartCell: UITableViewCell {
                         for (index, language) in self.results.enumerated() {
                             let percentage = Float(language.linesOfCode) / Float(self.totalLines)
                             self.progressView.setProgress(section: index, to: percentage)
-                            print("\(language.name) - \(language.linesOfCode) - \(percentage)")
                         }
         })
     }

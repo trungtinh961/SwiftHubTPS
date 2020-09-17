@@ -203,9 +203,7 @@ class GitHubAPI<Element: Mappable> {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
         }
         
-        debugPrint(request.allHTTPHeaderFields?["Authorization"] ?? "No Authorization")
-        debugPrint(request.httpMethod!)
-        debugPrint(request)
+        debugPrint("\(request.httpMethod ?? ""): \(request)")
         
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
             defer {

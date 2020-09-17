@@ -86,17 +86,16 @@ class UserViewController: UIViewController {
     // MARK: - IBActions
     @IBAction func btnAddUser(_ sender: Any) {
         if isFollowed {
-            _ = checkFollowUser(type: .unFollowUser)
-            btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_plus.rawValue), for: .normal)
+            isFollowed = !isFollowed
+            checkFollowUser(type: .unFollowUser)
             self.view.makeToast("You unfollowed \(userItem?.login ?? "")")
             debugPrint("Did unfollowed \(userItem?.login ?? "")")
         } else {
-            _ = checkFollowUser(type: .followUser)
-            btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_x.rawValue), for: .normal)
+            isFollowed = !isFollowed
+            checkFollowUser(type: .followUser)
             self.view.makeToast("You followed \(userItem?.login ?? "")")
             debugPrint("Did followed \(userItem?.login ?? "")")
         }
-        isFollowed = !isFollowed
     }
     
     @IBAction func btnClose(_ sender: Any) {
@@ -137,17 +136,20 @@ class UserViewController: UIViewController {
         self.navigationController?.pushViewController(repositoryDetailViewController, animated: true)
     }
     
-    private func checkFollowUser(type: GetType) -> Bool {
-        var isSuccess = false
+    private func checkFollowUser(type: GetType) {
         userGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { results, errorMessage, statusCode in
             if let statusCode = statusCode {
-                if statusCode == 204 { isSuccess = true }
+                if statusCode == 204 {
+                    if type == .checkFollowedUser {
+                        self.isFollowed = true
+                    }                    
+                    self.updateStatus()
+                }
             }
             if !errorMessage.isEmpty {
                 debugPrint("Search error: " + errorMessage)
             }
         }
-        return isSuccess
     }
     
     private func getData() {
@@ -170,7 +172,7 @@ class UserViewController: UIViewController {
                     self?.getOrganizations()
                 }
                 self?.resultTableView.reloadData()
-                self?.updateStatus()
+                self?.checkFollowUser(type: .checkFollowedUser)
             }
             if !errorMessage.isEmpty {
                 debugPrint("Search error: " + errorMessage)
@@ -192,7 +194,6 @@ class UserViewController: UIViewController {
     
     private func updateStatus() {
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated != userItem {
-            isFollowed = checkFollowUser(type: .checkFollowedUser)
             if  isFollowed {
                 btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_x.rawValue), for: .normal)
             } else {
