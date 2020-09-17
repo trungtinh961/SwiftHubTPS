@@ -17,10 +17,10 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U6T-3J-DNp">
-                        <rect key="frame" x="6" y="0.5" width="53" height="16"/>
+                        <rect key="frame" x="8" y="0.5" width="49" height="16"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LcI-a3-r7H">
-                                <rect key="frame" x="2" y="2" width="12" height="12"/>
+                                <rect key="frame" x="0.0" y="2" width="12" height="12"/>
                                 <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="12" id="HwH-Fn-WEl"/>
@@ -28,7 +28,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIn-ET-sTd">
-                                <rect key="frame" x="18" y="0.5" width="33" height="15"/>
+                                <rect key="frame" x="16" y="0.5" width="33" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -40,8 +40,8 @@
                             <constraint firstItem="LcI-a3-r7H" firstAttribute="top" secondItem="U6T-3J-DNp" secondAttribute="top" constant="2" id="3Mk-qu-sA8"/>
                             <constraint firstAttribute="bottom" secondItem="LcI-a3-r7H" secondAttribute="bottom" constant="2" id="BiU-df-1gu"/>
                             <constraint firstItem="tIn-ET-sTd" firstAttribute="leading" secondItem="LcI-a3-r7H" secondAttribute="trailing" constant="4" id="Ld1-v3-wQU"/>
-                            <constraint firstItem="LcI-a3-r7H" firstAttribute="leading" secondItem="U6T-3J-DNp" secondAttribute="leading" constant="2" id="SuN-eQ-jAQ"/>
-                            <constraint firstAttribute="trailing" secondItem="tIn-ET-sTd" secondAttribute="trailing" constant="2" id="mVU-rA-R8c"/>
+                            <constraint firstItem="LcI-a3-r7H" firstAttribute="leading" secondItem="U6T-3J-DNp" secondAttribute="leading" id="SuN-eQ-jAQ"/>
+                            <constraint firstAttribute="trailing" secondItem="tIn-ET-sTd" secondAttribute="trailing" id="mVU-rA-R8c"/>
                         </constraints>
                     </view>
                 </subviews>
