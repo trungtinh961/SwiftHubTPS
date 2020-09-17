@@ -95,12 +95,11 @@
 		BAFF238525024D4A00843E38 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF238325024D4A00843E38 /* EventCell.swift */; };
 		BAFF238625024D4A00843E38 /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAFF238425024D4A00843E38 /* EventCell.xib */; };
 		BAFF23892502562200843E38 /* StarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF23882502562200843E38 /* StarViewController.swift */; };
-		D2C57271620F948D548D8370 /* Pods_SwifthubTPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */; };
+		D8BBD949C3153B1A194B436B /* Pods_SwifthubTPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE96297727935A89C083F704 /* Pods_SwifthubTPS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		29EE408D9F0E788EDF35D898 /* Pods-SwifthubTPS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwifthubTPS.release.xcconfig"; path = "Target Support Files/Pods-SwifthubTPS/Pods-SwifthubTPS.release.xcconfig"; sourceTree = "<group>"; };
-		63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwifthubTPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD005EBAC607AE0125388ABD /* Pods-SwifthubTPS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwifthubTPS.debug.xcconfig"; path = "Target Support Files/Pods-SwifthubTPS/Pods-SwifthubTPS.debug.xcconfig"; sourceTree = "<group>"; };
 		BA3D105824F616550079C5A1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTableViewCell.swift; sourceTree = "<group>"; };
@@ -192,6 +191,7 @@
 		BAFF238325024D4A00843E38 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		BAFF238425024D4A00843E38 /* EventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
 		BAFF23882502562200843E38 /* StarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarViewController.swift; sourceTree = "<group>"; };
+		CE96297727935A89C083F704 /* Pods_SwifthubTPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwifthubTPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,7 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA9C844525072FB600B65818 /* WebKit.framework in Frameworks */,
-				D2C57271620F948D548D8370 /* Pods_SwifthubTPS.framework in Frameworks */,
+				D8BBD949C3153B1A194B436B /* Pods_SwifthubTPS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				BA9C844425072FB600B65818 /* WebKit.framework */,
-				63707A75F85459E1CFD893CA /* Pods_SwifthubTPS.framework */,
+				CE96297727935A89C083F704 /* Pods_SwifthubTPS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -621,7 +621,7 @@
 				BAC5D28624F3C13800A731F0 /* Sources */,
 				BAC5D28724F3C13800A731F0 /* Frameworks */,
 				BAC5D28824F3C13800A731F0 /* Resources */,
-				7A10E844845208CD0FF447DE /* [CP] Embed Pods Frameworks */,
+				75ED56389B8167F4D6E72088 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -696,7 +696,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7A10E844845208CD0FF447DE /* [CP] Embed Pods Frameworks */ = {
+		75ED56389B8167F4D6E72088 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

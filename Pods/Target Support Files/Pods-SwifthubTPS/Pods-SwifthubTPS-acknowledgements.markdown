@@ -27,11 +27,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-## Kingfisher
+## MessageKit
 
-The MIT License (MIT)
+MIT License
 
-Copyright (c) 2019 Wei Wang
+Copyright (c) 2017-2020 MessageKit
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,12 +52,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-
-## MessageKit
+## MultiProgressView
 
 MIT License
 
-Copyright (c) 2017-2020 MessageKit
+Copyright (c) 2018 Mac Gallagher
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

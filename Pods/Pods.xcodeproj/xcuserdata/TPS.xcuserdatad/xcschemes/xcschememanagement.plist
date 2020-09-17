@@ -9,12 +9,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Kingfisher.xcscheme</key>
+		<key>MessageKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>MessageKit.xcscheme</key>
+		<key>MultiProgressView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

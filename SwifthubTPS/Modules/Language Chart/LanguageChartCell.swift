@@ -7,56 +7,87 @@
 //
 
 import UIKit
+import MultiProgressView
 
 class LanguageChartCell: UITableViewCell {
     
+    // MARK: - IBOutlets
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var chartView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // MARK: - Public Properties
     var repositoryItem: Repository?
+    
+    // MARK: - Private Properties
     private var repositoryLanguages: [String:Int] = [:]
     private var colorLanguages: [String: ColorLanguage] = [:]
     private var results: [ChartLanguage] = []
     private var colorURL: String = "https://raw.githubusercontent.com/ozh/github-colors/master/colors.json"
     private var languageURL: String = ""
+    private let padding: CGFloat = 15
+    private let progressViewHeight: CGFloat = 20
+    private var totalLines = 0
     
+    private lazy var progressView: MultiProgressView = {
+      let progress = MultiProgressView()
+      progress.lineCap = .round
+      progress.cornerRadius = progressViewHeight / 4
+      return progress
+    }()
+    
+    private let stackView: UIStackView = {
+      let stackView = UIStackView()
+      stackView.distribution = .equalSpacing
+      stackView.alignment = .center
+      return stackView
+    }()
+    
+    
+    // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         mainView.layer.cornerRadius = 5
-        chartView.layer.cornerRadius = 5
+        
         self.collectionView.register(UINib.init(nibName: "LanguageCollectionCell", bundle: nil), forCellWithReuseIdentifier: "LanguageCollectionCell")
         getColorLanguage()
+        setupProgressBar()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    private func getRepositoryLanguages() {
-        languageURL = "https://api.github.com/repos/\(repositoryItem!.fullname!)/languages"
-        let url = URL(string: languageURL)
-        var request = URLRequest(url: url!)
-        request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
-        request.httpMethod = "GET"
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let data = data {
-                do {
-                    self.repositoryLanguages = try JSONDecoder().decode([String:Int].self, from: data)
-                    for (key, value) in self.repositoryLanguages {
-                        self.results.append(ChartLanguage(name: key, color: self.colorLanguages[key]?.color, quantity: value))
-                    }
-                    self.results.sort(by: { $0.quantity > $1.quantity } )
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                } catch {
-                    print("Language \(error)")
-                }
-            }
-        }.resume()
+    
+    // MARK: - Private Methods
+    
+    /// Progressbar
+    private func setupProgressBar() {
+        chartView.addSubview(progressView)
+        progressView.frame = CGRect(x: 8,
+                                    y: 0,
+                                    width: chartView.frame.width - 8,
+                                    height: chartView.frame.height - 18)
+        progressView.dataSource = self
+        progressView.delegate = self
     }
     
+    private func setProgress() {
+        UIView.animate(withDuration: 0.4,
+                       delay: 0,
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 0,
+                       options: .curveLinear,
+                       animations: {
+                        for (index, language) in self.results.enumerated() {
+                            let percentage = Float(language.linesOfCode) / Float(self.totalLines)
+                            self.progressView.setProgress(section: index, to: percentage)
+                            print("\(language.name) - \(language.linesOfCode) - \(percentage)")
+                        }
+        })
+    }
+    
+    /// Get data
     private func getColorLanguage() {
         let url = URL(string: colorURL)
         let request = URLRequest(url: url!)
@@ -72,8 +103,37 @@ class LanguageChartCell: UITableViewCell {
         }.resume()
     }
     
+    private func getRepositoryLanguages() {
+        languageURL = "https://api.github.com/repos/\(repositoryItem!.fullname!)/languages"
+        let url = URL(string: languageURL)
+        var request = URLRequest(url: url!)
+        request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
+        request.httpMethod = "GET"
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let data = data {
+                do {
+                    
+                    self.repositoryLanguages = try JSONDecoder().decode([String:Int].self, from: data)
+                    for (key, value) in self.repositoryLanguages {
+                        self.results.append(ChartLanguage(name: key, color: self.colorLanguages[key]?.color, linesOfCode: value))
+                        self.totalLines += value
+                    }
+                    self.results.sort(by: { $0.linesOfCode > $1.linesOfCode } )
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                        self.progressView.reloadData()
+                        self.setProgress()
+                    }
+                } catch {
+                    print("Language \(error)")
+                }
+            }
+        }.resume()
+    }
+    
 }
 
+// MARK: - UICollectionViewDataSource
 extension LanguageChartCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return results.count
@@ -92,5 +152,26 @@ extension LanguageChartCell: UICollectionViewDataSource, UICollectionViewDelegat
             label.sizeToFit()
             let size = CGSize(width: label.frame.size.width + 10, height: 36)
             return size
+    }
+}
+
+// MARK: - MultiProgressViewDataSource
+extension LanguageChartCell: MultiProgressViewDataSource {
+    func numberOfSections(in progressView: MultiProgressView) -> Int {
+        return results.count
+    }
+    
+    func progressView(_ progressView: MultiProgressView, viewForSection section: Int) -> ProgressViewSection {
+        let bar = ProgressViewSection()
+        bar.backgroundColor = UIColor(results[section].color ?? "#AFEDFC")
+        return bar
+    }
+ 
+}
+
+// MARK: - MultiProgressViewDelegate
+extension LanguageChartCell: MultiProgressViewDelegate {
+    func progressView(_ progressView: MultiProgressView, didTapSectionAt index: Int) {
+        print("Tapped section \(index)")
     }
 }

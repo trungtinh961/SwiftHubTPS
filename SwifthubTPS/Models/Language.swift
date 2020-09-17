@@ -33,10 +33,10 @@ extension Language: Equatable {
 struct ChartLanguage {
     let name: String
     let color: String?
-    let quantity: Int
+    let linesOfCode: Int
     
     func string() -> String {
-        "name: \(name) - quantity: \(quantity) - color: \(color ?? "")"
+        "name: \(name) - quantity: \(linesOfCode) - color: \(color ?? "")"
     }
 }
 

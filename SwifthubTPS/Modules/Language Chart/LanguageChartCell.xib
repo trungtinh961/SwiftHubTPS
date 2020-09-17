@@ -24,14 +24,14 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fjr-cf-HAo">
                                         <rect key="frame" x="0.0" y="0.0" width="378" height="44.5"/>
-                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44.5" id="GTX-Fw-wqZ"/>
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="czx-ud-Cnh">
-                                        <rect key="frame" x="0.0" y="48.5" width="378" height="30"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <rect key="frame" x="8" y="48.5" width="362" height="30"/>
+                                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="JEZ-81-muq"/>
                                         </constraints>
@@ -49,16 +49,16 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="czx-ud-Cnh" secondAttribute="bottom" id="0Kw-8t-F6W"/>
-                                    <constraint firstAttribute="trailing" secondItem="czx-ud-Cnh" secondAttribute="trailing" id="0bO-c4-gpE"/>
+                                    <constraint firstAttribute="trailing" secondItem="czx-ud-Cnh" secondAttribute="trailing" constant="8" id="0bO-c4-gpE"/>
                                     <constraint firstItem="czx-ud-Cnh" firstAttribute="top" secondItem="fjr-cf-HAo" secondAttribute="bottom" constant="4" id="6Mw-IF-Zlx"/>
                                     <constraint firstAttribute="trailing" secondItem="fjr-cf-HAo" secondAttribute="trailing" id="E6G-cw-N4f"/>
                                     <constraint firstItem="fjr-cf-HAo" firstAttribute="leading" secondItem="Uee-ff-wGm" secondAttribute="leading" id="ILR-Pm-dRF"/>
                                     <constraint firstItem="fjr-cf-HAo" firstAttribute="top" secondItem="Uee-ff-wGm" secondAttribute="top" id="OEA-YC-uel"/>
-                                    <constraint firstItem="czx-ud-Cnh" firstAttribute="leading" secondItem="Uee-ff-wGm" secondAttribute="leading" id="lb3-09-tci"/>
+                                    <constraint firstItem="czx-ud-Cnh" firstAttribute="leading" secondItem="Uee-ff-wGm" secondAttribute="leading" constant="8" id="lb3-09-tci"/>
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Uee-ff-wGm" firstAttribute="top" secondItem="NFC-Nk-V4Y" secondAttribute="top" id="70A-N8-JqB"/>
                             <constraint firstItem="Uee-ff-wGm" firstAttribute="leading" secondItem="NFC-Nk-V4Y" secondAttribute="leading" id="JMP-7W-a0Z"/>
