@@ -24,23 +24,20 @@ class ContentViewController: UIViewController {
     private var contentItems: [Content]?
     
     // MARK:- Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateTableView()
+        makeUI()
+    }
+  
+    private func makeUI() {
         if let title = repositoryItem?.fullname {
             self.title = title
         }
-        updateTableView()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
         /// Register cell
         RegisterTableViewCell.register(tableView: tableView, identifier: TableViewCellIdentifiers.contentCell.rawValue)
         RegisterTableViewCell.register(tableView: tableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        
     }
-  
     
     // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {

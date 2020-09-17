@@ -25,18 +25,14 @@ class RepositoryEventViewController: UIViewController {
     private var eventGithubAPI = GitHubAPI<Event>()
     private var eventItems: [Event]?
     
-    
-    
-    
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateTableView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.eventCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
@@ -45,7 +41,6 @@ class RepositoryEventViewController: UIViewController {
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
     }
-    
 
     // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {

@@ -57,13 +57,16 @@ class UserViewController: UIViewController {
             self.navigationItem.leftBarButtonItem?.isEnabled = true
             self.navigationItem.rightBarButtonItem?.tintColor = .clear
             self.navigationItem.rightBarButtonItem?.isEnabled = false
-        }
-        getData()
+        }        
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
-        
+        super.viewDidLoad()
+        reloadTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
@@ -107,11 +110,7 @@ class UserViewController: UIViewController {
     }
     
     @IBAction func btnLogout(_ sender: Any) {
-        let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
-        mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = false
-        mainTabBarController?.gitHubAuthenticationManager.accessToken = ""
-        self.view.window?.rootViewController = mainTabBarController
-        self.view.window?.makeKeyAndVisible()
+        showAlert()
     }
     
     @IBAction func btnRepositories(_ sender: Any) {
@@ -127,6 +126,37 @@ class UserViewController: UIViewController {
     }
     
     // MARK: - Private Methods
+    
+    private func showAlert() {
+        let alert = UIAlertController(title: "\(userItem?.name ?? "")", message: "Are you want to log out from Swifthub?", preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { _ in
+            //Cancel Action
+        }))
+        alert.addAction(UIAlertAction(title: "Logout", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
+            self.logout()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func logout() {
+        let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
+        mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = false
+        mainTabBarController?.gitHubAuthenticationManager.accessToken = ""
+        guard let window = self.view.window else {
+            self.view.window?.rootViewController = mainTabBarController
+            self.view.window?.makeKeyAndVisible()
+            return
+        }
+        window.rootViewController = mainTabBarController
+        window.makeKeyAndVisible()
+        UIView.transition(with: window,
+                          duration: 1,
+                          options: .transitionFlipFromLeft,
+                          animations: nil,
+                          completion: nil)
+    }
+    
     private func showDetails(detailType: detailType) {
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let repositoryDetailViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryDeatailVC.rawValue) as! RepositoryDetailViewController
@@ -142,7 +172,7 @@ class UserViewController: UIViewController {
                 if statusCode == 204 {
                     if type == .checkFollowedUser {
                         self.isFollowed = true
-                    }                    
+                    }
                     self.updateStatus()
                 }
             }
@@ -152,7 +182,7 @@ class UserViewController: UIViewController {
         }
     }
     
-    private func getData() {
+    private func reloadTableView() {
         isLoading = true
         userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { [weak self] results, errorMessage, statusCode in
             if let result = results?[0] {

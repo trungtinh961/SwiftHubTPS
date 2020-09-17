@@ -25,16 +25,14 @@ class ReleaseViewController: UIViewController {
     private var releaseItems: [Release]?
         
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.title = repositoryItem?.fullname!
-        updateTableView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
+        self.title = repositoryItem?.fullname!
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.releaseCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)

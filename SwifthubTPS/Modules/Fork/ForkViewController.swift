@@ -26,14 +26,13 @@ class ForkViewController: UIViewController {
     private var forkItems: [Repository]?
     
     // MARK: - Lifecycles
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateTableView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
@@ -42,7 +41,6 @@ class ForkViewController: UIViewController {
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
     }
-    
 
     // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {

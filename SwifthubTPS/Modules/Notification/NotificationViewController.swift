@@ -28,14 +28,13 @@ class NotificationViewController: UIViewController {
     private var notificationItems: [Notification]?
     
     // MARK: - Lifecycles
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateTableView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.notificationCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)

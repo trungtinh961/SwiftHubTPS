@@ -28,14 +28,13 @@ class PullRequestViewController: UIViewController {
     private var pullItems: [PullRequest]?
         
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateTableView()
-    }
-    
-    override func viewDidLoad() {
+   override func viewDidLoad() {
         super.viewDidLoad()
+        updateTableView()
+        makeUI()
+    }
 
+    private func makeUI() {
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.pullRequestCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
@@ -44,7 +43,7 @@ class PullRequestViewController: UIViewController {
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
     }
-
+    
     // MARK: - IBActions
     @IBAction func stateSegmentControl(_ sender: Any) {
         switch stateSegmentControl.selectedSegmentIndex {

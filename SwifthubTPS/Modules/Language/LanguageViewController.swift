@@ -37,13 +37,17 @@ class LanguageViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateTableView()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         self.hideKeyboardWhenTappedAround()
-        
         /// Register Cell
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.languageCell.rawValue)
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)

@@ -25,23 +25,21 @@ class ContributorViewController: UIViewController {
     private var contributorGithubAPI = GitHubAPI<User>()
     private var contributorItems: [User]?
     
-     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-       super.viewWillAppear(animated)
-       updateTableView()
-    }
-
+    // MARK: - Lifecycle
     override func viewDidLoad() {
-       super.viewDidLoad()
-
-       ///Register cell
+        super.viewDidLoad()
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
+        ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.contributorCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
-       ///Config layout
-       imgAuthor.layer.masksToBounds = true
-       imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
-       
+        ///Config layout
+        imgAuthor.layer.masksToBounds = true
+        imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
     }
     
     // MARK: - IBActions

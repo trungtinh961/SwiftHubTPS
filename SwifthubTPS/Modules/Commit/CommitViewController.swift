@@ -25,15 +25,14 @@ class CommitViewController: UIViewController {
     private var commitItems: [Commit]?
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.title = repositoryItem?.fullname!
-        updateTableView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
+        self.title = repositoryItem?.fullname!
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.commitCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)

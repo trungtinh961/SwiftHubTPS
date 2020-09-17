@@ -40,23 +40,22 @@ class RepositoryViewController: UIViewController {
     private let storyBoard = UIStoryboard(name: "Main", bundle:nil)
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         if gitHubAuthenticationManager.didAuthenticated {
             btnStar.isHidden = false
             btnStar.isEnabled = true
         } else {
             btnStar.isHidden = true
-            btnStar.isEnabled = false            
+            btnStar.isEnabled = false
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
         self.title = repositoryItem?.fullname
-        getData()
+        
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.languageChartCell.rawValue)
@@ -126,7 +125,7 @@ class RepositoryViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    private func getData() {
+    private func updateTableView() {
         isLoading = true
         
         repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { [weak self] results, errorMessage, statusCode in
@@ -153,6 +152,7 @@ class RepositoryViewController: UIViewController {
             }
         }
     }
+    
     
     private func checkStarRepository(type: GetType) {
         repositoryGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) {results, errorMessage, statusCode in
@@ -210,6 +210,7 @@ extension RepositoryViewController: UITableViewDataSource {
         if section == 0 {
             let  cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.languageChartCell.rawValue, for: indexPath) as! LanguageChartCell
             cell.repositoryItem = repositoryItem
+            cell.gitHubAuthenticationManager = gitHubAuthenticationManager
             return cell
         } else {
             if isLoading {

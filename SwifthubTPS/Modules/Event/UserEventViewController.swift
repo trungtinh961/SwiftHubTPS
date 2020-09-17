@@ -31,20 +31,18 @@ class UserEventViewController: UIViewController {
     private var eventItems: [Event]?
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         updateTableView(eventType: eventType)
-        
+        makeUI()
+    }
+    
+    private func makeUI() {
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
             self.navigationItem.leftBarButtonItem?.tintColor = .clear
         } else {
             self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.eventCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)

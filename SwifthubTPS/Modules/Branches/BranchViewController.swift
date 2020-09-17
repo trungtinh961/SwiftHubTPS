@@ -30,16 +30,14 @@ class BranchViewController: UIViewController {
     private var branchItems: [Branch]?
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.title = repositoryItem?.fullname!
-        updateTableView()
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
+        self.title = repositoryItem?.fullname!
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
