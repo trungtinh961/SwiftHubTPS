@@ -81,17 +81,17 @@ class RepositoryViewController: UIViewController {
     // MARK: - IBActions
     @IBAction func btnStar(_ sender: Any) {
         if isStarred {
-            _ = checkStarRepository(type: .unStarRepository)
-            btnStar.setImage(UIImage(named: ImageName.icon_button_unstar.rawValue), for: .normal)
+            isStarred = !isStarred
+            checkStarRepository(type: .unStarRepository)
             self.view.makeToast("You unstarred \(repositoryItem?.fullname ?? "")")
             debugPrint("Did unstarred \(repositoryItem?.fullname ?? "")")
         } else {
-            _ = checkStarRepository(type: .starRepository)
-            btnStar.setImage(UIImage(named: ImageName.icon_button_star.rawValue), for: .normal)
+            isStarred = !isStarred
+            checkStarRepository(type: .starRepository)
             self.view.makeToast("You starred \(repositoryItem?.fullname ?? "")")
             debugPrint("Did starred \(repositoryItem?.fullname ?? "")")
         }
-        isStarred = !isStarred
+        
     }
     
     @IBAction func btnClose(_ sender: Any) {
@@ -146,7 +146,7 @@ class RepositoryViewController: UIViewController {
                 self?.branch = self?.repositoryItem?.defaultBranch
                 self?.repositoryDetails = self?.repositoryItem?.getDetailCell()
                 self?.resultTableView.reloadData()
-                self?.updateStatus()
+                self?.checkStarRepository(type: .checkStarredRepository)
             }
             if !errorMessage.isEmpty {
                 debugPrint("Search error: " + errorMessage)
@@ -154,22 +154,24 @@ class RepositoryViewController: UIViewController {
         }
     }
     
-    private func checkStarRepository(type: GetType) -> Bool {
-        var isSuccess = false
+    private func checkStarRepository(type: GetType) {
         repositoryGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) {results, errorMessage, statusCode in
             if let statusCode = statusCode {
-                if statusCode == 204 { isSuccess = true }
+                if statusCode == 204 {
+                    if type == .checkStarredRepository {
+                        self.isStarred = true
+                    }
+                    self.updateStatus()
+                }
             }
             if !errorMessage.isEmpty {
                 debugPrint("Search error: " + errorMessage)
             }
         }
-        return isSuccess
     }
     
     private func updateStatus() {
         if gitHubAuthenticationManager.didAuthenticated {
-            isStarred = checkStarRepository(type: .checkStarredRepository)
             if  isStarred {
                 btnStar.setImage(UIImage(named: ImageName.icon_button_star.rawValue), for: .normal)
             } else {
