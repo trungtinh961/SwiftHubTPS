@@ -44,21 +44,20 @@ class SearchViewController: UIViewController {
     private var noResult = false
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateTableView()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateTableView()
+        makeUI()
+   }
+    
+    private func makeUI() {
         self.hideKeyboardWhenTappedAround()
         /// Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
-                
-   }
+    }
     
     // MARK: - IBActions
     @IBAction func typeApiSegmentControl(_ sender: Any) {

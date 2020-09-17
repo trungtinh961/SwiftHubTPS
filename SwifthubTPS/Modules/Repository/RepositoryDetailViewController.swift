@@ -35,8 +35,13 @@ class RepositoryDetailViewController: UIViewController {
     private var userItems: [User]?
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         if detailType == .repositories {
             self.navigationItem.title = "Repositories"
         } else if detailType == .followers {
@@ -44,12 +49,6 @@ class RepositoryDetailViewController: UIViewController {
         } else {
             self.navigationItem.title = "Following"
         }
-        updateTableView()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)

@@ -17,6 +17,7 @@ class LanguageChartCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Public Properties
+    var gitHubAuthenticationManager = GITHUB()
     var repositoryItem: Repository?
     
     // MARK: - Private Properties
@@ -106,12 +107,14 @@ class LanguageChartCell: UITableViewCell {
         languageURL = "https://api.github.com/repos/\(repositoryItem!.fullname!)/languages"
         let url = URL(string: languageURL)
         var request = URLRequest(url: url!)
+        if gitHubAuthenticationManager.didAuthenticated {
+            request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        }
         request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let data = data {
-                do {
-                    
+                do {                    
                     self.repositoryLanguages = try JSONDecoder().decode([String:Int].self, from: data)
                     for (key, value) in self.repositoryLanguages {
                         self.results.append(ChartLanguage(name: key, color: self.colorLanguages[key]?.color, linesOfCode: value))

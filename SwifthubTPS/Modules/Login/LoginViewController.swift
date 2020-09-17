@@ -31,11 +31,11 @@ class LoginViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func btnOauth(_ sender: Any) {
-        showAlertWithDistructiveButton()
+        showAlert()
     }
     
     // MARK: - Private Methods
-    private func showAlertWithDistructiveButton() {
+    private func showAlert() {
         let alert = UIAlertController(title: "\"SwiftHub\" wants to use \"github.com\" to sign in.", message: "This allows the app and website to share information about you.", preferredStyle: UIAlertController.Style.alert)
 
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { _ in

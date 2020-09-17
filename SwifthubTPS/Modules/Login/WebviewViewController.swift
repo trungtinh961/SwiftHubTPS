@@ -90,9 +90,7 @@ extension WebviewViewController: WKNavigationDelegate {
                 if status == "access_token" {
                     let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
                     mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = true
-                    mainTabBarController?.gitHubAuthenticationManager.accessToken = self.accessToken
-                    mainTabBarController?.modalTransitionStyle = .flipHorizontal
-                    mainTabBarController?.modalTransitionStyle = .flipHorizontal
+                    mainTabBarController?.gitHubAuthenticationManager.accessToken = self.accessToken                    
                     self.view.window?.rootViewController = mainTabBarController
                     self.view.window?.makeKeyAndVisible()
                 } else {

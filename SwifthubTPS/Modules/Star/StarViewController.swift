@@ -30,19 +30,18 @@ class StarViewController: UIViewController {
     private var stargazersItems: [User]?
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateTableView()
+        makeUI()
+    }
+    
+    private func makeUI() {
         if getType == .getStarred {
             self.navigationItem.title = "Starred"
         } else {
             self.navigationItem.title = "Stargazers"
         }
-        updateTableView()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
         ///Register cell
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
@@ -52,7 +51,6 @@ class StarViewController: UIViewController {
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
     }
-    
 
     // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {
