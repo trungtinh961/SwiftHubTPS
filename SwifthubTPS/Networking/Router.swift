@@ -28,6 +28,7 @@ enum GetType: Int {
     case getWatchers
     case getUserEvents
     case getAuthenUser
+    case getRepositoryOfAuthenUser
     case getNotifications
     case makeNotificationAllRead
     case getUserRepositories
@@ -69,6 +70,7 @@ enum Router {
     case getWatchers(fullname: String)
     case getUserEvents(username: String, type: EventType)
     case getAuthenUser
+    case getRepositoryOfAuthenUser
     case getNotifications(notificationState: NotificationState)
     case makeNotificationAllRead
     case getUserRepositories(username: String)
@@ -84,7 +86,6 @@ enum Router {
     case createIssueComment(fullname: String, number: String)
     case getOrganizations(username: String)
     case getContents(fullname: String, path: String)
-    case getContent(fullname: String, path: String)
     
     var scheme: String {
         switch self {
@@ -123,6 +124,7 @@ enum Router {
         case .getWatchers(let fullname): return "/repos/\(fullname)/subscribers"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
         case .getAuthenUser: return "/user"
+        case .getRepositoryOfAuthenUser: return "/user/repos"
         case .getNotifications,
              .makeNotificationAllRead:
             return "/notifications"
@@ -140,9 +142,7 @@ enum Router {
         case .getIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         case .createIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         case .getOrganizations(let username): return "/users/\(username)/orgs"
-        case .getContents(let fullname, let path),
-             .getContent(let fullname, let path):
-            return "/repos/\(fullname)/contents/\(path)"
+        case .getContents(let fullname, let path): return "/repos/\(fullname)/contents/\(path)"
             
             
         }
@@ -187,11 +187,11 @@ enum Router {
              .getStargazers,
              .getWatching,
              .getWatchers,
-             .getUserRepositories,
              .getFollowers,
              .getFollowing,
              .getUserEvents,
              .getIssueComment,
+             .getUserRepositories,
              .getOrganizations:
             params["per_page"] = "100"
         case .getNotifications(let notificationState):
@@ -200,6 +200,9 @@ enum Router {
             case .participate: params["participating"] = "true"
             case .all: params["all"] = "true"
             }
+            params["per_page"] = "100"
+        case .getRepositoryOfAuthenUser:
+            params["visibility"] = "all"
             params["per_page"] = "100"
         default: break
         }

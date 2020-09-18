@@ -89,8 +89,8 @@ extension WebviewViewController: WKNavigationDelegate {
             DispatchQueue.main.async {
                 if status == "access_token" {
                     let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
-                    mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = false
-                    mainTabBarController?.gitHubAuthenticationManager.accessToken = ""
+                    mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = true
+                    mainTabBarController?.gitHubAuthenticationManager.accessToken = self.accessToken
                     guard let window = self.view.window else {
                         self.view.window?.rootViewController = mainTabBarController
                         self.view.window?.makeKeyAndVisible()

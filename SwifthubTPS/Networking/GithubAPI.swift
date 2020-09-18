@@ -19,7 +19,7 @@ class GitHubAPI<Element: Mappable> {
     typealias JSONDictionary = [String: Any]
     typealias QueryResults = ([Element]?, String, Int?) -> Void
     
-    func createURL(type: GetType, eventType: EventType, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String, number: Int, path: String) -> URL? {
+    func createURL(type: GetType, eventType: EventType, gitHubAuthenticationManager: GITHUB, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String, number: Int, path: String) -> URL? {
         var components = URLComponents()
         switch type {
         case .repository:
@@ -111,6 +111,11 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getAuthenUser.scheme
             components.host = Router.getAuthenUser.host
             components.path = Router.getAuthenUser.path
+        case .getRepositoryOfAuthenUser:
+            components.scheme = Router.getRepositoryOfAuthenUser.scheme
+            components.host = Router.getRepositoryOfAuthenUser.host
+            components.path = Router.getRepositoryOfAuthenUser.path
+            components.setQueryItems(with: Router.getRepositoryOfAuthenUser.parameters!)
         case .getNotifications, .makeNotificationAllRead:
             components.scheme = Router.getNotifications(notificationState: notificationState).scheme
             components.host = Router.getNotifications(notificationState: notificationState).host
@@ -157,8 +162,6 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getContents(fullname: fullname, path: path).scheme
             components.host = Router.getContents(fullname: fullname, path: path).host
             components.path = Router.getContents(fullname: fullname, path: path).path
-        
-        
         }
         
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
@@ -170,7 +173,7 @@ class GitHubAPI<Element: Mappable> {
         
         dataTask?.cancel()
         
-        guard let url = createURL(type: type, eventType: eventType, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number, path: path)
+        guard let url = createURL(type: type, eventType: eventType, gitHubAuthenticationManager: gitHubAuthenticationManager, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number, path: path)
             else {
                 return
             }
