@@ -1,9 +1,10 @@
 # SwiftHubTPS
 
 ## API
-
+- [GitHub Trending API](https://githubtrendingapi.docs.apiary.io/#)
+- [GitHub REST API](https://docs.github.com/en/rest)
 ## Reference
-
+- [SwiftHub](https://github.com/khoren93/SwiftHub)
 ## CocoaPods library
 - [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)
 - [UIColor_Hex_Swift](https://github.com/yeahdongcn/UIColor-Hex-Swift)
