@@ -1,5 +1,5 @@
 # SwiftHubTPS
-
+An ios app get some information of Github.
 ## API
 - [GitHub Trending API](https://githubtrendingapi.docs.apiary.io/#)
 - [GitHub REST API](https://docs.github.com/en/rest)
