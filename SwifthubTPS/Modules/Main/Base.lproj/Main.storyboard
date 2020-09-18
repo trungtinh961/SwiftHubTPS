@@ -746,22 +746,7 @@
                     <view key="view" contentMode="scaleToFill" id="bUk-dv-IeT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLk-6X-cGb">
-                                <rect key="frame" x="8" y="52" width="398" height="802"/>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="sNd-ey-iFd" firstAttribute="trailing" secondItem="yLk-6X-cGb" secondAttribute="trailing" constant="8" id="Cnl-OW-B2e"/>
-                            <constraint firstItem="yLk-6X-cGb" firstAttribute="leading" secondItem="sNd-ey-iFd" secondAttribute="leading" constant="8" id="Dno-bd-CTB"/>
-                            <constraint firstItem="sNd-ey-iFd" firstAttribute="bottom" secondItem="yLk-6X-cGb" secondAttribute="bottom" constant="8" id="aop-QN-f8B"/>
-                            <constraint firstItem="yLk-6X-cGb" firstAttribute="top" secondItem="sNd-ey-iFd" secondAttribute="top" constant="8" id="bdz-fV-OZ7"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="sNd-ey-iFd"/>
                     </view>
                     <navigationItem key="navigationItem" id="Mgl-IN-Cbo">
@@ -772,9 +757,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="txtContent" destination="yLk-6X-cGb" id="nUc-U4-8I6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehm-Ji-HND" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

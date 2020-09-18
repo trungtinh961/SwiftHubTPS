@@ -1,4 +1,5 @@
 PODS:
+  - Highlightr (2.1.0)
   - InputBarAccessoryView (5.1.0):
     - InputBarAccessoryView/Core (= 5.1.0)
   - InputBarAccessoryView/Core (5.1.0)
@@ -11,6 +12,7 @@ PODS:
   - UIColor_Hex_Swift (5.1.0)
 
 DEPENDENCIES:
+  - Highlightr
   - InputBarAccessoryView
   - MessageKit
   - MultiProgressView
@@ -21,6 +23,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Highlightr
     - InputBarAccessoryView
     - MessageKit
     - MultiProgressView
@@ -30,6 +33,7 @@ SPEC REPOS:
     - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
+  Highlightr: 595f3e100737c8de41113385da8bd0b5b65212c6
   InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
   MessageKit: 1f07618183be6d92b648ba7a384aafa097362a00
   MultiProgressView: 65e5bb8181687099ade56d16d85d245a92fafa96
@@ -38,6 +42,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   UIColor_Hex_Swift: 8be7432edacb7fa91c78aa05ef3c30b66e4f9415
 
-PODFILE CHECKSUM: 0a011c5c39351bb317ba5f54154158fa46d03454
+PODFILE CHECKSUM: 4ad8acbe691c91548c6f784f44fe0ecd72ee9635
 
 COCOAPODS: 1.9.3

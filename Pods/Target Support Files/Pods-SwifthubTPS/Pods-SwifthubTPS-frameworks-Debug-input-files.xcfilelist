@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-SwifthubTPS/Pods-SwifthubTPS-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework
 ${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework
 ${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework
 ${BUILT_PRODUCTS_DIR}/MultiProgressView/MultiProgressView.framework

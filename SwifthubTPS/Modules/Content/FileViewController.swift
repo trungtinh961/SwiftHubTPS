@@ -7,11 +7,9 @@
 //
 
 import UIKit
+import Highlightr
 
 class FileViewController: UIViewController {
-    
-    // MARK: - IBOutlets
-    @IBOutlet weak var txtContent: UITextView!
     
     // MARK: - Public properties
     var contentItem: Content?
@@ -19,6 +17,7 @@ class FileViewController: UIViewController {
     var gitHubAuthenticationManager = GITHUB()
     
     // MARK: - Private properties
+    private var textView: UITextView?
     private var isLoading = false
     private let defaultSession = URLSession(configuration: .default)
     private var dataTask: URLSessionDataTask?
@@ -26,12 +25,25 @@ class FileViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.title = contentItem?.name ?? ""
+        makeUI()
         getExtension()
         getContent()
     }    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    private func makeUI() {
+        let textStorage = CodeAttributedString()
+        textStorage.language = "Swift"
+        let layoutManager = NSLayoutManager()
+        textStorage.addLayoutManager(layoutManager)
+        let textContainer = NSTextContainer(size: view.bounds.size)
+        layoutManager.addTextContainer(textContainer)
+        textView = UITextView(frame: CGRect(x: 8, y: 8, width: view.frame.width - 16, height: view.frame.height - 16), textContainer: textContainer)
+        view.addSubview(textView!)
     }
     
     // MARK: - IBActions
@@ -75,7 +87,7 @@ class FileViewController: UIViewController {
                 let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
                     DispatchQueue.main.async {
-                        self?.txtContent.text = String(data: data, encoding: .utf8)
+                        self?.textView!.text = String(data: data, encoding: .utf8)
                     }
             }
         }

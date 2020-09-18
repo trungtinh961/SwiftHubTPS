@@ -12,4 +12,5 @@ target 'SwifthubTPS' do
     pod 'Toast-Swift'           # https://github.com/scalessec/Toast-Swift
     pod 'SwiftDate'             # https://github.com/malcommac/SwiftDate
     pod 'MultiProgressView'     # https://github.com/mac-gallagher/MultiProgressView
+    pod 'Highlightr'            # https://github.com/raspu/Highlightr
 end
