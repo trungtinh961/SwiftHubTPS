@@ -201,8 +201,7 @@ class UserViewController: UIViewController {
                 if result.type == .user {
                     self?.getOrganizations()
                 }
-                self?.resultTableView.reloadData()
-                self?.checkFollowUser(type: .checkFollowedUser)
+                self?.resultTableView.reloadData()                
             }
             if !errorMessage.isEmpty {
                 debugPrint("Search error: " + errorMessage)
@@ -215,6 +214,9 @@ class UserViewController: UIViewController {
             if let results = results {
                 self?.organizations = results
                 self?.resultTableView.reloadData()
+                if (self?.gitHubAuthenticationManager.didAuthenticated)! {
+                    self?.checkFollowUser(type: .checkFollowedUser)
+                }
             }
             if !errorMessage.isEmpty {
                 debugPrint("Search error: " + errorMessage)

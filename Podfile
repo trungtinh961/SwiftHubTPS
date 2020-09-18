@@ -5,7 +5,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'SwifthubTPS' do
-    pod 'ObjectMapper'          # https://github.com/ninjaprox/NVActivityIndicatorView
+    pod 'ObjectMapper'          # https://github.com/tristanhimmelman/ObjectMapper
     pod 'UIColor_Hex_Swift'     # https://github.com/yeahdongcn/UIColor-Hex-Swift
     pod 'MessageKit'            # https://github.com/MessageKit/MessageKit
     pod 'InputBarAccessoryView' # https://github.com/nathantannar4/InputBarAccessoryView
