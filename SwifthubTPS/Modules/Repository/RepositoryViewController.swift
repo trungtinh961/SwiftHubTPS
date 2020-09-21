@@ -129,7 +129,12 @@ class RepositoryViewController: UIViewController {
         isLoading = true
         
         repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { [weak self] results, errorMessage, statusCode in
-            if let result = results?[0] {
+            if results?.count == 0 {
+                self?.isLoading = false
+                self?.lbDescription.text = "Error when load data!"
+                self?.resultTableView.reloadData()
+            }
+            else if let result = results?[0] {
                 self?.repositoryItem = result
                 self?.isLoading = false
                 if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
@@ -148,6 +153,7 @@ class RepositoryViewController: UIViewController {
                 self?.checkStarRepository(type: .checkStarredRepository)
             }
             if !errorMessage.isEmpty {
+                self?.isLoading = false
                 debugPrint("Search error: " + errorMessage)
             }
         }

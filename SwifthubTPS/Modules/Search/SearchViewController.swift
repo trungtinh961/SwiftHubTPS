@@ -150,6 +150,8 @@ class SearchViewController: UIViewController {
                         self?.resultTableView.reloadData()
                     }
                     if !errorMessage.isEmpty {
+                        self?.isLoading = false
+                        self?.resultTableView.reloadData()
                         debugPrint("Search error: " + errorMessage)
                     }
                 }
@@ -264,7 +266,7 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        if getType == .repository, !isLoading {
+        if getType == .repository, !isLoading, !noResult {
             let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             var indexCell: Repository
@@ -277,7 +279,7 @@ extension SearchViewController: UITableViewDelegate {
             let navController = UINavigationController(rootViewController: repositoryViewController)
             self.present(navController, animated:true, completion: nil)
             
-        } else if getType == .user, !isLoading {
+        } else if getType == .user, !isLoading, !noResult {
             var indexCell: User
             if isSearching {
                 indexCell = searchUsers![indexPath.row]

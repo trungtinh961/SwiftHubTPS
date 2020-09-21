@@ -266,6 +266,10 @@ class GitHubAPI<Element: Mappable> {
                 DispatchQueue.main.async {
                     completion([], self?.errorMessage ?? "", response.statusCode)
                 }
+            } else {
+                DispatchQueue.main.async {
+                    completion([], self?.errorMessage ?? "", 0)
+                }
             }
         }
         dataTask?.resume()
@@ -343,10 +347,4 @@ class GitHubAPI<Element: Mappable> {
         }
         dataTask?.resume()
     }
-    
-    
-    
-    
-    
-    
 }

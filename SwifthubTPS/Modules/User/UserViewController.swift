@@ -186,7 +186,12 @@ class UserViewController: UIViewController {
     private func reloadTableView() {
         isLoading = true
         userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? username ?? "") { [weak self] results, errorMessage, statusCode in
-            if let result = results?[0] {
+            if results?.count == 0 {
+                self?.isLoading = false
+                self?.lbDescription.text = "Error when load data!"
+                self?.resultTableView.reloadData()
+            }
+            else if let result = results?[0] {
                 self?.userItem = result
                 self?.totalRepos = (self?.userItem?.repositoriesCount ?? 0) + (self?.userItem?.privateRepoCount ?? 0)
                 self?.isLoading = false

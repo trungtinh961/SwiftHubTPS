@@ -58,7 +58,6 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Uee-ff-wGm" firstAttribute="top" secondItem="NFC-Nk-V4Y" secondAttribute="top" id="70A-N8-JqB"/>
                             <constraint firstItem="Uee-ff-wGm" firstAttribute="leading" secondItem="NFC-Nk-V4Y" secondAttribute="leading" id="JMP-7W-a0Z"/>

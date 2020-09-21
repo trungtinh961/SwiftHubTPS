@@ -50,20 +50,23 @@ class TrendingGithubAPI<Element: Mappable> {
         }
         debugPrint(url)
         dataTask = defaultSession.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else {return}
             defer {
-                self?.dataTask = nil
+                self.dataTask = nil
             }
             if let error = error {
-                self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
+                self.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
+                
             } else if
                 let data = data,
                 let response = response as? HTTPURLResponse,
                 response.statusCode == STATUS_CODE.OK {
-                    self?.updateSearchResults(data)
-                    DispatchQueue.main.async {
-                        completion(self?.elements, self?.errorMessage ?? "")
-                    }
+                    self.updateSearchResults(data)
+                    
                 }
+            DispatchQueue.main.async {
+                completion(self.elements, self.errorMessage )
+            }
         }
         dataTask?.resume()
     }
