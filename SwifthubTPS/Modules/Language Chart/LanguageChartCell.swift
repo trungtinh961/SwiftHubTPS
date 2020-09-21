@@ -37,14 +37,6 @@ class LanguageChartCell: UITableViewCell {
       return progress
     }()
     
-    private let stackView: UIStackView = {
-      let stackView = UIStackView()
-      stackView.distribution = .equalSpacing
-      stackView.alignment = .center
-      return stackView
-    }()
-    
-    
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -87,6 +79,19 @@ class LanguageChartCell: UITableViewCell {
         })
     }
     
+    private func noLanguage() {
+        let lbNoLanguage = UILabel()
+        lbNoLanguage.frame = CGRect(x: 8,
+                                    y: 0,
+                                    width: chartView.frame.width - 8,
+                                    height: chartView.frame.height)
+        lbNoLanguage.center = CGPoint(x: mainView.frame.size.width  / 2,
+                                      y: mainView.frame.size.height / 2)
+        lbNoLanguage.text = "No language found."
+        lbNoLanguage.textColor = .darkGray
+        mainView.addSubview(lbNoLanguage)
+    }
+    
     /// Get data
     private func getColorLanguage() {
         let url = URL(string: colorURL)
@@ -122,9 +127,13 @@ class LanguageChartCell: UITableViewCell {
                     }
                     self.results.sort(by: { $0.linesOfCode > $1.linesOfCode } )
                     DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                        self.progressView.reloadData()
-                        self.setProgress()
+                        if self.results.count == 0 {
+                            self.noLanguage()
+                        } else {
+                            self.collectionView.reloadData()
+                            self.progressView.reloadData()
+                            self.setProgress()
+                        }
                     }
                 } catch {
                     print("Language \(error)")
@@ -168,7 +177,6 @@ extension LanguageChartCell: MultiProgressViewDataSource {
         bar.backgroundColor = UIColor(results[section].color ?? "#AFEDFC")
         return bar
     }
- 
 }
 
 // MARK: - MultiProgressViewDelegate
