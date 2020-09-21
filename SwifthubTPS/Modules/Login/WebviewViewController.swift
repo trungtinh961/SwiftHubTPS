@@ -23,8 +23,7 @@ class WebviewViewController: UIViewController {
     // MARK: - Lifecycles
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let authURL = String(format: "%@?client_id=%@&scope=%@&redirect_uri=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE,GITHUB.GITHUB_REDIRECT_URI])
-       
+        let authURL = String(format: "%@?client_id=%@&scope=%@", arguments: [GITHUB.GITHUB_AUTHURL,GITHUB.GITHUB_CLIENT_ID,GITHUB.GITHUB_SCOPE])
         let urlRequest = URLRequest(url: URL(string: authURL)!)
         debugPrint(urlRequest)
         webview.navigationDelegate = self
@@ -32,7 +31,7 @@ class WebviewViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
     }
         
     //MARK: - IBActions

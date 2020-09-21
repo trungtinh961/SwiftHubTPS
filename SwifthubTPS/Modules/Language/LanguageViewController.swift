@@ -20,6 +20,7 @@ class LanguageViewController: UIViewController {
     @IBOutlet weak var languageTableView: UITableView!
     @IBOutlet weak var btnAllLanguage: UIButton!
     @IBOutlet weak var btnSave: UIBarButtonItem!
+    @IBOutlet weak var lbLanguageName: UILabel!
     
     // MARK: - Public properties
     var language: String?
@@ -37,7 +38,6 @@ class LanguageViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     override func viewDidLoad() {
@@ -48,6 +48,7 @@ class LanguageViewController: UIViewController {
     
     private func makeUI() {
         self.hideKeyboardWhenTappedAround()
+        lbLanguageName.text = "All"
         /// Register Cell
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.languageCell.rawValue)
         RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
@@ -103,6 +104,7 @@ class LanguageViewController: UIViewController {
         if language != nil, languages != nil {
             for index in 0..<languages!.count {
                 if language == languages![index].urlParam?.removingPercentEncoding {
+                    lbLanguageName.text = languages![index].name
                     cellChecked = IndexPath(row: index, section: 0)
                     break
                 }

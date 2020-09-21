@@ -245,11 +245,15 @@ extension UserViewController: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0.0 : 32
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 45))
         headerView.backgroundColor = UIColor("#F5F5F5")
         let label = UILabel()
-        label.frame = CGRect(x: 0, y: 4, width: headerView.frame.width - 10, height: 17)
+        label.frame = CGRect(x: 0, y: 5, width: headerView.frame.width - 10, height: 17)
         headerView.addSubview(label)
         if section == 1 {
             label.text = "Orgnizations"
@@ -325,6 +329,7 @@ extension UserViewController: UITableViewDelegate {
             case "events":
                 let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
                 eventViewController.userItem = userItem
+                eventViewController.isTabbarCall = false
                 eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
                 self.navigationController?.pushViewController(eventViewController, animated: true)
             case "blog":

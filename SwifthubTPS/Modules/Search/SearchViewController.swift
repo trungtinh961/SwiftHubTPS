@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import HMSegmentedControl
 import UIColor_Hex_Swift
 
 class SearchViewController: UIViewController {
@@ -347,6 +346,7 @@ extension SearchViewController: LanguageViewControllerDelegate {
     
     func allLanguageViewController(_ controller: LanguageViewController) {
         updateTableView(query: searchTextCurrent)
+        language = nil
         dismiss(animated: true, completion: nil)
     }
 

@@ -58,6 +58,7 @@ class NotificationViewController: UIViewController {
                 if statusCode == StatusCode.RESET_CONTENT {
                     self.view.makeToast("Make as all read!")
                     debugPrint("Make as all read!")
+                    self.updateTableView()
                 }                
             }
             if !errorMessage.isEmpty {

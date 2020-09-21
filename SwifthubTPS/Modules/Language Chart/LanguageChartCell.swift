@@ -44,7 +44,7 @@ class LanguageChartCell: UITableViewCell {
         
         self.collectionView.register(UINib.init(nibName: "LanguageCollectionCell", bundle: nil), forCellWithReuseIdentifier: "LanguageCollectionCell")
         getColorLanguage()
-        setupProgressBar()
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -57,10 +57,10 @@ class LanguageChartCell: UITableViewCell {
     /// Progressbar
     private func setupProgressBar() {
         chartView.addSubview(progressView)
-        progressView.frame = CGRect(x: 8,
+        progressView.frame = CGRect(x: 0,
                                     y: 0,
-                                    width: chartView.frame.width - 8,
-                                    height: chartView.frame.height - 18)
+                                    width: chartView.frame.width - 0,
+                                    height: chartView.frame.height - 8)
         progressView.dataSource = self
         progressView.delegate = self
     }
@@ -99,6 +99,9 @@ class LanguageChartCell: UITableViewCell {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let data = data {
                 do {
+                    DispatchQueue.main.async {
+                        self.setupProgressBar()
+                    }
                     self.colorLanguages = try JSONDecoder().decode([String:ColorLanguage].self, from: data)
                     self.getRepositoryLanguages()
                 } catch {

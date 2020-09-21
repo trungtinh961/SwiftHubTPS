@@ -358,6 +358,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="A5g-D6-CsC">
                                 <rect key="frame" x="167" y="60" width="80" height="80"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="Pei-65-MDf"/>
                                     <constraint firstAttribute="height" constant="80" id="a6l-eh-IGe"/>
                                 </constraints>
                             </imageView>
@@ -376,7 +377,6 @@
                             <constraint firstItem="A5g-D6-CsC" firstAttribute="top" secondItem="cn6-YZ-E4B" secondAttribute="top" constant="16" id="58f-mY-uYt"/>
                             <constraint firstItem="ie6-vv-gHR" firstAttribute="top" secondItem="A5g-D6-CsC" secondAttribute="bottom" constant="8" id="602-gu-y4z"/>
                             <constraint firstItem="ie6-vv-gHR" firstAttribute="trailing" secondItem="cn6-YZ-E4B" secondAttribute="trailing" id="9aH-v9-gvT"/>
-                            <constraint firstItem="A5g-D6-CsC" firstAttribute="leading" secondItem="cn6-YZ-E4B" secondAttribute="leading" constant="167" id="BcJ-6C-r1e"/>
                             <constraint firstItem="ie6-vv-gHR" firstAttribute="leading" secondItem="cn6-YZ-E4B" secondAttribute="leading" constant="8" id="FR1-wn-Q7B"/>
                             <constraint firstAttribute="bottomMargin" secondItem="ie6-vv-gHR" secondAttribute="bottom" constant="-26" id="frr-MI-e7R"/>
                         </constraints>
@@ -996,6 +996,7 @@
                                 <rect key="frame" x="167" y="60" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="JGA-Yh-zOQ"/>
+                                    <constraint firstAttribute="width" constant="80" id="iRf-5b-NBG"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RaP-d3-wnp">
@@ -1013,7 +1014,6 @@
                             <constraint firstItem="hqU-OZ-M0D" firstAttribute="centerX" secondItem="yYa-gJ-yWF" secondAttribute="centerX" id="CvG-gF-5SG"/>
                             <constraint firstItem="RaP-d3-wnp" firstAttribute="trailing" secondItem="cVz-Qi-uGm" secondAttribute="trailing" id="R5R-0u-JKs"/>
                             <constraint firstItem="hqU-OZ-M0D" firstAttribute="top" secondItem="cVz-Qi-uGm" secondAttribute="top" constant="16" id="VzP-h1-ckF"/>
-                            <constraint firstItem="hqU-OZ-M0D" firstAttribute="leading" secondItem="cVz-Qi-uGm" secondAttribute="leading" constant="167" id="Xdn-yB-4G7"/>
                             <constraint firstItem="RaP-d3-wnp" firstAttribute="leading" secondItem="cVz-Qi-uGm" secondAttribute="leading" constant="8" id="YaO-Bo-FNE"/>
                             <constraint firstItem="cVz-Qi-uGm" firstAttribute="bottom" secondItem="RaP-d3-wnp" secondAttribute="bottom" constant="8" id="gyd-3T-iVU"/>
                         </constraints>
@@ -1325,6 +1325,7 @@
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="2Ux-lK-UUV">
+                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="btnSave:" destination="csF-i5-M5W" id="TAv-cv-vb8"/>
                                             </connections>
@@ -1333,7 +1334,7 @@
                                 </items>
                             </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWz-eJ-uRs">
-                                <rect key="frame" x="8" y="72" width="19" height="21"/>
+                                <rect key="frame" x="8" y="72" width="194" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1368,7 +1369,7 @@
                             <constraint firstItem="EOt-rY-ARE" firstAttribute="trailing" secondItem="Rq3-j7-TLV" secondAttribute="trailing" constant="2" id="Feq-dH-93W"/>
                             <constraint firstItem="Rq3-j7-TLV" firstAttribute="leading" secondItem="EOt-rY-ARE" secondAttribute="leading" constant="8" id="JFy-VD-6qJ"/>
                             <constraint firstItem="xWz-eJ-uRs" firstAttribute="leading" secondItem="EOt-rY-ARE" secondAttribute="leading" constant="8" id="U6k-u6-Zu6"/>
-                            <constraint firstItem="EOt-rY-ARE" firstAttribute="trailing" secondItem="xWz-eJ-uRs" secondAttribute="trailing" constant="387" id="hrM-ew-YyQ"/>
+                            <constraint firstItem="EOt-rY-ARE" firstAttribute="trailing" secondItem="xWz-eJ-uRs" secondAttribute="trailing" constant="212" id="hrM-ew-YyQ"/>
                             <constraint firstItem="Rq3-j7-TLV" firstAttribute="top" secondItem="xWz-eJ-uRs" secondAttribute="bottom" constant="16" id="jme-pU-DH5"/>
                             <constraint firstItem="EOt-rY-ARE" firstAttribute="trailing" secondItem="9wh-5a-hof" secondAttribute="trailing" constant="16" id="o38-6L-bjd"/>
                             <constraint firstItem="9wh-5a-hof" firstAttribute="top" secondItem="Rq3-j7-TLV" secondAttribute="bottom" constant="8" id="p6I-Bg-Gtp"/>
@@ -1382,11 +1383,12 @@
                         <outlet property="btnAllLanguage" destination="9wh-5a-hof" id="USE-GT-9OL"/>
                         <outlet property="btnSave" destination="2Ux-lK-UUV" id="TLY-oO-vgh"/>
                         <outlet property="languageTableView" destination="Rq3-j7-TLV" id="T1P-bI-mfc"/>
+                        <outlet property="lbLanguageName" destination="xWz-eJ-uRs" id="oZs-h7-38D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTu-TX-EmJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2541" y="-1073"/>
+            <point key="canvasLocation" x="2540.579710144928" y="-1073.4375"/>
         </scene>
         <!--Login-->
         <scene sceneID="wg7-f3-ORb">

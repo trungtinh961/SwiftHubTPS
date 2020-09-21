@@ -21,6 +21,7 @@ class UserEventViewController: UIViewController {
     var gitHubAuthenticationManager = GITHUB()
     var userItem: User?
     var didAuthenticated: Bool = false
+    var isTabbarCall = false
     
     // MARK: - Private properties
     private var eventType = EventType.received
@@ -38,7 +39,7 @@ class UserEventViewController: UIViewController {
     }
     
     private func makeUI() {
-        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
+        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem, isTabbarCall {
             self.navigationItem.leftBarButtonItem?.tintColor = .clear
         } else {
             self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
@@ -54,9 +55,7 @@ class UserEventViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {
-        if !gitHubAuthenticationManager.didAuthenticated {
-            self.navigationController?.popViewController(animated: true)
-        }
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func segmentControl(_ sender: Any) {

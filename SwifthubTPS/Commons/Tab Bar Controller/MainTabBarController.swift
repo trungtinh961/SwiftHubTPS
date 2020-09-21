@@ -63,6 +63,7 @@ class MainTabBarController: UITabBarController {
             let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
             eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             eventViewController.userItem = userItem
+            eventViewController.isTabbarCall = true
             let eventNavgitaionController = UINavigationController(rootViewController: eventViewController)
             eventNavgitaionController.title = "Event"
             eventNavgitaionController.tabBarItem.image = UIImage.init(named: ImageName.icon_tabbar_news.rawValue)

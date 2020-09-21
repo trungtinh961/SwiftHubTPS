@@ -162,8 +162,7 @@ class GitHubAPI<Element: Mappable> {
             components.scheme = Router.getContents(fullname: fullname, path: path).scheme
             components.host = Router.getContents(fullname: fullname, path: path).host
             components.path = Router.getContents(fullname: fullname, path: path).path
-        }
-        
+        }        
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
         return components.url
     }
@@ -234,7 +233,6 @@ class GitHubAPI<Element: Mappable> {
         }
         dataTask?.resume()
     }
-        
       
     private func updateSearchResults(type: GetType, _ data: Data) {
         elements.removeAll()
@@ -249,7 +247,6 @@ class GitHubAPI<Element: Mappable> {
                 errorMessage += "JSONSerialization error: \(error.localizedDescription)\n"
                 return
             }
-            
         default: /// Json return array
             do {
                 jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Array
@@ -263,7 +260,5 @@ class GitHubAPI<Element: Mappable> {
               }
             }
         }
-        
     }
-    
 }
