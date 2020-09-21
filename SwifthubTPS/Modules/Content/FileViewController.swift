@@ -21,6 +21,7 @@ class FileViewController: UIViewController {
     private var isLoading = false
     private let defaultSession = URLSession(configuration: .default)
     private var dataTask: URLSessionDataTask?
+    private var contentGithubAPI = GitHubAPI<Content>()
     
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -71,29 +72,8 @@ class FileViewController: UIViewController {
     }
     
     private func getContent() {
-        let components = URLComponents(string: contentItem?.url ?? "")
-        guard let url =  components?.url else { return }
-        var request = URLRequest(url: url)
-        request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
-        if gitHubAuthenticationManager.didAuthenticated {
-            request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        contentGithubAPI.getContent(fullname: repositoryItem?.fullname ?? "", gitHubAuthenticationManager: gitHubAuthenticationManager, path: contentItem?.path ?? "") { [weak self] content in
+                self?.textView!.text = content
         }
-        request.httpMethod = "GET"
-        dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
-            defer {
-                self?.dataTask = nil
-            }
-            if let error = error {
-                print("DataTask error: " + error.localizedDescription)
-            } else if
-                let data = data,
-                let response = response as? HTTPURLResponse,
-            response.statusCode == STATUS_CODE.OK {
-                    DispatchQueue.main.async {
-                        self?.textView!.text = String(data: data, encoding: .utf8)
-                    }
-            }
-        }
-        dataTask?.resume()
     }
 }

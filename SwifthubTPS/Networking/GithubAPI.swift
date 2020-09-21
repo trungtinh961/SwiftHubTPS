@@ -18,8 +18,9 @@ class GitHubAPI<Element: Mappable> {
     
     typealias JSONDictionary = [String: Any]
     typealias QueryResults = ([Element]?, String, Int?) -> Void
+    typealias ContentResults = (String) -> Void
     
-    func createURL(type: GetType, eventType: EventType, gitHubAuthenticationManager: GITHUB, state: IssueState, notificationState: NotificationState,  query: String, language: String, fullname: String, username: String, number: Int, path: String) -> URL? {
+    func createURL(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, path: String = "") -> URL? {
         var components = URLComponents()
         switch type {
         case .repository:
@@ -169,16 +170,12 @@ class GitHubAPI<Element: Mappable> {
     
     
     func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, body: String = "", path: String = "", completion: @escaping QueryResults) {
-        
         dataTask?.cancel()
-        
         guard let url = createURL(type: type, eventType: eventType, gitHubAuthenticationManager: gitHubAuthenticationManager, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number, path: path)
             else {
                 return
             }
-        
         var request = URLRequest(url: url)
-        
         request.httpMethod = { () -> String in
             switch type {
             case .createIssueComment: return "POST"
@@ -233,7 +230,11 @@ class GitHubAPI<Element: Mappable> {
         }
         dataTask?.resume()
     }
-      
+    
+    /// Parse Json of github API
+    /// - Parameters:
+    ///   - type: type to get api
+    ///   - data: data got
     private func updateSearchResults(type: GetType, _ data: Data) {
         elements.removeAll()
         var jsonArray: Array<Any>!
@@ -260,5 +261,40 @@ class GitHubAPI<Element: Mappable> {
               }
             }
         }
+    }
+    
+    /// Get  content of file
+    /// - Parameters:
+    ///   - fullname: Repository fullname
+    ///   - gitHubAuthenticationManager: GitHub Authentication
+    ///   - path: path to file
+    func getContent(fullname: String, gitHubAuthenticationManager: GITHUB, path: String, completion: @escaping ContentResults) {
+        dataTask?.cancel()
+        guard let url = createURL(type: .getContent, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: fullname, path: path)
+            else {
+                return
+            }
+        var request = URLRequest(url: url)
+        request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
+        if gitHubAuthenticationManager.didAuthenticated {
+            request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        }
+        request.httpMethod = "GET"
+        dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
+            defer {
+                self?.dataTask = nil
+            }
+            if let error = error {
+                print("DataTask error: " + error.localizedDescription)
+            } else if
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == STATUS_CODE.OK {
+                    DispatchQueue.main.async {
+                        completion(String(data: data, encoding: .utf8)!)
+                    }
+            }
+        }
+        dataTask?.resume()
     }
 }
