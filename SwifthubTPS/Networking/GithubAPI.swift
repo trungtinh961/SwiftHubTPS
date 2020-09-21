@@ -20,9 +20,20 @@ class GitHubAPI<Element: Mappable> {
     typealias QueryResults = ([Element]?, String, Int?) -> Void
     typealias ContentResults = (String) -> Void
     
-    func createURL(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, path: String = "") -> URL? {
+    func createURL(type: GetType,
+                   eventType: EventType = .received,
+                   gitHubAuthenticationManager: GITHUB,
+                   state: IssueState = .open,
+                   notificationState: NotificationState = .unread,
+                   query: String = "",
+                   language: String = "",
+                   fullname: String = "",
+                   username: String = "",
+                   number: Int = 0,
+                   path: String = "") -> URL? {
         var components = URLComponents()
         switch type {
+        /// Search
         case .repository:
             components.scheme = Router.searchRepositories(query: query, language: language).scheme
             components.host = Router.searchRepositories(query: query, language: language).host
@@ -35,6 +46,7 @@ class GitHubAPI<Element: Mappable> {
             components.setQueryItems(with: Router.searchUsers(query: query, language: language).parameters!)
         case .language:
             break
+        /// Repository
         case .getRepository:
             components.scheme = Router.getRepository(fullname: fullname).scheme
             components.host = Router.getRepository(fullname: fullname).host
@@ -75,10 +87,29 @@ class GitHubAPI<Element: Mappable> {
             components.path = Router.getContributors(fullname: fullname).path
             components.setQueryItems(with: Router.getContributors(fullname: fullname).parameters!)
         case .getRepositoryEvents:
-            components.scheme = Router.getEvents(fullname: fullname).scheme
-            components.host = Router.getEvents(fullname: fullname).host
-            components.path = Router.getEvents(fullname: fullname).path
-            components.setQueryItems(with: Router.getEvents(fullname: fullname).parameters!)
+            components.scheme = Router.getRepositoryEvents(fullname: fullname).scheme
+            components.host = Router.getRepositoryEvents(fullname: fullname).host
+            components.path = Router.getRepositoryEvents(fullname: fullname).path
+            components.setQueryItems(with: Router.getRepositoryEvents(fullname: fullname).parameters!)
+        case .getStargazers:
+            components.scheme = Router.getStargazers(fullname: fullname).scheme
+            components.host = Router.getStargazers(fullname: fullname).host
+            components.path = Router.getStargazers(fullname: fullname).path
+            components.setQueryItems(with: Router.getStargazers(fullname: fullname).parameters!)
+        case .getWatchers:
+            components.scheme = Router.getWatchers(fullname: fullname).scheme
+            components.host = Router.getWatchers(fullname: fullname).host
+            components.path = Router.getWatchers(fullname: fullname).path
+            components.setQueryItems(with: Router.getWatchers(fullname: fullname).parameters!)
+        case .getContents:
+                components.scheme = Router.getContents(fullname: fullname, path: path).scheme
+                components.host = Router.getContents(fullname: fullname, path: path).host
+                components.path = Router.getContents(fullname: fullname, path: path).path
+        case .getRepositoryLanguage:
+                components.scheme = Router.getRepositoryLanguage(fullname: fullname).scheme
+                components.host = Router.getRepositoryLanguage(fullname: fullname).host
+                components.path = Router.getRepositoryLanguage(fullname: fullname).path
+        /// User
         case .getUser:
             components.scheme = Router.getUser(username: username).scheme
             components.host = Router.getUser(username: username).host
@@ -88,26 +119,37 @@ class GitHubAPI<Element: Mappable> {
             components.host = Router.getStarred(username: username).host
             components.path = Router.getStarred(username: username).path
             components.setQueryItems(with: Router.getStarred(username: username).parameters!)
-        case .getStargazers:
-            components.scheme = Router.getStargazers(fullname: fullname).scheme
-            components.host = Router.getStargazers(fullname: fullname).host
-            components.path = Router.getStargazers(fullname: fullname).path
-            components.setQueryItems(with: Router.getStargazers(fullname: fullname).parameters!)
         case .getWatching:
             components.scheme = Router.getWatching(username: username).scheme
             components.host = Router.getWatching(username: username).host
             components.path = Router.getWatching(username: username).path
             components.setQueryItems(with: Router.getWatching(username: username).parameters!)
-        case .getWatchers:
-            components.scheme = Router.getWatchers(fullname: fullname).scheme
-            components.host = Router.getWatchers(fullname: fullname).host
-            components.path = Router.getWatchers(fullname: fullname).path
-            components.setQueryItems(with: Router.getWatchers(fullname: fullname).parameters!)
         case .getUserEvents:
             components.scheme = Router.getUserEvents(username: username, type: eventType).scheme
             components.host = Router.getUserEvents(username: username, type: eventType).host
             components.path = Router.getUserEvents(username: username, type: eventType).path
             components.setQueryItems(with: Router.getUserEvents(username: username, type: eventType).parameters!)
+        case .getFollowers:
+                components.scheme = Router.getFollowers(username: username).scheme
+                components.host = Router.getFollowers(username: username).host
+                components.path = Router.getFollowers(username: username).path
+                components.setQueryItems(with: Router.getFollowers(username: username).parameters!)
+        case .getFollowing:
+                components.scheme = Router.getFollowing(username: username).scheme
+                components.host = Router.getFollowing(username: username).host
+                components.path = Router.getFollowing(username: username).path
+                components.setQueryItems(with: Router.getFollowing(username: username).parameters!)
+        case .getOrganizations:
+            components.scheme = Router.getOrganizations(username: username).scheme
+            components.host = Router.getOrganizations(username: username).host
+            components.path = Router.getOrganizations(username: username).path
+            components.setQueryItems(with: Router.getOrganizations(username: username).parameters!)
+        case .getUserRepositories:
+            components.scheme = Router.getUserRepositories(username: username).scheme
+            components.host = Router.getUserRepositories(username: username).host
+            components.path = Router.getUserRepositories(username: username).path
+            components.setQueryItems(with: Router.getUserRepositories(username: username).parameters!)
+        /// Authentication require
         case .getAuthenUser:
             components.scheme = Router.getAuthenUser.scheme
             components.host = Router.getAuthenUser.host
@@ -123,22 +165,7 @@ class GitHubAPI<Element: Mappable> {
             components.path = Router.getNotifications(notificationState: notificationState).path
             if type == .getNotifications {
                 components.setQueryItems(with: Router.getNotifications(notificationState: notificationState).parameters!)
-            }            
-        case .getUserRepositories:
-            components.scheme = Router.getUserRepositories(username: username).scheme
-            components.host = Router.getUserRepositories(username: username).host
-            components.path = Router.getUserRepositories(username: username).path
-            components.setQueryItems(with: Router.getUserRepositories(username: username).parameters!)
-        case .getFollowers:
-            components.scheme = Router.getFollowers(username: username).scheme
-            components.host = Router.getFollowers(username: username).host
-            components.path = Router.getFollowers(username: username).path
-            components.setQueryItems(with: Router.getFollowers(username: username).parameters!)
-        case .getFollowing:
-            components.scheme = Router.getFollowing(username: username).scheme
-            components.host = Router.getFollowing(username: username).host
-            components.path = Router.getFollowing(username: username).path
-            components.setQueryItems(with: Router.getFollowing(username: username).parameters!)
+            }
         case .followUser, .unFollowUser, .checkFollowedUser:
             components.scheme = Router.followUser(username: username).scheme
             components.host = Router.followUser(username: username).host
@@ -154,24 +181,37 @@ class GitHubAPI<Element: Mappable> {
             if type == .getIssueComments {
                 components.setQueryItems(with: Router.getIssueComment(fullname: fullname, number: String(number)).parameters!)
             }
-        case .getOrganizations:
-            components.scheme = Router.getOrganizations(username: username).scheme
-            components.host = Router.getOrganizations(username: username).host
-            components.path = Router.getOrganizations(username: username).path
-            components.setQueryItems(with: Router.getOrganizations(username: username).parameters!)
-        case .getContents, .getContent:
-            components.scheme = Router.getContents(fullname: fullname, path: path).scheme
-            components.host = Router.getContents(fullname: fullname, path: path).host
-            components.path = Router.getContents(fullname: fullname, path: path).path
-        }        
+        }
         components.percentEncodedQuery = components.percentEncodedQuery?.removingPercentEncoding
         return components.url
     }
     
     
-    func getResults(type: GetType, eventType: EventType = .received, gitHubAuthenticationManager: GITHUB, state: IssueState = .open, notificationState: NotificationState = .unread, query: String = "", language: String = "", fullname: String = "", username: String = "", number: Int = 0, body: String = "", path: String = "", completion: @escaping QueryResults) {
+    func getResults(type: GetType,
+                    eventType: EventType = .received,
+                    gitHubAuthenticationManager: GITHUB,
+                    state: IssueState = .open,
+                    notificationState: NotificationState = .unread,
+                    query: String = "",
+                    language: String = "",
+                    fullname: String = "",
+                    username: String = "",
+                    number: Int = 0,
+                    body: String = "",
+                    path: String = "",
+                    completion: @escaping QueryResults) {
         dataTask?.cancel()
-        guard let url = createURL(type: type, eventType: eventType, gitHubAuthenticationManager: gitHubAuthenticationManager, state: state, notificationState: notificationState, query: query, language: language, fullname: fullname, username: username, number: number, path: path)
+        guard let url = createURL(type: type,
+                                  eventType: eventType,
+                                  gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                  state: state,
+                                  notificationState: notificationState,
+                                  query: query,
+                                  language: language,
+                                  fullname: fullname,
+                                  username: username,
+                                  number: number,
+                                  path: path)
             else {
                 return
             }
@@ -239,7 +279,7 @@ class GitHubAPI<Element: Mappable> {
         elements.removeAll()
         var jsonArray: Array<Any>!
         switch type {
-        case .getRepository, .getUser, .repository, .user, .getAuthenUser, .createIssueComment, .getContent: /// Json return 1 element
+        case .getRepository, .getUser, .repository, .user, .getAuthenUser, .createIssueComment: /// Json return 1 element
             do {
                 if let item = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject] {
                     elements.append(Element(JSON: item)!)
@@ -268,9 +308,15 @@ class GitHubAPI<Element: Mappable> {
     ///   - fullname: Repository fullname
     ///   - gitHubAuthenticationManager: GitHub Authentication
     ///   - path: path to file
-    func getContent(fullname: String, gitHubAuthenticationManager: GITHUB, path: String, completion: @escaping ContentResults) {
+    func getContent(fullname: String,
+                    gitHubAuthenticationManager: GITHUB,
+                    path: String,
+                    completion: @escaping ContentResults) {
         dataTask?.cancel()
-        guard let url = createURL(type: .getContent, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: fullname, path: path)
+        guard let url = createURL(type: .getContents,
+                                  gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                  fullname: fullname,
+                                  path: path)
             else {
                 return
             }
@@ -297,4 +343,10 @@ class GitHubAPI<Element: Mappable> {
         }
         dataTask?.resume()
     }
+    
+    
+    
+    
+    
+    
 }

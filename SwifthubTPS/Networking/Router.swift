@@ -9,9 +9,11 @@
 import Foundation
 
 enum GetType: Int {
+    /// Search
     case repository
     case user
     case language
+    /// Repository
     case getRepository
     case getForks
     case getIssues
@@ -21,19 +23,24 @@ enum GetType: Int {
     case getReleases
     case getContributors
     case getRepositoryEvents
+    case getStargazers
+    case getWatchers
+    case getContents
+    case getRepositoryLanguage
+    /// User
     case getUser
     case getStarred
-    case getStargazers
     case getWatching
-    case getWatchers
     case getUserEvents
+    case getFollowers
+    case getFollowing
+    case getOrganizations
+    case getUserRepositories
+    /// Authentication require
     case getAuthenUser
     case getRepositoryOfAuthenUser
     case getNotifications
     case makeNotificationAllRead
-    case getUserRepositories
-    case getFollowers
-    case getFollowing
     case followUser
     case unFollowUser
     case checkFollowedUser
@@ -42,9 +49,6 @@ enum GetType: Int {
     case checkStarredRepository
     case getIssueComments
     case createIssueComment
-    case getOrganizations
-    case getContents    // ContentType == .dir return array
-    case getContent     // ContentType == ...  return 1 element
 }
 
 enum Router {
@@ -64,10 +68,11 @@ enum Router {
     case getBranches(fullname: String)
     case getReleases(fullname: String)
     case getContributors(fullname: String)
-    case getEvents(fullname: String)
+    case getRepositoryEvents(fullname: String)
     case getStargazers(fullname: String)
     case getWatchers(fullname: String)
     case getContents(fullname: String, path: String)
+    case getRepositoryLanguage(fullname: String)
     /// User
     case getUser(username: String)
     case getStarred(username: String)
@@ -76,12 +81,12 @@ enum Router {
     case getFollowers(username: String)
     case getFollowing(username: String)
     case getOrganizations(username: String)
+    case getUserRepositories(username: String)
     /// Authentication require
     case getAuthenUser
     case getRepositoryOfAuthenUser
     case getNotifications(notificationState: NotificationState)
     case makeNotificationAllRead
-    case getUserRepositories(username: String)
     case followUser(username: String)
     case unFollowUser(username: String)
     case checkFollowedUser(username: String)
@@ -90,7 +95,7 @@ enum Router {
     case checkStarredRepository(fullname: String)
     case getIssueComment(fullname: String, number: String)
     case createIssueComment(fullname: String, number: String)
-    
+        
     var scheme: String {
         switch self {
         default: return "https"
@@ -102,16 +107,18 @@ enum Router {
         case .getTrendingRepository, .getTrendingUser, .languages: return "ghapi.huchen.dev"
         default: return "api.github.com"
         }
-        
     }
  
     var path: String {
         switch self {
+        /// Use trending-github-api
         case .getTrendingRepository: return "/repositories"
         case .getTrendingUser: return "/developers"
         case .languages: return "/languages"
+        /// Use github-api
         case .searchRepositories: return "/search/repositories"
         case .searchUsers: return "/search/users"
+        /// Repository
         case .getRepository(let fullname): return "/repos/\(fullname)"
         case .getForks(let fullname): return "/repos/\(fullname)/forks"
         case .getIssues(let fullname, _): return "/repos/\(fullname)/issues"
@@ -120,21 +127,27 @@ enum Router {
         case .getBranches(let fullname): return "/repos/\(fullname)/branches"
         case .getReleases(let fullname): return "/repos/\(fullname)/releases"
         case .getContributors(let fullname): return "/repos/\(fullname)/contributors"
-        case .getEvents(let fullname): return "/repos/\(fullname)/events"
+        case .getRepositoryEvents(let fullname): return "/repos/\(fullname)/events"
+        case .getStargazers(let fullname): return "/repos/\(fullname)/stargazers"
+        case .getWatchers(let fullname): return "/repos/\(fullname)/subscribers"
+        case .getContents(let fullname, let path): return "/repos/\(fullname)/contents/\(path)"
+        case .getRepositoryLanguage(let fullname): return "/repos/\(fullname)/languages"
+        /// User
         case .getUser(let username): return "/users/\(username)"
         case .getStarred(let username): return "/users/\(username)/starred"
-        case .getStargazers(let fullname): return "/repos/\(fullname)/stargazers"
         case .getWatching(let username): return "/users/\(username)/subscriptions"
-        case .getWatchers(let fullname): return "/repos/\(fullname)/subscribers"
         case .getUserEvents(let username, let type): return "/users/\(username)/\(type.rawValue)"
+        case .getFollowers(let username): return "/users/\(username)/followers"
+        case .getFollowing(let username): return "/users/\(username)/following"
+        case .getOrganizations(let username): return "/users/\(username)/orgs"
+        case .getUserRepositories(let username): return "/users/\(username)/repos"
+        /// Authentication require
         case .getAuthenUser: return "/user"
         case .getRepositoryOfAuthenUser: return "/user/repos"
         case .getNotifications,
              .makeNotificationAllRead:
             return "/notifications"
-        case .getUserRepositories(let username): return "/users/\(username)/repos"
-        case .getFollowers(let username): return "/users/\(username)/followers"
-        case .getFollowing(let username): return "/users/\(username)/following"
+        
         case .followUser(let username),
              .unFollowUser(let username),
              .checkFollowedUser(let username):
@@ -145,8 +158,6 @@ enum Router {
             return "/user/starred/\(fullname)"
         case .getIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         case .createIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
-        case .getOrganizations(let username): return "/users/\(username)/orgs"
-        case .getContents(let fullname, let path): return "/repos/\(fullname)/contents/\(path)"
         }
     }
     
@@ -183,7 +194,7 @@ enum Router {
              .getBranches,
              .getReleases,
              .getContributors,
-             .getEvents,
+             .getRepositoryEvents,
              .getForks,
              .getStarred,
              .getStargazers,

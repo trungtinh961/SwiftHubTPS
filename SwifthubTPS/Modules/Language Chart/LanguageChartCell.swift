@@ -144,7 +144,6 @@ class LanguageChartCell: UITableViewCell {
             }
         }.resume()
     }
-    
 }
 
 // MARK: - UICollectionViewDataSource
