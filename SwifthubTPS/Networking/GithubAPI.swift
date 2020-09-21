@@ -249,10 +249,10 @@ class GitHubAPI<Element: Mappable> {
                 self?.dataTask = nil
             }
             if let error = error, let response = response as? HTTPURLResponse {
+                self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
                 DispatchQueue.main.async {
                     completion([], self?.errorMessage ?? "", response.statusCode)
                 }
-                self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
             } else if
                 let data = data,
                 let response = response as? HTTPURLResponse,
@@ -266,11 +266,7 @@ class GitHubAPI<Element: Mappable> {
                 DispatchQueue.main.async {
                     completion([], self?.errorMessage ?? "", response.statusCode)
                 }
-            } else {
-                DispatchQueue.main.async {
-                    completion([], self?.errorMessage ?? "", 0)
-                }
-            }
+            }            
         }
         dataTask?.resume()
     }
