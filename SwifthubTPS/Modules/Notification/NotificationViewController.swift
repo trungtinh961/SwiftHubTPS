@@ -55,7 +55,7 @@ class NotificationViewController: UIViewController {
     @IBAction func btnMakeAllRead(_ sender: Any) {
         notificationGithubAPI.getResults(type: .makeNotificationAllRead, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) {results, errorMessage, statusCode in
             if let statusCode = statusCode {
-                if statusCode == StatusCode.RESET_CONTENT {
+                if statusCode == STATUS_CODE.RESET_CONTENT {
                     self.view.makeToast("Make as all read!")
                     debugPrint("Make as all read!")
                     self.updateTableView()

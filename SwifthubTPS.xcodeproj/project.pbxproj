@@ -65,7 +65,7 @@
 		BABE48842501EA3F00A5AB12 /* PullRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48822501EA3F00A5AB12 /* PullRequestCell.swift */; };
 		BABE48852501EA3F00A5AB12 /* PullRequestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BABE48832501EA3F00A5AB12 /* PullRequestCell.xib */; };
 		BABE48872501EA5700A5AB12 /* PullRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE48862501EA5700A5AB12 /* PullRequestViewController.swift */; };
-		BABFFF012518426800CA3A9E /* StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABFFF002518426800CA3A9E /* StatusCode.swift */; };
+		BABFFF012518426800CA3A9E /* STATUS_CODE.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABFFF002518426800CA3A9E /* STATUS_CODE.swift */; };
 		BAC5D28E24F3C13800A731F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */; };
 		BAC5D29024F3C13800A731F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */; };
 		BAC5D29224F3C13800A731F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC5D29124F3C13800A731F0 /* SearchViewController.swift */; };
@@ -160,7 +160,7 @@
 		BABE48822501EA3F00A5AB12 /* PullRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestCell.swift; sourceTree = "<group>"; };
 		BABE48832501EA3F00A5AB12 /* PullRequestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PullRequestCell.xib; sourceTree = "<group>"; };
 		BABE48862501EA5700A5AB12 /* PullRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestViewController.swift; sourceTree = "<group>"; };
-		BABFFF002518426800CA3A9E /* StatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCode.swift; sourceTree = "<group>"; };
+		BABFFF002518426800CA3A9E /* STATUS_CODE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STATUS_CODE.swift; sourceTree = "<group>"; };
 		BAC5D28A24F3C13800A731F0 /* SwifthubTPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwifthubTPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC5D28D24F3C13800A731F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAC5D28F24F3C13800A731F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -482,7 +482,7 @@
 				BA3D105D24F647820079C5A1 /* RegisterTableViewCell.swift */,
 				BAB51E6224FDFDDD005A4F7D /* StoryboardIdentifier.swift */,
 				BAB51E6824FE3DF2005A4F7D /* ImageName.swift */,
-				BABFFF002518426800CA3A9E /* StatusCode.swift */,
+				BABFFF002518426800CA3A9E /* STATUS_CODE.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -779,7 +779,7 @@
 				BAFF2366250226F600843E38 /* Branch.swift in Sources */,
 				BABE48792500DB8A00A5AB12 /* PullRequest.swift in Sources */,
 				BABBA0DB2511BDF200CA1E8E /* ContentCell.swift in Sources */,
-				BABFFF012518426800CA3A9E /* StatusCode.swift in Sources */,
+				BABFFF012518426800CA3A9E /* STATUS_CODE.swift in Sources */,
 				BABBA0E425121A4E00CA1E8E /* LanguageCollectionCell.swift in Sources */,
 				BAB51E6124FDFD04005A4F7D /* RepositoryViewController.swift in Sources */,
 				BAFF237E2502438F00843E38 /* Event.swift in Sources */,

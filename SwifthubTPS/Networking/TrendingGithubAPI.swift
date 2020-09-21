@@ -15,21 +15,15 @@ enum TrendingSince: String {
     case monthly = "monthly"
 }
 
-
-
 class TrendingGithubAPI<Element: Mappable> {
-    
     let defaultSession = URLSession(configuration: .default)
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
     var elements: [Element] = []
-    
     typealias JSONDictionary = [String: Any]
     typealias QueryResult = ([Element]?, String) -> Void
-    
     func createURL(type: GetType, language: String, since: TrendingSince) -> URL? {
         var components = URLComponents()
-        
         if type == .repository {            
             components.scheme = Router.getTrendingRepository(language: language, since: since).scheme
             components.host = Router.getTrendingRepository(language: language, since: since).host
@@ -49,7 +43,6 @@ class TrendingGithubAPI<Element: Mappable> {
         return components.url
     }
     
-    
     func getResults(type: GetType, language: String = "", since: TrendingSince = .daily, completion: @escaping QueryResult) {
         dataTask?.cancel()
         guard let url = createURL(type: type, language: language, since: since) else {
@@ -65,7 +58,7 @@ class TrendingGithubAPI<Element: Mappable> {
             } else if
                 let data = data,
                 let response = response as? HTTPURLResponse,
-                response.statusCode == StatusCode.OK {
+                response.statusCode == STATUS_CODE.OK {
                     self?.updateSearchResults(data)
                     DispatchQueue.main.async {
                         completion(self?.elements, self?.errorMessage ?? "")
@@ -89,6 +82,5 @@ class TrendingGithubAPI<Element: Mappable> {
             elements.append(Element(JSON: item)!)
           }
         }
-    }
-    
+    }    
 }

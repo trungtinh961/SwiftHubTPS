@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct StatusCode {
+struct STATUS_CODE {
     static var OK = 200
     static var CREATE = 201
     static var NO_CONTENT = 204

@@ -85,7 +85,7 @@ class FileViewController: UIViewController {
             } else if
                 let data = data,
                 let response = response as? HTTPURLResponse,
-            response.statusCode == StatusCode.OK {
+            response.statusCode == STATUS_CODE.OK {
                     DispatchQueue.main.async {
                         self?.textView!.text = String(data: data, encoding: .utf8)
                     }

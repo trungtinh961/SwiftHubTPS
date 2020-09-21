@@ -48,12 +48,14 @@ enum GetType: Int {
 }
 
 enum Router {
-    
+    /// Use trending-github-api
     case getTrendingUser(language: String, since: TrendingSince)
     case getTrendingRepository(language: String, since: TrendingSince)
     case languages
+    /// Use github-api
     case searchRepositories(query: String, language: String)
     case searchUsers(query: String, language: String)
+    /// Repository
     case getRepository(fullname: String)
     case getForks(fullname: String)
     case getIssues(fullname: String, issueState: IssueState)
@@ -63,19 +65,23 @@ enum Router {
     case getReleases(fullname: String)
     case getContributors(fullname: String)
     case getEvents(fullname: String)
+    case getStargazers(fullname: String)
+    case getWatchers(fullname: String)
+    case getContents(fullname: String, path: String)
+    /// User
     case getUser(username: String)
     case getStarred(username: String)
-    case getStargazers(fullname: String)
     case getWatching(username: String)
-    case getWatchers(fullname: String)
     case getUserEvents(username: String, type: EventType)
+    case getFollowers(username: String)
+    case getFollowing(username: String)
+    case getOrganizations(username: String)
+    /// Authentication require
     case getAuthenUser
     case getRepositoryOfAuthenUser
     case getNotifications(notificationState: NotificationState)
     case makeNotificationAllRead
     case getUserRepositories(username: String)
-    case getFollowers(username: String)
-    case getFollowing(username: String)
     case followUser(username: String)
     case unFollowUser(username: String)
     case checkFollowedUser(username: String)
@@ -84,8 +90,6 @@ enum Router {
     case checkStarredRepository(fullname: String)
     case getIssueComment(fullname: String, number: String)
     case createIssueComment(fullname: String, number: String)
-    case getOrganizations(username: String)
-    case getContents(fullname: String, path: String)
     
     var scheme: String {
         switch self {
@@ -143,8 +147,6 @@ enum Router {
         case .createIssueComment(let fullname, let number): return "/repos/\(fullname)/issues/\(number)/comments"
         case .getOrganizations(let username): return "/users/\(username)/orgs"
         case .getContents(let fullname, let path): return "/repos/\(fullname)/contents/\(path)"
-            
-            
         }
     }
     

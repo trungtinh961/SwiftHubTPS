@@ -170,7 +170,7 @@ class UserViewController: UIViewController {
     private func checkFollowUser(type: GetType) {
         userGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { results, errorMessage, statusCode in
             if let statusCode = statusCode {
-                if statusCode == StatusCode.NO_CONTENT {
+                if statusCode == STATUS_CODE.NO_CONTENT {
                     if type == .checkFollowedUser {
                         self.isFollowed = true
                     }

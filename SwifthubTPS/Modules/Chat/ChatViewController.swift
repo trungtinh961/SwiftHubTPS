@@ -86,7 +86,7 @@ class ChatViewController: MessagesViewController {
                 }
             }
             if let statusCode = statusCode {
-                if statusCode == StatusCode.CREATE {
+                if statusCode == STATUS_CODE.CREATE {
                     debugPrint("Create successfully comment to issue #\(self?.number ?? 0)")
                 }
             }

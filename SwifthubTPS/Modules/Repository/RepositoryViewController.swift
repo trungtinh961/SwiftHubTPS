@@ -156,7 +156,7 @@ class RepositoryViewController: UIViewController {
     private func checkStarRepository(type: GetType) {
         repositoryGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) {results, errorMessage, statusCode in
             if let statusCode = statusCode {
-                if statusCode == StatusCode.NO_CONTENT {
+                if statusCode == STATUS_CODE.NO_CONTENT {
                     if type == .checkStarredRepository {
                         self.isStarred = true
                     }
