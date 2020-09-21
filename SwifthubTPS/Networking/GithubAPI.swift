@@ -220,7 +220,7 @@ class GitHubAPI<Element: Mappable> {
             } else if
                 let data = data,
                 let response = response as? HTTPURLResponse,
-                response.statusCode == 200 || response.statusCode == 201 {
+                response.statusCode == StatusCode.OK || response.statusCode == StatusCode.CREATE {
                     self?.updateSearchResults(type: type, data)
                     DispatchQueue.main.async {
                         completion(self?.elements, self?.errorMessage ?? "", response.statusCode)

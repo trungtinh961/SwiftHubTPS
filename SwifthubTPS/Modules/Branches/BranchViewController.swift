@@ -15,8 +15,7 @@ protocol BranchViewControllerDelegate: class {
 class BranchViewController: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var resultTableView: UITableView!
-    
+    @IBOutlet weak var resultTableView: UITableView!    
     
     // MARK: - Public properties
     weak var delegate: BranchViewControllerDelegate?

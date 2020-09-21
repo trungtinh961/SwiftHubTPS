@@ -65,7 +65,7 @@ class TrendingGithubAPI<Element: Mappable> {
             } else if
                 let data = data,
                 let response = response as? HTTPURLResponse,
-                response.statusCode == 200 {
+                response.statusCode == StatusCode.OK {
                     self?.updateSearchResults(data)
                     DispatchQueue.main.async {
                         completion(self?.elements, self?.errorMessage ?? "")
