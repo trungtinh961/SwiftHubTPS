@@ -19,7 +19,7 @@ class ChatViewController: MessagesViewController {
     var currentUser: User?
     var issueItem: Issue?
     var pullItem: PullRequest?
-    var number: Int?
+    var issuesNumber: Int?
     var repositoryItem: Repository?
     var messages: [MessageType] = [] {
         didSet {
@@ -31,13 +31,15 @@ class ChatViewController: MessagesViewController {
     // MARK: - Private properties
     private var downloadTask: URLSessionDownloadTask?
     private var issueCommentGithubAPI = GitHubAPI<Comment>()
-    private var issueCommentItems: [Comment]?    
+    private var issueCommentItems: [Comment]?
+    private var number: Int?
+    private let storyBoard = UIStoryboard(name: "Main", bundle:nil)
     
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = repositoryItem?.fullname
-        number = issueItem?.number ?? pullItem?.number ?? 0
+        number = issuesNumber ?? issueItem?.number ?? pullItem?.number ?? 0
+        self.title = "\(repositoryItem?.fullname ?? "") issue #\(number!)"
         updateTableView(type: .getIssueComments)
     }
     
@@ -105,7 +107,6 @@ class ChatViewController: MessagesViewController {
         guard indexPath.section + 1 < messages.count else { return false }
         return (messages[indexPath.section].sender as? User) == (messages[indexPath.section + 1].sender as? User)
     }
-    
 }
 
 // MARK: - MessagesDataSource
@@ -124,7 +125,10 @@ extension ChatViewController: MessagesDataSource {
 
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        return NSAttributedString(string: name, attributes: [
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1),
+            NSAttributedString.Key.foregroundColor: UIColor.blue
+        ])
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -134,8 +138,8 @@ extension ChatViewController: MessagesDataSource {
 }
 
 
-// MARK: - MessageCellDelegate
-extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
+// MARK: - MessagesDisplayDelegate
+extension ChatViewController: MessagesDisplayDelegate {
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         if let user = message.sender as? User {
             avatarView.isHidden = isNextMessageSameSender(at: indexPath)
@@ -165,9 +169,62 @@ extension ChatViewController: MessageCellDelegate, MessagesDisplayDelegate {
     }
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        
         let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
         return .bubbleTail(tail, .curved)
+    }
+}
+
+// MARK: - MessageCellDelegate
+extension ChatViewController: MessageCellDelegate {
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
+                return
+        }
+        let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+        userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        userViewController.userItem = (message.sender as! User)
+        userViewController.isTabbarCall = false
+        self.navigationController?.pushViewController(userViewController, animated: true)
+    }
+
+    func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
+                return
+        }
+        let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+        userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        userViewController.userItem = (message.sender as! User)
+        userViewController.isTabbarCall = false
+        self.navigationController?.pushViewController(userViewController, animated: true)
+    }
+}
+
+extension ChatViewController: MessageLabelDelegate {
+    func didSelectURL(_ url: URL) {
+        UIApplication.shared.open(url)
+    }
+
+    func didSelectMention(_ mention: String) {
+        let seperator = mention.firstIndex(of: "@")!
+        let username = String(mention[mention.index(after: seperator)...])
+        let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+        userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        userViewController.username = username
+        userViewController.isTabbarCall = false
+        self.navigationController?.pushViewController(userViewController, animated: true)
+    }
+    
+    func didSelectHashtag(_ hashtag: String) {
+        let seperator = hashtag.firstIndex(of: "#")!
+        let issueNumber = String(hashtag[hashtag.index(after: seperator)...])
+        
+        let chatViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.chatVC.rawValue) as! ChatViewController
+        chatViewController.repositoryItem = repositoryItem
+        chatViewController.issuesNumber = Int(issueNumber)
+        chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+        self.navigationController?.pushViewController(chatViewController, animated: true)
     }
 }
 

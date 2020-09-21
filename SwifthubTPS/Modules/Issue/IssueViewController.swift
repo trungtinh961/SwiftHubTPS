@@ -167,6 +167,6 @@ extension IssueViewController: UITableViewDelegate {
         chatViewController.repositoryItem = repositoryItem
         chatViewController.issueItem = issueItems?[indexPath.row]
         chatViewController.gitHubAuthenticationManager = gitHubAuthenticationManager        
-        self.navigationController?.pushViewController(chatViewController, animated: true)        
+        self.navigationController?.pushViewController(chatViewController, animated: true)
     }
 }

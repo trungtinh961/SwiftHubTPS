@@ -25,6 +25,7 @@ class UserViewController: UIViewController {
     // MARK: - Public properties
     var gitHubAuthenticationManager = GITHUB()
     var userItem: User?
+    var username: String?
     var isTabbarCall = false
     
     // MARK: - Private properties
@@ -184,7 +185,7 @@ class UserViewController: UIViewController {
     
     private func reloadTableView() {
         isLoading = true
-        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { [weak self] results, errorMessage, statusCode in
+        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? username ?? "") { [weak self] results, errorMessage, statusCode in
             if let result = results?[0] {
                 self?.userItem = result
                 self?.totalRepos = (self?.userItem?.repositoriesCount ?? 0) + (self?.userItem?.privateRepoCount ?? 0)
