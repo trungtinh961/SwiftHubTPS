@@ -42,6 +42,10 @@ class PullRequestViewController: UIViewController {
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
+        
+        if let smallURL = URL(string: repositoryItem?.owner?.avatarUrl ?? "") {
+            downloadTask = imgAuthor.loadImage(url: smallURL)
+        }
     }
     
     // MARK: - IBActions

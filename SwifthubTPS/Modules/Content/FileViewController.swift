@@ -75,6 +75,9 @@ class FileViewController: UIViewController {
         guard let url =  components?.url else { return }
         var request = URLRequest(url: url)
         request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
+        if gitHubAuthenticationManager.didAuthenticated {
+            request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        }
         request.httpMethod = "GET"
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
             defer {
