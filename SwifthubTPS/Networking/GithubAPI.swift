@@ -200,6 +200,7 @@ class GitHubAPI<Element: Mappable> {
                     body: String = "",
                     path: String = "",
                     completion: @escaping QueryResults) {
+        errorMessage = ""
         dataTask?.cancel()
         guard let url = createURL(type: type,
                                   eventType: eventType,

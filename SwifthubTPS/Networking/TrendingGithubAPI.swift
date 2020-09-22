@@ -44,6 +44,7 @@ class TrendingGithubAPI<Element: Mappable> {
     }
     
     func getResults(type: GetType, language: String = "", since: TrendingSince = .daily, completion: @escaping QueryResult) {
+        errorMessage = ""
         var filename = ""
         if type == .repository {
             filename = "TrendingRepositories"

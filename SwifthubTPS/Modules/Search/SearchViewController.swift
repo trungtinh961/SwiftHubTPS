@@ -115,7 +115,6 @@ class SearchViewController: UIViewController {
                         }
                         self?.resultTableView.reloadData()
                     }
-
                     if !errorMessage.isEmpty {
                         debugPrint("Search error: " + errorMessage)
                     }
@@ -215,7 +214,7 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else {
-                lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all")"
+                lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all languages")"
                 let indexCell = trendingRepositories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
