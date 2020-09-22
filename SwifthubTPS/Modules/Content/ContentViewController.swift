@@ -57,7 +57,7 @@ class ContentViewController: UIViewController {
                 self?.tableView.reloadData()
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }    

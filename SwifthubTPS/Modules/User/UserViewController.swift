@@ -180,7 +180,7 @@ class UserViewController: UIViewController {
                 }
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }
@@ -194,7 +194,7 @@ class UserViewController: UIViewController {
                 self?.isLoading = false
                 self?.lbDescription.text = "Error when load data!"
                 self?.resultTableView.reloadData()
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
             else if let result = results?[0] {
                 self?.userItem = result
@@ -227,7 +227,7 @@ class UserViewController: UIViewController {
                 }
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }

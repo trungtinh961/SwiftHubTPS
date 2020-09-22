@@ -36,7 +36,8 @@ class SearchViewController: UIViewController {
     private var searchRepostories: [Repository]?
     private var searchUserInfor: UserSearch?
     private var searchUsers: [User]?
-    private var language: String?
+    private var languageParam: String?
+    private var languageName: String?
     private var searchTextCurrent = ""
     private var isLoading = false
     private var isSearching = false
@@ -67,7 +68,7 @@ class SearchViewController: UIViewController {
             getType = .user
         default: debugPrint("default")
         }
-        updateTableView(language: language, query: searchTextCurrent)
+        updateTableView(language: languageParam, query: searchTextCurrent)
     }
     
     @IBAction func sinceApiSegmentControl(_ sender: Any) {
@@ -77,7 +78,7 @@ class SearchViewController: UIViewController {
         case 2: trendingSince = .monthly
         default: trendingSince = .daily
         }
-        updateTableView(language: language)
+        updateTableView(language: languageParam)
     }
     
     // MARK: - Private Methods
@@ -102,7 +103,7 @@ class SearchViewController: UIViewController {
                     }
                   
                     if !errorMessage.isEmpty {
-                        debugPrint("Search error: " + errorMessage)
+                        debugPrint(errorMessage)
                     }
                 }
             } else {
@@ -116,7 +117,7 @@ class SearchViewController: UIViewController {
                         self?.resultTableView.reloadData()
                     }
                     if !errorMessage.isEmpty {
-                        debugPrint("Search error: " + errorMessage)
+                        debugPrint(errorMessage)
                     }
                 }
             }
@@ -135,7 +136,7 @@ class SearchViewController: UIViewController {
                         self?.resultTableView.reloadData()
                     }
                     if !errorMessage.isEmpty {
-                        debugPrint("Search error: " + errorMessage)
+                        debugPrint(errorMessage)
                     }
                 }
             } else {
@@ -151,7 +152,7 @@ class SearchViewController: UIViewController {
                     if !errorMessage.isEmpty {
                         self?.isLoading = false
                         self?.resultTableView.reloadData()
-                        debugPrint("Search error: " + errorMessage)
+                        debugPrint(errorMessage)
                     }
                 }
             }
@@ -188,10 +189,12 @@ extension SearchViewController: UITableViewDataSource {
         } else if noResult {
             if isSearching {
                 if getType == .repository {
-                    lbTitle.text = "0 repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
+                    lbTitle.text = "0 repositories \n\nSearch results for \(languageName ?? "all languages")"
                 } else if getType == .user {
-                    lbTitle.text = "0 users \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
+                    lbTitle.text = "0 users \n\nSearch results for \(languageName ?? "all languages")"
                 }
+            } else {
+                lbTitle.text = "Trending for \(languageName ?? "all languages")"
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
@@ -200,7 +203,7 @@ extension SearchViewController: UITableViewDataSource {
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
-                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
+                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \n\nSearch results for \(languageName ?? "all languages")"
                 let indexCell = searchRepostories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
@@ -214,12 +217,13 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else {
-                lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all languages")"
+                lbTitle.text = "Trending for \(languageName ?? "all languages")"
                 let indexCell = trendingRepositories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
                 cell.lbStars.text = indexCell.stars!.kFormatted()
                 cell.lbCurrentPeriodStars.text = indexCell.currentPeriodStars!.kFormatted() + " " + trendingSince.rawValue
+                cell.imgCurrentPeriodStars.isHidden = false
                 cell.lbLanguage.isHidden = false
                 cell.viewLanguageColor.isHidden = false
                 cell.lbLanguage.text = indexCell.language
@@ -239,7 +243,7 @@ extension SearchViewController: UITableViewDataSource {
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
-                lbTitle.text = (searchUserInfor?.totalCount.kFormatted())! + " users \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
+                lbTitle.text = (searchUserInfor?.totalCount.kFormatted())! + " users \n\nSearch results for \(languageName ?? "all languages")"
                 let indexCell = searchUsers![indexPath.row]
                 cell.lbFullname.text = indexCell.login
                 cell.lbDescription.isHidden = true
@@ -247,7 +251,7 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else {
-                lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all languages")"
+                lbTitle.text = "Trending for \(languageName ?? "all languages")"
                 cell.lbDescription.isHidden = false
                 let indexCell = trendingUsers![indexPath.row]
                 cell.lbFullname.text = "\(indexCell.username ?? "")"
@@ -277,6 +281,7 @@ extension SearchViewController: UITableViewDelegate {
             }
             repositoryViewController.repositoryItem = indexCell
             let navController = UINavigationController(rootViewController: repositoryViewController)
+            navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated:true, completion: nil)
             
         } else if getType == .user, !isLoading, !noResult {
@@ -291,6 +296,7 @@ extension SearchViewController: UITableViewDelegate {
             userViewController.userItem = indexCell
             userViewController.isTabbarCall = false
             let navController = UINavigationController(rootViewController: userViewController)
+            navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated:true, completion: nil)
         }        
     }
@@ -305,7 +311,7 @@ extension SearchViewController: UISearchBarDelegate {
         }
         searchTextCurrent = searchText
         isSearching = true
-        updateTableView(language: language, query: searchText)
+        updateTableView(language: languageParam, query: searchText)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -314,8 +320,8 @@ extension SearchViewController: UISearchBarDelegate {
             isSearching = false
             sinceApiSegmentControl.isHidden = false
             titleConstraints.constant = 10
-            lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all languages")"
-            updateTableView(language: language)
+            lbTitle.text = "Trending for \(languageName ?? "all languages")"
+            updateTableView(language: languageParam)
         }
     }
     
@@ -329,7 +335,7 @@ extension SearchViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             let controller = segue.destination as! LanguageViewController
             controller.delegate = self
-            controller.language = language?.removingPercentEncoding
+            controller.language = languageParam?.removingPercentEncoding
     }
 }
 
@@ -340,15 +346,17 @@ extension SearchViewController: LanguageViewControllerDelegate {
     
     func languageViewController(_ controller: LanguageViewController, didFinishEditing item: Language) {
         if let urlParam = item.urlParam {
-            language = urlParam
-            updateTableView(language: language, query: searchTextCurrent)
+            languageParam = urlParam
+            languageName = item.name!
+            updateTableView(language: languageParam, query: searchTextCurrent)
         }
         dismiss(animated: true, completion: nil)
     }
     
     func allLanguageViewController(_ controller: LanguageViewController) {
         updateTableView(query: searchTextCurrent)
-        language = nil
+        languageParam = nil
+        languageName = nil
         dismiss(animated: true, completion: nil)
     }
 

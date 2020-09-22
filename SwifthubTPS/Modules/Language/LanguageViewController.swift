@@ -95,7 +95,7 @@ class LanguageViewController: UIViewController {
                 self?.selectCell()
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }

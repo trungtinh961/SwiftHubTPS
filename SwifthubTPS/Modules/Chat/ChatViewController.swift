@@ -91,7 +91,7 @@ class ChatViewController: MessagesViewController {
                 }
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }

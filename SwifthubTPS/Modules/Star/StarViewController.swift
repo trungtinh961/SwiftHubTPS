@@ -79,7 +79,7 @@ class StarViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    debugPrint("Search error: " + errorMessage)
+                    debugPrint(errorMessage)
                 }
             }
         } else {
@@ -98,7 +98,7 @@ class StarViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    debugPrint("Search error: " + errorMessage)
+                    debugPrint(errorMessage)
                 }
             }
         }

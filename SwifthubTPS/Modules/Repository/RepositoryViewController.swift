@@ -136,7 +136,7 @@ class RepositoryViewController: UIViewController {
                 self?.isLoading = false
                 self?.lbDescription.text = "Error when load data!"
                 self?.resultTableView.reloadData()
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
             else if let result = results?[0] {
                 self?.repositoryItem = result
@@ -170,7 +170,7 @@ class RepositoryViewController: UIViewController {
                 }
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }

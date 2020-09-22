@@ -80,7 +80,7 @@ class IssueViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    debugPrint("Search error: " + errorMessage)
+                    debugPrint(errorMessage)
                 }
             }
         } else if state == .closed {
@@ -99,7 +99,7 @@ class IssueViewController: UIViewController {
                     self?.resultTableView.reloadData()
                 }
                 if !errorMessage.isEmpty {
-                    debugPrint("Search error: " + errorMessage)
+                    debugPrint(errorMessage)
                 }
             }
         }        

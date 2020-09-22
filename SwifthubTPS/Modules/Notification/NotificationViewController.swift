@@ -62,7 +62,7 @@ class NotificationViewController: UIViewController {
                 }                
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }
@@ -85,7 +85,7 @@ class NotificationViewController: UIViewController {
                 self?.resultTableView.reloadData()
             }
             if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
+                debugPrint(errorMessage)
             }
         }
     }
