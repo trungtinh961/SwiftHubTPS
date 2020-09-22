@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import MessageKit
 import ObjectMapper
 
-struct Issue: Mappable {
+struct Issue: Mappable, MessageType {
 
     var activeLockReason: String?
     var assignee: User?
@@ -65,6 +66,13 @@ struct Issue: Mappable {
         url <- map["url"]
         user <- map["user"]
     }
+    
+    // MessageType
+    var sender: SenderType { return user ?? User() }
+    var messageId: String { return String(describing: id) }
+    var sentDate: Date { return createdAt ?? Date() }
+    var kind: MessageKind { return .text(body ?? "") }
+    
 }
 
 struct IssueLabel: Mappable {

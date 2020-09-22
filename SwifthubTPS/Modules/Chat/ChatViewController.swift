@@ -36,18 +36,19 @@ class ChatViewController: MessagesViewController {
     private let storyBoard = UIStoryboard(name: "Main", bundle:nil)
     
     // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        number = issuesNumber ?? issueItem?.number ?? pullItem?.number ?? 0
-        self.title = "\(repositoryItem?.fullname ?? "") issue #\(number!)"
-        updateTableView(type: .getIssueComments)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        makeUI()
         currentUser = gitHubAuthenticationManager.userAuthenticated
         configureMessageCollectionView()
         configureMessageInputBar()
+    }
+    
+    func makeUI() {
+        self.messages.append(issueItem!)
+        number = issuesNumber ?? issueItem?.number ?? pullItem?.number ?? 0
+        self.title = "\(repositoryItem?.fullname ?? "") issue #\(number!)"
+        updateTableView(type: .getIssueComments)
     }
     
     func configureMessageCollectionView() {
@@ -80,7 +81,7 @@ class ChatViewController: MessagesViewController {
         issueCommentGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "", number: number ?? 0, body: body) { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if type == .getIssueComments {
-                    self?.messages = results
+                    self?.messages.append(contentsOf: results)
                 } else {
                     self?.messages.append(contentsOf: results)
                 }
