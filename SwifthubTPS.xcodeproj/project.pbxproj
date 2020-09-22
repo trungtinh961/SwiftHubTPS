@@ -243,6 +243,7 @@
 				BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */,
 				BA3D106924F76D2D0079C5A1 /* Router.swift */,
 				BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */,
+				BAB627882519DB6100FD1982 /* Stubbed Responses */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -316,6 +317,13 @@
 				BAB42A26250A0AEA00A3A1FF /* RepositoryDetailViewController.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		BAB627882519DB6100FD1982 /* Stubbed Responses */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Stubbed Responses";
 			sourceTree = "<group>";
 		};
 		BAB786F924F8A6CE002779B2 /* Language */ = {

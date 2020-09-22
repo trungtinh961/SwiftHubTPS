@@ -32,6 +32,7 @@ class UserViewController: UIViewController {
     private var downloadTask: URLSessionDownloadTask?
     private var userGithubAPI = GitHubAPI<User>()
     private var isLoading = false
+    private var noResult = false
     private var isFollowed = false
     private var userDetails: [DetailCellProperty]?
     private var totalRepos = 0
@@ -72,6 +73,7 @@ class UserViewController: UIViewController {
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
         RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
         
         /// Config layout
         imgAvatar.layer.cornerRadius = imgAvatar.frame.height / 2
@@ -185,11 +187,14 @@ class UserViewController: UIViewController {
     
     private func reloadTableView() {
         isLoading = true
+        noResult = false
         userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? username ?? "") { [weak self] results, errorMessage, statusCode in
-            if results?.count == 0 {
+            if results?.count == 0 || !errorMessage.isEmpty {
+                self?.noResult = true
                 self?.isLoading = false
                 self?.lbDescription.text = "Error when load data!"
                 self?.resultTableView.reloadData()
+                debugPrint("Search error: " + errorMessage)
             }
             else if let result = results?[0] {
                 self?.userItem = result
@@ -208,9 +213,6 @@ class UserViewController: UIViewController {
                     self?.getOrganizations()
                 }
                 self?.resultTableView.reloadData()                
-            }
-            if !errorMessage.isEmpty {
-                debugPrint("Search error: " + errorMessage)
             }
         }
     }
@@ -270,7 +272,7 @@ extension UserViewController: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
+        if isLoading || noResult {
             return 1
         } else if section == 0 {
             return userDetails?.count ?? 0
@@ -286,6 +288,9 @@ extension UserViewController: UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
                 let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
                 spinner.startAnimating()
+                return cell
+            } else if noResult {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
@@ -317,40 +322,42 @@ extension UserViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         let section = indexPath.section
-        if section == 0 {
-            let itemCell = userDetails?[indexPath.row]
-            switch itemCell!.id {
-            case "starred":
-                let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
-                starsViewController.userItem = userItem
-                starsViewController.getType = .getStarred
-                starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-                self.navigationController?.pushViewController(starsViewController, animated: true)
-            case "subscriptions":
-                let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
-                watchingViewController.getType = .getWatching
-                watchingViewController.userItem = userItem
-                watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-                self.navigationController?.pushViewController(watchingViewController, animated: true)
-            case "events":
-                let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
-                eventViewController.userItem = userItem
-                eventViewController.isTabbarCall = false
-                eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-                self.navigationController?.pushViewController(eventViewController, animated: true)
-            case "blog":
-                if let url = URL(string: userItem?.blog ?? "") {
-                    UIApplication.shared.open(url)
+        if !isLoading, !noResult {
+            if section == 0 {
+                let itemCell = userDetails?[indexPath.row]
+                switch itemCell!.id {
+                case "starred":
+                    let starsViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.starVC.rawValue) as! StarViewController
+                    starsViewController.userItem = userItem
+                    starsViewController.getType = .getStarred
+                    starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                    self.navigationController?.pushViewController(starsViewController, animated: true)
+                case "subscriptions":
+                    let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
+                    watchingViewController.getType = .getWatching
+                    watchingViewController.userItem = userItem
+                    watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                    self.navigationController?.pushViewController(watchingViewController, animated: true)
+                case "events":
+                    let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
+                    eventViewController.userItem = userItem
+                    eventViewController.isTabbarCall = false
+                    eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                    self.navigationController?.pushViewController(eventViewController, animated: true)
+                case "blog":
+                    if let url = URL(string: userItem?.blog ?? "") {
+                        UIApplication.shared.open(url)
+                    }
+                default:
+                    break
                 }
-            default:
-                break
+            } else {
+                let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+                userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                userViewController.userItem = organizations[indexPath.row]
+                userViewController.isTabbarCall = false
+                self.navigationController?.pushViewController(userViewController, animated: true)
             }
-        } else {
-            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            userViewController.userItem = organizations[indexPath.row]
-            userViewController.isTabbarCall = false
-            self.navigationController?.pushViewController(userViewController, animated: true)
         }
     }    
 }

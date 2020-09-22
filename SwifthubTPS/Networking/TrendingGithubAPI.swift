@@ -61,8 +61,7 @@ class TrendingGithubAPI<Element: Mappable> {
                 let data = data,
                 let response = response as? HTTPURLResponse,
                 response.statusCode == STATUS_CODE.OK {
-                    self.updateSearchResults(data)
-                    
+                    self.updateSearchResults(data)                    
                 }
             DispatchQueue.main.async {
                 completion(self.elements, self.errorMessage )
