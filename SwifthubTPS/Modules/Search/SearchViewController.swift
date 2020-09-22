@@ -189,9 +189,9 @@ extension SearchViewController: UITableViewDataSource {
         } else if noResult {
             if isSearching {
                 if getType == .repository {
-                    lbTitle.text = "0 repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
+                    lbTitle.text = "0 repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
                 } else if getType == .user {
-                    lbTitle.text = "0 users \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
+                    lbTitle.text = "0 users \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
                 }
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
@@ -201,7 +201,7 @@ extension SearchViewController: UITableViewDataSource {
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
-                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
+                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
                 let indexCell = searchRepostories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
@@ -215,6 +215,7 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else {
+                lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all")"
                 let indexCell = trendingRepositories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
@@ -239,7 +240,7 @@ extension SearchViewController: UITableViewDataSource {
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
-                lbTitle.text = (searchUserInfor?.totalCount.kFormatted())! + " users \n\nSearch results for \(language?.removingPercentEncoding ?? "all")"
+                lbTitle.text = (searchUserInfor?.totalCount.kFormatted())! + " users \n\nSearch results for \(language?.removingPercentEncoding ?? "all languages")"
                 let indexCell = searchUsers![indexPath.row]
                 cell.lbFullname.text = indexCell.login
                 cell.lbDescription.isHidden = true
@@ -247,11 +248,11 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else {
+                lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all languages")"
                 cell.lbDescription.isHidden = false
                 let indexCell = trendingUsers![indexPath.row]
                 cell.lbFullname.text = "\(indexCell.username ?? "")"
                 cell.lbDescription.text = "\(indexCell.username ?? "")/\(indexCell.repo?.name ?? "")"
-                cell.imgAuthor.image = UIImage(named: "Placeholder")
                 if let smallURL = URL(string: indexCell.avatar ?? "") {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
@@ -314,7 +315,7 @@ extension SearchViewController: UISearchBarDelegate {
             isSearching = false
             sinceApiSegmentControl.isHidden = false
             titleConstraints.constant = 10
-            lbTitle.text = "Trending"
+            lbTitle.text = "Trending for \(language?.removingPercentEncoding ?? "all languages")"
             updateTableView(language: language)
         }
     }

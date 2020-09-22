@@ -44,6 +44,17 @@ class TrendingGithubAPI<Element: Mappable> {
     }
     
     func getResults(type: GetType, language: String = "", since: TrendingSince = .daily, completion: @escaping QueryResult) {
+        var filename = ""
+        if type == .repository {
+            filename = "TrendingRepositories"
+        } else if type == .user {
+            filename = "TrendingUsers"
+        } else if type == .language {
+            filename = "TrendingLanguages"
+        }
+        if let data = FileHelper.loadJSON(filename: filename) {
+            self.updateSearchResults(data)
+        }
         dataTask?.cancel()
         guard let url = createURL(type: type, language: language, since: since) else {
           return
@@ -61,7 +72,8 @@ class TrendingGithubAPI<Element: Mappable> {
                 let data = data,
                 let response = response as? HTTPURLResponse,
                 response.statusCode == STATUS_CODE.OK {
-                    self.updateSearchResults(data)                    
+                    FileHelper.saveJSON(data, filename: filename)
+                    self.updateSearchResults(data)
                 }
             DispatchQueue.main.async {
                 completion(self.elements, self.errorMessage )
