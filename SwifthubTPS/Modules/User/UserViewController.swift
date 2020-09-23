@@ -70,10 +70,10 @@ class UserViewController: UIViewController {
     
     private func makeUI() {
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.detailCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.userCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
         
         /// Config layout
         imgAvatar.layer.cornerRadius = imgAvatar.frame.height / 2
@@ -170,7 +170,10 @@ class UserViewController: UIViewController {
     }
     
     private func checkFollowUser(type: GetType) {
-        userGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { results, errorMessage, statusCode in
+        userGithubAPI.getResults(type: type,
+                                 gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                 username: userItem!.login!)
+        { results, errorMessage, statusCode in
             if let statusCode = statusCode {
                 if statusCode == STATUS_CODE.NO_CONTENT {
                     if type == .checkFollowedUser {
@@ -188,7 +191,10 @@ class UserViewController: UIViewController {
     private func reloadTableView() {
         isLoading = true
         noResult = false
-        userGithubAPI.getResults(type: .getUser, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? username ?? "") { [weak self] results, errorMessage, statusCode in
+        userGithubAPI.getResults(type: .getUser,
+                                 gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                 username: userItem?.login ?? username ?? "")
+        { [weak self] results, errorMessage, statusCode in
             if results?.count == 0 || !errorMessage.isEmpty {
                 self?.noResult = true
                 self?.isLoading = false
@@ -218,7 +224,10 @@ class UserViewController: UIViewController {
     }
     
     private func getOrganizations() {
-        userGithubAPI.getResults(type: .getOrganizations, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem!.login!) { [weak self] results, errorMessage, statusCode in
+        userGithubAPI.getResults(type: .getOrganizations,
+                                 gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                 username: userItem!.login!)
+        { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 self?.organizations = results
                 self?.resultTableView.reloadData()
@@ -285,15 +294,15 @@ extension UserViewController: UITableViewDataSource {
         let section = indexPath.section
         if section == 0 {
             if isLoading {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
                 let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
                 spinner.startAnimating()
                 return cell
             } else if noResult {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
                 let itemCell = userDetails?[indexPath.row]
                 cell.lbTitleCell.text = itemCell?.titleCell
                 cell.lbDetails.text = itemCell?.detail
@@ -304,7 +313,7 @@ extension UserViewController: UITableViewDataSource {
                 return cell
             }
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
             let indexCell = organizations[indexPath.row]
             cell.lbFullname.text = indexCell.login
             cell.lbDescription.isHidden = true
@@ -331,19 +340,19 @@ extension UserViewController: UITableViewDelegate {
                     starsViewController.userItem = userItem
                     starsViewController.getType = .getStarred
                     starsViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-                    self.navigationController?.pushViewController(starsViewController, animated: true)
+                    nextVC(starsViewController)
                 case "subscriptions":
                     let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
                     watchingViewController.getType = .getWatching
                     watchingViewController.userItem = userItem
                     watchingViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-                    self.navigationController?.pushViewController(watchingViewController, animated: true)
+                    nextVC(watchingViewController)
                 case "events":
                     let eventViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userEventVC.rawValue) as! UserEventViewController
                     eventViewController.userItem = userItem
                     eventViewController.isTabbarCall = false
                     eventViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-                    self.navigationController?.pushViewController(eventViewController, animated: true)
+                    nextVC(eventViewController)
                 case "blog":
                     if let url = URL(string: userItem?.blog ?? "") {
                         UIApplication.shared.open(url)
@@ -356,8 +365,18 @@ extension UserViewController: UITableViewDelegate {
                 userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
                 userViewController.userItem = organizations[indexPath.row]
                 userViewController.isTabbarCall = false
-                self.navigationController?.pushViewController(userViewController, animated: true)
+                nextVC(userViewController)
             }
         }
-    }    
+    }
+    
+    private func nextVC(_ vc: UIViewController) {
+        if isTabbarCall {
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated:true, completion: nil)
+        } else {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }

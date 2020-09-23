@@ -83,7 +83,12 @@ class ChatViewController: MessagesViewController {
     
     // MARK: - Private Methods
     private func updateTableView(type: GetType, body: String = ""){
-        issueCommentGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "", number: number ?? 0, body: body) { [weak self] results, errorMessage, statusCode in
+        issueCommentGithubAPI.getResults(type: type,
+                                         gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                         fullname: repositoryItem?.fullname ?? "",
+                                         number: number ?? 0,
+                                         body: body)
+        { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if type == .getIssueComments {
                     self?.messages.append(contentsOf: results)

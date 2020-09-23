@@ -22,14 +22,15 @@ class MainTabBarController: UITabBarController {
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if gitHubAuthenticationManager.didAuthenticated {
-            self.getAuthenUser()
-        }        
-        self.selectedIndex = 0
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if gitHubAuthenticationManager.didAuthenticated {
+            self.getAuthenUser()
+        }
+        self.selectedIndex = 0
     }
     
     

@@ -56,6 +56,4 @@ class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController: UIWebViewDelegate {    
-}
 

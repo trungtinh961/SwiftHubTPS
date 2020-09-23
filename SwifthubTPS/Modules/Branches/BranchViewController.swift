@@ -38,9 +38,9 @@ class BranchViewController: UIViewController {
     private func makeUI() {
         self.title = repositoryItem?.fullname!
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.detailCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
     }
     
     // MARK: - IBActions
@@ -54,7 +54,10 @@ class BranchViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        branchGithubAPI.getResults(type: .getBranches, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+        branchGithubAPI.getResults(type: .getBranches,
+                                   gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                   fullname: repositoryItem?.fullname ?? "")
+        { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true
@@ -84,15 +87,15 @@ extension BranchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-                  let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+                  let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
                   let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
                   spinner.startAnimating()
                   return cell
         } else if noResult {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
             
             cell.imgCell?.image = UIImage(named: ImageName.icon_cell_git_branch.rawValue)
             cell.lbTitleCell.text = branchItems![indexPath.row].name

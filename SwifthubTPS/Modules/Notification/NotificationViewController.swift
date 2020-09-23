@@ -36,9 +36,9 @@ class NotificationViewController: UIViewController {
     
     private func makeUI() {
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.notificationCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.notificationCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
     }
     
     // MARK:- IBActions
@@ -53,7 +53,10 @@ class NotificationViewController: UIViewController {
     }
     
     @IBAction func btnMakeAllRead(_ sender: Any) {
-        notificationGithubAPI.getResults(type: .makeNotificationAllRead, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) {results, errorMessage, statusCode in
+        notificationGithubAPI.getResults(type: .makeNotificationAllRead,
+                                         gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                         notificationState: notificationState)
+        { results, errorMessage, statusCode in
             if let statusCode = statusCode {
                 if statusCode == STATUS_CODE.RESET_CONTENT {
                     self.view.makeToast("Make as all read!")
@@ -73,7 +76,10 @@ class NotificationViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        notificationGithubAPI.getResults(type: .getNotifications, gitHubAuthenticationManager: gitHubAuthenticationManager, notificationState: notificationState) { [weak self] results, errorMessage, statusCode in
+        notificationGithubAPI.getResults(type: .getNotifications,
+                                         gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                         notificationState: notificationState)
+        { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true
@@ -103,15 +109,15 @@ extension NotificationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
         } else if noResult {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.notificationCell.rawValue, for: indexPath) as! NotificationCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.notificationCell.rawValue, for: indexPath) as! NotificationCell
             let itemCell = notificationItems![indexPath.row]
             let actionText = itemCell.subject?.title ?? ""
             let repoName = itemCell.repository?.fullname ?? ""
@@ -134,6 +140,8 @@ extension NotificationViewController: UITableViewDelegate {
         let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         repositoryViewController.repositoryItem = itemCell.repository
-        self.present(repositoryViewController, animated:true, completion:nil)
+        let navController = UINavigationController(rootViewController: repositoryViewController)
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated:true, completion: nil)
     }
 }

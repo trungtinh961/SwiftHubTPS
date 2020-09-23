@@ -34,9 +34,9 @@ class CommitViewController: UIViewController {
     private func makeUI() {
         self.title = repositoryItem?.fullname!
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.commitCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.commitCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
     }
     
     // MARK: - IBActions
@@ -50,7 +50,10 @@ class CommitViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        commitGithubAPI.getResults(type: .getCommits, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+        commitGithubAPI.getResults(type: .getCommits,
+                                   gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                   fullname: repositoryItem?.fullname ?? "")
+        { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true
@@ -80,15 +83,15 @@ extension CommitViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-          let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+          let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
           let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
           spinner.startAnimating()
           return cell
         } else if noResult {
-           let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+           let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
            return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.commitCell.rawValue, for: indexPath) as! CommitCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.commitCell.rawValue, for: indexPath) as! CommitCell
             let itemCell = commitItems?[indexPath.row]
             if let smallURL = URL(string: itemCell?.author?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)

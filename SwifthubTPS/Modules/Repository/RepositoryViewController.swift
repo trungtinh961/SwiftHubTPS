@@ -58,10 +58,10 @@ class RepositoryViewController: UIViewController {
         self.title = repositoryItem?.fullname
         
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.detailCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.languageChartCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.detailCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.languageChartCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
         
         /// Config layout
         btnStar.layer.cornerRadius = btnStar.frame.height / 2
@@ -130,7 +130,10 @@ class RepositoryViewController: UIViewController {
     private func updateTableView() {
         isLoading = true
         noResult = false
-        repositoryGithubAPI.getResults(type: .getRepository, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem!.fullname!) { [weak self] results, errorMessage, statusCode in
+        repositoryGithubAPI.getResults(type: .getRepository,
+                                       gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                       fullname: repositoryItem!.fullname!)
+        { [weak self] results, errorMessage, statusCode in
             if results?.count == 0 || !errorMessage.isEmpty {
                 self?.noResult = true
                 self?.isLoading = false
@@ -185,7 +188,6 @@ class RepositoryViewController: UIViewController {
     }
 }
 
-
 // MARK: - UITableViewDataSource
 extension RepositoryViewController: UITableViewDataSource {
     
@@ -212,21 +214,21 @@ extension RepositoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         if section == 0 {
-            let  cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.languageChartCell.rawValue, for: indexPath) as! LanguageChartCell
+            let  cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.languageChartCell.rawValue, for: indexPath) as! LanguageChartCell
             cell.repositoryItem = repositoryItem
             cell.gitHubAuthenticationManager = gitHubAuthenticationManager
             return cell
         } else {
             if isLoading {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
                 let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
                 spinner.startAnimating()
                 return cell
             } else if noResult {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
                 let itemCell = repositoryDetails?[indexPath.row]
                 cell.lbTitleCell.text = itemCell?.titleCell
                 if repositoryDetails?[indexPath.row].id == "branches" {
@@ -243,7 +245,6 @@ extension RepositoryViewController: UITableViewDataSource {
         }
     }
 }
-
 
 // MARK: - UITableViewDelegate
 extension RepositoryViewController: UITableViewDelegate {

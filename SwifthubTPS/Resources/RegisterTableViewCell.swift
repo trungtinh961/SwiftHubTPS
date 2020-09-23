@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum TableViewCellIdentifiers: String {
+enum CellIdentifiers: String {
     case repositoryCell = "RepositoryCell"
     case userCell = "UserCell"
     case languageCell = "LanguageCell"
@@ -25,11 +25,19 @@ enum TableViewCellIdentifiers: String {
     case notificationCell = "NotificationCell"
     case contentCell = "ContentCell"
     case languageChartCell = "LanguageChartCell"
+    case languageCollectionCell = "LanguageCollectionCell"
 }
 
 struct RegisterTableViewCell {
     static func register(tableView: UITableView, identifier: String) {
         let cellNib = UINib(nibName: identifier, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: identifier)
+    }
+}
+
+struct RegisterCollectionViewCell {
+    static func register(collectionView: UICollectionView, identifier: String) {
+        let cellNib = UINib(nibName: identifier, bundle: nil)
+        collectionView.register(cellNib, forCellWithReuseIdentifier: identifier)
     }
 }

@@ -50,10 +50,10 @@ class RepositoryDetailViewController: UIViewController {
             self.navigationItem.title = "Following"
         }
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.repositoryCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.userCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
@@ -72,9 +72,15 @@ class RepositoryDetailViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         noResult = false
-        let type: GetType = (gitHubAuthenticationManager.didAuthenticated && gitHubAuthenticationManager.userAuthenticated == userItem) ? .getRepositoryOfAuthenUser : .getUserRepositories
+        let type: GetType = (gitHubAuthenticationManager.didAuthenticated
+                             && gitHubAuthenticationManager.userAuthenticated == userItem)
+                             ? .getRepositoryOfAuthenUser
+                             : .getUserRepositories
         if detailType == .repositories {
-            repositoryGithubAPI.getResults(type: type, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
+            repositoryGithubAPI.getResults(type: type,
+                                           gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                           username: userItem?.login ?? "")
+            { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -93,7 +99,10 @@ class RepositoryDetailViewController: UIViewController {
                 }
             }
         } else if detailType == .followers {
-            userGithubAPI.getResults(type: .getFollowers, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
+            userGithubAPI.getResults(type: .getFollowers,
+                                     gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                     username: userItem?.login ?? "")
+            { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -112,7 +121,10 @@ class RepositoryDetailViewController: UIViewController {
                 }
             }
         } else {
-            userGithubAPI.getResults(type: .getFollowing, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
+            userGithubAPI.getResults(type: .getFollowing,
+                                     gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                     username: userItem?.login ?? "")
+            { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -148,15 +160,15 @@ extension RepositoryDetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
         } else if noResult {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else if detailType == .repositories {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
             let itemCell = repositoryItems![indexPath.row]
             cell.lbFullname.text = itemCell.fullname
             cell.lbDescription.text = itemCell.description
@@ -170,7 +182,7 @@ extension RepositoryDetailViewController: UITableViewDataSource {
             cell.viewLanguageColor.isHidden = true
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
             let itemCell = userItems![indexPath.row]
             cell.lbFullname.text = itemCell.login
             if let smallURL = URL(string: itemCell.avatarUrl ?? "") {

@@ -36,9 +36,9 @@ class IssueViewController: UIViewController {
     
     private func makeUI() {
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.issueCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.issueCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
@@ -63,46 +63,29 @@ class IssueViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         noResult = false
-        
-        if state == .open {
-            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
-                if let results = results {
-                    if results.count == 0 {
-                        self?.noResult = true
-                        self?.isLoading = false
-                    } else {
-                        self?.issueItems = results
-                        self?.isLoading = false
-                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
-                            self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
-                        }
+                
+        issueGithubAPI.getResults(type: .getIssues,
+                                  gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                  state: state,
+                                  fullname: repositoryItem?.fullname ?? "")
+        { [weak self] results, errorMessage, statusCode in
+            if let results = results {
+                if results.count == 0 {
+                    self?.noResult = true
+                    self?.isLoading = false
+                } else {
+                    self?.issueItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
                     }
-                    self?.resultTableView.reloadData()
                 }
-                if !errorMessage.isEmpty {
-                    debugPrint(errorMessage)
-                }
+                self?.resultTableView.reloadData()
             }
-        } else if state == .closed {
-            issueGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, state: .closed, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
-                if let results = results {
-                    if results.count == 0 {
-                        self?.noResult = true
-                        self?.isLoading = false
-                    } else {
-                        self?.issueItems = results
-                        self?.isLoading = false
-                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
-                            self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
-                        }
-                    }
-                    self?.resultTableView.reloadData()
-                }
-                if !errorMessage.isEmpty {
-                    debugPrint(errorMessage)
-                }
+            if !errorMessage.isEmpty {
+                debugPrint(errorMessage)
             }
-        }        
+        }
     }
 }
 
@@ -118,15 +101,15 @@ extension IssueViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
         } else if noResult {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.issueCell.rawValue, for: indexPath) as! IssueCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.issueCell.rawValue, for: indexPath) as! IssueCell
             let itemCell = issueItems?[indexPath.row]
             if let smallURL = URL(string: itemCell?.user?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)

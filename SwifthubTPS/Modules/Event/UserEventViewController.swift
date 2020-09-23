@@ -45,9 +45,9 @@ class UserEventViewController: UIViewController {
             self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
         }
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.eventCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.eventCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
@@ -55,7 +55,11 @@ class UserEventViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func btnBack(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        if self.navigationController?.viewControllers.count == 1 {
+            dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func segmentControl(_ sender: Any) {
@@ -75,7 +79,11 @@ class UserEventViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
 
-        eventGithubAPI.getResults(type: .getUserEvents, eventType: eventType, gitHubAuthenticationManager: gitHubAuthenticationManager, username: userItem?.login ?? "") { [weak self] results, errorMessage, statusCode in
+        eventGithubAPI.getResults(type: .getUserEvents,
+                                  eventType: eventType,
+                                  gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                  username: userItem?.login ?? "")
+        { [weak self] results, errorMessage, statusCode in
                 if let results = results {
                     if results.count == 0 {
                         self?.noResult = true
@@ -109,15 +117,15 @@ extension UserEventViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
         } else if noResult {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.eventCell.rawValue, for: indexPath) as! EventCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.eventCell.rawValue, for: indexPath) as! EventCell
             let itemCell = eventItems?[indexPath.row]
             if let smallURL = URL(string: itemCell?.actor?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)
@@ -144,6 +152,7 @@ extension UserEventViewController: UITableViewDelegate {
         repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
             let navController = UINavigationController(rootViewController: repositoryViewController)
+            navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated:true, completion: nil)
         } else {
             self.navigationController?.pushViewController(repositoryViewController, animated: true)

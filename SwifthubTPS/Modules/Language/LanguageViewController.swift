@@ -50,9 +50,9 @@ class LanguageViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         lbLanguageName.text = "All"
         /// Register Cell
-        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.languageCell.rawValue)
-        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: languageTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: languageTableView, identifier: CellIdentifiers.languageCell.rawValue)
+        RegisterTableViewCell.register(tableView: languageTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: languageTableView, identifier: CellIdentifiers.noResultCell.rawValue)
         /// Config layouts
         btnAllLanguage.layer.cornerRadius = 5
         btnSave.isEnabled = false
@@ -82,7 +82,8 @@ class LanguageViewController: UIViewController {
         languageTableView.reloadData()
         noResult = false
         
-        trendingLanguageGithubAPI.getResults(type: .language) { [weak self] results, errorMessage in
+        trendingLanguageGithubAPI.getResults(type: .language)
+        { [weak self] results, errorMessage in
             if let results = results {
                 if results.count == 0 {
                     self?.noResult = true
@@ -129,15 +130,15 @@ extension LanguageViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
         } else if noResult {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.languageCell.rawValue, for: indexPath) as! LanguageCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.languageCell.rawValue, for: indexPath) as! LanguageCell
             cell.lbLanguage.text = languages![indexPath.row].name
             cell.imgCheck.isHidden = true
             if !isFirstLaunch, indexPath == cellChecked {

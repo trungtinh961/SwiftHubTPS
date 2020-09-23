@@ -42,7 +42,7 @@ class LanguageChartCell: UITableViewCell {
         super.awakeFromNib()
         mainView.layer.cornerRadius = 5
         
-        self.collectionView.register(UINib.init(nibName: "LanguageCollectionCell", bundle: nil), forCellWithReuseIdentifier: "LanguageCollectionCell")
+        RegisterCollectionViewCell.register(collectionView: collectionView, identifier: CellIdentifiers.languageCollectionCell.rawValue)        
         getColorLanguage()
         
     }

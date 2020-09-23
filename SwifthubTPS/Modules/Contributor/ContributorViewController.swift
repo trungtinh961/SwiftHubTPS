@@ -34,9 +34,9 @@ class ContributorViewController: UIViewController {
     
     private func makeUI() {
         ///Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.contributorCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.contributorCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
         ///Config layout
         imgAuthor.layer.masksToBounds = true
         imgAuthor.layer.cornerRadius = imgAuthor.frame.width / 2
@@ -53,7 +53,10 @@ class ContributorViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        contributorGithubAPI.getResults(type: .getContributors, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
+        contributorGithubAPI.getResults(type: .getContributors,
+                                        gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                        fullname: repositoryItem?.fullname ?? "")
+        { [weak self] results, errorMessage, statusCode in
            if let results = results {
                if results.count == 0 {
                    self?.noResult = true
@@ -87,15 +90,15 @@ extension ContributorViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-                  let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+                  let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
                   let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
                   spinner.startAnimating()
                   return cell
         } else if noResult {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.contributorCell.rawValue, for: indexPath) as! ContributorCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.contributorCell.rawValue, for: indexPath) as! ContributorCell
             let itemCell = contributorItems?[indexPath.row]
             if let smallURL = URL(string: itemCell?.avatarUrl ?? "") {
                 downloadTask = cell.imgAuthor.loadImage(url: smallURL)

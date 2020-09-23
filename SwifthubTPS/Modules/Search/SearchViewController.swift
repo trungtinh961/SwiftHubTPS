@@ -53,10 +53,10 @@ class SearchViewController: UIViewController {
     private func makeUI() {
         self.hideKeyboardWhenTappedAround()
         /// Register cell
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.repositoryCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.userCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
-        RegisterTableViewCell.register(tableView: resultTableView, identifier: TableViewCellIdentifiers.noResultCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.repositoryCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.userCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: resultTableView, identifier: CellIdentifiers.noResultCell.rawValue)
     }
     
     // MARK: - IBActions
@@ -89,7 +89,11 @@ class SearchViewController: UIViewController {
         
         if getType == .repository {
             if isSearching {
-                searchRepositoryGithubAPI.getResults(type: .repository, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage, statusCode in
+                searchRepositoryGithubAPI.getResults(type: .repository,
+                                                     gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                                     query: query,
+                                                     language: language ?? "")
+                { [weak self] results, errorMessage, statusCode in
                     if let result = results?[0] {
                         if result.totalCount == 0 {
                             self?.noResult = true
@@ -107,7 +111,10 @@ class SearchViewController: UIViewController {
                     }
                 }
             } else {
-                trendingRepositoryGithubAPI.getResults(type: .repository, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                trendingRepositoryGithubAPI.getResults(type: .repository,
+                                                       language: language ?? "",
+                                                       since: self.trendingSince)
+                { [weak self] results, errorMessage in
                     if let results = results {
                         self?.trendingRepositories = results
                         self?.isLoading = false
@@ -123,7 +130,11 @@ class SearchViewController: UIViewController {
             }
         } else if getType == .user {
             if isSearching {
-                searchUserGithubAPI.getResults(type: .user, gitHubAuthenticationManager: gitHubAuthenticationManager, query: query, language: language ?? "") { [weak self] results, errorMessage, statusCode in
+                searchUserGithubAPI.getResults(type: .user,
+                                               gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                               query: query,
+                                               language: language ?? "")
+                { [weak self] results, errorMessage, statusCode in
                     if let result = results?[0] {
                         if result.totalCount == 0 {
                             self?.noResult = true
@@ -140,7 +151,10 @@ class SearchViewController: UIViewController {
                     }
                 }
             } else {
-                trendingUserGithubAPI.getResults(type: getType, language: language ?? "", since: self.trendingSince) { [weak self] results, errorMessage in
+                trendingUserGithubAPI.getResults(type: getType,
+                                                 language: language ?? "",
+                                                 since: self.trendingSince)
+                { [weak self] results, errorMessage in
                     if let results = results {
                         self?.trendingUsers = results
                         self?.isLoading = false
@@ -182,7 +196,7 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
@@ -196,10 +210,10 @@ extension SearchViewController: UITableViewDataSource {
             } else {
                 lbTitle.text = "Trending for \(languageName ?? "all languages")"
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultCell.rawValue, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else if getType == .repository {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
             if isSearching { /// RepositorySearch
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
@@ -239,7 +253,7 @@ extension SearchViewController: UITableViewDataSource {
             }
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32

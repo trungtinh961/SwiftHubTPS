@@ -35,8 +35,8 @@ class ContentViewController: UIViewController {
             self.title = title
         }
         /// Register cell
-        RegisterTableViewCell.register(tableView: tableView, identifier: TableViewCellIdentifiers.contentCell.rawValue)
-        RegisterTableViewCell.register(tableView: tableView, identifier: TableViewCellIdentifiers.loadingCell.rawValue)
+        RegisterTableViewCell.register(tableView: tableView, identifier: CellIdentifiers.contentCell.rawValue)
+        RegisterTableViewCell.register(tableView: tableView, identifier: CellIdentifiers.loadingCell.rawValue)
     }
     
     // MARK: - IBActions
@@ -49,7 +49,11 @@ class ContentViewController: UIViewController {
         isLoading = true
         tableView.reloadData()
         
-        contentGithubAPI.getResults(type: .getContents, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "", path: contentItem?.path ?? "") { [weak self] results, errorMessage, statusCode in
+        contentGithubAPI.getResults(type: .getContents,
+                                    gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                    fullname: repositoryItem?.fullname ?? "",
+                                    path: contentItem?.path ?? "")
+        { [weak self] results, errorMessage, statusCode in
             if let results = results {
                 self?.contentItems = results
                 self?.contentItems?.sort(by: { $0.type > $1.type } )
@@ -75,12 +79,12 @@ extension ContentViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-          let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell.rawValue, for: indexPath)
+          let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.loadingCell.rawValue, for: indexPath)
           let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
           spinner.startAnimating()
           return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.contentCell.rawValue, for: indexPath) as! ContentCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.contentCell.rawValue, for: indexPath) as! ContentCell
             let itemCell = contentItems?[indexPath.row]
             cell.lbTitle.text = itemCell?.name
             if itemCell?.type != .dir {

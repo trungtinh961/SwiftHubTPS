@@ -1559,35 +1559,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8H-Hu-UVh">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <items>
-                                    <navigationItem id="TBJ-3y-mF1">
-                                        <nil key="title"/>
-                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="jos-bI-Sze">
-                                            <rect key="frame" x="60.5" y="5.5" width="293" height="33"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segments>
-                                                <segment title="Unread"/>
-                                                <segment title="Participating"/>
-                                                <segment title="All"/>
-                                            </segments>
-                                            <connections>
-                                                <action selector="notificationSegmentControl:" destination="6Pc-NL-1Au" eventType="valueChanged" id="9d2-ih-nMh"/>
-                                            </connections>
-                                        </segmentedControl>
-                                        <barButtonItem key="rightBarButtonItem" image="icon_cell_check" id="ZL5-63-zM7">
-                                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="btnMakeAllRead:" destination="6Pc-NL-1Au" id="bJ7-dO-PFU"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i9h-FZ-Weq">
-                                <rect key="frame" x="8" y="96" width="406" height="774"/>
+                                <rect key="frame" x="8" y="52" width="406" height="818"/>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="6Pc-NL-1Au" id="6dO-A2-RW0"/>
@@ -1597,16 +1570,35 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="k8H-Hu-UVh" firstAttribute="top" secondItem="7ba-PE-c1M" secondAttribute="top" id="24V-9X-PJq"/>
-                            <constraint firstAttribute="trailing" secondItem="k8H-Hu-UVh" secondAttribute="trailing" id="3B7-D3-BHD"/>
-                            <constraint firstItem="k8H-Hu-UVh" firstAttribute="leading" secondItem="7ba-PE-c1M" secondAttribute="leading" id="IzE-lH-flp"/>
+                            <constraint firstItem="i9h-FZ-Weq" firstAttribute="top" secondItem="7ba-PE-c1M" secondAttribute="top" constant="8" id="Bjh-CS-WIn"/>
                             <constraint firstItem="i9h-FZ-Weq" firstAttribute="trailing" secondItem="7ba-PE-c1M" secondAttribute="trailing" id="JcE-fL-lle"/>
                             <constraint firstItem="i9h-FZ-Weq" firstAttribute="leading" secondItem="7ba-PE-c1M" secondAttribute="leading" constant="8" id="SBe-rV-8ap"/>
-                            <constraint firstItem="i9h-FZ-Weq" firstAttribute="top" secondItem="k8H-Hu-UVh" secondAttribute="bottom" constant="8" id="chC-3O-50u"/>
                             <constraint firstItem="i9h-FZ-Weq" firstAttribute="bottom" secondItem="7ba-PE-c1M" secondAttribute="bottom" constant="8" id="uiX-9Q-jcM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7ba-PE-c1M"/>
                     </view>
+                    <navigationItem key="navigationItem" id="8xq-5z-cAJ">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" id="4Nk-7d-BuL"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="jos-bI-Sze">
+                            <rect key="frame" x="60.5" y="6" width="293" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Unread"/>
+                                <segment title="Participating"/>
+                                <segment title="All"/>
+                            </segments>
+                            <connections>
+                                <action selector="notificationSegmentControl:" destination="6Pc-NL-1Au" eventType="valueChanged" id="9d2-ih-nMh"/>
+                            </connections>
+                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" image="icon_cell_check" id="ZL5-63-zM7">
+                            <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="btnMakeAllRead:" destination="6Pc-NL-1Au" id="bJ7-dO-PFU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="notificationSegmentControl" destination="jos-bI-Sze" id="lPf-fS-774"/>
                         <outlet property="resultTableView" destination="i9h-FZ-Weq" id="rJS-F1-s4a"/>
