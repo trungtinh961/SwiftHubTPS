@@ -114,11 +114,13 @@ extension ContributorViewController: UITableViewDataSource {
 extension ContributorViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-        userViewController.userItem = contributorItems?[indexPath.row]
-        userViewController.isTabbarCall = false
-        userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        self.navigationController?.pushViewController(userViewController, animated: true)
+        if !isLoading, !noResult {
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+            userViewController.userItem = contributorItems?[indexPath.row]
+            userViewController.isTabbarCall = false
+            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            self.navigationController?.pushViewController(userViewController, animated: true)
+        }
     }
 }

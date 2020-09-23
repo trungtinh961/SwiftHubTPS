@@ -283,36 +283,38 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        if getType == .repository, !isLoading, !noResult {
-            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            var indexCell: Repository
-            if isSearching {
-                indexCell = searchRepostories![indexPath.row]
-            } else {
-                indexCell = Repository(repo: trendingRepositories![indexPath.row])
+        if !isLoading, !noResult {
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            if getType == .repository, !isLoading, !noResult {
+                let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+                repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                var indexCell: Repository
+                if isSearching {
+                    indexCell = searchRepostories![indexPath.row]
+                } else {
+                    indexCell = Repository(repo: trendingRepositories![indexPath.row])
+                }
+                repositoryViewController.repositoryItem = indexCell
+                let navController = UINavigationController(rootViewController: repositoryViewController)
+                navController.modalPresentationStyle = .fullScreen
+                self.present(navController, animated:true, completion: nil)
+                
+            } else if getType == .user, !isLoading, !noResult {
+                var indexCell: User
+                if isSearching {
+                    indexCell = searchUsers![indexPath.row]
+                } else {
+                    indexCell = User(user: trendingUsers![indexPath.row])
+                }
+                let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+                userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                userViewController.userItem = indexCell
+                userViewController.isTabbarCall = false
+                let navController = UINavigationController(rootViewController: userViewController)
+                navController.modalPresentationStyle = .fullScreen
+                self.present(navController, animated:true, completion: nil)
             }
-            repositoryViewController.repositoryItem = indexCell
-            let navController = UINavigationController(rootViewController: repositoryViewController)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated:true, completion: nil)
-            
-        } else if getType == .user, !isLoading, !noResult {
-            var indexCell: User
-            if isSearching {
-                indexCell = searchUsers![indexPath.row]
-            } else {
-                indexCell = User(user: trendingUsers![indexPath.row])
-            }
-            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            userViewController.userItem = indexCell
-            userViewController.isTabbarCall = false
-            let navController = UINavigationController(rootViewController: userViewController)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated:true, completion: nil)
-        }        
+        }
     }
 }
 

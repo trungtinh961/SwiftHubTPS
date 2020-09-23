@@ -169,17 +169,19 @@ extension StarViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        if getType == .getStarred {            
-            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-            repositoryViewController.repositoryItem = starredItems![indexPath.row]
-            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(repositoryViewController, animated: true)
-        } else {
-            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            userViewController.userItem = stargazersItems![indexPath.row]
-            userViewController.isTabbarCall = false
-            self.navigationController?.pushViewController(userViewController, animated: true)
-        }        
+        if !isLoading, !noResult {
+            if getType == .getStarred {
+                let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+                repositoryViewController.repositoryItem = starredItems![indexPath.row]
+                repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(repositoryViewController, animated: true)
+            } else {
+                let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+                userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                userViewController.userItem = stargazersItems![indexPath.row]
+                userViewController.isTabbarCall = false
+                self.navigationController?.pushViewController(userViewController, animated: true)
+            }
+        }
     }
 }

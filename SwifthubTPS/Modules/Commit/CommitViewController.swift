@@ -110,8 +110,10 @@ extension CommitViewController: UITableViewDataSource {
 extension CommitViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let url = URL(string: commitItems![indexPath.row].htmlUrl ?? "") {
-            UIApplication.shared.open(url)
+        if !isLoading, !noResult {
+            if let url = URL(string: commitItems![indexPath.row].htmlUrl ?? "") {
+                UIApplication.shared.open(url)
+            }
         }
     }
 }

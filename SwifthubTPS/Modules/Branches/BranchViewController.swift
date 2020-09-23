@@ -109,8 +109,10 @@ extension BranchViewController: UITableViewDataSource {
 extension BranchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let cell = tableView.cellForRow(at: indexPath) as! DetailCell
-        delegate?.branchViewController(self, didFinishEditing: cell.lbTitleCell.text!)
+        if !isLoading, !noResult {
+            let cell = tableView.cellForRow(at: indexPath) as! DetailCell
+            delegate?.branchViewController(self, didFinishEditing: cell.lbTitleCell.text!)
+        }
     }
 }
 

@@ -108,9 +108,11 @@ extension ReleaseViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ReleaseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)        
-        if let url = URL(string: releaseItems![indexPath.row].htmlUrl ?? "") {
-            UIApplication.shared.open(url)
+        tableView.deselectRow(at: indexPath, animated: true)
+        if !isLoading, !noResult {
+            if let url = URL(string: releaseItems![indexPath.row].htmlUrl ?? "") {
+                UIApplication.shared.open(url)
+            }
         }
     }
 }

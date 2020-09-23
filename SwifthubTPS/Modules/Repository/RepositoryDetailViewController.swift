@@ -198,17 +198,19 @@ extension RepositoryDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        if detailType == .repositories {
-            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-            repositoryViewController.repositoryItem = repositoryItems![indexPath.row]
-            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            self.navigationController?.pushViewController(repositoryViewController, animated: true)
-        } else {
-            let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
-            userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            userViewController.userItem = userItems![indexPath.row]
-            userViewController.isTabbarCall = false
-            self.navigationController?.pushViewController(userViewController, animated: true)
+        if !isLoading, !noResult {
+            if detailType == .repositories {
+                let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+                repositoryViewController.repositoryItem = repositoryItems![indexPath.row]
+                repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                self.navigationController?.pushViewController(repositoryViewController, animated: true)
+            } else {
+                let userViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.userVC.rawValue) as! UserViewController
+                userViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+                userViewController.userItem = userItems![indexPath.row]
+                userViewController.isTabbarCall = false
+                self.navigationController?.pushViewController(userViewController, animated: true)
+            }
         }
     }
 }

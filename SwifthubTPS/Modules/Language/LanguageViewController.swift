@@ -153,14 +153,16 @@ extension LanguageViewController: UITableViewDataSource {
 extension LanguageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if !isFirstLaunch, cellChecked.row != -1, let cell = tableView.cellForRow(at: cellChecked) as? LanguageCell{
-            cell.imgCheck.isHidden = true
+        if !isLoading, !noResult {
+            if !isFirstLaunch, cellChecked.row != -1, let cell = tableView.cellForRow(at: cellChecked) as? LanguageCell{
+                cell.imgCheck.isHidden = true
+            }
+            if let cell = tableView.cellForRow(at: indexPath) as? LanguageCell{
+                isFirstLaunch = false
+                cell.imgCheck.isHidden = false
+                cellChecked = indexPath
+            }
+            btnSave.isEnabled = true
         }
-        if let cell = tableView.cellForRow(at: indexPath) as? LanguageCell{
-            isFirstLaunch = false
-            cell.imgCheck.isHidden = false
-            cellChecked = indexPath
-        }
-        btnSave.isEnabled = true
     }
 }

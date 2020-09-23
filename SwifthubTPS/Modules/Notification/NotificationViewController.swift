@@ -135,13 +135,15 @@ extension NotificationViewController: UITableViewDataSource {
 extension NotificationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let itemCell = notificationItems![indexPath.row]
-        let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.repositoryItem = itemCell.repository
-        let navController = UINavigationController(rootViewController: repositoryViewController)
-        navController.modalPresentationStyle = .fullScreen
-        self.present(navController, animated:true, completion: nil)
+        if !isLoading, !noResult {
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            let itemCell = notificationItems![indexPath.row]
+            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            repositoryViewController.repositoryItem = itemCell.repository
+            let navController = UINavigationController(rootViewController: repositoryViewController)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated:true, completion: nil)
+        }        
     }
 }

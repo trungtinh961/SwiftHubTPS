@@ -145,18 +145,19 @@ extension UserEventViewController: UITableViewDataSource {
 extension UserEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
-        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
-            let navController = UINavigationController(rootViewController: repositoryViewController)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated:true, completion: nil)
-        } else {
-            self.navigationController?.pushViewController(repositoryViewController, animated: true)
+        if !isLoading, !noResult {
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
+            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
+                let navController = UINavigationController(rootViewController: repositoryViewController)
+                navController.modalPresentationStyle = .fullScreen
+                self.present(navController, animated:true, completion: nil)
+            } else {
+                self.navigationController?.pushViewController(repositoryViewController, animated: true)
+            }
         }
-        
     }
 }

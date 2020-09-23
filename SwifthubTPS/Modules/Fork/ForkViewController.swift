@@ -118,10 +118,12 @@ extension ForkViewController: UITableViewDataSource {
 extension ForkViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-        let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
-        repositoryViewController.repositoryItem = forkItems![indexPath.row]
-        repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-        self.navigationController?.pushViewController(repositoryViewController, animated: true)        
+        if !isLoading, !noResult {
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            let repositoryViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.repositoryVC.rawValue) as! RepositoryViewController
+            repositoryViewController.repositoryItem = forkItems![indexPath.row]
+            repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
+            self.navigationController?.pushViewController(repositoryViewController, animated: true)
+        }
     }
 }
