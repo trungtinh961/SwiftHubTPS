@@ -10,48 +10,26 @@ import Foundation
 import ObjectMapper
 
 struct Repository: Mappable {
-
-    var archived: Bool?
-    var cloneUrl: String?
+    
     var createdAt: Date?
     var defaultBranch = "master"
     var description: String?
-    var fork: Bool?
     var forks: Int?
-    var forksCount: Int?
     var fullname: String?
-    var hasDownloads: Bool?
-    var hasIssues: Bool?
-    var hasPages: Bool?
-    var hasProjects: Bool?
-    var hasWiki: Bool?
     var homepage: String?
-    var htmlUrl: String?
     var language: String?
     var languageColor: String?
     
     var name: String?
-    var networkCount: Int?
-    var nodeId: String?
-    var openIssues: Int?
     var openIssuesCount: Int?
-    var organization: User?
     var owner: User?
-    var privateField: Bool?
-    var pushedAt: String?
     var size: Int?
-    var sshUrl: String?
     var stargazersCount: Int?
     var subscribersCount: Int?
     var updatedAt: Date?
-    var url: String?
-    var watchers: Int?
-    var watchersCount: Int?
-    var parentFullname: String?
 
     var commitsCount: Int?
     var pullRequestsCount: Int?
-    var branchesCount: Int?
     var releasesCount: Int?
     var contributorsCount: Int?
     var viewerHasStarred: Bool?
@@ -78,48 +56,20 @@ struct Repository: Mappable {
     }
 
     mutating func mapping(map: Map) {
-        archived <- map["archived"]
-        cloneUrl <- map["clone_url"]
         createdAt <- (map["created_at"], ISO8601DateTransform())
         defaultBranch <- map["default_branch"]
         description <- map["description"]
-        fork <- map["fork"]
         forks <- map["forks"]
-        forksCount <- map["forks_count"]
         fullname <- map["full_name"]
-        hasDownloads <- map["has_downloads"]
-        hasIssues <- map["has_issues"]
-        hasPages <- map["has_pages"]
-        hasProjects <- map["has_projects"]
-        hasWiki <- map["has_wiki"]
         homepage <- map["homepage"]
-        htmlUrl <- map["html_url"]
         language <- map["language"]
         name <- map["name"]
-        networkCount <- map["network_count"]
-        nodeId <- map["node_id"]
-        openIssues <- map["open_issues"]
         openIssuesCount <- map["open_issues_count"]
-        organization <- map["organization"]
         owner <- map["owner"]
-        privateField <- map["private"]
-        pushedAt <- map["pushed_at"]
         size <- map["size"]
-        sshUrl <- map["ssh_url"]
         stargazersCount <- map["stargazers_count"]
         subscribersCount <- map["subscribers_count"]
         updatedAt <- (map["updated_at"], ISO8601DateTransform())
-        url <- map["url"]
-        watchers <- map["watchers"]
-        watchersCount <- map["watchers_count"]
-        parentFullname <- map["parent.full_name"]
-    }
-
-    func parentRepository() -> Repository? {
-        guard let parentFullName = parentFullname else { return nil }
-        var repository = Repository()
-        repository.fullname = parentFullName
-        return repository
     }
 }
 

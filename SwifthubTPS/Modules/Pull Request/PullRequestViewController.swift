@@ -68,45 +68,27 @@ class PullRequestViewController: UIViewController {
         resultTableView.reloadData()
         noResult = false
         
-        if state == .open {
-            pullGithubAPI.getResults(type: .getPullRequests, gitHubAuthenticationManager: gitHubAuthenticationManager, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
-                if let results = results {
-                    if results.count == 0 {
-                        self?.noResult = true
-                        self?.isLoading = false
-                    } else {
-                        self?.pullItems = results
-                        self?.isLoading = false
-                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
-                            self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
-                        }
+        pullGithubAPI.getResults(type: .getPullRequests,
+                                 gitHubAuthenticationManager: gitHubAuthenticationManager,
+                                 state: state, fullname: repositoryItem?.fullname ?? "")
+        { [weak self] results, errorMessage, statusCode in
+            if let results = results {
+                if results.count == 0 {
+                    self?.noResult = true
+                    self?.isLoading = false
+                } else {
+                    self?.pullItems = results
+                    self?.isLoading = false
+                    if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
+                        self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
                     }
-                    self?.resultTableView.reloadData()
                 }
-                if !errorMessage.isEmpty {
-                    debugPrint(errorMessage)
-                }
+                self?.resultTableView.reloadData()
             }
-        } else if state == .closed {
-            pullGithubAPI.getResults(type: .getIssues, gitHubAuthenticationManager: gitHubAuthenticationManager, state: .closed, fullname: repositoryItem?.fullname ?? "") { [weak self] results, errorMessage, statusCode in
-                if let results = results {
-                    if results.count == 0 {
-                        self?.noResult = true
-                        self?.isLoading = false
-                    } else {
-                        self?.pullItems = results
-                        self?.isLoading = false
-                        if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
-                            self?.downloadTask = self?.imgAuthor.loadImage(url: smallURL)
-                        }
-                    }
-                    self?.resultTableView.reloadData()
-                }
-                if !errorMessage.isEmpty {
-                    debugPrint(errorMessage)
-                }
+            if !errorMessage.isEmpty {
+                debugPrint(errorMessage)
             }
-        }        
+        }
     }    
 }
 

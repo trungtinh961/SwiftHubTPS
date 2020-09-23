@@ -23,10 +23,8 @@ struct User: Mappable, SenderType {
     var company: String?
     var contributions: Int?
     var createdAt: Date?
-    var email: String?
     var followers: Int?
     var following: Int?
-    var htmlUrl: String?
     var login: String?
     var name: String?
     var type: UserType = .user
@@ -34,11 +32,8 @@ struct User: Mappable, SenderType {
     var starredRepositoriesCount: Int?
     var repositoriesCount: Int?
     var privateRepoCount: Int?
-    var issuesCount: Int?
-    var watchingCount: Int?
     var viewerCanFollow: Bool?
     var viewerIsFollowing: Bool?
-    var isViewer: Bool?
     var organizations: [User]?
     
     // Only for Organization type
@@ -79,10 +74,8 @@ struct User: Mappable, SenderType {
         contributions <- map["contributions"]
         createdAt <- (map["created_at"], ISO8601DateTransform())
         descriptionField <- map["description"]
-        email <- map["email"]
         followers <- map["followers"]
         following <- map["following"]
-        htmlUrl <- map["html_url"]
         login <- map["login"]
         name <- map["name"]
         repositoriesCount <- map["public_repos"]

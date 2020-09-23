@@ -14,8 +14,7 @@ struct Language: Mappable {
     var urlParam: String?
     var name: String?
     
-    init?(map: Map) {}
-    
+    init?(map: Map) {}    
     init() {}
     
     mutating func mapping(map: Map) {

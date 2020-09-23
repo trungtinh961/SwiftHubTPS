@@ -45,7 +45,12 @@ class ChatViewController: MessagesViewController {
     }
     
     func makeUI() {
-        self.messages.append(issueItem!)
+        if let issueItem = issueItem {
+            self.messages.append(issueItem)
+        }
+        if let pullItem = pullItem {
+            self.messages.append(pullItem)
+        }
         number = issuesNumber ?? issueItem?.number ?? pullItem?.number ?? 0
         self.title = "\(repositoryItem?.fullname ?? "") issue #\(number!)"
         updateTableView(type: .getIssueComments)

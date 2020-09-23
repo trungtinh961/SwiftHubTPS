@@ -27,14 +27,7 @@ enum EventType: String {
     case unknown = ""
     case received = "received_events"
     case performed = "events"
-    
-    func getDescription() -> String {
-        switch self {
-        case .fork: return "forked"
-        case .star: return "starred"
-        default: return ""
-        }        
-    }
+
 }
 
 /// Each event has a similar JSON schema, but a unique payload object that is determined by its event type.
@@ -43,8 +36,6 @@ struct Event: Mappable {
     var actor: User?
     var createdAt: Date?
     var id: String?
-    var organization: User?
-    var isPublic: Bool?
     var repository: Repository?
     var type: EventType = .unknown
 
@@ -57,8 +48,6 @@ struct Event: Mappable {
         actor <- map["actor"]
         createdAt <- (map["created_at"], ISO8601DateTransform())
         id <- map["id"]
-        organization <- map["org"]
-        isPublic <- map["public"]
         repository <- map["repo"]
         type <- map["type"]
 
@@ -119,6 +108,7 @@ extension Event {
         }
         return [self.actor?.login ?? "", actionText, self.repository?.fullname ?? ""].joined(separator: " ")
     }
+    
     var body: String {
         switch self.type {
         case .issueComment:
@@ -139,6 +129,7 @@ extension Event {
         default: return ""
         }
     }
+    
     var badgeImage: String {
         switch self.type {
         case .fork:

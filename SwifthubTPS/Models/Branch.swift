@@ -13,8 +13,6 @@ struct Branch: Mappable {
 
     var commit: Commit?
     var name: String?
-    var protectedField: Bool?
-    var protectionUrl: String?
 
     init?(map: Map) {}
     init() {}
@@ -22,7 +20,5 @@ struct Branch: Mappable {
     mutating func mapping(map: Map) {
         commit <- map["commit"]
         name <- map["name"]
-        protectedField <- map["protected"]
-        protectionUrl <- map["protection_url"]
     }
 }

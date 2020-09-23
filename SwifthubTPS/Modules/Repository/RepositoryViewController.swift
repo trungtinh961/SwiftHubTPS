@@ -134,7 +134,6 @@ class RepositoryViewController: UIViewController {
             if results?.count == 0 || !errorMessage.isEmpty {
                 self?.noResult = true
                 self?.isLoading = false
-                self?.lbDescription.text = "Error when load data!"
                 self?.resultTableView.reloadData()
                 debugPrint(errorMessage)
             }

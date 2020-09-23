@@ -200,7 +200,7 @@ extension SearchViewController: UITableViewDataSource {
             return cell
         } else if getType == .repository {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.repositoryCell.rawValue, for: indexPath) as! RepositoryCell
-            if isSearching {
+            if isSearching { /// RepositorySearch
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
                 lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \n\nSearch results for \(languageName ?? "all languages")"
@@ -216,7 +216,7 @@ extension SearchViewController: UITableViewDataSource {
                 if let smallURL = URL(string: indexCell.owner?.avatarUrl ?? "") {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
-            } else {
+            } else { /// TrendingRepository
                 lbTitle.text = "Trending for \(languageName ?? "all languages")"
                 let indexCell = trendingRepositories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
