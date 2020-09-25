@@ -65,6 +65,11 @@ class TrendingGithubAPI<Element: Mappable> {
             guard let self = self else {return}
             defer {
                 self.dataTask = nil
+                if self.elements.count == 0 {
+                    DispatchQueue.main.async {
+                        completion([], self.errorMessage)
+                    }
+                }
             }
             if let error = error {
                 self.errorMessage += "DataTask error: " + error.localizedDescription + "\n"

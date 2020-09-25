@@ -269,4 +269,10 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             debugPrint("You must be logged in to post!")
         }
     }
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
+        if !gitHubAuthenticationManager.didAuthenticated {
+            inputBar.sendButton.isEnabled = false
+        }
+    }
 }

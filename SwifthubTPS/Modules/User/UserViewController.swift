@@ -50,6 +50,7 @@ class UserViewController: UIViewController {
             btnAddUser.isEnabled = false
         }
         if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem, isTabbarCall {
+            reloadTableView()
             self.navigationItem.leftBarButtonItem?.tintColor = .clear
             self.navigationItem.leftBarButtonItem?.isEnabled = false
             self.navigationItem.rightBarButtonItem?.tintColor = .systemTeal
