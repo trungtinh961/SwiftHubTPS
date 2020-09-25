@@ -183,6 +183,17 @@ extension LanguageChartCell: MultiProgressViewDataSource {
         if let color = results[section].color {
             bar.backgroundColor = UIColor(color)
         }
+        let language = results[section]
+        let percent = Float(language.linesOfCode) / Float(self.totalLines) * 100
+        let percentString = String(format: "%.2f%%", percent)
+        let font = UIFont.systemFont(ofSize: 12)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.white,
+        ]        
+        if percent > 10 {
+            bar.setAttributedTitle(NSAttributedString(string: percentString, attributes: attributes))
+        }
         return bar
     }
 }

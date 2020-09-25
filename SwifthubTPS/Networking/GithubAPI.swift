@@ -247,9 +247,9 @@ class GitHubAPI<Element: Mappable> {
         debugPrint("\(request.httpMethod ?? ""): \(request)")
         
         dataTask = defaultSession.dataTask(with: request) { [weak self] data, response, error in
-            defer {
-                self?.dataTask = nil
-            }
+//            defer {
+//                self?.dataTask = nil
+//            }
             if let error = error, let response = response as? HTTPURLResponse {
                 self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
                 DispatchQueue.main.async {
