@@ -549,12 +549,12 @@
 				BAFF237D2502438F00843E38 /* Event.swift */,
 				BABE48742500D87800A5AB12 /* Issue.swift */,
 				BAB7870224F8B453002779B2 /* Language.swift */,
+				BA9D5BA22508CBAE00DAF998 /* Notification.swift */,
 				BABE48782500DB8A00A5AB12 /* PullRequest.swift */,
 				BAFF236E250231B200843E38 /* Release.swift */,
 				BAD3886F24F60B830045C10E /* Repository.swift */,
 				BABE48762500DB4E00A5AB12 /* State.swift */,
 				BA3D105824F616550079C5A1 /* User.swift */,
-				BA9D5BA22508CBAE00DAF998 /* Notification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

@@ -153,9 +153,12 @@ extension LanguageChartCell: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LanguageCollectionCell", for: indexPath as IndexPath) as! LanguageCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifiers.languageCollectionCell.rawValue, for: indexPath as IndexPath) as! LanguageCollectionCell
         cell.lbLanguageName.text = results[indexPath.row].name
-        cell.languageColorView.backgroundColor = UIColor(results[indexPath.row].color ?? "#AFEDFC")
+        cell.languageColorView.backgroundColor = UIColor.random
+        if let color = results[indexPath.row].color {
+            cell.languageColorView.backgroundColor = UIColor(color)
+        }
         return cell
     }
     
@@ -176,7 +179,10 @@ extension LanguageChartCell: MultiProgressViewDataSource {
     
     func progressView(_ progressView: MultiProgressView, viewForSection section: Int) -> ProgressViewSection {
         let bar = ProgressViewSection()
-        bar.backgroundColor = UIColor(results[section].color ?? "#AFEDFC")
+        bar.backgroundColor = UIColor.random
+        if let color = results[section].color {
+            bar.backgroundColor = UIColor(color)
+        }
         return bar
     }
 }

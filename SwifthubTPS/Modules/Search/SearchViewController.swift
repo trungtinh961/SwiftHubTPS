@@ -172,6 +172,20 @@ class SearchViewController: UIViewController {
             }
         }
     }
+    
+    private func titleDescription(count: Int = 0) -> String {
+        let language = languageName ?? "all languages"
+        if isSearching {
+            if getType == .repository {
+                return "\(count.kFormatted()) repositories \n\nSearch results for \(language)"
+            } else {
+                return "\(count.kFormatted()) users \n\nSearch results for \(language)"
+            }
+        } else {
+            return "Trending for \(language)"
+        }
+    }
+    
 }
 
 // MARK:- UITableViewDataSource
@@ -203,12 +217,12 @@ extension SearchViewController: UITableViewDataSource {
         } else if noResult {
             if isSearching {
                 if getType == .repository {
-                    lbTitle.text = "0 repositories \n\nSearch results for \(languageName ?? "all languages")"
+                    lbTitle.text = titleDescription()
                 } else if getType == .user {
-                    lbTitle.text = "0 users \n\nSearch results for \(languageName ?? "all languages")"
+                    lbTitle.text = titleDescription()
                 }
             } else {
-                lbTitle.text = "Trending for \(languageName ?? "all languages")"
+                lbTitle.text = titleDescription()
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
@@ -217,21 +231,21 @@ extension SearchViewController: UITableViewDataSource {
             if isSearching { /// RepositorySearch
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
-                lbTitle.text = (searchRepositoryInfor?.totalCount.kFormatted())! + " repositories \n\nSearch results for \(languageName ?? "all languages")"
+                lbTitle.text = titleDescription(count: searchRepositoryInfor?.totalCount ?? 0)
                 let indexCell = searchRepostories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
                 cell.lbStars.text = indexCell.stargazersCount?.kFormatted()
                 cell.imgCurrentPeriodStars.isHidden = true
                 cell.viewLanguageColor.isHidden = true
-                cell.lbLanguage.isHidden = true
-                cell.lbCurrentPeriodStars.text = indexCell.language
+                cell.lbCurrentPeriodStars.isHidden = true
+                cell.lbLanguage.text = indexCell.language
                 cell.lbCurrentPeriodStars.sizeToFit()
                 if let smallURL = URL(string: indexCell.owner?.avatarUrl ?? "") {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else { /// TrendingRepository
-                lbTitle.text = "Trending for \(languageName ?? "all languages")"
+                lbTitle.text = titleDescription()
                 let indexCell = trendingRepositories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
@@ -257,7 +271,7 @@ extension SearchViewController: UITableViewDataSource {
             if isSearching {
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
-                lbTitle.text = (searchUserInfor?.totalCount.kFormatted())! + " users \n\nSearch results for \(languageName ?? "all languages")"
+                lbTitle.text = titleDescription(count: searchUserInfor?.totalCount ?? 0)
                 let indexCell = searchUsers![indexPath.row]
                 cell.lbFullname.text = indexCell.login
                 cell.lbDescription.isHidden = true
@@ -265,7 +279,7 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else {
-                lbTitle.text = "Trending for \(languageName ?? "all languages")"
+                lbTitle.text = titleDescription()
                 cell.lbDescription.isHidden = false
                 let indexCell = trendingUsers![indexPath.row]
                 cell.lbFullname.text = "\(indexCell.username ?? "")"
@@ -337,7 +351,7 @@ extension SearchViewController: UISearchBarDelegate {
             isSearching = false
             sinceApiSegmentControl.isHidden = false
             titleConstraints.constant = 10
-            lbTitle.text = "Trending for \(languageName ?? "all languages")"
+            lbTitle.text = titleDescription()
             updateTableView(language: languageParam)
         }
     }
