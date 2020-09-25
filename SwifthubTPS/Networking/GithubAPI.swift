@@ -102,13 +102,13 @@ class GitHubAPI<Element: Mappable> {
             components.path = Router.getWatchers(fullname: fullname).path
             components.setQueryItems(with: Router.getWatchers(fullname: fullname).parameters!)
         case .getContents:
-                components.scheme = Router.getContents(fullname: fullname, path: path).scheme
-                components.host = Router.getContents(fullname: fullname, path: path).host
-                components.path = Router.getContents(fullname: fullname, path: path).path
+            components.scheme = Router.getContents(fullname: fullname, path: path).scheme
+            components.host = Router.getContents(fullname: fullname, path: path).host
+            components.path = Router.getContents(fullname: fullname, path: path).path
         case .getRepositoryLanguage:
-                components.scheme = Router.getRepositoryLanguage(fullname: fullname).scheme
-                components.host = Router.getRepositoryLanguage(fullname: fullname).host
-                components.path = Router.getRepositoryLanguage(fullname: fullname).path
+            components.scheme = Router.getRepositoryLanguage(fullname: fullname).scheme
+            components.host = Router.getRepositoryLanguage(fullname: fullname).host
+            components.path = Router.getRepositoryLanguage(fullname: fullname).path
         /// User
         case .getUser:
             components.scheme = Router.getUser(username: username).scheme
@@ -130,15 +130,15 @@ class GitHubAPI<Element: Mappable> {
             components.path = Router.getUserEvents(username: username, type: eventType).path
             components.setQueryItems(with: Router.getUserEvents(username: username, type: eventType).parameters!)
         case .getFollowers:
-                components.scheme = Router.getFollowers(username: username).scheme
-                components.host = Router.getFollowers(username: username).host
-                components.path = Router.getFollowers(username: username).path
-                components.setQueryItems(with: Router.getFollowers(username: username).parameters!)
+            components.scheme = Router.getFollowers(username: username).scheme
+            components.host = Router.getFollowers(username: username).host
+            components.path = Router.getFollowers(username: username).path
+            components.setQueryItems(with: Router.getFollowers(username: username).parameters!)
         case .getFollowing:
-                components.scheme = Router.getFollowing(username: username).scheme
-                components.host = Router.getFollowing(username: username).host
-                components.path = Router.getFollowing(username: username).path
-                components.setQueryItems(with: Router.getFollowing(username: username).parameters!)
+            components.scheme = Router.getFollowing(username: username).scheme
+            components.host = Router.getFollowing(username: username).host
+            components.path = Router.getFollowing(username: username).path
+            components.setQueryItems(with: Router.getFollowing(username: username).parameters!)
         case .getOrganizations:
             components.scheme = Router.getOrganizations(username: username).scheme
             components.host = Router.getOrganizations(username: username).host

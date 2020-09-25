@@ -242,8 +242,8 @@
 			isa = PBXGroup;
 			children = (
 				BA9C84462507308400B65818 /* GitHubAuthentication.swift */,
-				BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */,
 				BA3D106924F76D2D0079C5A1 /* Router.swift */,
+				BAB51E5B24FC9895005A4F7D /* GithubAPI.swift */,
 				BA6C5A5624F79EDD00971F23 /* TrendingGithubAPI.swift */,
 			);
 			path = Networking;

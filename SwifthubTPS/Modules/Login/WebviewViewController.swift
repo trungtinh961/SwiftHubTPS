@@ -66,7 +66,7 @@ extension WebviewViewController: WKNavigationDelegate {
             "client_secret" : GITHUB.GITHUB_CLIENT_SECRET,
             "code" : code
         ]
-        var components = URLComponents(string: "https://github.com/login/oauth/access_token")
+        var components = URLComponents(string: GITHUB.GITHUB_ACCESSURL)
         components?.setQueryItems(with: params)
         guard let url =  components?.url else { return }
         var request = URLRequest(url: url)
@@ -86,7 +86,7 @@ extension WebviewViewController: WKNavigationDelegate {
                 debugPrint("Login failed!")
             }
             DispatchQueue.main.async {
-                if status == "access_token" {
+                    if status == "access_token" {
                     let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
                     mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = true
                     mainTabBarController?.gitHubAuthenticationManager.accessToken = self.accessToken
