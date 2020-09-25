@@ -35,7 +35,7 @@ struct ChartLanguage {
     let linesOfCode: Int
     
     func string() -> String {
-        "name: \(name) - quantity: \(linesOfCode) - color: \(color ?? "")"
+        "name: \(name) - linesOfCode: \(linesOfCode) - color: \(color ?? "")"
     }
 }
 

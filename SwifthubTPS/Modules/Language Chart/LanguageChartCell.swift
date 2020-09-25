@@ -201,6 +201,6 @@ extension LanguageChartCell: MultiProgressViewDataSource {
 // MARK: - MultiProgressViewDelegate
 extension LanguageChartCell: MultiProgressViewDelegate {
     func progressView(_ progressView: MultiProgressView, didTapSectionAt index: Int) {
-        print("Tapped section \(index)")
+        print(results[index].string())
     }
 }
