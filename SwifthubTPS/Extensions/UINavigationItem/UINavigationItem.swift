@@ -11,7 +11,6 @@ import UIKit
 extension UINavigationItem {
     func setTitle(title:String, subtitle:String) {
         let titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: 0, height: 0))
-
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.textColor = UIColor.black
         titleLabel.font = UIFont.boldSystemFont(ofSize: 13)
@@ -21,7 +20,7 @@ extension UINavigationItem {
         let subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
         subtitleLabel.backgroundColor = UIColor.clear
         subtitleLabel.textColor = UIColor.gray
-        subtitleLabel.font = UIFont.systemFont(ofSize: 17)
+        subtitleLabel.font = UIFont.systemFont(ofSize: 15)
         subtitleLabel.text = subtitle
         subtitleLabel.sizeToFit()
 
