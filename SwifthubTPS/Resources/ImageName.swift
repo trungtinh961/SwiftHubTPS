@@ -52,5 +52,7 @@ enum ImageName: String {
     case icon_button_user_x = "icon_button_user_x"
     case launch_image = "launch_image"
     case icon_cell_submodule = "icon_cell_submodule"
+    case icon_navigation_github = "icon_navigation_github"
+    case icon_cell_logout = "icon_cell_logout"
 }
 

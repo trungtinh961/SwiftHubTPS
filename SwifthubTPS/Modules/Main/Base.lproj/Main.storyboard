@@ -325,6 +325,9 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_navigation_github" id="q0W-Q0-ND8">
                             <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="btnWebPage:" destination="JIg-9R-GKM" id="fLP-GW-6Dv"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

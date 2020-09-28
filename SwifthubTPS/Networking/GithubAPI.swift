@@ -239,7 +239,7 @@ class GitHubAPI<Element: Mappable> {
             request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         }
         
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthorizated {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
         }
         
@@ -329,7 +329,7 @@ class GitHubAPI<Element: Mappable> {
             }
         var request = URLRequest(url: url)
         request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthorizated {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
         }
         request.httpMethod = "GET"

@@ -111,6 +111,7 @@ class SearchViewController: UIViewController {
                     }
                 }
             } else {
+                lbTitle.text = titleDescription()
                 trendingRepositoryGithubAPI.getResults(type: .repository,
                                                        language: language ?? "",
                                                        since: self.trendingSince)
@@ -151,6 +152,7 @@ class SearchViewController: UIViewController {
                     }
                 }
             } else {
+                lbTitle.text = titleDescription()
                 trendingUserGithubAPI.getResults(type: getType,
                                                  language: language ?? "",
                                                  since: self.trendingSince)
@@ -245,7 +247,7 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else { /// TrendingRepository
-                lbTitle.text = titleDescription()
+                
                 let indexCell = trendingRepositories![indexPath.row]
                 cell.lbFullname.text = indexCell.fullname
                 cell.lbDescription.text = indexCell.description
@@ -279,7 +281,7 @@ extension SearchViewController: UITableViewDataSource {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
             } else { /// Trending Users
-                lbTitle.text = titleDescription()
+                
                 cell.lbDescription.isHidden = false
                 let indexCell = trendingUsers![indexPath.row]
                 cell.lbFullname.text = "\(indexCell.username ?? "")"
@@ -385,9 +387,9 @@ extension SearchViewController: LanguageViewControllerDelegate {
     }
     
     func allLanguageViewController(_ controller: LanguageViewController) {
-        updateTableView(query: searchTextCurrent)
         languageParam = nil
         languageName = nil
+        updateTableView(query: searchTextCurrent)        
         dismiss(animated: true, completion: nil)
     }
 

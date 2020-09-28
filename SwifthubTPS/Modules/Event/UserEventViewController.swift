@@ -32,14 +32,18 @@ class UserEventViewController: UIViewController {
     private var eventItems: [Event]?
     
     // MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTableView(eventType: eventType)        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateTableView(eventType: eventType)
         makeUI()
     }
     
     private func makeUI() {
-        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem, isTabbarCall {
+        if gitHubAuthenticationManager.didAuthorizated, gitHubAuthenticationManager.userAuthorizated == userItem, isTabbarCall {
             self.navigationItem.leftBarButtonItem?.tintColor = .clear
         } else {
             self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
@@ -151,7 +155,7 @@ extension UserEventViewController: UITableViewDelegate {
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
             repositoryViewController.repositoryItem = eventItems?[indexPath.row].repository
             repositoryViewController.gitHubAuthenticationManager = gitHubAuthenticationManager
-            if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem {
+            if gitHubAuthenticationManager.didAuthorizated, gitHubAuthenticationManager.userAuthorizated == userItem {
                 let navController = UINavigationController(rootViewController: repositoryViewController)
                 navController.modalPresentationStyle = .fullScreen
                 self.present(navController, animated:true, completion: nil)

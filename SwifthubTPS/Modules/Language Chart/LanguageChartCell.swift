@@ -115,7 +115,7 @@ class LanguageChartCell: UITableViewCell {
         languageURL = "https://api.github.com/repos/\(repositoryItem!.fullname!)/languages"
         let url = URL(string: languageURL)
         var request = URLRequest(url: url!)
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthorizated {
             request.setValue("token \(gitHubAuthenticationManager.accessToken ?? "")", forHTTPHeaderField: "Authorization")
         }
         request.setValue("application/vnd.github.v3.raw", forHTTPHeaderField: "Accept")

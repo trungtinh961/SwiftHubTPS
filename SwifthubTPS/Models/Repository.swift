@@ -19,7 +19,7 @@ struct Repository: Mappable {
     var homepage: String?
     var language: String?
     var languageColor: String?
-    
+    var htmlUrl: String?
     var name: String?
     var openIssuesCount: Int?
     var owner: User?
@@ -62,6 +62,7 @@ struct Repository: Mappable {
         forks <- map["forks"]
         fullname <- map["full_name"]
         homepage <- map["homepage"]
+        htmlUrl <- map["html_url"]
         language <- map["language"]
         name <- map["name"]
         openIssuesCount <- map["open_issues_count"]

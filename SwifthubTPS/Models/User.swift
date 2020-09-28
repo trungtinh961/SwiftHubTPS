@@ -25,6 +25,7 @@ struct User: Mappable, SenderType {
     var createdAt: Date?
     var followers: Int?
     var following: Int?
+    var htmlUrl: String?
     var login: String?
     var name: String?
     var type: UserType = .user
@@ -76,6 +77,7 @@ struct User: Mappable, SenderType {
         descriptionField <- map["description"]
         followers <- map["followers"]
         following <- map["following"]
+        htmlUrl <- map["html_url"]
         login <- map["login"]
         name <- map["name"]
         repositoriesCount <- map["public_repos"]

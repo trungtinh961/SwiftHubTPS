@@ -95,8 +95,7 @@ extension BranchViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.noResultCell.rawValue, for: indexPath)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell
-            
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailCell.rawValue, for: indexPath) as! DetailCell            
             cell.imgCell?.image = UIImage(named: ImageName.icon_cell_git_branch.rawValue)
             cell.lbTitleCell.text = branchItems![indexPath.row].name
             cell.lbDetails.isHidden = true

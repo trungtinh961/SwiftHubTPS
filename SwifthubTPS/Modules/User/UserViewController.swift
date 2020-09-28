@@ -42,24 +42,26 @@ class UserViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated != userItem {
+        if gitHubAuthenticationManager.didAuthorizated, gitHubAuthenticationManager.userAuthorizated != userItem {
             btnAddUser.isHidden = false
             btnAddUser.isEnabled = true
         } else {
             btnAddUser.isHidden = true
             btnAddUser.isEnabled = false
         }
-        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated == userItem, isTabbarCall {
+        if gitHubAuthenticationManager.didAuthorizated, gitHubAuthenticationManager.userAuthorizated == userItem, isTabbarCall {
             reloadTableView()
             self.navigationItem.leftBarButtonItem?.tintColor = .clear
             self.navigationItem.leftBarButtonItem?.isEnabled = false
-            self.navigationItem.rightBarButtonItem?.tintColor = .systemTeal
-            self.navigationItem.rightBarButtonItem?.isEnabled = true
+            self.navigationItem.rightBarButtonItem?.image = UIImage(named: ImageName.icon_cell_logout.rawValue)
+//            self.navigationItem.rightBarButtonItem?.tintColor = .systemTeal
+//            self.navigationItem.rightBarButtonItem?.isEnabled = true
         } else {
             self.navigationItem.leftBarButtonItem?.tintColor = .systemTeal
             self.navigationItem.leftBarButtonItem?.isEnabled = true
-            self.navigationItem.rightBarButtonItem?.tintColor = .clear
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
+//            self.navigationItem.rightBarButtonItem?.tintColor = .clear
+            self.navigationItem.rightBarButtonItem?.image = UIImage(named: ImageName.icon_navigation_github.rawValue)
+//            self.navigationItem.rightBarButtonItem?.isEnabled = false
         }        
     }
     
@@ -114,7 +116,15 @@ class UserViewController: UIViewController {
     }
     
     @IBAction func btnLogout(_ sender: Any) {
-        showAlert()
+        if gitHubAuthenticationManager.didAuthorizated, gitHubAuthenticationManager.userAuthorizated == userItem, isTabbarCall {
+            showAlert()
+        } else {
+            if let url = URL(string: userItem?.htmlUrl ?? "") {
+                UIApplication.shared.open(url)
+            }
+        }
+        
+        
     }
     
     @IBAction func btnRepositories(_ sender: Any) {
@@ -145,7 +155,7 @@ class UserViewController: UIViewController {
     
     private func logout() {
         let mainTabBarController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifier.tabbar.rawValue) as? MainTabBarController
-        mainTabBarController?.gitHubAuthenticationManager.didAuthenticated = false
+        mainTabBarController?.gitHubAuthenticationManager.didAuthorizated = false
         mainTabBarController?.gitHubAuthenticationManager.accessToken = ""
         guard let window = self.view.window else {
             self.view.window?.rootViewController = mainTabBarController
@@ -199,7 +209,6 @@ class UserViewController: UIViewController {
             if results?.count == 0 || !errorMessage.isEmpty {
                 self?.noResult = true
                 self?.isLoading = false
-                self?.lbDescription.text = "Error when load data!"
                 self?.resultTableView.reloadData()
                 debugPrint(errorMessage)
             }
@@ -232,7 +241,7 @@ class UserViewController: UIViewController {
             if let results = results {
                 self?.organizations = results
                 self?.resultTableView.reloadData()
-                if (self?.gitHubAuthenticationManager.didAuthenticated)! {
+                if (self?.gitHubAuthenticationManager.didAuthorizated)! {
                     self?.checkFollowUser(type: .checkFollowedUser)
                 }
             }
@@ -243,7 +252,7 @@ class UserViewController: UIViewController {
     }
     
     private func updateStatus() {
-        if gitHubAuthenticationManager.didAuthenticated, gitHubAuthenticationManager.userAuthenticated != userItem {
+        if gitHubAuthenticationManager.didAuthorizated, gitHubAuthenticationManager.userAuthorizated != userItem {
             if  isFollowed {
                 btnAddUser.setImage(UIImage(named: ImageName.icon_button_user_x.rawValue), for: .normal)
             } else {

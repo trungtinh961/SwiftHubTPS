@@ -27,7 +27,7 @@ class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthorizated {
             self.getAuthenUser()
         }
         self.selectedIndex = 0
@@ -39,8 +39,8 @@ class MainTabBarController: UITabBarController {
         userGithubAPI.getResults(type: .getAuthenUser, gitHubAuthenticationManager: gitHubAuthenticationManager) { [weak self] results, errorMessage, statusCode in
             if let result = results?[0] {
                 self?.userItem = result
-                self?.gitHubAuthenticationManager.userAuthenticated = result
-                self?.viewControllers = self?.refreshAllTab(didAuthenticated: (self?.gitHubAuthenticationManager.didAuthenticated)!)
+                self?.gitHubAuthenticationManager.userAuthorizated = result
+                self?.viewControllers = self?.refreshAllTab(didAuthenticated: (self?.gitHubAuthenticationManager.didAuthorizated)!)
             }
             if !errorMessage.isEmpty {
                 debugPrint("Get data error: " + errorMessage)

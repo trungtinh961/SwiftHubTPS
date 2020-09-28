@@ -39,7 +39,7 @@ class ChatViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         makeUI()
-        currentUser = gitHubAuthenticationManager.userAuthenticated
+        currentUser = gitHubAuthenticationManager.userAuthorizated
         configureMessageCollectionView()
         configureMessageInputBar()
     }
@@ -262,7 +262,7 @@ extension ChatViewController: MessagesLayoutDelegate {
 extension ChatViewController: InputBarAccessoryViewDelegate {
     @objc
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthorizated {
             inputBar.inputTextView.text = ""
             updateTableView(type: .createIssueComment, body: text)
         } else {
@@ -271,7 +271,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
-        if !gitHubAuthenticationManager.didAuthenticated {
+        if !gitHubAuthenticationManager.didAuthorizated {
             inputBar.sendButton.isEnabled = false
         }
     }

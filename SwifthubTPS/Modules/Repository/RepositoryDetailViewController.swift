@@ -72,8 +72,8 @@ class RepositoryDetailViewController: UIViewController {
         isLoading = true
         resultTableView.reloadData()
         noResult = false
-        let type: GetType = (gitHubAuthenticationManager.didAuthenticated
-                             && gitHubAuthenticationManager.userAuthenticated == userItem)
+        let type: GetType = (gitHubAuthenticationManager.didAuthorizated
+                             && gitHubAuthenticationManager.userAuthorizated == userItem)
                              ? .getRepositoryOfAuthenUser
                              : .getUserRepositories
         if detailType == .repositories {

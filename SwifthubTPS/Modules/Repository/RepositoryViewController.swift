@@ -48,7 +48,7 @@ class RepositoryViewController: UIViewController {
     }
     
     private func makeUI() {
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthorizated {
             btnStar.isHidden = false
             btnStar.isEnabled = true
         } else {
@@ -102,6 +102,13 @@ class RepositoryViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
+    
+    @IBAction func btnWebPage(_ sender: Any) {
+        if let url = URL(string: repositoryItem?.htmlUrl ?? "") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
     
     @IBAction func btnWatches(_ sender: Any) {
         let watchingViewController = storyBoard.instantiateViewController(withIdentifier: StoryboardIdentifier.watchingVC.rawValue) as! WatchingViewController
@@ -178,7 +185,7 @@ class RepositoryViewController: UIViewController {
     }
     
     private func updateStatus() {
-        if gitHubAuthenticationManager.didAuthenticated {
+        if gitHubAuthenticationManager.didAuthorizated {
             if  isStarred {
                 btnStar.setImage(UIImage(named: ImageName.icon_button_star.rawValue), for: .normal)
             } else {

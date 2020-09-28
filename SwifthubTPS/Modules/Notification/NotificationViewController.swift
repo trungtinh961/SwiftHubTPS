@@ -28,9 +28,13 @@ class NotificationViewController: UIViewController {
     private var notificationItems: [Notification]?
     
     // MARK: - Lifecycles
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTableView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateTableView()
         makeUI()
     }
     
