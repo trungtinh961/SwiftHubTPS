@@ -150,6 +150,7 @@ class RepositoryViewController: UIViewController {
             else if let result = results?[0] {
                 self?.repositoryItem = result
                 self?.isLoading = false
+                self?.noResult = false
                 if let smallURL = URL(string: self?.repositoryItem?.owner?.avatarUrl ?? "") {
                     self?.downloadTask = self?.imgAvatar.loadImage(url: smallURL)
                 }

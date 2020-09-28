@@ -216,6 +216,7 @@ class UserViewController: UIViewController {
                 self?.userItem = result
                 self?.totalRepos = (self?.userItem?.repositoriesCount ?? 0) + (self?.userItem?.privateRepoCount ?? 0)
                 self?.isLoading = false
+                self?.noResult = false
                 if let smallURL = URL(string: self?.userItem?.avatarUrl ?? "") {
                     self?.downloadTask = self?.imgAvatar.loadImage(url: smallURL)
                 }
