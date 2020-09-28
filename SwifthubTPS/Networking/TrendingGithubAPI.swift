@@ -10,7 +10,7 @@ import ObjectMapper
 import Foundation
 
 enum TrendingSince: String {
-    case daily = ""
+    case daily = "daily"
     case weekly = "weekly"
     case monthly = "monthly"
 }

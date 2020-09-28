@@ -169,7 +169,9 @@ enum Router {
             if language != "" {
                 params["language"] = language
             }
-            params["since"] = since.rawValue
+            if since != .daily {
+                params["since"] = since.rawValue
+            }            
         case .searchRepositories(let query, let language):
             if language != "" {
                 params["q"] = "\(query)+language:\(language)"

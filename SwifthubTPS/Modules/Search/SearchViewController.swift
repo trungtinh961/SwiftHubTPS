@@ -268,7 +268,7 @@ extension SearchViewController: UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.userCell.rawValue, for: indexPath) as! UserCell
-            if isSearching {
+            if isSearching { /// Search Users
                 sinceApiSegmentControl.isHidden = true
                 titleConstraints.constant = -32
                 lbTitle.text = titleDescription(count: searchUserInfor?.totalCount ?? 0)
@@ -278,7 +278,7 @@ extension SearchViewController: UITableViewDataSource {
                 if let smallURL = URL(string: indexCell.avatarUrl ?? "") {
                     downloadTask = cell.imgAuthor.loadImage(url: smallURL)
                 }
-            } else {
+            } else { /// Trending Users
                 lbTitle.text = titleDescription()
                 cell.lbDescription.isHidden = false
                 let indexCell = trendingUsers![indexPath.row]
